@@ -136,3 +136,22 @@ test('storage that throws on access degrades to not persisting, and never throws
   assert.strictEqual(MdEditor.createTheme({ root: p.content, storagePrefix: 'blocked-' }).get().theme, 'card',
     'and simply does not come back');
 });
+
+test('storageKeys lets a host keep the key names it already persisted under', () => {
+  const p = makePage(STORAGE_ORIGIN);
+  const keys = { theme: 'legacy-doc-theme', font: 'legacy-font' };
+  const t = MdEditor.createTheme({ root: p.content, storagePrefix: 'ignored-', storageKeys: keys });
+  t.setTheme('glass');
+  t.setLayout({ font: 21 });
+  assert.strictEqual(p.window.localStorage.getItem('legacy-doc-theme'), 'glass');
+  assert.strictEqual(p.window.localStorage.getItem('legacy-font'), '21');
+  assert.strictEqual(p.window.localStorage.getItem('ignored-theme'), null, 'the prefix is not also used');
+  assert.strictEqual(p.window.localStorage.getItem('ignored-width'), '1000', 'keys not overridden still use it');
+});
+
+test('a value already sitting under a legacy key is read back on construction', () => {
+  const p = makePage(STORAGE_ORIGIN);
+  p.window.localStorage.setItem('legacy-theme-key', 'modern');
+  const t = MdEditor.createTheme({ root: p.content, storageKeys: { theme: 'legacy-theme-key' } });
+  assert.strictEqual(t.get().theme, 'modern');
+});

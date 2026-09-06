@@ -11,6 +11,8 @@ const THEMES = ['card', 'modern', 'glass', 'claude'];
 
 const DEFAULTS = {
   themes: THEMES,
+  // storagePrefix: 'md-editor-'    namespaces the persisted keys
+  // storageKeys: { theme, dark, width, font, code }   overrides them one by one
   theme: 'card',
   dark: false,
   // Text column width, and the two font sizes. Width is the TEXT width, not the
@@ -24,8 +26,10 @@ const DEFAULTS = {
 // ambient global: they are the same thing on an ordinary page, but a document
 // inside an iframe has its own, and reaching for the outer one would write the
 // wrong store. Missing or blocked storage degrades to not persisting.
-function makeStore(prefix, win) {
-  const key = (k) => prefix + k;
+// `keys` lets a host that already has persisted settings keep its own names, so
+// adopting the library does not silently reset everyone's saved theme.
+function makeStore(prefix, win, keys) {
+  const key = (k) => ((keys && keys[k]) || prefix + k);
   const ls = () => {
     try { return (win && win.localStorage) || (typeof localStorage !== 'undefined' ? localStorage : null); }
     catch (e) { return null; }   // a blocked cookie policy throws on access
@@ -57,7 +61,10 @@ function createTheme(config) {
   const c = Object.assign({}, DEFAULTS, config);
   const root = c.root;
   const doc = root.ownerDocument;
-  const store = makeStore(c.storagePrefix || 'md-editor-', c.window || doc.defaultView);
+  const store = makeStore(
+    c.storagePrefix != null ? c.storagePrefix : 'md-editor-',
+    c.window || doc.defaultView,
+    c.storageKeys);
   // An id is the tightest selector available, but a host need not give its
   // element one — `'#' + ''` is the truthy string '#', which matches nothing, so
   // the emptiness has to be checked rather than relied on to be falsy.

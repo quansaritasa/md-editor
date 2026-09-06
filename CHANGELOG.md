@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.0 — adoption
+
+- `createTheme` takes `storageKeys`, so a host that already persisted settings under its own key names keeps them. Without it, adopting the library silently resets everyone's saved theme and text sizes, which is a poor first impression for an upgrade that is meant to change nothing visible
+
 ## v0.5.0 — source editor
 
 - Add `createEditor`, a controller around a textarea the host supplies. It owns the buffer, what is believed to be on disk, and the dirty flag; the host keeps every visible affordance, because which element is showing and what the Save button says are its business, not the library's
