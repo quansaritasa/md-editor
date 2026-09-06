@@ -1,0 +1,41 @@
+/* Host chrome for the demo. None of this belongs to the library: a host owns
+   its own toolbar, panel and layout, and this file exists to prove the library
+   needs nothing from it beyond a mount element and a scroller. */
+* { box-sizing: border-box; }
+body { margin: 0; font: 14px system-ui, sans-serif; background: #e2e8f0; color: #1f2937; }
+html.dark body { background: #0f131c; color: #e2e8f0; }
+
+#bar { display: flex; gap: 14px; align-items: center; padding: 8px 14px; border-bottom: 1px solid #cbd5e1;
+       background: #f8fafc; position: sticky; top: 0; z-index: 10; }
+html.dark #bar { background: #131926; border-color: #263349; }
+#bar .spacer { flex: 1; }
+#bar label { display: flex; gap: 5px; align-items: center; font-size: 12px; }
+#ver { color: #64748b; font-size: 12px; }
+
+#row { display: flex; height: calc(100vh - 41px); }
+#viewer { flex: 1; overflow: auto; }
+#content { margin: 0 auto; max-width: 1000px; }
+
+#outline-section { width: 260px; border-left: 1px solid #cbd5e1; overflow: auto; padding: 10px 12px; background: #f8fafc; }
+html.dark #outline-section { background: #131926; border-color: #263349; }
+#outline-head { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px;
+                text-transform: uppercase; letter-spacing: .06em; color: #64748b; margin-bottom: 8px; }
+#outline-actions { margin-left: auto; display: flex; gap: 2px; }
+#outline-actions button { border: 1px solid #cbd5e1; background: #fff; border-radius: 4px; cursor: pointer;
+                          font-size: 12px; line-height: 1; padding: 2px 5px; }
+html.dark #outline-actions button { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+#outline-actions.outline-actions-off { opacity: .35; }
+#outline-actions button:disabled { cursor: default; }
+
+#outline-list { list-style: none; margin: 0; padding: 0; }
+#outline-list li { position: relative; }
+#outline-list a { display: block; padding: 3px 4px 3px 16px; color: inherit; text-decoration: none;
+                  border-radius: 4px; font-size: 13px; }
+#outline-list a:hover { background: rgba(15, 118, 110, .1); }
+#outline-list a.outline-h3 { padding-left: 30px; font-size: 12px; opacity: .8; }
+#outline-list a.outline-active { background: rgba(15, 118, 110, .16); font-weight: 600; }
+#outline-list .outline-empty { padding: 4px; color: #94a3b8; font-style: italic; font-size: 12px; }
+.outline-toggle { position: absolute; left: 0; top: 3px; width: 14px; height: 16px; border: 0; padding: 0;
+                  background: none; cursor: pointer; color: inherit; opacity: .55; font-size: 11px; }
+.outline-toggle::before { content: '\2212'; }
+.outline-toggle[aria-expanded="false"]::before { content: '+'; }

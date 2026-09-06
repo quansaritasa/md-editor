@@ -10,15 +10,14 @@ toolbar — a host app supplies those and calls in.
 
 ## Status
 
-Phase 1 of 5. The pure rendering core is done and pinned by fixtures taken
-byte-for-byte from Qview's renderer. Everything that touches the DOM lands in
-the phases below.
+Phase 2 of 5. The rendering core and the DOM features are done. Theme
+switching, layout sizing and the source editor land in the phases below.
 
 | Phase | Scope | State |
 |-------|-------|-------|
 | 0 | Repository scaffold, build pipeline, themes | Done |
 | 1 | Pure core: `util`, `parse`, `transform`, `goodview`, `build` | Done |
-| 2 | Host adapter, `mount`, features: code blocks, mermaid, collapse, outline | Pending |
+| 2 | Host adapter, `mount`, features: code blocks, mermaid, collapse, outline | Done |
 | 3 | Theme switching, layout sizing, `css/base.css` | Pending |
 | 4 | Source editor and in-editor find | Pending |
 | 5 | Qview migrated onto the library | Pending |
@@ -69,6 +68,37 @@ MdEditor.configure({ marked, hljs, mermaid });
 | `mermaid` | No | Diagram rendering. Roughly 3.4 MB, so it stays opt-in |
 
 A missing optional peer skips that step rather than raising an error.
+
+## Mount element
+
+> **Note:** every theme rule is currently scoped to the literal selector
+> `#content`, so the element you mount into must carry `id="content"` or it
+> renders completely unstyled. Re-scoping the themes to a class the library
+> applies itself is planned for phase 3.
+
+## Usage in a host
+
+```js
+const outline = MdEditor.features.outline.createOutline({
+  content, scroller, list, section, actions: { box, expand, collapse },
+  kvLabels: () => goodViewIsOn(),   // a function, so host state stays live
+});
+
+const doc = await MdEditor.mount(content, markdown, {
+  docPath: '/docs/guide.md',        // resolves relative links and pictures
+  transforms: ['strip-hr', 'data-labels'],
+  editableCode: true,
+  onNavigate: (path) => openInHost(path),
+});
+
+outline.build();                    // after mount: it reads the headings
+MdEditor.features.collapse.bind(content);   // after the outline: the toggle
+outline.updateActions();            // ...and after both sets of toggles exist
+```
+
+`demo/index.html` is a complete working host — open it in a browser after
+`npm run build`. It owns its own toolbar, panel and layout, which is the point:
+the library asks for a mount element and a scroller, and nothing else.
 
 ## Themes
 

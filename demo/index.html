@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>md-editor demo</title>
+<link rel="stylesheet" href="../node_modules/@highlightjs/cdn-assets/styles/github-dark.min.css">
+<link id="doc-theme" rel="stylesheet" href="../dist/themes/card.css">
+<link rel="stylesheet" href="../dist/md-editor.css">
+<link rel="stylesheet" href="host.css">
+</head>
+<body>
+
+<header id="bar">
+  <strong>md-editor</strong>
+  <span id="ver"></span>
+  <span class="spacer"></span>
+  <label>Theme
+    <select id="theme">
+      <option>card</option><option>modern</option><option>glass</option><option>claude</option>
+    </select>
+  </label>
+  <label>Doc
+    <select id="doc">
+      <option value="all">Transform coverage</option>
+      <option value="skill">Skill header card</option>
+      <option value="txt">Flat text (good view)</option>
+    </select>
+  </label>
+  <label><input type="checkbox" id="dark"> Dark</label>
+  <label><input type="checkbox" id="gv"> Good view</label>
+</header>
+
+<div id="row">
+  <div id="viewer"><article id="content" class="page"></article></div>
+  <aside id="outline-section">
+    <div id="outline-head">
+      Outline
+      <span id="outline-actions">
+        <button type="button" id="outline-collapse" title="Collapse all">&#8863;</button>
+        <button type="button" id="outline-expand" title="Expand all">&#8862;</button>
+      </span>
+    </div>
+    <nav><ul id="outline-list"></ul></nav>
+  </aside>
+</div>
+
+<script src="../node_modules/marked/marked.min.js"></script>
+<script src="../node_modules/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="../node_modules/mermaid/dist/mermaid.min.js"></script>
+<script src="../dist/md-editor.js"></script>
+<script src="docs.js"></script>
+<script src="demo.js"></script>
+</body>
+</html>

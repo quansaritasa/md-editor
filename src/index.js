@@ -10,14 +10,34 @@ const parse = require('./parse');
 const transform = require('./transform');
 const goodview = require('./goodview');
 const { build, DEFAULTS } = require('./build');
+const adapter = require('./adapter');
+const mountMod = require('./mount');
 
 module.exports = {
   version: require('../package.json').version,
   configure: deps.configure,
 
+  // markdown source -> document HTML. Pure.
   build,
   buildDefaults: DEFAULTS,
   transforms: transform.OPTIONAL,
+
+  // document HTML -> a live element.
+  mount: mountMod.mount,
+  mountDefaults: mountMod.MOUNT_DEFAULTS,
+  resolveDocPaths: mountMod.resolveDocPaths,
+  bindLinks: mountMod.bindLinks,
+  createAdapter: adapter.createAdapter,
+
+  // Opt-in behaviour a host wires to its own chrome.
+  features: {
+    mermaid: require('./features/mermaid'),
+    mermaidZoom: require('./features/mermaid-zoom'),
+    codeBlocks: require('./features/codeblocks'),
+    collapse: require('./features/collapse'),
+    outline: require('./features/outline'),
+    outlineFold: require('./features/outline-fold'),
+  },
 
   // The pieces, for hosts that compose their own pipeline.
   parse,
