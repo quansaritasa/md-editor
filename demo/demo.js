@@ -56,9 +56,9 @@ function optionsFor(kind, docPath) {
   return { docPath, transforms: extras.concat(gv) };
 }
 
-async function show() {
+async function show(override) {
   const kind = document.getElementById('doc').value;
-  const md = window.DEMO_DOCS[kind];
+  const md = override != null ? override : window.DEMO_DOCS[kind];
   const opts = optionsFor(kind, location.href);
   opts.editableCode = true;
   opts.onNavigate = (p) => console.log('[demo] navigate ->', p);
@@ -80,6 +80,37 @@ async function show() {
   theme.refresh();
   console.log('[demo] rendered', kind, '| title:', JSON.stringify(title));
 }
+
+/* ---------- edit mode ----------
+   The demo has no filesystem, so writeFile keeps the text in memory. Swapping
+   in a real one is the whole of what a desktop host has to provide. */
+const editBtn = document.getElementById('edit');
+const saveBtn = document.getElementById('save');
+const sourceEl = document.getElementById('source');
+
+const editor = MdEditor.createEditor({
+  textarea: sourceEl,
+  adapter: MdEditor.createAdapter({
+    writeFile: async (path, text) => { window.DEMO_DOCS[document.getElementById('doc').value] = text; },
+  }),
+  onDirty: (d) => { saveBtn.classList.toggle('dirty', d); saveBtn.textContent = d ? '\u25cf Save' : '\ud83d\udcbe Save'; },
+  onSaved: () => console.log('[demo] saved'),
+  onError: (m) => console.error('[demo] save failed:', m),
+  onStateChange: (on) => {
+    sourceEl.hidden = !on;
+    pane.hidden = on;
+    saveBtn.hidden = !on;
+    editBtn.textContent = on ? '\ud83d\udc41 Preview' : '\u270e Edit';
+  },
+  // Whatever is now on disk — never the unsaved buffer.
+  onExit: (src) => { show(src); },
+});
+
+editBtn.addEventListener('click', () => {
+  if (editor.isEditing()) editor.close();
+  else editor.open(document.getElementById('doc').value, window.DEMO_DOCS[document.getElementById('doc').value]);
+});
+saveBtn.addEventListener('click', () => editor.save());
 
 sel.addEventListener('change', (e) => theme.setTheme(e.target.value));
 document.getElementById('dark').addEventListener('change', (e) => theme.setDark(e.target.checked));

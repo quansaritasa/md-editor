@@ -10,8 +10,8 @@ toolbar — a host app supplies those and calls in.
 
 ## Status
 
-Phase 3 of 5. Rendering, the DOM features, and theme and layout control are
-done. The source editor lands in the phase below.
+Phase 4 of 5. The library is feature-complete. What remains is migrating
+Qview onto it, which is what will prove the extraction in anger.
 
 | Phase | Scope | State |
 |-------|-------|-------|
@@ -19,7 +19,7 @@ done. The source editor lands in the phase below.
 | 1 | Pure core: `util`, `parse`, `transform`, `goodview`, `build` | Done |
 | 2 | Host adapter, `mount`, features: code blocks, mermaid, collapse, outline | Done |
 | 3 | Theme switching, layout sizing, `css/base.css` | Done |
-| 4 | Source editor and in-editor find | Pending |
+| 4 | Source editor and in-editor find | Done |
 | 5 | Qview migrated onto the library | Pending |
 
 ## Installation
@@ -159,6 +159,42 @@ output stays predictable:
 ```js
 MdEditor.build(md, { transforms: ['header', 'qa-cards', 'example-boxes'] });
 ```
+
+## Editing the source
+
+`createEditor` wraps a textarea the host supplies. It owns the buffer, what is
+believed to be on disk, and the dirty flag; the host owns every visible
+affordance — which element is showing, what the Save button says, and whether
+the file is editable at all.
+
+```js
+const editor = MdEditor.createEditor({
+  textarea: document.getElementById('source'),
+  adapter,                          // needs writeFile; the default refuses
+  onDirty: (dirty) => {},
+  onSaved: () => {},
+  onError: (message) => {},
+  onStateChange: (editing) => {},   // show/hide your own elements here
+  onExit: (source) => render(source),
+});
+
+editor.open(path, source);   // loads, marks clean, focuses
+editor.save();               // 'saved' | 'unchanged' | 'error' | 'idle'
+editor.close();              // saves pending edits, then hands back onExit
+editor.cancel();             // discards them
+```
+
+Two details worth knowing. A buffer equal to what is on disk is not written, so
+no-op saves do not bump the file's mtime. And a **failed** write does not
+advance the believed disk state, so `onExit` can never hand the host content
+that was never saved.
+
+`createSourceFind` is the textarea counterpart to searching rendered HTML —
+matches are index ranges, and a hit is shown by selecting it. It offers the
+same `search` / `focus` / `clear` / `count` calls, so one find bar can drive
+both and swap engines depending on whether the host is editing. `capped()`
+reports when a search stopped at the match limit, so a host can show `5000+`
+rather than presenting a truncated total as complete.
 
 ## Development
 

@@ -50,3 +50,30 @@
 .md-editor .sec-toggle[aria-expanded="false"]::before { content: '+'; }
 .md-editor .sec-toggle:hover { opacity: 1; color: var(--accent, currentColor); }
 .md-editor h2.sec-collapsed { opacity: 0.75; }
+
+/* ---------- source editor ---------- */
+/* Typography only. Whether the textarea is showing, where it sits and which of
+   it or the preview is visible are host layout decisions — createEditor adds
+   this class and touches nothing else.
+
+   The colours are literal, not theme variables. A host puts its textarea
+   BESIDE the mount element rather than inside it, because mount() rewrites that
+   element's innerHTML — and a sibling inherits none of the theme's custom
+   properties, so var(--text) would silently fall back and dark mode would never
+   engage. Verified in a browser: the two modes came out identical. A host that
+   wants exact theme colours overrides this rule with its own. */
+.md-editor-source {
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 24px 28px 40px;
+  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  font-size: 14px;
+  line-height: 1.7;
+  color: #1f2937;
+  background: #fafbfc;
+}
+html.dark .md-editor-source {
+  color: #e2e8f0;
+  background: #0f172a;
+}

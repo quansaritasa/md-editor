@@ -13,6 +13,8 @@ const { build, DEFAULTS } = require('./build');
 const adapter = require('./adapter');
 const mountMod = require('./mount');
 const theme = require('./theme');
+const editor = require('./editor');
+const editorFind = require('./editor-find');
 
 module.exports = {
   version: require('../package.json').version,
@@ -35,6 +37,11 @@ module.exports = {
   createTheme: theme.createTheme,
   themes: theme.THEMES,
   themeDefaults: theme.DEFAULTS,
+
+  // Editing the markdown source. The host owns every visible affordance.
+  createEditor: editor.createEditor,
+  createSourceFind: editorFind.createSourceFind,
+  sourceClass: editor.SOURCE_CLASS,
 
   // Opt-in behaviour a host wires to its own chrome.
   features: {

@@ -26,10 +26,16 @@
   <label><input type="checkbox" id="gv"> Good view</label>
   <label>Width <input type="range" id="w" min="600" max="1400" step="20"></label>
   <label>Font <input type="range" id="f" min="13" max="22"></label>
+  <button type="button" id="edit">&#9998; Edit</button>
+  <button type="button" id="save" hidden>&#128190; Save</button>
 </header>
 
 <div id="row">
-  <div id="viewer"><article id="reading-pane"></article></div>
+  <div id="viewer">
+    <textarea id="source" spellcheck="false" hidden
+      placeholder="Markdown source — Cmd/Ctrl+S saves, Esc discards"></textarea>
+    <article id="reading-pane"></article>
+  </div>
   <aside id="outline-section">
     <div id="outline-head">
       Outline
