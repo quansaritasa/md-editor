@@ -1,4 +1,52 @@
 /* ===================== md-editor — base =====================
-   Document chrome the themes do NOT own: good-view, collapsible sections and
-   the editor textarea. Lifted out of the host app in phase 3; a theme file
-   still supplies every colour, so this stays structural. */
+   Document chrome the themes do not own, scoped to the class mount() applies.
+   Colours come from theme variables, so this stays structural and works with
+   every theme in light and dark alike.
+
+   The outline PANEL is deliberately absent: where it sits, how wide it is and
+   what colour it takes are host layout decisions. The library only promises the
+   markup — .outline-h2, .outline-h3, .outline-active, .outline-empty,
+   .outline-parent, .outline-toggle, .outline-actions-off — and demo/host.css
+   is a worked example of styling it. */
+
+/* ---------- good view ---------- */
+/* mount() sets .good-view when the good-view transform ran. That transform
+   splits <br>-separated lines into their own <p>, so p + p fires between every
+   line of a line-per-entry file AND between blank-line-separated blocks. */
+.md-editor.good-view p + p {
+  margin-top: 1em;
+}
+
+/* "header: content" lines — the leading header becomes a highlighted chip. */
+.md-editor.good-view .kv-label {
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 3px;
+  padding: 0 3px;
+}
+
+/* ---------- collapsible sections ---------- */
+/* The glyph is a ::before, never a text node: a "−" inside the h2 would show up
+   in h2.textContent, which the outline labels and the browser's own find both
+   read. */
+.md-editor .sec-toggle {
+  display: inline-block;
+  width: 1.1em;
+  margin-right: 0.35em;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--muted, #888);
+  font: inherit;
+  font-weight: 400;
+  line-height: inherit;
+  text-align: left;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s, color 0.15s;
+}
+.md-editor .sec-toggle::before { content: '\2212'; }                        /* minus, section open */
+.md-editor .sec-toggle[aria-expanded="false"]::before { content: '+'; }
+.md-editor .sec-toggle:hover { opacity: 1; color: var(--accent, currentColor); }
+.md-editor h2.sec-collapsed { opacity: 0.75; }

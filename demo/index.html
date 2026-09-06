@@ -14,11 +14,7 @@
   <strong>md-editor</strong>
   <span id="ver"></span>
   <span class="spacer"></span>
-  <label>Theme
-    <select id="theme">
-      <option>card</option><option>modern</option><option>glass</option><option>claude</option>
-    </select>
-  </label>
+  <label>Theme <select id="theme"></select></label>
   <label>Doc
     <select id="doc">
       <option value="all">Transform coverage</option>
@@ -28,10 +24,12 @@
   </label>
   <label><input type="checkbox" id="dark"> Dark</label>
   <label><input type="checkbox" id="gv"> Good view</label>
+  <label>Width <input type="range" id="w" min="600" max="1400" step="20"></label>
+  <label>Font <input type="range" id="f" min="13" max="22"></label>
 </header>
 
 <div id="row">
-  <div id="viewer"><article id="content" class="page"></article></div>
+  <div id="viewer"><article id="reading-pane"></article></div>
   <aside id="outline-section">
     <div id="outline-head">
       Outline

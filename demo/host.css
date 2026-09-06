@@ -14,7 +14,7 @@ html.dark #bar { background: #131926; border-color: #263349; }
 
 #row { display: flex; height: calc(100vh - 41px); }
 #viewer { flex: 1; overflow: auto; }
-#content { margin: 0 auto; max-width: 1000px; }
+#reading-pane { margin: 0 auto; }   /* width comes from MdEditor.createTheme */
 
 #outline-section { width: 260px; border-left: 1px solid #cbd5e1; overflow: auto; padding: 10px 12px; background: #f8fafc; }
 html.dark #outline-section { background: #131926; border-color: #263349; }

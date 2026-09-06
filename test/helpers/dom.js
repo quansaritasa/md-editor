@@ -17,9 +17,11 @@ const MARKUP = `
   <nav><ul id="outline-list"></ul></nav>
 </div>`;
 
-function makePage() {
+// jsdom treats file:// as an opaque origin and THROWS on localStorage access,
+// so a test that needs storage asks for an http origin instead.
+function makePage(url) {
   const dom = new JSDOM('<!doctype html><html><body>' + MARKUP + '</body></html>', {
-    url: 'file:///docs/index.html',
+    url: url || 'file:///docs/index.html',
     pretendToBeVisual: true,
   });
   const { window } = dom;

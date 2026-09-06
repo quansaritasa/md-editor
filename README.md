@@ -10,15 +10,15 @@ toolbar — a host app supplies those and calls in.
 
 ## Status
 
-Phase 2 of 5. The rendering core and the DOM features are done. Theme
-switching, layout sizing and the source editor land in the phases below.
+Phase 3 of 5. Rendering, the DOM features, and theme and layout control are
+done. The source editor lands in the phase below.
 
 | Phase | Scope | State |
 |-------|-------|-------|
 | 0 | Repository scaffold, build pipeline, themes | Done |
 | 1 | Pure core: `util`, `parse`, `transform`, `goodview`, `build` | Done |
 | 2 | Host adapter, `mount`, features: code blocks, mermaid, collapse, outline | Done |
-| 3 | Theme switching, layout sizing, `css/base.css` | Pending |
+| 3 | Theme switching, layout sizing, `css/base.css` | Done |
 | 4 | Source editor and in-editor find | Pending |
 | 5 | Qview migrated onto the library | Pending |
 
@@ -71,10 +71,13 @@ A missing optional peer skips that step rather than raising an error.
 
 ## Mount element
 
-> **Note:** every theme rule is currently scoped to the literal selector
-> `#content`, so the element you mount into must carry `id="content"` or it
-> renders completely unstyled. Re-scoping the themes to a class the library
-> applies itself is planned for phase 3.
+Name it whatever you like. Every theme rule is scoped to the class
+`md-editor`, which `mount()` applies to the element it is given, so nothing in
+the library depends on a particular id — and several documents can be mounted
+on the same page at once.
+
+`mount()` also toggles a `good-view` class on that element when the good-view
+transform ran, which is what `css/base.css` keys its reading-mode rules to.
 
 ## Usage in a host
 
@@ -95,6 +98,38 @@ outline.build();                    // after mount: it reads the headings
 MdEditor.features.collapse.bind(content);   // after the outline: the toggle
 outline.updateActions();            // ...and after both sets of toggles exist
 ```
+
+## Theme and layout
+
+`createTheme` holds the state and applies it. The toolbar that drives it —
+buttons, menus, sliders — stays with the host.
+
+```js
+const theme = MdEditor.createTheme({
+  root: content,
+  link: document.getElementById('doc-theme'),  // the <link> whose href it swaps
+  basePath: 'themes/',
+  storagePrefix: 'my-app-',        // so two hosts on one origin do not collide
+  onTheme: (name) => {},           // reflect state back into your own controls
+  onDark:  (on) => {},
+  onLayout: (state) => {},
+});
+
+theme.apply();                     // restore what was persisted
+theme.setTheme('claude');
+theme.toggleDark();                // toggles a `dark` class on <html>
+theme.setLayout({ font: 19 });     // width | font | code, any subset
+theme.refresh();                   // re-measure after a re-render
+```
+
+The width you set is the **text** column, not the element width: each theme
+eats a different amount of padding before the text starts, so the difference is
+measured and added back. That is also why `refresh()` exists — a re-rendered
+document may have a different wrapper.
+
+Layout is written as a `<style>` rule targeting the element's id, or the
+doubled scope class when it has none, so it outranks the theme it must
+override.
 
 `demo/index.html` is a complete working host — open it in a browser after
 `npm run build`. It owns its own toolbar, panel and layout, which is the point:

@@ -54,6 +54,11 @@ function bindLinks(root, options) {
   });
 }
 
+/* The class every theme rule is scoped to. Applied by mount() so a host is free
+   to name its element anything: scoping to a literal id would force every host
+   to adopt that id, and would make two mounted documents impossible. */
+const ROOT_CLASS = 'md-editor';
+
 const MOUNT_DEFAULTS = {
   docPath: '',        // resolves relative links and pictures; '' skips that pass
   links: true,
@@ -68,6 +73,11 @@ async function mount(root, md, options) {
   const adapter = o.adapter || createAdapter();
   const doc = build(md, o);
 
+  root.classList.add(ROOT_CLASS);
+  // Good View is a rendering choice, so its CSS gate belongs on the document
+  // rather than on a class the host has to remember to set on <body>.
+  root.classList.toggle('good-view', (o.transforms || []).indexOf('good-view') !== -1);
+
   root.innerHTML = doc.html;
   if (o.docPath) await resolveDocPaths(root, o.docPath, adapter);
   if (o.links) bindLinks(root, o);
@@ -80,4 +90,4 @@ async function mount(root, md, options) {
   return doc;
 }
 
-module.exports = { mount, resolveDocPaths, bindLinks, MOUNT_DEFAULTS };
+module.exports = { mount, resolveDocPaths, bindLinks, MOUNT_DEFAULTS, ROOT_CLASS };

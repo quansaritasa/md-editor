@@ -1,5 +1,5 @@
-/* ===================== DOC THEME — md-to-html "card", scoped to #content ===================== */
-#content {
+/* ===================== DOC THEME — md-to-html "card", scoped to .md-editor ===================== */
+.md-editor {
     /* Long-form reading surface for EPUB/MOBI. Deliberately NOT --surface:
        a book wants paper, not a document card. */
     --book-bg: #F5EFE0;
@@ -45,7 +45,7 @@
   color: var(--text);
   line-height: 1.45;
 }
-html.dark #content {
+html.dark .md-editor {
     --book-bg: #1B2231;
 --bg: #131e30;
     --surface: #233044;
@@ -87,27 +87,27 @@ html.dark #content {
 
 /* syntax highlight string colour (same in both modes) */
 .hljs-string { color: #98c379; }
-#content ::selection { background: #0f766e; color: #ffffff; }
-html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
+.md-editor ::selection { background: #0f766e; color: #ffffff; }
+html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 
 /* plain-markdown extras the theme's own post-processor normally adds */
-#content img { max-width: 100%; border-radius: var(--radius); }
-#content hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
-#content blockquote { border: 1px solid var(--border); background: var(--block-card-bg); border-radius: 9px; padding: 14px 16px; margin: 12px 0; border-left: 4px solid #e67e22; }
-#content blockquote p { margin: 0; }
-#content .mermaid-diagram { margin: 0 0 1.4em; padding: 16px; background: var(--mermaid-bg); border: 1px solid var(--border); border-radius: 9px; overflow-x: auto; text-align: center; }
+.md-editor img { max-width: 100%; border-radius: var(--radius); }
+.md-editor hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
+.md-editor blockquote { border: 1px solid var(--border); background: var(--block-card-bg); border-radius: 9px; padding: 14px 16px; margin: 12px 0; border-left: 4px solid #e67e22; }
+.md-editor blockquote p { margin: 0; }
+.md-editor .mermaid-diagram { margin: 0 0 1.4em; padding: 16px; background: var(--mermaid-bg); border: 1px solid var(--border); border-radius: 9px; overflow-x: auto; text-align: center; }
 
 /* theme.css element + component rules, scoped to content */
-#content strong{
+.md-editor strong{
     color: var(--strong);
     font-size: 15px;
 }
-#content{
+.md-editor{
     max-width: 1000px;
     margin: 0 auto;
     padding: 32px 20px 56px;
 }
-#content .header{
+.md-editor .header{
     background: linear-gradient(
         180deg,
         var(--header-bg-start) 0%,
@@ -120,7 +120,7 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     margin-bottom: 26px;
     overflow: hidden;
 }
-#content .eyebrow{
+.md-editor .eyebrow{
     display: inline-block;
     padding: 6px 10px;
     border-radius: 9px;
@@ -132,25 +132,25 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     text-transform: uppercase;
     margin-bottom: 12px;
 }
-#content h1{
+.md-editor h1{
     margin: 0 0 10px;
     font-size: 38px;
     line-height: 1.15;
     color: var(--title);
 }
-#content .meta{
+.md-editor .meta{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
     margin-top: 18px;
 }
-#content .meta-item{
+.md-editor .meta-item{
     background: var(--surface-2);
     border: 1px solid var(--border);
     border-radius: 9px;
     padding: 12px 14px;
 }
-#content .meta-label{
+.md-editor .meta-label{
     display: block;
     font-size: 12px;
     text-transform: uppercase;
@@ -159,7 +159,7 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     margin-bottom: 4px;
     font-weight: 700;
 }
-#content .section{
+.md-editor .section{
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 9px;
@@ -168,43 +168,43 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     margin-bottom: 26px;
     overflow: hidden;
 }
-#content h2{
+.md-editor h2{
     margin: 0 0 16px;
     font-size: 26px;
     color: var(--title);
     border-bottom: 2px solid var(--h2-border-line);
 }
-#content h3{
+.md-editor h3{
     margin: 24px 0 10px;
     font-size: 20px;
     color: var(--sub-title);
 }
-#content h4{
+.md-editor h4{
     color: var(--title);
 }
-#content p.note{
+.md-editor p.note{
     margin: 0 0 14px;
     color: var(--muted);
 }
-#content ul.clean{
+.md-editor ul.clean{
     margin: 0;
     padding-left: 20px;
 }
-#content ul,
-#content ol{
+.md-editor ul,
+.md-editor ol{
     margin: -5px 0 1em 0;
     padding-left: 22px;
 }
-#content li{
+.md-editor li{
   line-height: 1.45;
 }
-#content p {
+.md-editor p {
     margin: 0 0 1em;
 }
-#content ul.clean li{
+.md-editor ul.clean li{
     margin: 6px 0;
 }
-#content table{
+.md-editor table{
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -213,8 +213,8 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     overflow: hidden;
     background: var(--table-bg);
 }
-#content th,
-#content td{
+.md-editor th,
+.md-editor td{
     border-bottom: 1px solid var(--table-border);
     border-right: 1px solid var(--table-border);
     vertical-align: top;
@@ -223,49 +223,49 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     font-size: 15px;
     line-height: 1.4;
 }
-#content th{
+.md-editor th{
     background: var(--th-bg);
     font-size: 15px;
     color: var(--th-title);
 }
-#content tr:last-child td,
-#content tr:last-child th{
+.md-editor tr:last-child td,
+.md-editor tr:last-child th{
     border-bottom: none;
 }
-#content td:last-child,
-#content th:last-child{
+.md-editor td:last-child,
+.md-editor th:last-child{
     border-right: none;
 }
-#content tbody tr:nth-child(even) td{
+.md-editor tbody tr:nth-child(even) td{
     background: var(--table-even-row);
 }
-#content td ul{
+.md-editor td ul{
     margin: 0;
     padding-left: 18px;
 }
-#content table.fields{
+.md-editor table.fields{
     font-variant-numeric: tabular-nums;
 }
-#content table.fields th{
+.md-editor table.fields th{
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
     border-bottom: 1px solid var(--border);
 }
-#content table.fields td{
+.md-editor table.fields td{
     color: var(--text);
 }
-#content table.fields td:first-child{
+.md-editor table.fields td:first-child{
     font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
     font-size: 0.85em;
     color: var(--fields-key);
     white-space: nowrap;
 }
-#content td li{
+.md-editor td li{
     margin: 4px 0;
 }
-#content pre{
+.md-editor pre{
     margin: 0 0 20px;
     padding: 16px;
     overflow-x: auto;
@@ -274,19 +274,19 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--pre-bg);
     color: var(--pre-text);
 }
-#content pre.mermaid{
+.md-editor pre.mermaid{
     background: var(--mermaid-bg);
     color: #1f2937;
 }
-#content .code-block{
+.md-editor .code-block{
     position: relative;
     margin: 0 0 20px;
 }
-#content .code-block pre{
+.md-editor .code-block pre{
     margin: 0;
     padding-top: 48px;
 }
-#content .code-copy-btn {
+.md-editor .code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -300,15 +300,15 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.12s;
 }
-#content .code-copy-btn:hover {
+.md-editor .code-copy-btn:hover {
     background: var(--border);
     color: var(--text);
 }
-#content .code-copy-btn.copied {
+.md-editor .code-copy-btn.copied {
     color: var(--accent);
     border-color: var(--accent);
 }
-#content .code-full-btn {
+.md-editor .code-full-btn {
     position: absolute;
     top: 8px;
     right: 148px;
@@ -322,11 +322,11 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.12s;
 }
-#content .code-full-btn:hover, #content .code-full-btn.copied {
+.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
     background: var(--border);
     color: var(--text);
 }
-#content .code-wrap-btn {
+.md-editor .code-wrap-btn {
     position: absolute;
     top: 8px;
     right: 64px;
@@ -341,20 +341,20 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }
-#content .code-wrap-btn:hover, #content .code-wrap-btn.active {
+.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
     background: var(--border);
     color: var(--text);
 }
-#content .code-block pre code[contenteditable="true"]::selection{
+.md-editor .code-block pre code[contenteditable="true"]::selection{
     background: transparent;
 }
-#content .code-block pre code[contenteditable="true"]::-moz-selection{
+.md-editor .code-block pre code[contenteditable="true"]::-moz-selection{
     background: transparent;
 }
-#content .code-block pre code[contenteditable="true"]:focus{
+.md-editor .code-block pre code[contenteditable="true"]:focus{
     outline: none;
 }
-#content code{
+.md-editor code{
     background: var(--code-bg);
     color: var(--code-text);
     padding: 2px 6px;
@@ -364,57 +364,57 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
         "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
         monospace;
 }
-#content pre code,
-#content p li pre code,
-#content p pre code,
-#content li pre code,
-#content td pre code{
+.md-editor pre code,
+.md-editor p li pre code,
+.md-editor p pre code,
+.md-editor li pre code,
+.md-editor td pre code{
     color: inherit;
     background: transparent;
     padding: 0;
     border-radius: 0;
     font-size: inherit;
 }
-#content p code,
-#content li code,
-#content td code{
+.md-editor p code,
+.md-editor li code,
+.md-editor td code{
     background: var(--code-bg);
     color: var(--code-text);
     padding: 2px 6px;
     border-radius: var(--radius);
     font-size: 0.875em;
 }
-#content p li pre code,
-#content p pre code,
-#content li pre code,
-#content td pre code{
+.md-editor p li pre code,
+.md-editor p pre code,
+.md-editor li pre code,
+.md-editor td pre code{
     background: transparent;
     padding: 0;
 }
-#content .block-card{
+.md-editor .block-card{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: 9px;
     padding: 14px 16px;
     overflow: hidden;
 }
-#content .example-box{
+.md-editor .example-box{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: 9px;
     padding: 14px 16px;
     margin: 12px 0;
 }
-#content .example-box p{
+.md-editor .example-box p{
     margin: 0;
 }
-#content .example-box.good-box{
+.md-editor .example-box.good-box{
     border-left: 4px solid #0f766e;
 }
-#content .example-box.bad-box{
+.md-editor .example-box.bad-box{
     border-left: 4px solid #9a3412;
 }
-#content .blockquotes{
+.md-editor .blockquotes{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: 9px;
@@ -422,51 +422,51 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 12px 0;
     border-left: 4px solid #e67e22;
 }
-#content .blockquotes p{
+.md-editor .blockquotes p{
     margin: 0;
 }
-#content .blockquotes.note{
+.md-editor .blockquotes.note{
     border-left-color: var(--note-amber-border);
     background: var(--note-amber-lt);
 }
-#content .blockquotes.note strong,
-#content .blockquotes.note p{
+.md-editor .blockquotes.note strong,
+.md-editor .blockquotes.note p{
     color: var(--note-amber);
 }
-#content .blockquotes.info{
+.md-editor .blockquotes.info{
     border-left-color: var(--info-blue-border);
     background: var(--info-blue-lt);
 }
-#content .blockquotes.info strong,
-#content .blockquotes.info p{
+.md-editor .blockquotes.info strong,
+.md-editor .blockquotes.info p{
     color: var(--info-blue);
 }
-#content .block-grid{
+.md-editor .block-grid{
     display: grid;
     gap: 14px;
 }
-#content .q{
+.md-editor .q{
     font-weight: 700;
     margin: 0 0 8px;
     color: var(--text);
 }
-#content .a{
+.md-editor .a{
     color: var(--muted);
     margin: 0;
 }
-#content h2,
-#content h4{
+.md-editor h2,
+.md-editor h4{
     color: var(--title);
 }
-#content a,
-#content h1{
+.md-editor a,
+.md-editor h1{
     color: var(--accent);
     text-decoration: none;
 }
-#content a:hover{
+.md-editor a:hover{
     text-decoration: underline;
 }
-#content .theme-btn{
+.md-editor .theme-btn{
     position: fixed;
     top: 14px;
     right: 14px;
@@ -482,10 +482,10 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     box-shadow: var(--shadow);
     transition: background 0.12s;
 }
-#content .theme-btn:hover{
+.md-editor .theme-btn:hover{
     background: var(--surface-2);
 }
-#content select{
+.md-editor select{
     padding: 6px 12px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
@@ -497,39 +497,39 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 @media (max-width: 760px) {
-    #content{
+    .md-editor{
         padding: 18px 12px 36px;
     }
-    #content .header,
-#content .section{
+    .md-editor .header,
+.md-editor .section{
         padding: 16px;
     }
-    #content h1{
+    .md-editor h1{
         font-size: 32px;
     }
-    #content h2{
+    .md-editor h2{
         font-size: 24px;
     }
-    #content table,
-#content thead,
-#content tbody,
-#content th,
-#content td,
-#content tr{
+    .md-editor table,
+.md-editor thead,
+.md-editor tbody,
+.md-editor th,
+.md-editor td,
+.md-editor tr{
         display: block;
     }
-    #content thead{
+    .md-editor thead{
         display: none;
     }
-    #content tr{
+    .md-editor tr{
         border: 1px solid var(--table-border);
         padding: 10px 0;
     }
-    #content td{
+    .md-editor td{
         border: none;
         padding: 8px 0;
     }
-    #content td::before{
+    .md-editor td::before{
         content: attr(data-label);
         display: block;
         font-size: 12px;
@@ -539,7 +539,7 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
         margin-bottom: 4px;
     }
 }
-#content .mermaid-wrapper{
+.md-editor .mermaid-wrapper{
     position: relative;
     overflow: hidden;
     border: 1px solid var(--border);
@@ -550,55 +550,55 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: grab;
     user-select: none;
 }
-#content .mermaid-wrapper .mermaid{
+.md-editor .mermaid-wrapper .mermaid{
     margin: 0;
     border: none;
     border-radius: 0;
     padding: 44px 20px 20px;
     color: #1f2937;
 }
-#content .mermaid-wrapper .mermaid svg,
-#content .mermaid-fullscreen-canvas .mermaid svg{
+.md-editor .mermaid-wrapper .mermaid svg,
+.md-editor .mermaid-fullscreen-canvas .mermaid svg{
     overflow: visible;
 }
-#content .mermaid-wrapper .mermaid text,
-#content .mermaid-fullscreen-canvas .mermaid text{
+.md-editor .mermaid-wrapper .mermaid text,
+.md-editor .mermaid-fullscreen-canvas .mermaid text{
     font-size: 14px !important;
 }
-#content .mermaid-wrapper .mermaid p,
-#content .mermaid-fullscreen-canvas .mermaid p{
+.md-editor .mermaid-wrapper .mermaid p,
+.md-editor .mermaid-fullscreen-canvas .mermaid p{
     margin: 0;
     padding-left: 0;
     padding-right: 0;
     font-size: 14px !important;
     line-height: 1.25;
 }
-#content .mermaid-wrapper .mermaid foreignObject,
-#content .mermaid-fullscreen-canvas .mermaid foreignObject{
+.md-editor .mermaid-wrapper .mermaid foreignObject,
+.md-editor .mermaid-fullscreen-canvas .mermaid foreignObject{
     overflow: visible;
 }
-#content .mermaid-wrapper .mermaid .edgeLabel foreignObject,
-#content .mermaid-fullscreen-canvas .mermaid .edgeLabel foreignObject{
+.md-editor .mermaid-wrapper .mermaid .edgeLabel foreignObject,
+.md-editor .mermaid-fullscreen-canvas .mermaid .edgeLabel foreignObject{
     box-sizing: content-box;
     padding: 0 2px;
 }
-#content .mermaid-wrapper .mermaid p,
-#content .mermaid-wrapper .mermaid div,
-#content .mermaid-wrapper .mermaid span{
+.md-editor .mermaid-wrapper .mermaid p,
+.md-editor .mermaid-wrapper .mermaid div,
+.md-editor .mermaid-wrapper .mermaid span{
     color: #1f2937;
 }
-#content .mermaid-wrapper .mermaid .nodeLabel,
-#content .mermaid-fullscreen-canvas .mermaid .nodeLabel{
+.md-editor .mermaid-wrapper .mermaid .nodeLabel,
+.md-editor .mermaid-fullscreen-canvas .mermaid .nodeLabel{
     display: block;
     width: 100%;
     text-align: center;
 }
-#content .mermaid-wrapper .mermaid .nodeLabel p,
-#content .mermaid-fullscreen-canvas .mermaid .nodeLabel p{
+.md-editor .mermaid-wrapper .mermaid .nodeLabel p,
+.md-editor .mermaid-fullscreen-canvas .mermaid .nodeLabel p{
     text-align: center;
     transform: translateX(-10px);
 }
-#content .mermaid-zoom-controls{
+.md-editor .mermaid-zoom-controls{
     position: absolute;
     top: 8px;
     right: 8px;
@@ -606,7 +606,7 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     gap: 4px;
     z-index: 10;
 }
-#content .mermaid-zoom-btn{
+.md-editor .mermaid-zoom-btn{
     width: 28px;
     height: 28px;
     border: 1px solid var(--border);
@@ -624,11 +624,11 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     transition: background 0.15s;
 }
-#content .mermaid-zoom-btn:hover{
+.md-editor .mermaid-zoom-btn:hover{
     background: var(--accent-soft);
     color: var(--accent);
 }
-#content .mermaid-zoom-label{
+.md-editor .mermaid-zoom-label{
     min-width: 44px;
     height: 28px;
     display: flex;
@@ -640,7 +640,7 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--surface-2);
     border-radius: 6px;
 }
-#content .mermaid-fullscreen-overlay{
+.md-editor .mermaid-fullscreen-overlay{
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
@@ -649,12 +649,12 @@ html.dark #content ::selection { background: #2dd4bf; color: #0f172a; }
     align-items: center;
     justify-content: center;
 }
-#content .mermaid-fullscreen-canvas .mermaid p,
-#content .mermaid-fullscreen-canvas .mermaid div,
-#content .mermaid-fullscreen-canvas .mermaid span{
+.md-editor .mermaid-fullscreen-canvas .mermaid p,
+.md-editor .mermaid-fullscreen-canvas .mermaid div,
+.md-editor .mermaid-fullscreen-canvas .mermaid span{
     color: #1f2937;
 }
-#content .mermaid-fullscreen-canvas{
+.md-editor .mermaid-fullscreen-canvas{
     width: 90vw;
     height: 90vh;
     overflow: hidden;

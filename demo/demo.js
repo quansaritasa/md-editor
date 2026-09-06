@@ -1,19 +1,35 @@
 'use strict';
 
 /* A minimal host. It owns the toolbar, the panel and the layout; the library is
-   handed a mount element, a scroller and a set of options, and nothing else. */
+   handed a mount element, a scroller and a set of options, and nothing else.
 
-const content = document.getElementById('content');
+   The mount element is called #reading-pane on purpose — nothing in the library
+   or the themes depends on what a host names it. */
+
+const pane = document.getElementById('reading-pane');
 const viewer = document.getElementById('viewer');
 document.getElementById('ver').textContent = 'v' + MdEditor.version;
 
-// The library reads marked / hljs / mermaid off globals, so nothing to inject
-// here — but a bundler-based host would call MdEditor.configure({...}).
-
 const goodView = () => document.getElementById('gv').checked;
 
+const theme = MdEditor.createTheme({
+  root: pane,
+  link: document.getElementById('doc-theme'),
+  basePath: '../dist/themes/',
+  storagePrefix: 'md-editor-demo-',
+  onTheme: (name) => { document.getElementById('theme').value = name; },
+  onDark: (on) => { document.getElementById('dark').checked = on; },
+  onLayout: (s) => {
+    document.getElementById('w').value = s.width;
+    document.getElementById('f').value = s.font;
+  },
+});
+
+const sel = document.getElementById('theme');
+for (const t of theme.themes) sel.add(new Option(t, t));
+
 const outline = MdEditor.features.outline.createOutline({
-  content, scroller: viewer,
+  content: pane, scroller: viewer,
   list: document.getElementById('outline-list'),
   section: document.getElementById('outline-section'),
   actions: {
@@ -47,29 +63,30 @@ async function show() {
   opts.editableCode = true;
   opts.onNavigate = (p) => console.log('[demo] navigate ->', p);
 
-  const doc = await MdEditor.mount(content, md, opts);
+  const doc = await MdEditor.mount(pane, md, opts);
   // The library only reports a title it was given or extracted; deriving one
-  // from the first heading is the host's fallback, as it is in Qview.
+  // from the first heading is the host's fallback.
   const title = doc.title || MdEditor.titleFromH1(md) || MdEditor.titleFromStem(kind);
   document.title = title + ' — md-editor demo';
 
   outline.build();
   // After the outline: it reads h2.textContent for its labels, and the toggle
   // must not be in the DOM while it does.
-  if (goodView()) MdEditor.features.collapse.bind(content);
+  if (goodView()) MdEditor.features.collapse.bind(pane);
   // ...and after that: the expand/collapse pair judges whether it has anything
   // to do only once both sets of toggles exist.
   outline.updateActions();
-  console.log('[demo] rendered', kind, '| title:', JSON.stringify(doc.title));
+  // The new document may have a different wrapper, so the inset can differ.
+  theme.refresh();
+  console.log('[demo] rendered', kind, '| title:', JSON.stringify(title));
 }
 
-document.getElementById('theme').addEventListener('change', (e) => {
-  document.getElementById('doc-theme').setAttribute('href', '../dist/themes/' + e.target.value + '.css');
-});
-document.getElementById('dark').addEventListener('change', (e) => {
-  document.documentElement.classList.toggle('dark', e.target.checked);
-});
+sel.addEventListener('change', (e) => theme.setTheme(e.target.value));
+document.getElementById('dark').addEventListener('change', (e) => theme.setDark(e.target.checked));
+document.getElementById('w').addEventListener('input', (e) => theme.setLayout({ width: e.target.value }));
+document.getElementById('f').addEventListener('input', (e) => theme.setLayout({ font: e.target.value }));
 document.getElementById('doc').addEventListener('change', show);
 document.getElementById('gv').addEventListener('change', show);
 
+theme.apply();
 show();

@@ -7,16 +7,10 @@
 
 const fold = require('./outline-fold');
 const collapse = require('./collapse');
+const slug = require('./outline-slug');
 
 /* a heading lands this far below the scroller top — still inside the observer band */
 const TOP_OFFSET = 16;
-
-function slugifyHeading(text, i) {
-  const s = String(text).trim().toLowerCase()
-    .replace(/[^a-z0-9一-鿿぀-ゟ゠-ヿ가-힯]+/g, '-')
-    .replace(/^-|-$/g, '');
-  return s || 'section-' + i;
-}
 
 const DEFAULTS = {
   // With no headings, list the "header:" lines instead. A boolean, or a
@@ -136,9 +130,9 @@ function createOutline(config) {
       return 0;
     }
 
-    items.forEach((it, i) => {
+    slug.assignIds(items);
+    items.forEach((it) => {
       const h = it.el;
-      if (!h.id) h.id = slugifyHeading(it.text, i);
       const li = doc.createElement('li');
       const a = doc.createElement('a');
       a.href = '#' + h.id;
@@ -173,4 +167,7 @@ function createOutline(config) {
   };
 }
 
-module.exports = { createOutline, slugifyHeading, TOP_OFFSET, DEFAULTS };
+module.exports = {
+  createOutline, TOP_OFFSET, DEFAULTS,
+  slugifyHeading: slug.slugifyHeading, uniqueSlug: slug.uniqueSlug,
+};

@@ -117,10 +117,22 @@ test('clear empties the list and hides the panel', async () => {
   assert.strictEqual(p.section.style.display, 'none');
 });
 
-test('a duplicate heading text still yields a usable slug', async () => {
-  const p = await withDoc('## Same\n\na\n\n## Same\n\nb\n');
+test('duplicate heading texts get distinct ids so each row scrolls to its own', async () => {
+  const p = await withDoc('## Same\n\na\n\n## Same\n\nb\n\n## Same\n\nc\n');
   makeOutline(p).build();
-  assert.deepStrictEqual([...p.list.querySelectorAll('a')].map((a) => a.getAttribute('href')), ['#same', '#same']);
+  const hrefs = [...p.list.querySelectorAll('a')].map((a) => a.getAttribute('href'));
+  assert.deepStrictEqual(hrefs, ['#same', '#same-2', '#same-3']);
+  const [h1, h2] = [...p.content.querySelectorAll('h2')];
+  assert.strictEqual(p.document.getElementById('same'), h1);
+  assert.strictEqual(p.document.getElementById('same-2'), h2, 'the second row resolves to the second heading');
+});
+
+test('a generated slug never collides with an id already on a heading', async () => {
+  const p = await withDoc('## Same\n\na\n\n## Same\n\nb\n');
+  const hs = [...p.content.querySelectorAll('h2')];
+  hs[1].id = 'same';                      // author-supplied, claimed first
+  makeOutline(p).build();
+  assert.deepStrictEqual([...p.list.querySelectorAll('a')].map((a) => a.getAttribute('href')), ['#same-2', '#same']);
 });
 
 test('a heading of only punctuation falls back to a positional slug', async () => {

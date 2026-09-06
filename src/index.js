@@ -12,6 +12,7 @@ const goodview = require('./goodview');
 const { build, DEFAULTS } = require('./build');
 const adapter = require('./adapter');
 const mountMod = require('./mount');
+const theme = require('./theme');
 
 module.exports = {
   version: require('../package.json').version,
@@ -28,6 +29,12 @@ module.exports = {
   resolveDocPaths: mountMod.resolveDocPaths,
   bindLinks: mountMod.bindLinks,
   createAdapter: adapter.createAdapter,
+  rootClass: mountMod.ROOT_CLASS,
+
+  // Theme and layout state; the toolbar that drives it belongs to the host.
+  createTheme: theme.createTheme,
+  themes: theme.THEMES,
+  themeDefaults: theme.DEFAULTS,
 
   // Opt-in behaviour a host wires to its own chrome.
   features: {
@@ -37,6 +44,7 @@ module.exports = {
     collapse: require('./features/collapse'),
     outline: require('./features/outline'),
     outlineFold: require('./features/outline-fold'),
+    outlineSlug: require('./features/outline-slug'),
   },
 
   // The pieces, for hosts that compose their own pipeline.
