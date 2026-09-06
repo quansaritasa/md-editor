@@ -10,8 +10,9 @@ toolbar — a host app supplies those and calls in.
 
 ## Status
 
-Phase 4 of 5. The library is feature-complete. What remains is migrating
-Qview onto it, which is what will prove the extraction in anger.
+Complete. Qview runs on the library: nine renderer files and its whole themes
+folder were replaced by it, and the app's 140-check smoke suite reports results
+byte-identical to the baseline taken before the swap.
 
 | Phase | Scope | State |
 |-------|-------|-------|
@@ -20,7 +21,7 @@ Qview onto it, which is what will prove the extraction in anger.
 | 2 | Host adapter, `mount`, features: code blocks, mermaid, collapse, outline | Done |
 | 3 | Theme switching, layout sizing, `css/base.css` | Done |
 | 4 | Source editor and in-editor find | Done |
-| 5 | Qview migrated onto the library | Pending |
+| 5 | Qview migrated onto the library | Done |
 
 ## Installation
 

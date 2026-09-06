@@ -2,6 +2,9 @@
 
 ## v0.6.0 — adoption
 
+- Qview now runs on the library. Nine of its renderer files, its whole `themes/` folder and four blocks of its stylesheet were replaced: about 3,550 lines out for 380 of glue. Its 140-check smoke suite reports results byte-identical to the baseline taken before the swap, which is the extraction's real proof
+- Two library assumptions only the migration could expose. `compare.js` clones the active theme by rewriting the scope selector, which the re-scoping in v0.4.0 had quietly broken; and a host's existing storage keys turned out to matter, hence `storageKeys` below
+
 - `createTheme` takes `storageKeys`, so a host that already persisted settings under its own key names keeps them. Without it, adopting the library silently resets everyone's saved theme and text sizes, which is a poor first impression for an upgrade that is meant to change nothing visible
 
 ## v0.5.0 — source editor
