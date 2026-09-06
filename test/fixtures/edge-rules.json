@@ -1,0 +1,14 @@
+{
+  "name": "edge-rules.md",
+  "options": {
+    "title": "Edge Rules",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables"
+    ]
+  },
+  "title": "Edge Rules"
+}

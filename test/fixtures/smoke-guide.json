@@ -1,0 +1,14 @@
+{
+  "name": "b-guide.md",
+  "options": {
+    "title": "Guide",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables"
+    ]
+  },
+  "title": "Guide"
+}

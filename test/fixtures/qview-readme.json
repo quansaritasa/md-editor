@@ -1,0 +1,14 @@
+{
+  "name": "README.md",
+  "options": {
+    "title": "Qview",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables"
+    ]
+  },
+  "title": "Qview"
+}

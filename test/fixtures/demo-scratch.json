@@ -1,0 +1,14 @@
+{
+  "name": "scratch.md",
+  "options": {
+    "title": "Scratch",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables"
+    ]
+  },
+  "title": "Scratch"
+}

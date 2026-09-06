@@ -10,13 +10,14 @@ toolbar — a host app supplies those and calls in.
 
 ## Status
 
-Phase 0 of 5. The build pipeline and the theme files are in place; the
-rendering modules land in the phases below.
+Phase 1 of 5. The pure rendering core is done and pinned by fixtures taken
+byte-for-byte from Qview's renderer. Everything that touches the DOM lands in
+the phases below.
 
 | Phase | Scope | State |
 |-------|-------|-------|
 | 0 | Repository scaffold, build pipeline, themes | Done |
-| 1 | Pure core: `util`, `parse`, `transform`, `goodview`, `build` | Pending |
+| 1 | Pure core: `util`, `parse`, `transform`, `goodview`, `build` | Done |
 | 2 | Host adapter, `mount`, features: code blocks, mermaid, collapse, outline | Pending |
 | 3 | Theme switching, layout sizing, `css/base.css` | Pending |
 | 4 | Source editor and in-editor find | Pending |

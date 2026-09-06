@@ -1,0 +1,302 @@
+<section class="section">
+<h1>Qview</h1>
+<p>A fast desktop viewer for a folder of documents and media. Point Qview at a directory and read what is inside it — markdown, plain text, EPUB books, PDFs, pictures, and video — without a local server, a build step, or any pre-generated HTML.</p>
+<p>Qview is built with Electron and runs entirely offline. It has no runtime dependencies: every third-party library is bundled at install time, so the app never reaches out to a CDN while you are reading.</p>
+<p><img src="docs/screenshots/document.png" alt="A markdown document open in Qview: file tree on the left, highlighted code and a table in the middle, and the document outline on the right"></p>
+</section>
+<section class="section">
+<h2>Why this exists</h2>
+<p>Most markdown workflows make you choose between an editor that renders poorly and a static site generator that needs a build step. Qview takes a third path: it treats a folder as the document set, watches it live, and renders each file the moment you click it.</p>
+<p>That idea turned out to apply well beyond markdown. A folder of research notes usually also holds screenshots, reference PDFs, and the occasional EPUB, and switching apps to read each one breaks the thread. Qview opens all of them in the same window, with the same tree, tabs, and search.</p>
+</section>
+<section class="section">
+<h2>What it opens</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Formats</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Kind">Documents</td>
+<td data-label="Formats"><code>.md</code>, <code>.txt</code></td>
+</tr>
+<tr>
+<td data-label="Kind">Books</td>
+<td data-label="Formats"><code>.epub</code></td>
+</tr>
+<tr>
+<td data-label="Kind">Documents (fixed layout)</td>
+<td data-label="Formats"><code>.pdf</code></td>
+</tr>
+<tr>
+<td data-label="Kind">Pictures</td>
+<td data-label="Formats"><code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.jfif</code>, <code>.apng</code>, <code>.gif</code>, <code>.webp</code>, <code>.avif</code>, <code>.heic</code>, <code>.heif</code>, <code>.bmp</code>, <code>.ico</code>, <code>.svg</code></td>
+</tr>
+<tr>
+<td data-label="Kind">Video</td>
+<td data-label="Formats"><code>.mp4</code>, <code>.webm</code>, <code>.mov</code>, <code>.m4v</code>, <code>.ogv</code>, <code>.mkv</code>, <code>.3gp</code></td>
+</tr>
+</tbody></table>
+</section>
+<section class="section">
+<h2>Features</h2>
+<p><strong>Reading documents</strong></p>
+<ul>
+<li>Live rendering of <code>.md</code> and <code>.txt</code> files, re-rendered when the file changes on disk</li>
+<li>A single newline is a line break, the way Obsidian and GitHub comments treat it, rather than being folded into the previous line as CommonMark would</li>
+<li>Good View, a reading mode for files with no blank lines between entries: every line becomes its own paragraph, and a leading <code>header:</code> on each line is highlighted</li>
+<li>Four document themes — Card, Modern, Glass, and Claude — with theme and layout controls appearing only for text files</li>
+<li>Light and dark mode</li>
+<li>Adjustable document width, body font size, and code font size, with a one-click reset</li>
+<li>Document outline panel with click-to-scroll navigation, which collapses when the file has nothing to outline</li>
+<li>Syntax highlighting for fenced code blocks, each with buttons to copy it and to toggle soft wrapping. Drop a <code>_pre</code> or <code>_post</code> file next to the document and a third button appears, copying the block wrapped in those snippets — useful when every block needs the same preamble</li>
+<li>Mermaid diagrams with cursor-anchored zoom</li>
+<li>Find-in-page that skips UI chrome and searches document content only</li>
+<li>Reading position is remembered per file, so reopening a long document returns you to where you stopped</li>
+</ul>
+<p><strong>Reading books and PDFs</strong></p>
+<ul>
+<li>Paginated EPUB reader that turns pages like a book rather than scrolling, built on CSS multi-column layout</li>
+<li>Chapter navigation, with your place in the book remembered between sessions</li>
+<li>PDFs open in an embedded viewer that remembers the page you were on</li>
+</ul>
+<p><strong>Pictures and video</strong></p>
+<ul>
+<li>Zoom from 5% to 1000%, with cursor-anchored wheel zoom and drag to pan</li>
+<li>Fit-to-width and fit-to-height modes that can be remembered and applied to every picture you open</li>
+<li>Fullscreen viewer with keyboard navigation to the next and previous picture</li>
+<li>HEIC and HEIF photos open through the operating system&#39;s preview service, which Chromium cannot decode on its own</li>
+<li>Copy any picture to the clipboard as PNG, ready to paste into another app — webp, avif, bmp, ico, and svg are converted on the way out</li>
+<li>Video plays inline with the standard transport controls</li>
+</ul>
+<p><strong>Browsing a folder</strong></p>
+<ul>
+<li>File tree sidebar with live search</li>
+<li>Two collections per folder tab, switchable from the sidebar: <strong>All</strong> for the whole folder and <strong>Local</strong> for a hand-pinned working set</li>
+<li><strong>Favorites</strong> — starred files and folders — is a global list, not tied to any one folder, so it lives as its own pinned first tab in the tab bar instead of the sidebar</li>
+<li>Thumbnail grid in two tile sizes, alongside the classic row list. Thumbnails come from the operating system&#39;s thumbnail service, so pictures, video posters, and PDF and EPUB covers all get one, and they are generated at the source aspect ratio so nothing is squashed</li>
+<li>Group by folder, by date, or not at all; sort by name or by newest first; filter by file type</li>
+<li>Those four controls are remembered <strong>per collection, per tab</strong> — All can be a thumbnail grid showing only pictures while Local stays a plain list showing everything, in the same tab</li>
+<li>Tabs, with the whole session restored on the next launch</li>
+<li>Each tab remembers the last file you opened in each of its collections; the Favorites tab remembers its own last file the same way</li>
+<li>File Info panel showing name, size, modified date, and pixel resolution for pictures and video</li>
+<li>Recent folders menu</li>
+</ul>
+<p><strong>Editing and file management</strong></p>
+<ul>
+<li>Inline edit mode with save to disk</li>
+<li>Create, rename, duplicate, move, and delete files from the context menu</li>
+<li>Multi-select in the tree with Cmd/Ctrl+click and Shift+click, then move many items at once</li>
+<li>Reveal any item in Finder</li>
+</ul>
+</section>
+<section class="section">
+<h2>More screenshots</h2>
+<p>Mermaid diagrams render inline, with their own zoom controls. The theme here is Claude; the shot above uses Modern.</p>
+<p><img src="docs/screenshots/diagram.png" alt="An architecture diagram rendered from a mermaid code block, with zoom controls in the corner"></p>
+<p>Open a picture and the chrome gets out of the way: the theme, layout, and edit controls disappear, the outline panel collapses, and the zoom and fit controls take over. Copy hands the image itself to the clipboard.</p>
+<p><img src="docs/screenshots/image-viewer.png" alt="A picture open in Qview, filling the window, with zoom and fit controls in the toolbar"></p>
+</section>
+<section class="section">
+<h2>Platform support</h2>
+<p>Qview is developed and tested on macOS. The Windows build target is configured and the code paths are cross-platform, but they have not been verified on a Windows machine — reports are welcome.</p>
+<p>On Linux there is no operating system thumbnail service available to Electron, so grid tiles fall back to the picture itself where the browser can decode it, and show a file-type plate otherwise. HEIC and HEIF will not open there for the same reason.</p>
+</section>
+<section class="section">
+<h2>Installing</h2>
+<h3>From a release</h3>
+<p>Download the latest <code>.dmg</code> (macOS) or portable build (Windows) from the <a href="https://github.com/quansaritasa/qview/releases">Releases page</a>, then open it.</p>
+<h3>From source</h3>
+<div class="code-block"><button class="code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">git clone https://github.com/quansaritasa/qview.git
+cd qview
+npm install
+npm start
+</code></pre></div>
+<p><code>npm install</code> runs <code>scripts/vendor.js</code>, which copies the browser builds of <code>marked</code>, <code>mermaid</code>, and <code>highlight.js</code> into <code>renderer/vendor/</code>. That directory is generated, so it is not checked into git.</p>
+</section>
+<section class="section">
+<h2>Building a distributable</h2>
+<div class="code-block"><button class="code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run dist
+</code></pre></div>
+<p>The output lands in <code>dist/</code>. macOS targets are <code>.dmg</code> and <code>.zip</code>; Windows produces a portable executable.</p>
+</section>
+<section class="section">
+<h2>Keyboard shortcuts</h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + Enter</code></td>
+<td data-label="Action">Toggle edit mode</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + S</code></td>
+<td data-label="Action">Save the file being edited</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + C</code></td>
+<td data-label="Action">Copy the open picture to the clipboard (pictures only — on text it stays the normal copy)</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + F</code></td>
+<td data-label="Action">Find in page</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + N</code></td>
+<td data-label="Action">New file in the current folder</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + O</code></td>
+<td data-label="Action">Open a folder in a new tab</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + 1</code> / <code>2</code></td>
+<td data-label="Action">Switch to the All / Local collection (no-op on the Favorites tab)</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + 0</code></td>
+<td data-label="Action">Switch to the pinned Favorites tab</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + Backspace</code></td>
+<td data-label="Action">Delete the open file</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>↑</code> / <code>↓</code></td>
+<td data-label="Action">Move between files in the tree</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>←</code> / <code>→</code></td>
+<td data-label="Action">Collapse or expand a folder</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>Esc</code></td>
+<td data-label="Action">Close the current dialog, menu, or fullscreen view</td>
+</tr>
+</tbody></table>
+<p>While reading a book or a picture:</p>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Shortcut"><code>Space</code> / <code>→</code> / <code>PageDown</code></td>
+<td data-label="Action">Next page in an EPUB, next picture in the fullscreen viewer</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>←</code> / <code>PageUp</code></td>
+<td data-label="Action">Previous page or previous picture</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>↓</code> / <code>↑</code></td>
+<td data-label="Action">Next or previous picture in the fullscreen viewer</td>
+</tr>
+</tbody></table>
+</section>
+<section class="section">
+<h2>Testing</h2>
+<p>Qview ships a headless smoke suite that drives the real Electron window. Twenty-four probe groups assert on rendering, file operations, tabs, collections, grouping and sorting, thumbnails, the EPUB reader, the outline, find, zoom, and keyboard shortcuts.</p>
+<div class="code-block"><button class="code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run smoke
+</code></pre></div>
+<p>The run prints <code>SMOKE OK</code> on success, or <code>SMOKE FAIL</code> together with a per-probe diagnostic line naming exactly which assertion did not hold.</p>
+</section>
+<section class="section">
+<h2>Project layout</h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Path"><code>main.js</code></td>
+<td data-label="Contents">Electron main process: window, default root, smoke bootstrap</td>
+</tr>
+<tr>
+<td data-label="Path"><code>preload.js</code></td>
+<td data-label="Contents">The context bridge exposed to the renderer</td>
+</tr>
+<tr>
+<td data-label="Path"><code>ipc.js</code></td>
+<td data-label="Contents">IPC handlers for every filesystem operation, thumbnails, and previews</td>
+</tr>
+<tr>
+<td data-label="Path"><code>fs-utils.js</code></td>
+<td data-label="Contents">Shared filesystem helpers used by IPC and the smoke suite</td>
+</tr>
+<tr>
+<td data-label="Path"><code>media-ext.js</code></td>
+<td data-label="Contents">The image and video extension sets, and why they differ from each other</td>
+</tr>
+<tr>
+<td data-label="Path"><code>media-info.js</code></td>
+<td data-label="Contents">Pixel dimensions for pictures and video, and thumbnail box sizing</td>
+</tr>
+<tr>
+<td data-label="Path"><code>image-header.js</code></td>
+<td data-label="Contents">Reads image dimensions from file headers, without decoding the picture</td>
+</tr>
+<tr>
+<td data-label="Path"><code>epub-reader.js</code></td>
+<td data-label="Contents">EPUB unpacking and chapter extraction</td>
+</tr>
+<tr>
+<td data-label="Path"><code>renderer/</code></td>
+<td data-label="Contents">UI: tree, tabs, rendering, outline, editing, zoom, thumbnails, dialogs</td>
+</tr>
+<tr>
+<td data-label="Path"><code>themes/</code></td>
+<td data-label="Contents">Document theme stylesheets, and the script that scopes them to the content pane</td>
+</tr>
+<tr>
+<td data-label="Path"><code>smoke/</code></td>
+<td data-label="Contents">Headless probe suite</td>
+</tr>
+<tr>
+<td data-label="Path"><code>scripts/vendor.js</code></td>
+<td data-label="Contents">Copies vendored browser libraries on postinstall</td>
+</tr>
+</tbody></table>
+<p>Modules are kept focused and small; anything that grows past roughly 300 lines gets split.</p>
+</section>
+<section class="section">
+<h2>Third-party libraries</h2>
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>License</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Library"><a href="https://www.electronjs.org/">Electron</a></td>
+<td data-label="License">MIT</td>
+</tr>
+<tr>
+<td data-label="Library"><a href="https://marked.js.org/">marked</a></td>
+<td data-label="License">MIT</td>
+</tr>
+<tr>
+<td data-label="Library"><a href="https://mermaid.js.org/">Mermaid</a></td>
+<td data-label="License">MIT</td>
+</tr>
+<tr>
+<td data-label="Library"><a href="https://highlightjs.org/">highlight.js</a></td>
+<td data-label="License">BSD-3-Clause</td>
+</tr>
+</tbody></table>
+</section>
+<section class="section">
+<h2>License</h2>
+<p>Released under the <a href="LICENSE">MIT License</a>.</p>
+</section>

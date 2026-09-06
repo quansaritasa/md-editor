@@ -1,0 +1,21 @@
+[
+  { "id": "transforms-all",    "local": true, "file": "test/corpus/transforms-all.md",    "as": "transforms-all.md" },
+  { "id": "skill-frontmatter", "local": true, "file": "test/corpus/skill-frontmatter.md", "as": "SKILL.md" },
+  { "id": "skill-metablock",   "local": true, "file": "test/corpus/skill-metablock.md",   "as": "SKILL.md" },
+  { "id": "kv-lines",          "local": true, "file": "test/corpus/kv-lines.txt",         "as": "kv-lines.txt" },
+  { "id": "edge-empty",        "local": true, "file": "test/corpus/edge-empty.md",        "as": "edge-empty.md" },
+  { "id": "edge-rules",        "local": true, "file": "test/corpus/edge-rules.md",        "as": "edge-rules.md" },
+
+  { "id": "qview-readme",      "file": "README.md" },
+  { "id": "qview-changelog",   "file": "CHANGELOG.md" },
+  { "id": "qview-agents",      "file": "AGENTS.md" },
+  { "id": "demo-readme",       "file": "docs/demo/README.md" },
+  { "id": "demo-meeting",      "file": "docs/demo/notes/meeting-notes.md" },
+  { "id": "demo-scratch",      "file": "docs/demo/notes/scratch.md" },
+  { "id": "demo-changelog-txt","file": "docs/demo/notes/changelog.txt" },
+  { "id": "smoke-intro",       "file": "smoke/fixtures/root/a-intro.md" },
+  { "id": "smoke-guide",       "file": "smoke/fixtures/root/b-guide.md" },
+  { "id": "smoke-flat",        "file": "smoke/fixtures/root/z-flat.md" },
+  { "id": "smoke-nested",      "file": "smoke/fixtures/root/sub/nested.md" },
+  { "id": "smoke-notes-txt",   "file": "smoke/fixtures/root/notes.txt" }
+]

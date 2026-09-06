@@ -1,0 +1,11 @@
+{
+  "name": "changelog.txt",
+  "options": {
+    "postprocess": false,
+    "title": "Changelog",
+    "transforms": [
+      "txt-headings"
+    ]
+  },
+  "title": "Changelog"
+}

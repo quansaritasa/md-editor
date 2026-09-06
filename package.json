@@ -1,7 +1,7 @@
 {
   "name": "md-editor",
   "version": "0.1.0",
-  "description": "Markdown viewer + editor core — parse, transform, theme. Framework-free, host-agnostic. Not published to npm; consumed as a git dependency.",
+  "description": "Markdown viewer + editor core \u2014 parse, transform, theme. Framework-free, host-agnostic. Not published to npm; consumed as a git dependency.",
   "license": "MIT",
   "author": "Quan Dao",
   "main": "dist/md-editor.js",
@@ -15,7 +15,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "prepare": "node scripts/build.js",
-    "test": "node --test test/"
+    "test": "node --test"
   },
   "peerDependencies": {
     "@highlightjs/cdn-assets": "^11.9.0",
@@ -23,10 +23,15 @@
     "mermaid": "^11.0.0"
   },
   "peerDependenciesMeta": {
-    "@highlightjs/cdn-assets": { "optional": true },
-    "mermaid": { "optional": true }
+    "@highlightjs/cdn-assets": {
+      "optional": true
+    },
+    "mermaid": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "esbuild": "^0.28.2"
+    "esbuild": "^0.28.2",
+    "marked": "^12.0.2"
   }
 }

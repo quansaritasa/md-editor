@@ -1,0 +1,17 @@
+{
+  "name": "SKILL.md",
+  "options": {
+    "extractMeta": true,
+    "fallbackStem": "SKILL",
+    "transforms": [
+      "header",
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables",
+      "good-view"
+    ]
+  },
+  "title": "SKILL"
+}

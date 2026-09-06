@@ -1,0 +1,14 @@
+{
+  "name": "AGENTS.md",
+  "options": {
+    "title": "Rules for AI — qview",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables"
+    ]
+  },
+  "title": "Rules for AI — qview"
+}

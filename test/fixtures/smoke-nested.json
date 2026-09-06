@@ -1,0 +1,14 @@
+{
+  "name": "nested.md",
+  "options": {
+    "title": "Nested",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables"
+    ]
+  },
+  "title": "Nested"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "edge-empty.md",
+  "options": {
+    "title": "Edge Empty",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables",
+      "good-view"
+    ]
+  },
+  "title": "Edge Empty"
+}

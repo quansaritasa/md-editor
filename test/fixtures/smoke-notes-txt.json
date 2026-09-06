@@ -1,0 +1,11 @@
+{
+  "name": "notes.txt",
+  "options": {
+    "postprocess": false,
+    "title": "Notes",
+    "transforms": [
+      "txt-headings"
+    ]
+  },
+  "title": "Notes"
+}

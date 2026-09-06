@@ -1,0 +1,15 @@
+{
+  "name": "transforms-all.md",
+  "options": {
+    "title": "Transform Coverage",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables",
+      "good-view"
+    ]
+  },
+  "title": "Transform Coverage"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "a-intro.md",
+  "options": {
+    "title": "Intro",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables",
+      "good-view"
+    ]
+  },
+  "title": "Intro"
+}

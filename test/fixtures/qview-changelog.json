@@ -1,0 +1,14 @@
+{
+  "name": "CHANGELOG.md",
+  "options": {
+    "title": "Changelog",
+    "transforms": [
+      "strip-hr",
+      "data-labels",
+      "qa-cards",
+      "example-boxes",
+      "field-tables"
+    ]
+  },
+  "title": "Changelog"
+}
