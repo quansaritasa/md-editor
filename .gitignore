@@ -1,0 +1,7 @@
+node_modules/
+
+# Rebuilt by scripts/build.js — npm runs `prepare` after installing a git
+# dependency, so consumers get dist/ without it being committed.
+dist/
+
+.DS_Store

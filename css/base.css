@@ -1,0 +1,4 @@
+/* ===================== md-editor — base =====================
+   Document chrome the themes do NOT own: good-view, collapsible sections and
+   the editor textarea. Lifted out of the host app in phase 3; a theme file
+   still supplies every colour, so this stays structural. */
