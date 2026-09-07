@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.2 — the width cap survives a host that hides sections
+
+- `measureInset` probed whatever `root.querySelector('section')` returned, which is the FIRST section whether or not it is on screen. A host that keeps several sections mounted and shows one at a time — an EPUB reader paging through chapters is the case that surfaced it — hands back a `display:none` element for every chapter but the first. The probe inside it measures 0, so the element's whole width is reported as inset and `max-width` becomes `width + paneWidth`: far past the pane, so the text column reads as having no cap at all. It now takes the first section that is actually laid out, and a probe measuring 0 yields no inset instead of a huge one. Hosts whose sections are always visible are unaffected — the same first section is still the one chosen
+
 ## v0.6.1 — theme polish, and spacing free of Good View
 
 - `css/base.css`: the paragraph-spacing rule is no longer gated behind `.good-view`. `.md-editor p` now carries the margin unconditionally (still overridable per host via `--good-view-gap`), and a new `.md-editor br` rule gives bare line breaks the same spacing — so a host's spacing control reaches a line-per-entry file whether or not the Good View transform ran, not only when it did

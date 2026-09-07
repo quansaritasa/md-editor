@@ -45,14 +45,25 @@ function makeStore(prefix, win, keys) {
 // yields a different text column per theme. Measuring the hidden part and
 // adding it back means the number a host shows always IS the text width.
 // Measured rather than tabulated: change a theme's padding and this follows.
+// A host may keep several <section>s and show only one — an EPUB reader paging
+// through chapters does exactly that. Probing a display:none section measures
+// 0 and so reports the element's ENTIRE width as inset, which then inflates
+// max-width past the pane and the column reads as uncapped. Take the first
+// section that is actually laid out, and treat an unmeasurable probe as no
+// inset rather than as a huge one.
 function measureInset(root) {
   try {
-    const host = root.querySelector('section') || root;
+    let host = root;
+    for (const s of root.querySelectorAll('section')) {
+      if (s.getBoundingClientRect().width > 0) { host = s; break; }
+    }
     const probe = root.ownerDocument.createElement('div');
     probe.style.cssText = 'display:block;width:auto;margin:0;padding:0;border:0;height:0';
     host.appendChild(probe);
-    const inset = root.getBoundingClientRect().width - probe.getBoundingClientRect().width;
+    const probeW = probe.getBoundingClientRect().width;
+    const inset = root.getBoundingClientRect().width - probeW;
     probe.remove();
+    if (!(probeW > 0)) return 0;
     return Number.isFinite(inset) ? Math.max(0, Math.round(inset)) : 0;
   } catch (e) { return 0; }
 }

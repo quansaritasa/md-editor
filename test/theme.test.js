@@ -155,3 +155,48 @@ test('a value already sitting under a legacy key is read back on construction', 
   const t = MdEditor.createTheme({ root: p.content, storageKeys: { theme: 'legacy-theme-key' } });
   assert.strictEqual(t.get().theme, 'modern');
 });
+
+/* ---- measureInset: hosts that show one <section> at a time ----
+   jsdom lays nothing out, so these stub getBoundingClientRect: an element
+   under a display:none ancestor reports 0, anything inside a section reports
+   the padded column, and the root reports the pane. That is exactly the shape
+   an EPUB reader has, where every chapter but the current one is hidden. */
+function stubRects(page, rootEl, { root = 1197, column = 1125 } = {}) {
+  page.window.Element.prototype.getBoundingClientRect = function () {
+    const rect = (w) => ({ width: w, height: 0, top: 0, left: 0, right: w, bottom: 0, x: 0, y: 0 });
+    for (let n = this; n && n.nodeType === 1; n = n.parentElement) {
+      if (n.style && n.style.display === 'none') return rect(0);
+    }
+    if (this === rootEl) return rect(root);
+    return rect(this.closest('section') ? column : 0);
+  };
+}
+
+const twoChapters = (page, currentIndex) => {
+  page.content.innerHTML = '';
+  [0, 1].forEach((i) => {
+    const sec = page.document.createElement('section');
+    if (i !== currentIndex) sec.style.display = 'none';
+    page.content.appendChild(sec);
+  });
+};
+
+test('the inset is measured on a laid-out section, not on the first hidden one', () => {
+  const p = makePage();
+  twoChapters(p, 1);              // chapter 0 hidden, chapter 1 on screen
+  stubRects(p, p.content);
+  const t = MdEditor.createTheme({ root: p.content, storagePrefix: 'test-inset-' });
+  t.setLayout({ width: 800 });
+  assert.match(layoutCss(p), /max-width: 872px/,
+    'inset is the 72px the section eats, not the whole 1197px pane');
+});
+
+test('an unmeasurable probe yields no inset rather than the element width', () => {
+  const p = makePage();
+  twoChapters(p, -1);             // nothing is on screen yet
+  stubRects(p, p.content);
+  const t = MdEditor.createTheme({ root: p.content, storagePrefix: 'test-inset-none-' });
+  t.setLayout({ width: 800 });
+  assert.match(layoutCss(p), /max-width: 800px/,
+    'a zero-width probe must not report the pane width as padding');
+});
