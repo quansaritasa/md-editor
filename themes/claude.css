@@ -4,7 +4,9 @@
     /* Long-form reading surface for EPUB/MOBI. Deliberately NOT --surface:
        a book wants paper, not a document card. */
     --book-bg: #F7F3E8;
-    --bg: #F5F4F0;
+    /* Was #F5F4F0 — flat and read as plain light gray. Warm ivory ties the
+       page to the theme's own book-reading paper tone (--book-bg above). */
+    --bg: #FBF7ED;
     --surface: #EDECEA;
     --surface-2: #E5E3DF;
     --text: #1C2333;
@@ -34,6 +36,7 @@
     --mermaid-bg: #ffffff;
     --copy-btn-bg: rgba(28, 35, 51, 0.85);
     --copy-btn-border: rgba(28, 35, 51, 0.15);
+    --copy-btn-text: #F5F4F0;
     --note-amber: #7C5C00;
     --note-amber-lt: #FEF8E7;
     --note-amber-border: #E6A817;
@@ -41,9 +44,12 @@
     --info-blue-lt: #EAF1F9;
     --info-blue-border: #5B9BD5;
     --fields-key: #2D6A4F;
-}.hljs-string { color: #0f766e; }html.dark .md-editor {
+}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     --book-bg: #1D1B20;
-    --bg: #18171A;
+    /* Was #18171A — darker than --surface/--pre-bg (#211F24/#1F1D22), the
+       opposite of light mode where --bg sits lighter than those. Now the page
+       is a shade lighter than the boxes it holds, in both modes. */
+    --bg: #29262D;
     --surface: #211F24;
     --surface-2: #2A272D;
     --text: #EDE8E3;
@@ -72,6 +78,7 @@
     --mermaid-bg: #ffffff;
     --copy-btn-bg: rgba(33, 31, 36, 0.9);
     --copy-btn-border: rgba(158, 150, 144, 0.2);
+    --copy-btn-text: #EDE8E3;
     --note-amber: #D4A853;
     --note-amber-lt: #2A1F08;
     --note-amber-border: #D4A853;
@@ -178,19 +185,26 @@
 }.md-editor pre.mermaid {
     background: var(--mermaid-bg);
     color: #1C2333;
-}.md-editor .code-block { position: relative; margin: 0 0 1rem; }.md-editor .code-block pre { margin: 0; padding-top: 44px; }.md-editor .code-copy-btn {
+}.md-editor .code-block { position: relative; margin: 0 0 1rem; }.md-editor .code-block pre { margin: 0; padding-top: 34px; }.md-editor .code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     z-index: 2;
     border: 1px solid var(--copy-btn-border);
     border-radius: var(--radius);
     background: var(--copy-btn-bg);
-    color: var(--surface);
-    font-size: 0.72rem;
+    color: var(--copy-btn-text);
+    font-size: 0.7rem;
     font-weight: 600;
+    font-family: inherit;
     line-height: 1;
-    padding: 6px 10px;
+    padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }.md-editor .code-copy-btn:hover, .md-editor .code-copy-btn.copied {
@@ -200,16 +214,23 @@
 }.md-editor .code-full-btn {
     position: absolute;
     top: 8px;
-    right: 148px;
+    right: 132px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     z-index: 2;
     border: 1px solid var(--copy-btn-border);
     border-radius: var(--radius);
     background: var(--copy-btn-bg);
-    color: var(--surface);
-    font-size: 0.72rem;
+    color: var(--copy-btn-text);
+    font-size: 0.7rem;
     font-weight: 600;
+    font-family: inherit;
     line-height: 1;
-    padding: 6px 10px;
+    padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
@@ -219,16 +240,23 @@
 }.md-editor .code-wrap-btn {
     position: absolute;
     top: 8px;
-    right: 64px;
+    right: 70px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     z-index: 2;
     border: 1px solid var(--copy-btn-border);
     border-radius: var(--radius);
     background: var(--copy-btn-bg);
-    color: var(--surface);
-    font-size: 0.72rem;
+    color: var(--copy-btn-text);
+    font-size: 0.7rem;
     font-weight: 600;
+    font-family: inherit;
     line-height: 1;
-    padding: 6px 10px;
+    padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {

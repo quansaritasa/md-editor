@@ -22,8 +22,12 @@
     --h2-border-line: rgb(13, 148, 136);
     --table-even-row: #f8fafc;
     --table-border: #e5e7eb;
-    --pre-bg: #0f172a;
-    --pre-text: #e5eefc;
+    /* Was #0f172a (dark navy, matching dark mode's own --pre-bg exactly),
+       then #1e293b (lighter navy). Now flipped to a light block — same tint
+       as inline --code-bg — differentiated from the page by --border below
+       rather than by a dark fill; --pre-text goes dark to match. */
+    --pre-bg: #eef3f7;
+    --pre-text: #1e293b;
     --code-bg: #eef3f7;
     --code-text: #e84a80;
     --block-card-bg: #fbfcfd;
@@ -31,7 +35,7 @@
     --header-bg-end: #f7fbfb;
     --table-bg: #fff;
     --mermaid-bg: #f6f8fa;
-    --copy-btn-bg: rgba(15, 23, 42, 0.9);
+    --copy-btn-bg: rgba(30, 41, 59, 0.9);
     --copy-btn-border: rgba(229, 238, 252, 0.2);
     --note-amber: #7c5c00;
     --note-amber-lt: #fef8e7;
@@ -85,8 +89,12 @@ html.dark .md-editor {
     --fields-key: #6ee7b7;
 }
 
-/* syntax highlight string colour (same in both modes) */
-.hljs-string { color: #98c379; }
+/* syntax highlight colours. Light mode is scoped (.md-editor .hljs-string, not
+   bare .hljs-string) to out-specificity github-dark.min.css's own equal-weight
+   rule, which otherwise wins the load-order tie and silently overrides it. */
+.md-editor .hljs-string { color: #0e4bb9; }
+html.dark .hljs-string { color: #98c379; }
+.md-editor .hljs-attr { color: #d97706; }
 .md-editor ::selection { background: #0f766e; color: #ffffff; }
 html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 
@@ -284,19 +292,27 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .code-block pre{
     margin: 0;
-    padding-top: 48px;
+    padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
 }
 .md-editor .code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 4px 10px;
+    padding: 0 8px;
     border-radius: var(--radius);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
+    line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
 }
@@ -311,14 +327,22 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor .code-full-btn {
     position: absolute;
     top: 8px;
-    right: 148px;
+    right: 132px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 4px 10px;
+    padding: 0 8px;
     border-radius: var(--radius);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
+    line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
 }
@@ -329,15 +353,22 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor .code-wrap-btn {
     position: absolute;
     top: 8px;
-    right: 64px;
+    right: 70px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 4px 10px;
+    padding: 0 8px;
     border-radius: var(--radius);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
-    font-weight: 500;
+    line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }

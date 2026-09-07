@@ -9,12 +9,24 @@
    .outline-parent, .outline-toggle, .outline-actions-off — and demo/host.css
    is a worked example of styling it. */
 
-/* ---------- good view ---------- */
-/* mount() sets .good-view when the good-view transform ran. That transform
-   splits <br>-separated lines into their own <p>, so p + p fires between every
-   line of a line-per-entry file AND between blank-line-separated blocks. */
-.md-editor.good-view p + p {
-  margin-top: 1em;
+/* ---------- paragraph / line spacing ---------- */
+/* The Line gap slider (a Qview host control) sets --good-view-gap on :root and
+   controls spacing everywhere, Good View on or off. This loads AFTER each
+   theme's own CSS, so at equal selector specificity it wins the cascade tie
+   and overrides whatever fixed margin a theme set. mount() sets .good-view
+   when the good-view transform ran — it splits <br>-separated lines into
+   their own <p>, so this same rule also fires between every line of a
+   line-per-entry file once that has run. */
+.md-editor p {
+  margin: 0 0 var(--good-view-gap, 1em);
+}
+/* Without Good View, a line-per-entry file stays ONE <p> full of bare <br>s —
+   the rule above never sees them. Giving <br> a block box is what lets
+   margin-top apply to it, so the slider reaches that case too. */
+.md-editor br {
+  display: block;
+  content: "";
+  margin-top: var(--good-view-gap, 1em);
 }
 
 /* "header: content" lines — the leading header becomes a highlighted chip. */

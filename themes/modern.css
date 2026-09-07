@@ -23,7 +23,7 @@
     --info-blue-lt: #eaf1f9;
     --info-blue-border: #5b9bd5;
     --fields-key: #2d6a4f;
-}.hljs-string { color: #0f766e; }html.dark .md-editor {
+}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     --book-bg: #191F26;
     --mermaid-bg: #f6f8fa;
     --bg: #131b24;
@@ -191,18 +191,26 @@
     margin: 12px 0 20px;
 }.md-editor .code-block pre {
     margin: 0;
-    padding-top: 48px; /* clear the Wrap / Copy / Copy Full buttons */
+    padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
 }.md-editor .code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 4px 10px;
+    padding: 0 8px;
     border-radius: var(--radius);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
+    line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
 }.md-editor .code-copy-btn:hover {
@@ -214,14 +222,22 @@
 }.md-editor .code-full-btn {
     position: absolute;
     top: 8px;
-    right: 148px;
+    right: 132px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 4px 10px;
+    padding: 0 8px;
     border-radius: var(--radius);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
+    line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
 }.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
@@ -230,15 +246,22 @@
 }.md-editor .code-wrap-btn {
     position: absolute;
     top: 8px;
-    right: 64px;
+    right: 70px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 4px 10px;
+    padding: 0 8px;
     border-radius: var(--radius);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
-    font-weight: 500;
+    line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {

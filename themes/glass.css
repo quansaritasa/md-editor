@@ -6,7 +6,7 @@
     --book-bg: #F2EEE6;
     --mermaid-bg: #ffffff;
     --bg: #e8ecf1;
-    --surface: rgba(255, 255, 255, 0.55);
+    --surface: rgba(255, 255, 255, 0.5);
     --text: #1a1a2e;
     --text-secondary: #5b6478;
     --border: rgba(255, 255, 255, 0.6);
@@ -16,7 +16,7 @@
     --code-text: #be185d;
     --radius: 14px;
     --max-w: 948px;
-    --blur: 20px;
+    --blur: 26px;
     --note-amber: #7c5c00;
     --note-amber-lt: #fef8e7;
     --note-amber-border: #e6a817;
@@ -24,11 +24,16 @@
     --info-blue-lt: #eaf1f9;
     --info-blue-border: #5b9bd5;
     --fields-key: #2d6a4f;
-}.hljs-string { color: #0f766e; }html.dark .md-editor {
+    --shadow-tint: rgba(99, 102, 241, 0.12);
+    --glow-1: rgba(99, 102, 241, 0.3);
+    --glow-2: rgba(236, 72, 153, 0.16);
+    --glow-3: rgba(139, 92, 246, 0.24);
+    --glow-4: rgba(45, 212, 191, 0.16);
+}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     --book-bg: #10131F;
     --mermaid-bg: #ffffff;
     --bg: #0c0e1a;
-    --surface: rgba(25, 28, 50, 0.7);
+    --surface: rgba(25, 28, 50, 0.62);
     --text: #e8e8f4;
     --text-secondary: #9b9bb8;
     --border: rgba(255, 255, 255, 0.1);
@@ -43,31 +48,45 @@
     --info-blue-lt: #172554;
     --info-blue-border: #3b82f6;
     --fields-key: #6ee7b7;
+    --shadow-tint: rgba(0, 0, 0, 0.3);
+    --glow-1: rgba(167, 139, 250, 0.35);
+    --glow-2: rgba(244, 114, 182, 0.2);
+    --glow-3: rgba(129, 140, 248, 0.3);
+    --glow-4: rgba(45, 212, 191, 0.2);
 }html.dark .md-editor .hljs-string { color: #98c379; }.md-editor {
     font-family:
         -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
         sans-serif;
-    background: var(--bg);
+    /* No flat background here on purpose: that used to paint a solid --bg
+       rectangle the full height of the document, a 3rd layer sandwiched
+       between the ambient glow (::before) and the individual glass cards —
+       visible as a big outer "card" wrapping the whole page. Two layers is
+       the design: the glow, and the frosted surfaces sitting on it. #viewer
+       (renderer/style.css) already paints a matching base tone behind this. */
     color: var(--text);
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     font-size: 16px;
-}.md-editor body::before {
+    position: relative;
+    isolation: isolate;
+}
+/* Was ".md-editor body::before" — body can never be a descendant of
+   .md-editor, so that rule never matched anything and the whole ambient glow
+   (the actual "glass" in glassmorphism) silently never rendered; every glass
+   surface was blurring nothing but the flat --bg colour behind it. Scoping the
+   pseudo-element to .md-editor itself (with position+isolation above so it
+   paints above the flat background but below real content) is what actually
+   gives the frosted panels something colourful to blur. */
+.md-editor::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -1;
     background:
-        radial-gradient(
-            ellipse 80% 60% at 15% 10%,
-            rgba(99, 102, 241, 0.15),
-            transparent
-        ),
-        radial-gradient(
-            ellipse 60% 80% at 85% 90%,
-            rgba(139, 92, 246, 0.1),
-            transparent
-        );
+        radial-gradient(ellipse 80% 60% at 15% 10%, var(--glow-1), transparent 60%),
+        radial-gradient(ellipse 70% 70% at 88% 12%, var(--glow-2), transparent 60%),
+        radial-gradient(ellipse 60% 80% at 85% 90%, var(--glow-3), transparent 60%),
+        radial-gradient(ellipse 55% 55% at 8% 92%, var(--glow-4), transparent 60%);
     pointer-events: none;
 }.md-editor {
     max-width: var(--max-w);
@@ -77,12 +96,12 @@
 /* ── Frontmatter Display ───────────────────── */
 .md-editor .header {
     background: var(--surface);
-    backdrop-filter: blur(var(--blur)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    backdrop-filter: blur(var(--blur)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.06),
+        0 8px 32px var(--shadow-tint),
         0 2px 8px rgba(0, 0, 0, 0.04),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
         inset 0 -1px 0 rgba(0, 0, 0, 0.04);
@@ -117,12 +136,12 @@
 /* ── Glass surfaces ──────────────────────── */
 .md-editor .section, .md-editor h2 {
     background: var(--surface);
-    backdrop-filter: blur(var(--blur)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    backdrop-filter: blur(var(--blur)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.06),
+        0 8px 32px var(--shadow-tint),
         0 2px 8px rgba(0, 0, 0, 0.04),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
         inset 0 -1px 0 rgba(0, 0, 0, 0.04);
@@ -167,8 +186,8 @@
     margin: 16px 0 24px;
     font-size: 0.9rem;
     background: var(--surface);
-    backdrop-filter: blur(var(--blur)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    backdrop-filter: blur(var(--blur)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     overflow: hidden;
@@ -216,8 +235,8 @@
     font-size: 0.85rem;
     line-height: 1.6;
     margin: 16px 0 24px;
-    backdrop-filter: blur(var(--blur)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    backdrop-filter: blur(var(--blur)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.3),
         0 2px 8px rgba(0, 0, 0, 0.03);
@@ -234,21 +253,29 @@
     margin: 16px 0 24px;
 }.md-editor .code-block pre {
     margin: 0;
-    padding-top: 48px; /* clear the Wrap / Copy / Copy Full buttons */
+    padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
 }.md-editor .code-copy-btn {
     position: absolute;
     z-index: 2;
     top: 8px;
     right: 8px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(200%);
+    -webkit-backdrop-filter: blur(12px) saturate(200%);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 5px 12px;
+    padding: 0 8px;
     border-radius: 8px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
+    line-height: 1;
     cursor: pointer;
     transition: all 0.15s;
 }.md-editor .code-copy-btn:hover {
@@ -261,16 +288,24 @@
     position: absolute;
     z-index: 2;
     top: 8px;
-    right: 148px;
+    right: 132px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(200%);
+    -webkit-backdrop-filter: blur(12px) saturate(200%);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 5px 12px;
+    padding: 0 8px;
     border-radius: 8px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
     font-family: inherit;
+    line-height: 1;
     cursor: pointer;
     transition: all 0.15s;
 }.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
@@ -280,26 +315,33 @@
     position: absolute;
     z-index: 2;
     top: 8px;
-    right: 64px;
+    right: 70px;
+    height: 22px;
+    min-width: 56px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--surface);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    backdrop-filter: blur(12px) saturate(200%);
+    -webkit-backdrop-filter: blur(12px) saturate(200%);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 5px 12px;
+    padding: 0 8px;
     border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: inherit;
+    line-height: 1;
     cursor: pointer;
-    letter-spacing: 0.01em;
     transition: all 0.15s;
 }.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
     background: var(--accent-soft);
     color: var(--accent);
 }.md-editor blockquote, .md-editor .blockquotes {
     background: var(--surface);
-    backdrop-filter: blur(var(--blur)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    backdrop-filter: blur(var(--blur)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
     border: 1px solid var(--border);
     border-left: 3px solid var(--accent);
     padding: 16px 24px;
@@ -324,8 +366,8 @@
     margin: 8px 0 16px 24px;
 }.md-editor .example-box {
     background: var(--surface);
-    backdrop-filter: blur(var(--blur)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    backdrop-filter: blur(var(--blur)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 14px 16px;
@@ -338,8 +380,8 @@
     border-left: 4px solid #9a3412;
 }.md-editor .block-card {
     background: var(--surface);
-    backdrop-filter: blur(var(--blur)) saturate(180%);
-    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    backdrop-filter: blur(var(--blur)) saturate(200%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 14px 16px;
@@ -362,8 +404,8 @@
     right: 16px;
     z-index: 100;
     background: var(--surface);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(200%);
+    -webkit-backdrop-filter: blur(16px) saturate(200%);
     border: 1px solid var(--border);
     color: var(--text-secondary);
     padding: 8px 16px;

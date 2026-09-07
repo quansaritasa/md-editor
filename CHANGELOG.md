@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.6.1 — theme polish, and spacing free of Good View
+
+- `css/base.css`: the paragraph-spacing rule is no longer gated behind `.good-view`. `.md-editor p` now carries the margin unconditionally (still overridable per host via `--good-view-gap`), and a new `.md-editor br` rule gives bare line breaks the same spacing — so a host's spacing control reaches a line-per-entry file whether or not the Good View transform ran, not only when it did
+- Glass theme: `.md-editor body::before` never matched — `body` can never be a descendant of `.md-editor` — so the ambient glow, the actual "glass" in glassmorphism, silently never rendered; every frosted surface was blurring nothing but the flat page colour. Fixed by scoping the pseudo-element to `.md-editor::before`, with `position: relative; isolation: isolate` added so it paints above the flat background but below real content
+- Glass theme: the flat `background: var(--bg)` on `.md-editor` is gone — it painted a solid rectangle the full height of the document, a third layer sandwiched between the (now-working) ambient glow and the individual frosted cards, reading as one big outer "card" wrapping the page. Two layers is the design: the glow, and the surfaces sitting on it
+- Glass theme: richer four-color ambient glow (`--glow-1..4`, new `--shadow-tint` for the cards' own ambient shadow), `--blur` 20px→26px, `saturate(180%)`→`200%`, `--surface` alpha nudged for contrast against the stronger glow
+- All four themes: `.code-copy-btn` / `.code-full-btn` / `.code-wrap-btn` unified to the same height (22px), min-width (56px), font (0.7rem / 600), and spacing — they used to differ slightly per theme for no reason. `.code-block pre`'s top padding tightened from ~44-48px to 34px to match the now-smaller buttons
+- Claude theme: fixed the copy-button text being invisible (`color: var(--surface)` against a `var(--copy-btn-bg)` background of a similar tone) — new `--copy-btn-text` var, tuned per mode
+- Claude theme: `--bg` warmed from a flat `#F5F4F0` (light) / darkened `#18171A` (dark, was darker than its own `--surface`/`--pre-bg` — the opposite of light mode) to `#FBF7ED` / `#29262D`, so the page reads as a shade lighter than the boxes it holds in both modes
+- Card theme: `--pre-bg` flipped from a dark navy block to a light one (`#eef3f7`, matching inline `--code-bg`) with `--pre-text` gone dark to match — differentiated from the page by `--border` rather than a dark fill
+- All four themes: `.hljs-string` scoped to `.md-editor .hljs-string` in light mode — the bare `.hljs-string` selector tied with `github-dark.min.css`'s own equal-specificity rule, and lost that tie depending on `<link>` load order. `.hljs-attr` given its own colour (`#d97706`, light mode only) where none existed before
+
 ## v0.6.0 — adoption
 
 - Qview now runs on the library. Nine of its renderer files, its whole `themes/` folder and four blocks of its stylesheet were replaced: about 3,550 lines out for 380 of glue. Its 140-check smoke suite reports results byte-identical to the baseline taken before the swap, which is the extraction's real proof
