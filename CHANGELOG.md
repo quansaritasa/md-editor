@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.6.4 — wide tables scroll instead of being cut off, and a failed diagram stops haunting later files
+
+- A table is only as narrow as its widest unbreakable cell, so one long code span — a fully qualified call, say — pushed the whole table past the card holding it. `.section` clips, as it must to keep its rounded corners, so those columns were not merely off screen but unreachable: no scrollbar anywhere on the page reached them. In one generated document, 19 of 23 tables were cut. `transform.run` now always wraps each finished table in `<div class="table-scroll">`, and `css/base.css` gives that box `overflow-x: auto`. Column widths are untouched and a table that already fits shows no scrollbar
+- `features/mermaid.render` caught a failed diagram and logged it, but mermaid DRAWS its "Syntax error in text" graphic before throwing — into a scratch element it appends to `<body>` as `d` + the render id. That element lives outside the mounted document, so neither the next render nor a host resetting `innerHTML` could reach it, and the error then sat on top of every file opened afterwards, including files holding no diagram at all. The render loop now clears its own scratch in a `finally`, and sweeps any `[id^="dmmd-"]` left by an earlier run before it checks whether the document has diagrams — the file that has to do the clearing is usually one that has none
+- `test/fixtures`: the 12 fixtures containing a table were rewrapped by the same `wrapTables` the pipeline uses, leaving the rest byte-frozen. Note that `tools/parity-check.js` can no longer regenerate them — it loads `renderer/markdown.js`, `renderer/postprocess.js` and `renderer/render.js` from Qview, and the migration removed all three
+
 ## v0.6.3 — long tables label in one pass, and a `$&` in a cell no longer tears the row apart
 
 - `addDataLabels` rebuilt each table by searching the whole table string for every row's own text — `out.replace('<tr>' + oldRow + '</tr>', ...)`, once per row — which is O(rows x table size). A 1619-row / 644 KB table in a generated document spent about a second there: 1020 ms of a 1074 ms build, against 31 ms for marked itself. It now rewrites each `<tr>` in place in a single pass, so 3000 rows cost ~20 ms instead of 620 ms

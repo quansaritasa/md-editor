@@ -1,10 +1,10 @@
 'use strict';
 
 /* ================= HTML post-processing =================
-   Three steps always run once post-processing is on, because the themes and the
+   Four steps always run once post-processing is on, because the themes and the
    collapse/outline features are written against the markup they produce:
-   sections, code blocks, blockquotes. Everything else is opt-in and lives in
-   transform-cards.js. */
+   sections, code blocks, blockquotes, tables. Everything else is opt-in and
+   lives in transform-cards.js. */
 
 const cards = require('./transform-cards');
 
@@ -56,6 +56,17 @@ function wrapBlockquotes(html) {
   });
 }
 
+// A table is only as narrow as its widest unbreakable cell, so one long
+// identifier in one cell pushes the whole table past the card it sits in — and
+// the card has to clip, for its rounded corners, which leaves those columns
+// unreachable rather than merely off screen. The wrapper gives the overflow a
+// scrollbar of its own and leaves every column width alone. Markdown cannot
+// nest a table inside a table, so the lazy match is safe here.
+function wrapTables(html) {
+  return html.replace(/<table(?:\s[^>]*)?>[\s\S]*?<\/table>/g,
+    (t) => '<div class="table-scroll">' + t + '</div>');
+}
+
 const OPTIONAL = ['txt-headings', 'strip-hr', 'header', 'data-labels', 'qa-cards', 'example-boxes', 'field-tables', 'good-view'];
 
 // Step order is load-bearing: sections must exist before the Q&A pass can find
@@ -77,9 +88,13 @@ function run(html, ctx) {
   if (t.has('field-tables')) html = cards.wrapFieldTables(html);
   html = wrapCodeBlocks(html);
   html = wrapBlockquotes(html);
+  // Last: field-tables may still be inventing tables above, and the wrapper has
+  // to go around the finished one.
+  html = wrapTables(html);
   return html;
 }
 
 module.exports = {
   OPTIONAL, run, boldTxtHeadings, stripHorizontalRules, wrapSections, wrapCodeBlocks, wrapBlockquotes,
+  wrapTables,
 };

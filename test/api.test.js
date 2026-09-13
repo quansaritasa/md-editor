@@ -77,3 +77,26 @@ test('a long table is labelled in one pass, not once per row', () => {
   assert.strictEqual((out.html.match(/data-label="Title"/g) || []).length, 3000, 'every row is labelled');
   assert.ok(ms < 250, 'labelling 3000 rows took ' + ms + 'ms — quadratic again?');
 });
+
+/* ---------- wide tables ---------- */
+
+test('every table is wrapped in a scroll box', () => {
+  const md = '| A | B |\n|---|---|\n| 1 | 2 |\n\ntext\n\n| C | D |\n|---|---|\n| 3 | 4 |\n';
+  const out = MdEditor.build(md);
+  assert.ok(out.html.includes('<div class="table-scroll"><table>'), 'the wrapper opens around the table');
+  assert.ok(out.html.includes('</table></div>'), 'and closes around it');
+  assert.strictEqual((out.html.match(/table-scroll/g) || []).length, 2, 'one wrapper per table, not one for the pair');
+});
+
+test('a document with no table gains no wrapper', () => {
+  const out = MdEditor.build('# Title\n\njust a paragraph\n');
+  assert.ok(!out.html.includes('table-scroll'));
+});
+
+// field-tables invents its own <table class="fields">, after the point a
+// wrapper placed earlier in the pipeline would have run.
+test('a table the transforms invent is wrapped as well', () => {
+  const out = MdEditor.build('| Field | Type |\n|---|---|\n| id | int |\n', { transforms: ['field-tables'] });
+  const m = out.html.match(/<div class="table-scroll"><table[^>]*>/);
+  assert.ok(m, 'wrapped: ' + out.html.slice(0, 200));
+});

@@ -89,3 +89,20 @@ html.dark .md-editor-source {
   color: #e2e8f0;
   background: #0f172a;
 }
+
+/* ---------- wide tables ---------- */
+/* A table is only as narrow as its widest unbreakable cell, so one long
+   identifier — a code span holding a fully qualified call, say — can push it
+   well past the card it sits in. The card clips, because it must to keep its
+   rounded corners, and the right-hand columns end up unreachable rather than
+   merely off screen. transform.wrapTables puts every table in this box so the
+   overflow gets a scrollbar of its own; column widths are untouched, and a
+   table that already fits shows no scrollbar at all.
+
+   Only overflow-x is set. Pairing it with overflow-y: visible would be a lie —
+   the spec computes a visible axis to auto the moment the other axis scrolls —
+   but the box is content-height, so there is never anything to scroll
+   vertically and the page keeps owning up-and-down. */
+.md-editor .table-scroll {
+  overflow-x: auto;
+}
