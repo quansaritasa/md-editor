@@ -1,9 +1,13 @@
 'use strict';
 
-/* Fixtures were generated from Qview's renderer by tools/parity-check.js and
-   are byte-for-byte what that renderer produced. Reproducing them proves the
-   library did not drift from the app it was extracted from — with no dependency
-   on Qview being installed. */
+/* Frozen snapshots of this library's own output, one per corpus entry, written
+   by tools/fixtures.js. Reproducing them byte for byte is what catches drift no
+   one meant to introduce; a deliberate change to the pipeline is expected to
+   change them, and the diff is the review.
+
+   They began as a parity record against Qview's renderer, back when the library
+   was being extracted from it. That renderer is gone, so the comparison is too
+   — see the header of tools/fixtures.js. */
 
 const test = require('node:test');
 const assert = require('node:assert');
@@ -16,7 +20,7 @@ MdEditor.configure({ marked: require('marked') });
 const DIR = path.join(__dirname, 'fixtures');
 const cases = fs.readdirSync(DIR).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5));
 
-assert.ok(cases.length > 0, 'no fixtures found — run tools/parity-check.js --write');
+assert.ok(cases.length > 0, 'no fixtures found — run tools/fixtures.js --write');
 
 for (const id of cases) {
   test('fixture: ' + id, () => {

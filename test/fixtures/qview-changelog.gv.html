@@ -1,61 +1,334 @@
 <section class="section">
-<h1>Changelog</h1>
-</section>
-<section class="section">
-<h2>Unreleased</h2>
 <ul>
-<li>Toast messages now sit on a light yellow pill instead of the same surface colour as every other panel. A toast is the one thing on screen that disappears on its own, so it has to be spotted inside its 2.6 seconds. The colours are the pill&#39;s own rather than theme tokens, so the dark-on-yellow contrast holds in both light and dark mode; dark mode uses a slightly deeper yellow, since full brightness against a dark app glares instead of reading</li>
-<li>Replace the Expand all / Collapse all glyphs with <code>⊞</code> / <code>⊟</code> in both places they appear — the document outline and the tree sidebar. <code>⏬</code> / <code>⏫</code> are emoji that read as &quot;scroll to the end&quot;, and the new pair is the plus/minus convention every file tree and IDE already uses; sized up to 15px since text glyphs come out thinner than emoji at the same size. The outline&#39;s two buttons were also swapped to <code>⊟</code> <code>⊞</code>, so both pairs sit in the same order</li>
-<li><code>Ctrl/Cmd + C</code> in the tree sidebar now copies the selected files to the OS clipboard, ready to paste into a browser, a chat window or the native file manager. It copies the whole selection when there is one, else the single focused row. The shortcut is only taken when the sidebar has focus or a live selection — anywhere else it still copies the open picture as before</li>
-<li>Copy and Cut now confirm on screen (<code>📋 Copied 2 items to the clipboard</code>). Both used to do their work in complete silence, which is tolerable for a menu item you just clicked and reads as a dead key for a shortcut</li>
-<li>The <code>📦 Move to…</code> dialog shows a real folder <strong>tree</strong> instead of one flat list of every folder in the tab, which was unreadable on any project with more than a screenful. Folders start collapsed and unfold one level per <code>▸</code>; the caret folds without selecting the folder it belongs to. Typing in the filter box still falls back to the flat list of full paths, because matches can sit anywhere in a collapsed tree</li>
-<li>Add a <code>👁 Hidden</code> box to the <code>📦 Move to…</code> dialog for moving something into a dot-folder. It belongs to the dialog alone and does not change the app-wide setting in <code>⚙ Settings</code> — the sidebar stays as it was. It starts ticked if hidden files are already on globally</li>
-<li>Extend the smoke suite from 139 to 147 checks: four for the Move dialog&#39;s tree (collapsed on open, one level per caret, filter fallback, the <code>👁</code> box not leaking into the global setting) and four for the sidebar copy shortcut (selection, focused row, and that focus outside the sidebar still hands the key back to picture-copy)</li>
-<li>Add <code>AGENTS.md</code> (AI working rules) and symlink <code>CLAUDE.md</code> → <code>AGENTS.md</code></li>
-<li>Merge the separate Python/JavaScript 200-line-file rules in <code>AGENTS.md</code> into one language-agnostic &quot;Nguyên tắc file code&quot; rule</li>
-<li>Double right-click on an image now applies Auto Fit instead of Vertical fit</li>
-<li>Speed up search: debounce file-name filtering, and rewrite content search&#39;s main-process file scan to run async with concurrency instead of blocking the app on synchronous reads (worst on Windows)</li>
-<li>Add a Linux (AppImage) build target and CI job; note it can only be packaged on a Linux/mac host, not from Windows</li>
-<li>Add <code>Ctrl/Cmd + O</code> to open a folder in a new tab; move the pinned Favorites tab shortcut from <code>Ctrl/Cmd + 3</code> to <code>Ctrl/Cmd + 0</code></li>
-<li>Release CI: name build artifacts by version + platform (<code>qview-&lt;version&gt;-&lt;platform&gt;</code>) instead of <code>qview-&lt;os&gt;-latest</code></li>
-<li>Double left-click a photo for reverse Auto Fit (the dimension Auto Fit did not pick) and double right-click for Auto Fit, in both the normal viewer and the fullscreen overlay; the reverse fit applies to the photo on screen only, so Fit Horizontal / Fit Vertical never light up and the next photo still opens in the remembered mode</li>
-<li>Axis fits now leave a 0.5% gutter on each side instead of filling the surface edge to edge, giving the photo room to breathe</li>
-<li>Move Compare to the top of the right-click menu, so the entry is first on the occasions it is offered at all (it needs exactly two comparable files selected)</li>
-<li>Fix the selection highlight not appearing until the pointer moved away: the row&#39;s pink tint is 10% opaque but the hovered file&#39;s own background is solid, and a child&#39;s background paints over its parent&#39;s, so hovering the row you had just clicked hid the highlight completely. A hovered selected row now uses a stronger tint of the same pink, keeping both states readable</li>
-<li>Multi-select no longer gets slower as a folder grows: each <code>Ctrl/Cmd + click</code> used to repaint every row in the tree, and now repaints only the row it touched. Measured on 50,000 rows, a click went from 19ms to 0.01ms</li>
-<li>Split every oversized source file so no application file breaks the 200-line rule in <code>AGENTS.md</code> — 16 files over the limit became 0, and the largest file went from 447 lines to 187. Pure code moves, no behaviour change</li>
-<li>Extend the smoke suite from 90 to 94 checks, covering three areas that had none: image fit and zoom, tab drag reordering, and whether a selection is actually painted rather than merely counted</li>
-<li>Windows build: switch installer from portable (self-extracts to a new temp folder every run, no fixed path) to NSIS, with a directory picker defaulting to Program Files</li>
-<li>Add a startup splash (icon + spinner) that covers the window while scripts run and the first tab&#39;s tree/file loads, instead of a blank pane; it fades out once the first tab finishes loading (with a fallback timeout so it can never get stuck)</li>
-<li>Right panel File Info: wrap the file name onto up to 2 lines instead of chopping it with an ellipsis; split the single &quot;Date&quot; row into separate Created and Modified rows, both using the file&#39;s real creation/modified time; reformat dates to drop seconds and spell the month (<code>Sep 3, 2026, 10:14 AM</code>) instead of the locale&#39;s raw numeric format</li>
-<li>Add &quot;New folder here&quot; to the tree&#39;s right-click menu — lands &quot;New folder&quot; (or &quot;New folder 2&quot;...) right there and drops straight into rename mode, like Duplicate already does</li>
-<li>Drag a file or folder onto another folder in the tree to move it in, or onto blank tree space to move it to the root; dragging a row that&#39;s part of the current multi-select carries the whole selection</li>
-<li>Empty folders now show up in the tree (they used to be hidden entirely) — needed so a freshly created folder doesn&#39;t vanish, and now consistent everywhere</li>
-<li>Compare: double-clicking an image pane now fits the picture instead of closing the overlay — double left-click is reverse Auto Fit and double right-click is Auto Fit, the same two gestures the normal viewer uses. Opening one of the two files for real moved to a new 📂 button in the image pane&#39;s header; text and video panes still open on double-click</li>
-<li>Search files now also matches folder names — a matched folder shows its full contents, expanded, even where none of the files inside match the text; a plain file-name match still shows as a flat hit list like before</li>
-<li>Right-click menu gains a file clipboard: <code>✂️ Cut</code> alongside <code>📋 Copy</code>, then <code>📥 Copy files here</code> / <code>📤 Move files here</code> to paste into the folder you right-clicked (a file pastes into its parent). Files copied in Finder/Explorer paste too — the OS clipboard is read back when nothing was copied inside Qview. Pasting into a file&#39;s own folder duplicates it (<code>name copy.md</code>) and a name clash never overwrites</li>
-<li>Right-click menu also opens a terminal in that folder, listing only what is installed: <code>Open iTerm2</code> and <code>Open Terminal</code> on macOS, <code>Open Terminal</code> and <code>Open PowerShell</code> on Windows, <code>Open Terminal</code> on Linux</li>
-<li>With two or more files selected in the sidebar, the four arrow keys tour the selection instead of the whole tree — each press lands on another selected file, wrapping round at both ends, and never stops on a file you did not pick. <code>Esc</code> clears the selection and hands the arrows back to the tree</li>
-<li>Compare: a shared zoom bar in the overlay header drives both panes at once (zoom, Auto fit, fit to pane, fit width, fit height), and <code>🔗 Sync Photos</code> ties the two together for the mouse as well — a wheel zoom, a drag or a double-click fit in one pane is copied into the other, so the pair moves as one picture. The toggle is remembered between sessions. Both pane headers gained the Auto fit button the bar has</li>
-<li>Compare: photo panes now open at reverse Auto Fit instead of shrinking the whole picture into the pane, so a photo uses the short side of a half-window pane; the header hint no longer claims a double-click opens the file, since on a photo pane it fits — it now says what each pane kind actually does</li>
-<li>A copy, a move or a drag onto a folder now reports what happened in a small toast (<code>📥 Copied 2 items to dest</code>), instead of silently reshuffling the tree; failures still raise an alert, which needs acknowledging</li>
-<li>Extend the smoke suite from 96 to 110 checks, covering the file clipboard, the terminal list, arrow navigation inside a selection, and the compare zoom bar / Sync Photos; the context-menu probe now asserts the action set rather than a hard-coded item count that every new menu entry would break</li>
-<li>Right-click menu gains <code>◇ Add to Local</code> and <code>☆ Add to Favorites</code>, which act on the whole selection when there is one; the label flips to <code>Remove</code> once every target is already in, and the result is reported in a toast</li>
-<li>Fix file indentation inside subfolders: a file now lines up with the folders at its own level instead of sitting one step further in, at every depth</li>
-<li>Give folder rows a roomier 36px band in both Thumbnail modes, where they had been squeezed to the same height as a list row</li>
-<li>Right-click a tab for its own menu: <code>Change display name</code> (edited inline on the tab itself), <code>Reset to folder name</code>, <code>Reveal folder</code>, <code>Copy folder path</code>, <code>Close tab</code> and <code>Close other tabs</code>. A renamed tab keeps its label across restarts; the folder&#39;s real name is still what <code>Reset</code> returns to</li>
-<li>Add a <code>🕘 Recent</code> collection holding the last 50 files opened — one per tab in the sidebar beside All and Local, plus a global one pinned to the tab bar next to <code>⭐ Favorites</code> that spans every tab</li>
-<li>Put a space between a collection&#39;s name and its count (<code>Local (6)</code>) — the rule meant to do this had never been applied to any element</li>
-<li>The right-click menu can be driven from the keyboard: each entry shows the letter that runs it, so right-click then <code>C</code> copies. The letters are fixed per action rather than derived from the labels, so they survive a wording change; a letter belonging to a hidden entry does nothing</li>
-<li>Open Compare from a two-file selection without the menu: double-click either file, or press <code>Enter</code> or <code>Space</code>. <code>Space</code> no longer scrolls the sidebar or turns a book&#39;s page while two files are selected</li>
-<li>Add a <code>⚙ Settings</code> popup to the tab bar with <code>Show hidden files &amp; folders</code> (dot-entries such as <code>.claude</code> and <code>.agents</code>, hidden until now with no way to see them), <code>Include node_modules</code> as a sub-option of it, and the <code>Library folder</code> with a picker. Both visibility flags travel with every folder listing, and default to off — a recursive scan of <code>.git</code> alone turns 7 folder rows into 919</li>
-<li>Tab bar shows more tabs at the same height: the strip was capped at 60% of the window while the toolbar held 713px for 450px of buttons, and tabs could never shorten their labels because they had no minimum width. The cap is gone, tabs now ellipsize down to 92px before the strip scrolls, and the toolbar gives up space first with a floor that stops it collapsing. Measured at 1400px wide, 8 tabs are visible where 6 used to be; the bar&#39;s height and the viewer below it are untouched</li>
-<li>The tab strip scrolls sideways on a vertical wheel, so an overflowing bar can be reached with a plain mouse — its scrollbar is hidden</li>
-<li><code>📦 Move to…</code> can move into any folder of any open tab: a chip per folder tab across the top of the dialog swaps the folder list to that tab&#39;s tree. It opens on the folder already on screen, so a single-tab move is unchanged, and a folder is still never offered as a destination inside itself</li>
-<li><code>📦 Move to…</code> keeps one height whatever is selected: the list used to size to its contents, so switching from a tab with hundreds of folders to one with a single folder shrank the dialog from 524px to 276px and slid the <code>Move</code> button out from under the pointer</li>
-<li>Outline panel gains <code>⏬</code> / <code>⏫</code> to expand or collapse every heading at once — both the outline&#39;s own groups and the document&#39;s sections, which fold together. They drive the same per-heading toggles a click would, so the two can never disagree; headings themselves always stay visible. Document sections only exist in Good View, so outside it this folds the outline alone. With nothing foldable the pair is disabled rather than hidden — hiding it read as a missing feature, since most documents are flat</li>
-<li><code>AGENTS.md</code> now holds only what is specific to this repo and points at the global AI rules instead of restating them</li>
-<li><code>run-qview</code> skill: default debug port moves from 9222 to 9847, and the driver now checks the page it found is actually this app before touching it — on 9222 it had attached to a different Electron app and driven that instead. A port held by something else is now reported and refused rather than used</li>
-<li>Extend the smoke suite from 110 to 139 checks, covering the Recent collections, the pinned Recent tab, tab rename, the bulk Local/Favorites entries, menu accelerator keys, the selection-to-Compare gestures, the Settings visibility flags, the tab bar&#39;s width and height behaviour, and the Move dialog&#39;s tab chips and fixed height</li>
+<li><p>Wide tables now scroll sideways instead of having their right-hand columns cut off, and a diagram that fails to draw no longer leaves an error over later files.</p>
+</li>
+<li><p>Large markdown files with long tables open several times faster, and cells containing a $ sign no longer come out mangled.</p>
+</li>
+<li><p>Searching a file&#39;s plain-text view now highlights every match and scrolls to the one you are on, including HTML source opened with ⌘Enter.</p>
+</li>
+<li><p>Search content now covers code, config and table files, jumps to the match when you open one, and no longer misses matches far down a long file.</p>
+</li>
+<li><p>New 🌐 button beside the search boxes searches every open tab at once — by file or folder name, or by what is inside your text files.</p>
+</li>
+<li><p>Favorites, Recent and search results now show just the file name, without the folder path repeated beside it.</p>
+</li>
+<li><p>Renaming or cancelling a rename keeps the file tree focused, so arrow keys still work right after.</p>
+</li>
+<li><p>Mở file .html giờ hiện bản xem trước an toàn (script không chạy) thay vì mã nguồn thô; bấm Sửa để xem/sửa mã.</p>
+</li>
+<li><p>JSON/JSONL files now beautify automatically on open; the 🗂 Types filter now shows only the types you check instead of hiding them.</p>
+</li>
+<li><p>Open .jsonl files directly, and pretty-print any JSON view with the new Beautify button.</p>
+</li>
+<li><p>Sửa syntax theme dropdown không đổi màu khi mở file code/JSON riêng, và JSON key/value trong theme mặc định giờ khác màu dễ đọc hơn.</p>
+</li>
+<li><p>A &quot;What&#39;s new&quot; popup greets you after an update with that release&#39;s highlights and a one-click Buy Me a Coffee link; two new docs, features.md and release-note.md, cover the full feature list and versioned release history.</p>
+</li>
+<li><p>Deleted or renamed files now drop out of Recent, per-file-type Recent, and the jump bar automatically.</p>
+</li>
+<li><p>Outline items in the side panel are a touch larger and easier to read.</p>
+</li>
+<li><p>Books (EPUB, MOBI) now open at a narrower, more comfortable reading width by default.</p>
+</li>
+<li><p><span class="kv-label">Modern theme:</span> the page has soft shadows along its left and right edges.</p>
+</li>
+<li><p><span class="kv-label">Settings:</span> the Change…, Reset… and Show buttons share one style, instead of the unstyled ones rendering as bare OS buttons beside the styled one.</p>
+</li>
+<li><p>AGENTS.md gains a token-saving cote workflow (scripts/cote.sh) and a rule that CHANGELOG entries stay one short, user-facing line; all 144 existing entries were rewritten to match.</p>
+</li>
+<li><p><span class="kv-label">Settings → Layout:</span> &quot;Swap the side panels&quot; moves the file tree to the right and the outline to the left.</p>
+</li>
+<li><p>Content search no longer lags while you type in a large folder.</p>
+</li>
+<li><p>EPUB images that use srcset, or an unquoted path, now display instead of failing to load.</p>
+</li>
+<li><p>EPUB and MOBI pages cast a soft shadow, so the text reads as a sheet of paper on a desk.</p>
+</li>
+<li><p>Opening an EPUB with local images no longer logs a file-not-found error.</p>
+</li>
+<li><p>The find bar no longer turns red when the box is empty or when you have just opened a new file, and &quot;not found&quot; is a clearer red.</p>
+</li>
+<li><p>The Ctrl+F search bar has a pale yellow fill and a rounded border, so it reads as a popup rather than part of the page.</p>
+</li>
+<li><p>The sidebar&#39;s name and content search boxes light up while they hold text, so you can see at a glance that the tree is filtered.</p>
+</li>
+<li><p>The jump bar highlights the button you actually clicked; opening the same file from the tree or a tab no longer lights up an unrelated one.</p>
+</li>
+<li><p>Clearing a search scrolls the tree back to the file you have open.</p>
+</li>
+<li><p>EPUB pages use the warm paper colour of the document theme instead of plain white.</p>
+</li>
+<li><p>Click anywhere in the margins beside an EPUB page to turn it, not just on the text.</p>
+</li>
+<li><p><span class="kv-label">Ctrl+F ignores punctuation now:</span> searching AD01 finds AD-01, AD 01 and AD:01.</p>
+</li>
+<li><p>The sidebar name filter and content search ignore punctuation the same way, so all three searches agree on what counts as a match.</p>
+</li>
+<li><p>Ctrl/Cmd-click a Types checkbox to show that type alone, instead of unticking the rest by hand.</p>
+</li>
+<li><p>Ctrl or Shift plus the wheel scrolls sideways — long code lines, wide CSV and zip tables — so a plain mouse can reach them.</p>
+</li>
+<li><p>A .docx opens centred in the reading column instead of flush against the left edge.</p>
+</li>
+<li><p>Fix the file tree hanging on &quot;Loading files…&quot; on macOS. Your Library folder is skipped now, the same as node_modules.</p>
+</li>
+<li><p>The Text and Snippet size sliders both cover 8–40px.</p>
+</li>
+<li><p>File names in the tree use the same colour as outline entries.</p>
+</li>
+<li><p>Record a code review in plan-0908.md, including two defects the smoke suite misses — one still open: Reset appearance discards an unsaved edit.</p>
+</li>
+<li><p><span class="kv-label">Layout can set your reading fonts:</span> Body for prose, Mono for code, and a Syntax palette for keywords, strings and comments. Only installed fonts are offered.</p>
+</li>
+<li><p>Source files get their own size slider (Code file, 9–36px), separate from the Snippet slider for fenced code inside a document.</p>
+</li>
+<li><p>Code, the line-number gutter and fenced blocks share one font, instead of the gutter and the code disagreeing.</p>
+</li>
+<li><p>The Syntax palette applies over the document theme, which used to out-colour any palette you picked.</p>
+</li>
+<li><p>Two syntax palettes are stored, light and dark, and swap with the light/dark toggle — Monokai on a white page is unreadable.</p>
+</li>
+<li><p>Layout shows only the rows the open file can use, and Reset changes only what is shown: a book gets prose rows, a source file gets code rows.</p>
+</li>
+<li><p>Layout is reachable with a source file open — it now holds the code size, mono font and syntax palette.</p>
+</li>
+<li><p>The Layout menu scrolls inside a short window instead of running its Reset button off the bottom.</p>
+</li>
+<li><p><span class="kv-label">Settings gains Reset appearance:</span> theme, light/dark, every Layout value, fonts, palettes, Good View and image modes back to defaults, behind a confirm. Tabs and favourites are untouched.</p>
+</li>
+<li><p>Ctrl/Cmd+, opens Settings and Ctrl/Cmd+L opens Layout.</p>
+</li>
+<li><p>Extend the smoke suite by eight checks covering the Layout and Reset work.</p>
+</li>
+<li><p>Switching tabs and coming back no longer throws a document to the top — the reading position was being erased on the way out.</p>
+</li>
+<li><p>Scroll positions are saved against the document actually on screen, so one file can never overwrite another&#39;s position.</p>
+</li>
+<li><p>Both pinned tabs wear the gold border, marking where the global lists end and your folder tabs begin.</p>
+</li>
+<li><p>Past five folder tabs, Favorites and Recent shrink to their icon and count, freeing width for folder names.</p>
+</li>
+<li><p><span class="kv-label">Qview reads five more kinds of file:</span> source and config with line numbers, CSV/TSV as a table, audio with a player, ZIP as a listing, .docx as prose.</p>
+</li>
+<li><p>Source files are editable, not read-only — the same as a .txt.</p>
+</li>
+<li><p>Code opens with a sticky line-number gutter. Past 400KB it opens unhighlighted, with a note saying why.</p>
+</li>
+<li><p>The CSV viewer reads quoted fields correctly and takes its separator from the extension. It stops at 2000 rows and 200 columns, and says so.</p>
+</li>
+<li><p>A .zip is listed, never extracted: name, folder, size, packed size, date and ratio, plus Reveal in Finder.</p>
+</li>
+<li><p>A .docx converts to real headings and lists rather than a picture of a Word page, and keeps the Layout column.</p>
+</li>
+<li><p>Qview does not register as the system handler for the new types — .js stays with your editor and .docx with Word.</p>
+</li>
+<li><p>Content search greps source, config and delimited files too. PDF, EPUB and .docx stay out — too slow to scan on every keystroke.</p>
+</li>
+<li><p>The jump bar gains a ⌨ slot for source files.</p>
+</li>
+<li><p>Split helpers.js and openfile.js so no file breaks the 200-line rule.</p>
+</li>
+<li><p>Extend the smoke suite by seven checks covering the new file kinds.</p>
+</li>
+<li><p>Split probes-groupsort.js: the per-tab memory probes move to probes-prefs.js.</p>
+</li>
+<li><p><span class="kv-label">A guided tour on first launch:</span> eleven bubbles pointing at the real controls, one at a time. Next/Back/Skip or the arrow keys; replay it from Help in Settings.</p>
+</li>
+<li><p>The tour&#39;s spotlight ring and the dim around it are one element, so they cannot drift apart on a resize. Clicks outside the bubble are swallowed.</p>
+</li>
+<li><p>A tour step whose target is not on screen is skipped, so a bubble never points at nothing.</p>
+</li>
+<li><p>Each bubble is kept inside the window and its arrow still points at the thing it describes.</p>
+</li>
+<li><p>The tour never opens itself while the smoke suite is driving the app.</p>
+</li>
+<li><p>Extend the smoke suite by four checks covering the tour.</p>
+</li>
+<li><p>Frontmatter at the top of a markdown file shows verbatim, instead of a header card that overlapped its own text.</p>
+</li>
+<li><p>Frontmatter shows the same way in the compare panes as in the main viewer.</p>
+</li>
+<li><p>Style the 📄 Open File button like its neighbours.</p>
+</li>
+<li><p>Split probes-core.js: document rendering checks move to probes-render.js.</p>
+</li>
+<li><p>Open a single file without adding its folder first — double-click it in Finder/Explorer, drop it on the window, or press Ctrl/Cmd+O. Its folder becomes the tree root.</p>
+</li>
+<li><p>Ctrl/Cmd+O opens a file, as in every other app; the folder picker moves to Ctrl/Cmd+Shift+O and stays on ➕.</p>
+</li>
+<li><p>Double-clicking a file in Finder/Explorer opens it in the window you already have, not a second one.</p>
+</li>
+<li><p>Fix dropping a file on the window doing nothing on newer Electron.</p>
+</li>
+<li><p>Split probes-shortcuts.js: the tree arrow probes move to probes-treearrows.js.</p>
+</li>
+<li><p><span class="kv-label">EPUB and MOBI paging follows the pointer:</span> rest the mouse over the page and the wheel and arrow keys turn it, without clicking first.</p>
+</li>
+<li><p>Split the input half of epub.js into epubinput.js.</p>
+</li>
+<li><p>Fix a book reopened at a later chapter ignoring the Layout width and running edge to edge.</p>
+</li>
+<li><p>Fix a smoke probe reading a working Good View as broken after an md-editor upgrade.</p>
+</li>
+<li><p>Move all source into src/. No behaviour change — verified against a pre-move smoke baseline.</p>
+</li>
+<li><p>Fix the splash icon going missing after the move.</p>
+</li>
+<li><p><span class="kv-label">Claude theme:</span> cool the background slightly, less yellow.</p>
+</li>
+<li><p>Document the npm run vendor step in the README — pulling the src/ move without it left the app blank.</p>
+</li>
+<li><p>EPUB and MOBI get their own Layout settings — width, text size, code size, line gap — so a book no longer inherits the document ones.</p>
+</li>
+<li><p>Fix the Line gap slider doing nothing in EPUB and MOBI.</p>
+</li>
+<li><p>The Layout Width slider covers 300–2000px, up from 600–1400.</p>
+</li>
+<li><p>npm run dist bumps the patch version, so builds stop shipping as 0.1.0 forever.</p>
+</li>
+<li><p><span class="kv-label">Tree right-click:</span> a new &quot;Open file&quot; entry hands the file to your default app, and the paste entries stay hidden until the clipboard holds something.</p>
+</li>
+<li><p>The tab close button sits flush against the tab&#39;s right edge after a short label.</p>
+</li>
+<li><p>The page background around a document can vary per theme; only Claude uses it so far.</p>
+</li>
+<li><p>The markdown viewer and its four themes now come from md-editor, a library extracted from this app. Nothing changed on screen — the same 140 smoke checks pass.</p>
+</li>
+<li><p>Every call site kept its old names, so the extraction touched only the files it replaced.</p>
+</li>
+<li><p>Your saved theme and text sizes survive the upgrade.</p>
+</li>
+<li><p>Four defects were found and fixed while extracting the code, all of which had been in Qview:</p>
+<ul>
+<li>Two headings with the same text got the same link, so clicking the second outline row scrolled to the first.</li>
+<li>A failed save still advanced the text in memory, so Escape &quot;restored&quot; content that never reached disk.</li>
+<li>The dirty marker stayed on after you undid an edit back to the saved text.</li>
+<li>Find-in-editor stopped counting at 5000 matches and presented that as the total.</li>
+</ul>
+</li>
+<li><p>Fix the whole smoke suite dying before its first result.</p>
+</li>
+<li><p>Update the README for the extraction.</p>
+</li>
+<li><p>Fix an EPUB probe pointing at a path that no longer exists.</p>
+</li>
+<li><p>Toasts sit on a yellow pill, so you can spot one inside the 2.6 seconds it is up.</p>
+</li>
+<li><p>Expand all / Collapse all use ⊞ / ⊟ in the outline and the tree — the convention every file tree uses — instead of ⏬ / ⏫.</p>
+</li>
+<li><p>Ctrl/Cmd+C in the tree copies the selected files to the OS clipboard, ready to paste into a browser, a chat or your file manager.</p>
+</li>
+<li><p>Copy and Cut confirm on screen instead of doing their work in silence.</p>
+</li>
+<li><p>The 📦 Move to… dialog shows a real folder tree instead of one flat list of every folder. Typing in the filter still falls back to the flat list.</p>
+</li>
+<li><p>The 📦 Move to… dialog gains a 👁 Hidden box for moving into a dot-folder, without changing the app-wide setting.</p>
+</li>
+<li><p>Extend the smoke suite from 139 to 147 checks, covering the Move dialog tree and the sidebar copy shortcut.</p>
+</li>
+<li><p>Add AGENTS.md (AI working rules) and symlink CLAUDE.md to it.</p>
+</li>
+<li><p>Merge the separate Python and JavaScript file-size rules in AGENTS.md into one.</p>
+</li>
+<li><p>Double right-click on an image applies Auto Fit instead of Vertical fit.</p>
+</li>
+<li><p><span class="kv-label">Search is faster:</span> name filtering is debounced, and content search no longer blocks the app while it reads files — worst on Windows.</p>
+</li>
+<li><p>Add a Linux AppImage build.</p>
+</li>
+<li><p>Ctrl/Cmd+O opens a folder in a new tab; the Favorites tab moves to Ctrl/Cmd+0.</p>
+</li>
+<li><p>Release builds are named by version and platform.</p>
+</li>
+<li><p>Double left-click a photo for the fit Auto Fit did not pick, double right-click for Auto Fit — in the viewer and fullscreen alike.</p>
+</li>
+<li><p>Axis fits leave a small gutter each side instead of filling the surface edge to edge.</p>
+</li>
+<li><p>Compare moves to the top of the right-click menu.</p>
+</li>
+<li><p>Fix the selection highlight not showing until you moved the pointer away.</p>
+</li>
+<li><p><span class="kv-label">Multi-select no longer slows down as a folder grows:</span> on 50,000 rows a Ctrl-click went from 19ms to 0.01ms.</p>
+</li>
+<li><p>Split every oversized source file — 16 over the 200-line limit became 0. Pure code moves, no behaviour change.</p>
+</li>
+<li><p>Extend the smoke suite from 90 to 94 checks, covering image fit and zoom, tab drag and selection painting.</p>
+</li>
+<li><p><span class="kv-label">Windows:</span> switch the installer to NSIS with a directory picker, instead of a portable build that self-extracted somewhere new each run.</p>
+</li>
+<li><p>Add a startup splash instead of a blank pane while the first tab loads.</p>
+</li>
+<li><p><span class="kv-label">File Info:</span> wrap long names onto two lines, split Date into Created and Modified, and spell the month (Sep 3, 2026, 10:14 AM).</p>
+</li>
+<li><p>&quot;New folder here&quot; in the tree&#39;s right-click menu drops straight into rename mode.</p>
+</li>
+<li><p>Drag a file or folder onto another folder to move it in, or onto blank space for the root. Dragging part of a selection carries all of it.</p>
+</li>
+<li><p>Empty folders show up in the tree, so a folder you just made does not vanish.</p>
+</li>
+<li><p><span class="kv-label">Compare:</span> double-click an image pane to fit the picture; opening the file for real moves to a 📂 button.</p>
+</li>
+<li><p>Searching files matches folder names too — a matched folder opens with all its contents.</p>
+</li>
+<li><p><span class="kv-label">Right-click gains a file clipboard:</span> Cut, Copy, then Copy files here / Move files here. Files copied in Finder or Explorer paste too, and a clash never overwrites.</p>
+</li>
+<li><p>Right-click a folder to open a terminal there — only the terminals you actually have installed are listed.</p>
+</li>
+<li><p>With two or more files selected, the arrow keys tour the selection instead of the whole tree. Esc clears it.</p>
+</li>
+<li><p><span class="kv-label">Compare:</span> a shared zoom bar drives both panes, and 🔗 Sync Photos ties the mouse together too, so the pair moves as one picture.</p>
+</li>
+<li><p><span class="kv-label">Compare:</span> photo panes open filling the pane&#39;s short side instead of shrinking the whole picture into it.</p>
+</li>
+<li><p>A copy, move or drag reports what happened in a toast instead of silently reshuffling the tree.</p>
+</li>
+<li><p>Extend the smoke suite from 96 to 110 checks, covering the file clipboard, terminals, selection arrows and the compare zoom bar.</p>
+</li>
+<li><p>Right-click gains ◇ Add to Local and ☆ Add to Favorites, acting on the whole selection; the label flips to Remove once everything is already in.</p>
+</li>
+<li><p>Fix files in a subfolder sitting one step further in than the folders at their own level.</p>
+</li>
+<li><p>Folder rows get a roomier band in both Thumbnail modes.</p>
+</li>
+<li><p>Right-click a tab to rename it inline, reset to the folder name, reveal the folder, copy its path, or close it. A rename survives restarts.</p>
+</li>
+<li><p>Add a 🕘 Recent collection of the last 50 files opened — one per tab, plus a global one pinned beside ⭐ Favorites.</p>
+</li>
+<li><p>Put a space between a collection&#39;s name and its count.</p>
+</li>
+<li><p><span class="kv-label">The right-click menu can be driven from the keyboard:</span> each entry shows the letter that runs it, so right-click then C copies.</p>
+</li>
+<li><p><span class="kv-label">Open Compare from a two-file selection without the menu:</span> double-click either file, or press Enter or Space.</p>
+</li>
+<li><p>Add a ⚙ Settings popup with Show hidden files &amp; folders, Include node_modules, and the Library folder picker. Both flags default to off.</p>
+</li>
+<li><p>The tab bar fits more tabs at the same height — eight where six used to fit at 1400px wide — by shortening labels before the strip scrolls.</p>
+</li>
+<li><p>The tab strip scrolls sideways on a plain vertical wheel.</p>
+</li>
+<li><p>📦 Move to… can move into any folder of any open tab, through a chip per tab across the top.</p>
+</li>
+<li><p>📦 Move to… keeps one height, so the Move button no longer slides out from under the pointer.</p>
+</li>
+<li><p>The outline gains expand-all / collapse-all, folding the outline and the document&#39;s sections together. Disabled rather than hidden when there is nothing to fold.</p>
+</li>
+<li><p>AGENTS.md holds only what is specific to this repo and points at the global rules.</p>
+</li>
+<li><p>run-qview skill: move the debug port off 9222, and check the page found is actually this app before driving it.</p>
+</li>
+<li><p>Extend the smoke suite from 110 to 139 checks, covering Recent, tab rename, menu letters, the Settings flags, the tab bar and the Move dialog.</p>
+</li>
+<li><p>Image files get their own 🏞 icon in the tree, jump bar and type labels.</p>
+</li>
+<li><p>File Info shows the aspect ratio beside the resolution (1080 × 1920 · 9:16 · 1K).</p>
+</li>
+<li><p><span class="kv-label">Compare:</span> Ctrl+Scroll or Shift+Scroll scrolls both text panes together, so a side-by-side read does not drift.</p>
+</li>
+<li><p><span class="kv-label">Editing remembers where you were reading:</span> Ctrl+Enter carries your place into the source and back out again, instead of landing at the top.</p>
+</li>
+<li><p>Layout gains a Line gap slider (0–3em) controlling paragraph and line spacing, independent of Good View.</p>
+</li>
+<li><p>Widen the Layout dropdown so &quot;Line gap&quot; fits on one line.</p>
+</li>
 </ul>
 </section>

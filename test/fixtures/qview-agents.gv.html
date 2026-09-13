@@ -15,8 +15,86 @@
 </thead>
 <tbody><tr>
 <td data-label="Shortcut"><code>cote</code></td>
-<td data-label="Action">Append changes to <code>CHANGELOG.md</code>, then commit and push to remOTE</td>
-<td data-label="Vì sao khác global">Repo này có <code>CHANGELOG.md</code>; phần lớn repo khác không có nên global để <code>cote</code> là commit + push trần</td>
+<td data-label="Action"><code>cote &quot;&lt;entry&gt;&quot; &quot;&lt;commit msg&gt;&quot;</code> — <strong>hai</strong> tham số, không phải một. Việc nội bộ thì <code>cote -n &quot;&lt;commit msg&gt;&quot;</code></td>
+<td data-label="Vì sao khác global">Repo này có <code>CHANGELOG.md</code>, nên <code>cote</code> đòi thêm entry. Đừng bịa entry cho commit người dùng không thấy — dùng <code>-n</code></td>
 </tr>
 </tbody></table></div>
+</section>
+<section class="section">
+<h2><code>CHANGELOG.md</code> — viết cho người dùng, không cho lập trình viên</h2>
+<p>Mỗi entry là <strong>một dòng, tối đa 30 từ</strong>, tả thứ người dùng nhìn thấy hoặc làm được.</p><p>Không tên file, hàm, biến, CSS, regex, số đo ms. Chi tiết kỹ thuật thuộc về</p><p>commit message — ai cần thì đọc <code>git log</code>.</p>
+<p>File là <strong>danh sách phẳng, mới nhất trên cùng</strong> — không tiêu đề, không mục</p><p><code>## Unreleased</code>, không nhóm theo version. <code>cote</code> chèn thẳng vào dòng đầu; thêm</p><p>heading vào sẽ khiến entry sau lọt lên trên nó.</p>
+<p>Chỉ được nhắc tên khi người dùng thật sự thấy nó trên màn hình: nhãn menu,</p><p>tên setting, phím tắt, định dạng file.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Nên</th>
+<th>Không nên</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Nên">Nói cái gì đổi từ góc nhìn người dùng</td>
+<td data-label="Không nên">Kể cách sửa</td>
+</tr>
+<tr>
+<td data-label="Nên">Bắt đầu bằng tính năng hoặc động từ</td>
+<td data-label="Không nên">Bắt đầu bằng tên file</td>
+</tr>
+<tr>
+<td data-label="Nên">Một câu</td>
+<td data-label="Không nên">Một đoạn</td>
+</tr>
+</tbody></table></div>
+<p>Ví dụ — cùng một thay đổi:</p>
+<ul>
+<li><p>❌ <code>Content search stops normalizing every candidate file&#39;s full text. Making the 🗂 content search fuzzy on punctuation put normalizeSearch(text) inside the per-file loop, which allocated two whole copies of every candidate — up to the 2 MB CONTENT_MAX_BYTES ceiling each — ... 0.6 ms worst case</code></p>
+</li>
+<li><p>✅ <code>Content search no longer lags while you type in large folders.</code></p>
+</li>
+<li><p>❌ <code>sanitizeChapterHtml() (epublinks.js) used to leave a chapter&#39;s &lt;img src=&quot;cover.jpg&quot;&gt; as real HTML; the moment that string became DOM, Chromium eagerly fetched it against index.html&#39;s location ...</code></p>
+</li>
+<li><p>✅ <code>EPUB images now load reliably, including ones that use srcset or unquoted paths.</code></p>
+</li>
+<li><p>❌ <code>The swap is pure CSS order on #app-row — each panel keeps its id, its saved width key and its own resizer — so no other part of the app has to know the tree moved ...</code></p>
+</li>
+<li><p>✅ <code>Settings → Layout: &quot;Swap the side panels&quot; moves the file tree to the right and the outline to the left.</code></p>
+</li>
+</ul>
+</section>
+<section class="section">
+<h2><code>cote</code> — kỷ luật tiết kiệm token</h2>
+<p>Mỗi tool call gửi lại toàn bộ conversation, nên số call mới là thứ tốn tiền —</p><p>không phải độ dài lệnh. <code>cote</code> phải gói trọn trong <strong>1–2 Bash call</strong>.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Tình huống</th>
+<th>Làm gì</th>
+<th>Số call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Tình huống">Vừa làm việc trong session này (đã biết đổi gì)</td>
+<td data-label="Làm gì"><code>cote &quot;&lt;entry&gt;&quot; &quot;&lt;commit msg&gt;&quot;</code></td>
+<td data-label="Số call">1</td>
+</tr>
+<tr>
+<td data-label="Tình huống">Cold start / không rõ đổi gì</td>
+<td data-label="Làm gì"><code>cote peek</code> rồi <code>cote</code></td>
+<td data-label="Số call">2</td>
+</tr>
+<tr>
+<td data-label="Tình huống">Commit không có gì để nói với người dùng (tooling, CI, sửa docs)</td>
+<td data-label="Làm gì"><code>cote -n &quot;&lt;commit msg&gt;&quot;</code></td>
+<td data-label="Số call">1</td>
+</tr>
+</tbody></table></div>
+<p><code>cote</code> nằm trên PATH (<code>~/.local/bin/cote</code>) và dùng chung cho mọi repo.</p><p><code>scripts/cote.sh</code> trong repo giờ chỉ là forwarder — gọi cách nào cũng được.</p>
+<p>Cấm:</p>
+<ul>
+<li>Chạy <code>git diff</code> không có <code>--stat</code>. Diff thô vào context, dùng một lần rồi bỏ.</li>
+<li><code>Read</code> / <code>Edit</code> <code>CHANGELOG.md</code>. Script tự chèn entry lên <strong>dòng đầu file</strong>,<br>và tự thêm dấu <code>- </code> — đừng tự gõ bullet vào entry.</li>
+<li>Verify sau commit bằng <code>git log</code> / <code>git status</code>. Lệnh fail thì Bash đã báo lỗi;<br><code>ship</code> tự in một dòng <code>git log --oneline -1</code> là đủ.</li>
+<li>Tách <code>git add</code>, <code>git commit</code>, <code>git push</code> thành nhiều call.</li>
+</ul>
+<p>Commit message truyền vào <code>cote</code> phải giữ nguyên hai dòng trailer</p><p><code>Co-Authored-By:</code> và <code>Claude-Session:</code> như các commit trước trong repo.</p>
 </section>

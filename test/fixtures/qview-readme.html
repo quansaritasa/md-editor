@@ -73,6 +73,7 @@
 </ul>
 <p><strong>Browsing a folder</strong></p>
 <ul>
+<li>Open a single file three ways — double-click it in Finder or Explorer, drop it on the window, or pick it with <code>⌘/Ctrl + O</code> and the 📄 button — without first adding its whole folder. The file&#39;s folder becomes the tree either way, so the arrow keys keep walking its neighbours, and a folder already open in a tab is reused rather than duplicated</li>
 <li>File tree sidebar with live search</li>
 <li>Two collections per folder tab, switchable from the sidebar: <strong>All</strong> for the whole folder and <strong>Local</strong> for a hand-pinned working set</li>
 <li><strong>Favorites</strong> — starred files and folders — is a global list, not tied to any one folder, so it lives as its own pinned first tab in the tab bar instead of the sidebar</li>
@@ -114,7 +115,10 @@ cd qview
 npm install
 npm start
 </code></pre></div>
-<p><code>npm install</code> runs <code>scripts/vendor.js</code>, which copies the browser builds of <code>marked</code>, <code>mermaid</code>, and <code>highlight.js</code> into <code>renderer/vendor/</code>. That directory is generated, so it is not checked into git.</p>
+<p><code>npm install</code> runs <code>src/scripts/vendor.js</code>, which copies the browser builds of <code>marked</code>, <code>mermaid</code>, <code>highlight.js</code> and <code>md-editor</code> — along with the four document themes — into <code>src/renderer/vendor/</code>. That directory is generated, so it is not checked into git.</p>
+<p>Because it is generated on <code>npm install</code> only, a <code>git pull</code> that changes where those files belong leaves the old copies behind and the new directory empty. The window then opens blank: the four <code>vendor/</code> script tags 404, so <code>MdEditor</code>, <code>marked</code> and <code>hljs</code> are all undefined, <code>src/renderer/edit.js</code> throws while initialising, and every later <code>openFile()</code> dies on the half-initialised module. Run the copy again after any pull that touches the layout:</p>
+<div class="code-block"><button class="code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run vendor
+</code></pre></div>
 </section>
 <section class="section">
 <h2>Building a distributable</h2>
@@ -153,6 +157,10 @@ npm start
 </tr>
 <tr>
 <td data-label="Shortcut"><code>⌘/Ctrl + O</code></td>
+<td data-label="Action">Open a file — its folder becomes the tree, so the arrow keys still walk the neighbours</td>
+</tr>
+<tr>
+<td data-label="Shortcut"><code>⌘/Ctrl + Shift + O</code></td>
 <td data-label="Action">Open a folder in a new tab</td>
 </tr>
 <tr>
@@ -219,51 +227,55 @@ npm start
 </tr>
 </thead>
 <tbody><tr>
-<td data-label="Path"><code>main.js</code></td>
+<td data-label="Path"><code>src/main.js</code></td>
 <td data-label="Contents">Electron main process: window, default root, smoke bootstrap</td>
 </tr>
 <tr>
-<td data-label="Path"><code>preload.js</code></td>
+<td data-label="Path"><code>src/preload.js</code></td>
 <td data-label="Contents">The context bridge exposed to the renderer</td>
 </tr>
 <tr>
-<td data-label="Path"><code>ipc.js</code></td>
+<td data-label="Path"><code>src/ipc.js</code></td>
 <td data-label="Contents">IPC handlers for every filesystem operation, thumbnails, and previews</td>
 </tr>
 <tr>
-<td data-label="Path"><code>fs-utils.js</code></td>
+<td data-label="Path"><code>src/fs-utils.js</code></td>
 <td data-label="Contents">Shared filesystem helpers used by IPC and the smoke suite</td>
 </tr>
 <tr>
-<td data-label="Path"><code>media-ext.js</code></td>
+<td data-label="Path"><code>src/media-ext.js</code></td>
 <td data-label="Contents">The image and video extension sets, and why they differ from each other</td>
 </tr>
 <tr>
-<td data-label="Path"><code>media-info.js</code></td>
+<td data-label="Path"><code>src/media-info.js</code></td>
 <td data-label="Contents">Pixel dimensions for pictures and video, and thumbnail box sizing</td>
 </tr>
 <tr>
-<td data-label="Path"><code>image-header.js</code></td>
+<td data-label="Path"><code>src/image-header.js</code></td>
 <td data-label="Contents">Reads image dimensions from file headers, without decoding the picture</td>
 </tr>
 <tr>
-<td data-label="Path"><code>epub-reader.js</code></td>
+<td data-label="Path"><code>src/epub-reader.js</code></td>
 <td data-label="Contents">EPUB unpacking and chapter extraction</td>
 </tr>
 <tr>
-<td data-label="Path"><code>renderer/</code></td>
+<td data-label="Path"><code>src/renderer/</code></td>
 <td data-label="Contents">UI: tree, tabs, rendering, outline, editing, zoom, thumbnails, dialogs</td>
 </tr>
 <tr>
-<td data-label="Path"><code>themes/</code></td>
-<td data-label="Contents">Document theme stylesheets, and the script that scopes them to the content pane</td>
+<td data-label="Path"><code>src/renderer/md-glue.js</code></td>
+<td data-label="Contents">Wires the md-editor library to the globals the rest of the renderer calls</td>
 </tr>
 <tr>
-<td data-label="Path"><code>smoke/</code></td>
+<td data-label="Path"><code>src/renderer/outline-glue.js</code></td>
+<td data-label="Contents">The same, for the document outline and its folding</td>
+</tr>
+<tr>
+<td data-label="Path"><code>src/smoke/</code></td>
 <td data-label="Contents">Headless probe suite</td>
 </tr>
 <tr>
-<td data-label="Path"><code>scripts/vendor.js</code></td>
+<td data-label="Path"><code>src/scripts/vendor.js</code></td>
 <td data-label="Contents">Copies vendored browser libraries on postinstall</td>
 </tr>
 </tbody></table></div>
@@ -293,6 +305,10 @@ npm start
 <tr>
 <td data-label="Library"><a href="https://highlightjs.org/">highlight.js</a></td>
 <td data-label="License">BSD-3-Clause</td>
+</tr>
+<tr>
+<td data-label="Library"><a href="https://github.com/quansaritasa/md-editor">md-editor</a></td>
+<td data-label="License">MIT</td>
 </tr>
 </tbody></table></div>
 </section>

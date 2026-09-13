@@ -55,6 +55,7 @@ That idea turned out to apply well beyond markdown. A folder of research notes u
 
 **Browsing a folder**
 
+- Open a single file three ways — double-click it in Finder or Explorer, drop it on the window, or pick it with `⌘/Ctrl + O` and the 📄 button — without first adding its whole folder. The file's folder becomes the tree either way, so the arrow keys keep walking its neighbours, and a folder already open in a tab is reused rather than duplicated
 - File tree sidebar with live search
 - Two collections per folder tab, switchable from the sidebar: **All** for the whole folder and **Local** for a hand-pinned working set
 - **Favorites** — starred files and folders — is a global list, not tied to any one folder, so it lives as its own pinned first tab in the tab bar instead of the sidebar
@@ -104,7 +105,13 @@ npm install
 npm start
 ```
 
-`npm install` runs `scripts/vendor.js`, which copies the browser builds of `marked`, `mermaid`, and `highlight.js` into `renderer/vendor/`. That directory is generated, so it is not checked into git.
+`npm install` runs `src/scripts/vendor.js`, which copies the browser builds of `marked`, `mermaid`, `highlight.js` and `md-editor` — along with the four document themes — into `src/renderer/vendor/`. That directory is generated, so it is not checked into git.
+
+Because it is generated on `npm install` only, a `git pull` that changes where those files belong leaves the old copies behind and the new directory empty. The window then opens blank: the four `vendor/` script tags 404, so `MdEditor`, `marked` and `hljs` are all undefined, `src/renderer/edit.js` throws while initialising, and every later `openFile()` dies on the half-initialised module. Run the copy again after any pull that touches the layout:
+
+```bash
+npm run vendor
+```
 
 ## Building a distributable
 
@@ -123,7 +130,8 @@ The output lands in `dist/`. macOS targets are `.dmg` and `.zip`; Windows produc
 | `⌘/Ctrl + C` | Copy the open picture to the clipboard (pictures only — on text it stays the normal copy) |
 | `⌘/Ctrl + F` | Find in page |
 | `⌘/Ctrl + N` | New file in the current folder |
-| `⌘/Ctrl + O` | Open a folder in a new tab |
+| `⌘/Ctrl + O` | Open a file — its folder becomes the tree, so the arrow keys still walk the neighbours |
+| `⌘/Ctrl + Shift + O` | Open a folder in a new tab |
 | `⌘/Ctrl + 1` / `2` | Switch to the All / Local collection (no-op on the Favorites tab) |
 | `⌘/Ctrl + 0` | Switch to the pinned Favorites tab |
 | `⌘/Ctrl + Backspace` | Delete the open file |
@@ -153,18 +161,19 @@ The run prints `SMOKE OK` on success, or `SMOKE FAIL` together with a per-probe 
 
 | Path | Contents |
 |---|---|
-| `main.js` | Electron main process: window, default root, smoke bootstrap |
-| `preload.js` | The context bridge exposed to the renderer |
-| `ipc.js` | IPC handlers for every filesystem operation, thumbnails, and previews |
-| `fs-utils.js` | Shared filesystem helpers used by IPC and the smoke suite |
-| `media-ext.js` | The image and video extension sets, and why they differ from each other |
-| `media-info.js` | Pixel dimensions for pictures and video, and thumbnail box sizing |
-| `image-header.js` | Reads image dimensions from file headers, without decoding the picture |
-| `epub-reader.js` | EPUB unpacking and chapter extraction |
-| `renderer/` | UI: tree, tabs, rendering, outline, editing, zoom, thumbnails, dialogs |
-| `themes/` | Document theme stylesheets, and the script that scopes them to the content pane |
-| `smoke/` | Headless probe suite |
-| `scripts/vendor.js` | Copies vendored browser libraries on postinstall |
+| `src/main.js` | Electron main process: window, default root, smoke bootstrap |
+| `src/preload.js` | The context bridge exposed to the renderer |
+| `src/ipc.js` | IPC handlers for every filesystem operation, thumbnails, and previews |
+| `src/fs-utils.js` | Shared filesystem helpers used by IPC and the smoke suite |
+| `src/media-ext.js` | The image and video extension sets, and why they differ from each other |
+| `src/media-info.js` | Pixel dimensions for pictures and video, and thumbnail box sizing |
+| `src/image-header.js` | Reads image dimensions from file headers, without decoding the picture |
+| `src/epub-reader.js` | EPUB unpacking and chapter extraction |
+| `src/renderer/` | UI: tree, tabs, rendering, outline, editing, zoom, thumbnails, dialogs |
+| `src/renderer/md-glue.js` | Wires the md-editor library to the globals the rest of the renderer calls |
+| `src/renderer/outline-glue.js` | The same, for the document outline and its folding |
+| `src/smoke/` | Headless probe suite |
+| `src/scripts/vendor.js` | Copies vendored browser libraries on postinstall |
 
 Modules are kept focused and small; anything that grows past roughly 300 lines gets split.
 
@@ -176,6 +185,7 @@ Modules are kept focused and small; anything that grows past roughly 300 lines g
 | [marked](https://marked.js.org/) | MIT |
 | [Mermaid](https://mermaid.js.org/) | MIT |
 | [highlight.js](https://highlightjs.org/) | BSD-3-Clause |
+| [md-editor](https://github.com/quansaritasa/md-editor) | MIT |
 
 ## License
 

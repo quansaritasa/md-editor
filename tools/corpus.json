@@ -13,9 +13,9 @@
   { "id": "demo-meeting",      "file": "docs/demo/notes/meeting-notes.md" },
   { "id": "demo-scratch",      "file": "docs/demo/notes/scratch.md" },
   { "id": "demo-changelog-txt","file": "docs/demo/notes/changelog.txt" },
-  { "id": "smoke-intro",       "file": "smoke/fixtures/root/a-intro.md" },
-  { "id": "smoke-guide",       "file": "smoke/fixtures/root/b-guide.md" },
-  { "id": "smoke-flat",        "file": "smoke/fixtures/root/z-flat.md" },
-  { "id": "smoke-nested",      "file": "smoke/fixtures/root/sub/nested.md" },
-  { "id": "smoke-notes-txt",   "file": "smoke/fixtures/root/notes.txt" }
+  { "id": "smoke-intro",       "file": "src/smoke/fixtures/root/a-intro.md" },
+  { "id": "smoke-guide",       "file": "src/smoke/fixtures/root/b-guide.md" },
+  { "id": "smoke-flat",        "file": "src/smoke/fixtures/root/z-flat.md" },
+  { "id": "smoke-nested",      "file": "src/smoke/fixtures/root/sub/nested.md" },
+  { "id": "smoke-notes-txt",   "file": "src/smoke/fixtures/root/notes.txt" }
 ]

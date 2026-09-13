@@ -1,7 +1,7 @@
 {
   "name": "CHANGELOG.md",
   "options": {
-    "title": "Changelog",
+    "title": "CHANGELOG",
     "transforms": [
       "strip-hr",
       "data-labels",
@@ -11,5 +11,5 @@
       "good-view"
     ]
   },
-  "title": "Changelog"
+  "title": "CHANGELOG"
 }
