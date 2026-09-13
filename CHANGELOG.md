@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.3 — long tables label in one pass, and a `$&` in a cell no longer tears the row apart
+
+- `addDataLabels` rebuilt each table by searching the whole table string for every row's own text — `out.replace('<tr>' + oldRow + '</tr>', ...)`, once per row — which is O(rows x table size). A 1619-row / 644 KB table in a generated document spent about a second there: 1020 ms of a 1074 ms build, against 31 ms for marked itself. It now rewrites each `<tr>` in place in a single pass, so 3000 rows cost ~20 ms instead of 620 ms
+- The same code handed `String.prototype.replace` a replacement STRING, so a cell whose text held `$&`, `` $` ``, `$'` or `$1` had those patterns expanded into it. A cell reading `StartsWith($"host")` escapes to `$&quot;`, and `$&` means "splice the whole match back in here" — in one real document that left 8 cells unlabelled and 2 stray `</tr>` tags, a visibly broken table. Both loops now use replacer FUNCTIONS, which never expand `$` patterns
+
 ## v0.6.2 — the width cap survives a host that hides sections
 
 - `measureInset` probed whatever `root.querySelector('section')` returned, which is the FIRST section whether or not it is on screen. A host that keeps several sections mounted and shows one at a time — an EPUB reader paging through chapters is the case that surfaced it — hands back a `display:none` element for every chapter but the first. The probe inside it measures 0, so the element's whole width is reported as inset and `max-width` becomes `width + paneWidth`: far past the pane, so the text column reads as having no cap at all. It now takes the first section that is actually laid out, and a probe measuring 0 yields no inset instead of a huge one. Hosts whose sections are always visible are unaffected — the same first section is still the one chosen

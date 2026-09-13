@@ -62,26 +62,21 @@ function addDataLabels(html) {
   return html.replace(/<table>.*?<\/table>/gs, (table) => {
     const headers = [...table.matchAll(/<th>(.*?)<\/th>/gs)].map((m) => m[1].replace(/<.*?>/gs, '').trim());
     if (!headers.length) return table;
-    const rows = [...table.matchAll(/<tr>(.*?)<\/tr>/gs)].map((m) => m[1]);
-    const newRows = [];
-    for (const rowHtml of rows) {
-      if (rowHtml.includes('<th>')) { newRows.push(rowHtml); continue; }
-      const tds = [...rowHtml.matchAll(/<td>(.*?)<\/td>/gs)].map((m) => m[1]);
-      let newRow = rowHtml;
-      tds.forEach((tdContent, index) => {
-        if (index < headers.length) {
-          const label = escapeHtml(headers[index]);
-          const norm = normalizeTableCellContent(tdContent);
-          newRow = newRow.replace('<td>' + tdContent + '</td>', '<td data-label="' + label + '">' + norm + '</td>');
-        }
-      });
-      newRows.push(newRow);
-    }
-    let out = table;
-    rows.forEach((oldRow, i) => {
-      out = out.replace('<tr>' + oldRow + '</tr>', '<tr>' + newRows[i] + '</tr>');
+    // Rewritten in place, in one pass. Searching the whole table for each row's
+    // own text cost O(rows x table size) — a 1600-row table spent a second here
+    // — and a replacement STRING lets a cell holding "$&" or "$1" splice the
+    // match back into itself, tearing the row apart. A replacer FUNCTION is
+    // immune to both.
+    return table.replace(/<tr>(.*?)<\/tr>/gs, (whole, rowHtml) => {
+      if (rowHtml.includes('<th>')) return whole;
+      let col = 0;
+      return '<tr>' + rowHtml.replace(/<td>(.*?)<\/td>/gs, (cell, tdContent) => {
+        const index = col++;
+        if (index >= headers.length) return cell;
+        return '<td data-label="' + escapeHtml(headers[index]) + '">'
+          + normalizeTableCellContent(tdContent) + '</td>';
+      }) + '</tr>';
     });
-    return out;
   });
 }
 
