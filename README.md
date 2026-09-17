@@ -143,15 +143,33 @@ the library asks for a mount element and a scroller, and nothing else.
 
 ## Themes
 
-Four document themes ship with the library: `card`, `modern`, `glass` and
-`claude`. Every rule is scoped to the mount element, so a theme cannot reach
-out and restyle the host application.
+Twelve document themes ship with the library. Every rule is scoped to the
+mount element, so a theme cannot reach out and restyle the host application.
+
+| Theme | Look |
+|---|---|
+| `card` | Sections in bordered cards |
+| `modern` | Flat, clean, no cards |
+| `glass` | Glassmorphism |
+| `claude` | Warm paper, book-like |
+| `catppuccin` | Catppuccin Latte (light) and Mocha (dark) |
+| `nord` | Nord — arctic blues |
+| `gruvbox` | Gruvbox — warm retro |
+| `solarized` | Solarized light and dark |
+| `terminal` | Monospace throughout, Markdown hashes kept on headings, phosphor accents |
+| `editorial` | Newspaper — display serif, hairline rules, drop cap on the opening paragraph |
+| `eink` | Grayscale serif with no shadows; syntax is carried by weight and slant |
+| `contrast` | High contrast — black on white or white on black, thick borders, no grey text |
+
+Every theme carries a light and a dark block; `setDark` flips between them.
 
 Themes are copied into `dist/themes/` rather than bundled, because a host
 switches them at runtime by rewriting a `<link href>`.
 
 `tools/scope_theme.py` is the script that scopes upstream md-to-html theme CSS
-to the mount element. Run it when importing a new theme.
+to the mount element. Run it when importing a new theme. `tools/gen_themes.py` regenerates the eight
+palette and reading-mode themes from their token tables; edit the table, rerun,
+commit the output.
 
 ## Optional transforms
 

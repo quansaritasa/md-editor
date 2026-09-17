@@ -200,3 +200,36 @@ test('an unmeasurable probe yields no inset rather than the element width', () =
   assert.match(layoutCss(p), /max-width: 800px/,
     'a zero-width probe must not report the pane width as padding');
 });
+
+// Every name the library advertises has a file, and every file speaks the same
+// token vocabulary in both modes — a theme that forgets --code-bg in its dark
+// block would fall through to the light value and nobody would notice until a
+// user flipped the switch.
+test('every advertised theme ships a file that defines the shared tokens in light and dark', () => {
+  const fs = require('fs');
+  const path = require('path');
+  const dir = path.join(__dirname, '..', 'themes');
+  const onDisk = fs.readdirSync(dir).filter((f) => f.endsWith('.css')).map((f) => f.slice(0, -4)).sort();
+  assert.deepStrictEqual([...MdEditor.themes].sort(), onDisk, 'THEMES and themes/*.css must agree');
+
+  const TOKENS = ['book-bg', 'bg', 'surface', 'text', 'text-secondary', 'border', 'accent',
+    'accent-soft', 'code-bg', 'code-text', 'note-amber', 'note-amber-lt', 'note-amber-border',
+    'info-blue', 'info-blue-lt', 'info-blue-border', 'fields-key'];
+  // The four originals predate this vocabulary and name a few tokens their own
+  // way (card/claude/glass use --muted etc.); only the generated set is held to it.
+  const legacy = new Set(['card', 'modern', 'glass', 'claude']);
+  const declared = (css, sel) => {
+    const m = css.match(new RegExp(sel.replace(/[.]/g, '\\.') + '\\s*\\{([^}]*)\\}'));
+    return m ? new Set([...m[1].matchAll(/--([a-z-]+)\s*:/g)].map((x) => x[1])) : new Set();
+  };
+  for (const name of MdEditor.themes) {
+    if (legacy.has(name)) continue;
+    const css = fs.readFileSync(path.join(dir, name + '.css'), 'utf8');
+    const light = declared(css, '.md-editor');
+    const dark = declared(css, 'html.dark .md-editor');
+    for (const t of TOKENS) {
+      assert.ok(light.has(t), `${name}: light block lacks --${t}`);
+      assert.ok(dark.has(t), `${name}: dark block lacks --${t}`);
+    }
+  }
+});

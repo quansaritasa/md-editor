@@ -7,7 +7,14 @@
    Persistence goes through a storage prefix so two hosts on the same origin do
    not fight over the same keys. */
 
-const THEMES = ['card', 'modern', 'glass', 'claude'];
+// Order is the menu order a host gets from `theme.themes`: the four original
+// document looks first, then the palettes people know from their editor, then
+// the reading-mode specialists.
+const THEMES = [
+  'card', 'modern', 'glass', 'claude',
+  'catppuccin', 'nord', 'gruvbox', 'solarized',
+  'terminal', 'editorial', 'eink', 'contrast',
+];
 
 const DEFAULTS = {
   themes: THEMES,
