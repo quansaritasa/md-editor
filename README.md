@@ -92,7 +92,12 @@ const doc = await MdEditor.mount(content, markdown, {
   docPath: '/docs/guide.md',        // resolves relative links and pictures
   transforms: ['strip-hr', 'data-labels'],
   editableCode: true,
-  onNavigate: (path) => openInHost(path),
+  // `other.md#section`: path is the file, hash the fragment. Open the file,
+  // then MdEditor.jumpToAnchor(document, hash, onHash) lands on the anchor.
+  onNavigate: (path, a, hash) => openInHost(path, hash),
+  // `[text](#id)` inside the document: the target element, revealed if it
+  // sat in a folded section. Omit it for the browser's plain jump.
+  onHash: (target) => outline.jumpTo(target),
 });
 
 outline.build();                    // after mount: it reads the headings

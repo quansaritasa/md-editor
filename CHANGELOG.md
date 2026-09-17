@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.6 — `other.md#section` opens the file and lands on the section
+
+- `resolveDocPaths` handed the whole `other.md#section` string to the adapter as a file name, so the host was asked to open `other.md%23section` — a file that does not exist — and the click did nothing. The fragment is now split off before resolving: `dataset.path` is the file alone, the href keeps the fragment, and `onNavigate(path, a, hash)` receives it as a third argument (decoded, `''` when absent)
+- `MdEditor.jumpToAnchor(doc, id, onHash)` is exported — the v0.6.5 in-document jump, for a host to call once the linked file is on screen. Finds by id or `<a name>`, unfolds the section hiding the target, hands it to `onHash` or falls back to `scrollIntoView`, and returns the element or `null` on a miss
+
 ## v0.6.5 — a `[text](#id)` link finally goes somewhere
 
 - `bindLinks` called `preventDefault()` on every anchor and then returned early for a `#…` href, since such a link has no `dataset.path` — so an in-document link swallowed the browser's own jump and did nothing in its place. A generated document with 159 `<a id>` anchors and a table of contents pointing at them was unnavigable. The click now finds its target by id, or by name for the `<a name>` anchors older generators emit, decodes a percent-encoded fragment, and either hands the element to the host's new `onHash(target)` option or falls back to `scrollIntoView`

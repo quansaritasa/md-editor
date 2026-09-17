@@ -25,8 +25,17 @@ async function resolveDocPaths(root, docPath, adapter) {
       a.setAttribute('href', raw);
       return;
     }
-    a.dataset.path = await adapter.resolvePath(docPath, raw);
-    a.setAttribute('href', await adapter.resolveFile(docPath, raw));
+    // `other.md#section`: the fragment is not part of the file name, so it is
+    // split off before the adapter sees the path — resolved whole, it came back
+    // as a file called `other.md%23section` that does not exist. The fragment
+    // rides along on the element for bindLinks to hand to the host.
+    const cut = raw.indexOf('#');
+    const file = cut === -1 ? raw : raw.slice(0, cut);
+    const frag = cut === -1 ? '' : raw.slice(cut + 1);
+    if (frag) a.dataset.hash = decodeFragment(frag);
+    else delete a.dataset.hash;
+    a.dataset.path = await adapter.resolvePath(docPath, file);
+    a.setAttribute('href', await adapter.resolveFile(docPath, file) + (frag ? '#' + frag : ''));
   });
   await Promise.all([...images, ...links]);
 }
@@ -52,7 +61,7 @@ function bindLinks(root, options) {
       const p = a.dataset.path;
       if (!p) return;
       if (o.beforeOpen) o.beforeOpen();
-      onNavigate(p, a);
+      onNavigate(p, a, a.dataset.hash || '');
     };
   });
 }
@@ -65,15 +74,25 @@ function bindLinks(root, options) {
 // nowhere. The host's onHash gets the target when it wants its own scroll (the
 // outline's offset and easing, say); without one the browser does a plain jump.
 function jumpToHash(doc, href, onHash) {
-  let id = href.slice(1);
-  try { id = decodeURIComponent(id); } catch (_) { /* keep it raw */ }
-  if (!id) return;
+  return jumpToAnchor(doc, decodeFragment(href.slice(1)), onHash);
+}
+
+function decodeFragment(frag) {
+  try { return decodeURIComponent(frag); } catch (_) { return frag; }
+}
+
+// Exported as well: a host that opened `other.md#section` through onNavigate
+// calls this once the new document is on screen. Returns the target, or null
+// when the document has no such anchor.
+function jumpToAnchor(doc, id, onHash) {
+  if (!id) return null;
   const target = doc.getElementById(id)
     || doc.querySelector('a[name="' + id.replace(/["\\]/g, '\\$&') + '"]');
-  if (!target) return;
+  if (!target) return null;
   collapse.revealCollapsedTarget(target);
   if (onHash) onHash(target);
   else target.scrollIntoView({ block: 'start' });
+  return target;
 }
 
 /* The class every theme rule is scoped to. Applied by mount() so a host is free
@@ -112,4 +131,4 @@ async function mount(root, md, options) {
   return doc;
 }
 
-module.exports = { mount, resolveDocPaths, bindLinks, MOUNT_DEFAULTS, ROOT_CLASS };
+module.exports = { mount, resolveDocPaths, bindLinks, jumpToAnchor, MOUNT_DEFAULTS, ROOT_CLASS };

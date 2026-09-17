@@ -74,6 +74,40 @@ test('the default web adapter opens an in-document link itself', async () => {
   assert.deepStrictEqual(opened, ['file:///docs/b.md']);
 });
 
+test('a cross-file link with a fragment resolves the file alone and hands the hash over', async () => {
+  const p = makePage();
+  const got = [];
+  await MdEditor.mount(p.content, '[x](rules.md#br-1)\n[y](rules.md)\n[z](rules.md#sp%20ace)\n', {
+    docPath: DOC,
+    onNavigate: (path, a, hash) => got.push([path, hash]),
+  });
+  const links = [...p.content.querySelectorAll('a')];
+  assert.strictEqual(links[0].getAttribute('href'), 'file:///docs/rules.md#br-1', 'the fragment survives on the href');
+  assert.strictEqual(links[0].dataset.path, 'file:///docs/rules.md', 'but not in the path the host opens');
+  assert.strictEqual(links[1].dataset.hash, undefined);
+  links.forEach((a) => a.click());
+  assert.deepStrictEqual(got, [
+    ['file:///docs/rules.md', 'br-1'],
+    ['file:///docs/rules.md', ''],
+    ['file:///docs/rules.md', 'sp ace'],
+  ]);
+});
+
+test('jumpToAnchor finds by id or name, reveals, and reports a miss', async () => {
+  const p = makePage();
+  await MdEditor.mount(p.content, '## One\n\n<a id="a1"></a>\n\n<a name="n1"></a>\n', { docPath: DOC });
+  MdEditor.features.collapse.bind(p.content);
+  p.content.querySelector('.sec-toggle').click();
+  const hit = [];
+  const t = MdEditor.jumpToAnchor(p.document, 'a1', (el) => hit.push(el.id));
+  assert.strictEqual(t.id, 'a1');
+  assert.strictEqual(t.parentElement.hidden, false, 'unfolded');
+  assert.strictEqual(MdEditor.jumpToAnchor(p.document, 'n1', (el) => hit.push(el.getAttribute('name'))).getAttribute('name'), 'n1');
+  assert.strictEqual(MdEditor.jumpToAnchor(p.document, 'nope', () => hit.push('x')), null);
+  assert.strictEqual(MdEditor.jumpToAnchor(p.document, '', () => hit.push('x')), null);
+  assert.deepStrictEqual(hit, ['a1', 'n1']);
+});
+
 test('a #hash link reaches its target instead of being swallowed', async () => {
   const p = makePage();
   const md = '[go](#two)\n\n<a id="two"></a>\n\n## Two\n\ntext\n\n[named](#old) [none](#nope) [enc](#sp%20ace)\n\n<a name="old"></a>\n\n<a id="sp ace"></a>\n';

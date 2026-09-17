@@ -30,6 +30,7 @@ module.exports = {
   mountDefaults: mountMod.MOUNT_DEFAULTS,
   resolveDocPaths: mountMod.resolveDocPaths,
   bindLinks: mountMod.bindLinks,
+  jumpToAnchor: mountMod.jumpToAnchor,
   createAdapter: adapter.createAdapter,
   rootClass: mountMod.ROOT_CLASS,
 
