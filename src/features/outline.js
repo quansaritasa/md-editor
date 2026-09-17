@@ -160,8 +160,20 @@ function createOutline(config) {
     fold.bindActions({ list: c.list, content: c.content, box: c.actions.box, expand: c.actions.expand, collapse: c.actions.collapse });
   }
 
+  // What an outline click does, offered to the host for a jump it starts
+  // elsewhere — an in-document `#id` link — so both land the same way: the
+  // same offset and easing, the matching row highlighted, and the observer
+  // held off until the scroll settles. A target that is not itself a heading
+  // (an <a id> anchor before one) highlights nothing; the observer takes over.
+  function jumpTo(el) {
+    if (!el) return;
+    collapse.revealCollapsedTarget(el);
+    setActive(c.list ? c.list.querySelector('a[href="#' + el.id + '"]') : null);
+    scrollTo(el);
+  }
+
   return {
-    build, clear, setActive,
+    build, clear, setActive, jumpTo,
     updateActions: () => fold.updateActions(els),
     setAllFolds: (open) => fold.setAllFolds(els, open),
   };

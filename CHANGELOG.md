@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.6.5 — a `[text](#id)` link finally goes somewhere
+
+- `bindLinks` called `preventDefault()` on every anchor and then returned early for a `#…` href, since such a link has no `dataset.path` — so an in-document link swallowed the browser's own jump and did nothing in its place. A generated document with 159 `<a id>` anchors and a table of contents pointing at them was unnavigable. The click now finds its target by id, or by name for the `<a name>` anchors older generators emit, decodes a percent-encoded fragment, and either hands the element to the host's new `onHash(target)` option or falls back to `scrollIntoView`
+- `createOutline` returns a `jumpTo(el)` — what an outline click does, offered to the host so a hash link lands the same way: the same offset and easing, the matching outline row highlighted, and the intersection observer held off until the scroll settles. A target that is not a heading pins no row
+- `collapse.revealCollapsedTarget` only looked at `el.hidden`, but a fold hides a section's direct children, and marked wraps a lone `<a id></a>` in a `<p>` — so an anchor inside a folded section was never revealed and a jump to it went nowhere. It now looks for the hidden ancestor
+
 ## v0.6.4 — wide tables scroll instead of being cut off, and a failed diagram stops haunting later files
 
 - A table is only as narrow as its widest unbreakable cell, so one long code span — a fully qualified call, say — pushed the whole table past the card holding it. `.section` clips, as it must to keep its rounded corners, so those columns were not merely off screen but unreachable: no scrollbar anywhere on the page reached them. In one generated document, 19 of 23 tables were cut. `transform.run` now always wraps each finished table in `<div class="table-scroll">`, and `css/base.css` gives that box `overflow-x: auto`. Column widths are untouched and a table that already fits shows no scrollbar

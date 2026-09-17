@@ -9,6 +9,7 @@ const { createAdapter } = require('./adapter');
 const { build } = require('./build');
 const mermaid = require('./features/mermaid');
 const codeblocks = require('./features/codeblocks');
+const collapse = require('./features/collapse');
 
 // One adapter round trip per picture and per link, all in flight at once: a
 // doc-heavy page used to pay for them one after another.
@@ -39,6 +40,7 @@ function bindLinks(root, options) {
   const o = options || {};
   const adapter = o.adapter || createAdapter();
   const onNavigate = o.onNavigate || ((p) => adapter.openExternal(p));
+  const doc = root.ownerDocument;
   root.querySelectorAll('a').forEach((a) => {
     // Assignment, not addEventListener: re-binding a re-rendered document must
     // replace the old handler rather than stack a second one on top.
@@ -46,12 +48,32 @@ function bindLinks(root, options) {
       e.preventDefault();
       const href = a.getAttribute('href') || '';
       if (/^https?:\/\//i.test(href)) { adapter.openExternal(href); return; }
+      if (href.startsWith('#')) { jumpToHash(doc, href, o.onHash); return; }
       const p = a.dataset.path;
       if (!p) return;
       if (o.beforeOpen) o.beforeOpen();
       onNavigate(p, a);
     };
   });
+}
+
+// A `[text](#id)` link stays inside the document. The preventDefault above
+// also swallows the browser's own anchor jump, so the target has to be reached
+// here: by id (an explicit <a id> or a heading the outline slugged), or by
+// name for the <a name> anchors older generators still emit. A target hidden
+// in a folded section is opened first — scrolling to a hidden element goes
+// nowhere. The host's onHash gets the target when it wants its own scroll (the
+// outline's offset and easing, say); without one the browser does a plain jump.
+function jumpToHash(doc, href, onHash) {
+  let id = href.slice(1);
+  try { id = decodeURIComponent(id); } catch (_) { /* keep it raw */ }
+  if (!id) return;
+  const target = doc.getElementById(id)
+    || doc.querySelector('a[name="' + id.replace(/["\\]/g, '\\$&') + '"]');
+  if (!target) return;
+  collapse.revealCollapsedTarget(target);
+  if (onHash) onHash(target);
+  else target.scrollIntoView({ block: 'start' });
 }
 
 /* The class every theme rule is scoped to. Applied by mount() so a host is free

@@ -74,6 +74,42 @@ test('the default web adapter opens an in-document link itself', async () => {
   assert.deepStrictEqual(opened, ['file:///docs/b.md']);
 });
 
+test('a #hash link reaches its target instead of being swallowed', async () => {
+  const p = makePage();
+  const md = '[go](#two)\n\n<a id="two"></a>\n\n## Two\n\ntext\n\n[named](#old) [none](#nope) [enc](#sp%20ace)\n\n<a name="old"></a>\n\n<a id="sp ace"></a>\n';
+  const hit = [];
+  await MdEditor.mount(p.content, md, { docPath: DOC, onHash: (t) => hit.push(t.getAttribute('id') || t.getAttribute('name')) });
+  const links = [...p.content.querySelectorAll('a[href^="#"]')];
+  assert.strictEqual(links.length, 4);
+  links.forEach((a) => a.click());
+  assert.deepStrictEqual(hit, ['two', 'old', 'sp ace'], 'by id, by name, decoded — and a missing target does nothing');
+});
+
+test('a #hash link opens the folded section hiding its target', async () => {
+  const p = makePage();
+  const md = '[go](#deep)\n\n## One\n\n<a id="deep"></a>\n\ntext\n';
+  const hit = [];
+  // marked wraps a lone <a id> in a <p>, so the fold hides the paragraph, not the anchor
+  await MdEditor.mount(p.content, md, { docPath: DOC, onHash: (t) => hit.push(!!t.closest('[hidden]')) });
+  MdEditor.features.collapse.bind(p.content);
+  p.content.querySelector('.sec-toggle').click();
+  const deep = p.content.querySelector('#deep');
+  assert.strictEqual(deep.hidden, false, 'the anchor itself is not what the fold hides');
+  assert.strictEqual(deep.parentElement.hidden, true, 'its paragraph is');
+  p.content.querySelector('a[href="#deep"]').click();
+  assert.deepStrictEqual(hit, [false], 'revealed before the host scrolls');
+});
+
+test('without onHash a #hash link falls back to scrollIntoView', async () => {
+  const p = makePage();
+  await MdEditor.mount(p.content, '[go](#two)\n\n<a id="two"></a>\n', { docPath: DOC });
+  const two = p.content.querySelector('#two');
+  let scrolled = 0;
+  two.scrollIntoView = () => { scrolled++; };
+  p.content.querySelector('a').click();
+  assert.strictEqual(scrolled, 1);
+});
+
 test('Copy puts the block text on the clipboard, minus its trailing newline', async () => {
   const p = makePage();
   const clip = stubClipboard(p.window);

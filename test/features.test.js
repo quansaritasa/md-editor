@@ -90,6 +90,27 @@ test('the outline lists h2 and h3 with the right classes, and ids the headings',
   assert.strictEqual(p.section.style.display, '');
 });
 
+test('jumpTo lands like an outline click: highlights the row, scrolls, and unfolds', async () => {
+  const p = await withDoc(SECTIONED);
+  const o = makeOutline(p);
+  o.build();
+  collapse.bind(p.content);
+  const h2s = [...p.content.querySelectorAll('h2')];
+  h2s[1].querySelector('.sec-toggle').click();
+  const nested = p.content.querySelector('h3');
+  assert.strictEqual(nested.hidden, true);
+  o.jumpTo(nested);
+  assert.strictEqual(nested.hidden, false, 'folded section opened');
+  assert.strictEqual(p.list.querySelector('.outline-active').getAttribute('href'), '#two-a');
+  // an anchor that is not a heading pins no row, and clears the old one
+  const stray = p.document.createElement('a');
+  stray.id = 'stray';
+  p.content.appendChild(stray);
+  o.jumpTo(stray);
+  assert.strictEqual(p.list.querySelector('.outline-active'), null);
+  o.jumpTo(null); // tolerated
+});
+
 test('a heading-less document keeps the panel open and says so', async () => {
   const p = await withDoc('just a paragraph\n');
   assert.strictEqual(makeOutline(p).build(), 0);

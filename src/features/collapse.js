@@ -38,15 +38,19 @@ function setSectionOpen(h, range, open) {
 }
 
 // An outline click can target a heading inside a folded section. Unfold it
-// rather than scrolling to something the user cannot see.
+// rather than scrolling to something the user cannot see. The fold hides the
+// section's direct children, so a target nested deeper — an <a id> anchor that
+// marked wrapped in a <p>, say — is not itself hidden; the hidden ANCESTOR is
+// what sits in the range and names the section.
 function revealCollapsedTarget(el) {
-  if (!el || !el.hidden) return;
-  const parent = el.parentElement;
+  const hid = el && el.closest ? el.closest('[hidden]') : null;
+  if (!hid) return;
+  const parent = hid.parentElement;
   let h = null;
   if (parent && parent.classList.contains('section')) {
     h = parent.querySelector('h2');
   } else {
-    for (let p = el.previousElementSibling; p; p = p.previousElementSibling) {
+    for (let p = hid.previousElementSibling; p; p = p.previousElementSibling) {
       if (p.tagName === 'H2') { h = p; break; }
     }
   }
