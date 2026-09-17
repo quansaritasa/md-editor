@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.7.1 — `claude` dark is warm charcoal, with a terracotta accent
+
+- The dark block was a cool purple-gray (`#29262D` page, `#302D33` borders) under a warm ivory light block, so the two modes never read as one theme. Every neutral now sits on the light side's brown axis: `#2A2724` page, `#211F1C` surfaces, `#1E1C1A` code
+- Borders were 1.1:1 against the page — `pre`, tables and `hr` are outlined by them and effectively vanished. `#453F3A` is 1.4:1, visible without turning into a grid
+- Accent is Claude's terracotta, lifted to `#E08A6A` so a body-size link clears AA (5.7:1) on the new page; the light block keeps its blue. Info callouts keep their semantic blue in both modes
+- `--book-bg` dark follows (`#221F1C`), so an EPUB reads on the same paper
+
 ## v0.7.0 — eight more document themes
 
 - `themes/` grows from four to twelve. Four editor palettes — `catppuccin` (Latte / Mocha), `nord`, `gruvbox`, `solarized` — and four reading modes: `terminal` (monospace throughout, Markdown hashes kept on headings, phosphor accents), `editorial` (newspaper: display serif, hairline rules, drop cap on the opening paragraph, ❦ for a rule), `eink` (grayscale serif, no shadows; syntax carried by weight and slant instead of colour, images desaturated), and `contrast` (black on white / white on black, 2px borders, no grey text, 3px focus rings). Every one carries a light and a dark block

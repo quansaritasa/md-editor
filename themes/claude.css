@@ -45,45 +45,48 @@
     --info-blue-border: #5B9BD5;
     --fields-key: #2D6A4F;
 }.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
-    --book-bg: #1D1B20;
-    /* Was #18171A — darker than --surface/--pre-bg (#211F24/#1F1D22), the
-       opposite of light mode where --bg sits lighter than those. Now the page
-       is a shade lighter than the boxes it holds, in both modes. */
-    --bg: #29262D;
-    --surface: #211F24;
-    --surface-2: #2A272D;
+    /* Warm charcoal, not the cool purple-gray it used to be — dark is the
+       same ivory theme with the lights off, so every neutral sits on the
+       light block's brown axis. Border (#453F3A) is deliberately 1.4:1
+       against the page: pre, tables and hr are outlined by it and used to
+       vanish at 1.1:1. Accent is Claude's terracotta, lifted to #E08A6A so
+       a body-size link clears AA (5.7:1) on this page. */
+    --book-bg: #221F1C;
+    --bg: #2A2724;
+    --surface: #211F1C;
+    --surface-2: #35312D;
     --text: #EDE8E3;
     --strong: #EDE8E3;
-    --muted: #9E9690;
-    --border: #302D33;
-    --accent: #7EB3D8;
-    --accent-soft: #1C2D3D;
+    --muted: #A69F97;
+    --border: #453F3A;
+    --accent: #E08A6A;
+    --accent-soft: #3A2A23;
     --warning: #D4A853;
     --shadow: 0 2px 12px rgba(0,0,0,0.3);
     --title: #EDE8E3;
-    --sub-title: #9E9690;
-    --th-bg: #211F24;
+    --sub-title: #A69F97;
+    --th-bg: #211F1C;
     --th-title: #EDE8E3;
-    --h2-border-line: #302D33;
-    --table-even-row: #1F1D22;
-    --table-border: #302D33;
-    --pre-bg: #1F1D22;
+    --h2-border-line: #453F3A;
+    --table-even-row: #262320;
+    --table-border: #453F3A;
+    --pre-bg: #1E1C1A;
     --pre-text: #EDE8E3;
-    --code-bg: #1F1D22;
+    --code-bg: #1E1C1A;
     --code-text: #EDE8E3;
-    --block-card-bg: #211F24;
-    --header-bg-start: #18171A;
-    --header-bg-end: #211F24;
-    --table-bg: #18171A;
+    --block-card-bg: #211F1C;
+    --header-bg-start: #211F1C;
+    --header-bg-end: #2A2724;
+    --table-bg: #242220;
     --mermaid-bg: #ffffff;
-    --copy-btn-bg: rgba(33, 31, 36, 0.9);
-    --copy-btn-border: rgba(158, 150, 144, 0.2);
+    --copy-btn-bg: rgba(33, 31, 28, 0.9);
+    --copy-btn-border: rgba(166, 159, 151, 0.25);
     --copy-btn-text: #EDE8E3;
     --note-amber: #D4A853;
-    --note-amber-lt: #2A1F08;
+    --note-amber-lt: #2E2415;
     --note-amber-border: #D4A853;
     --info-blue: #7EB3D8;
-    --info-blue-lt: #1C2D3D;
+    --info-blue-lt: #232A30;
     --info-blue-border: #7EB3D8;
     --fields-key: #7DC4A0;
 }html.dark .md-editor .hljs-string { color: #98c379; }.md-editor *::before, .md-editor *::after { box-sizing: border-box; }.md-editor html { font-size: 16px; }.md-editor {
