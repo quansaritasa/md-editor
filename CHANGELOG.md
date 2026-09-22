@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.7.2 — `modern` h2 opens a section, not a page
+
+- The 52px above an `h2` was taller than the gap `h1` itself opens the
+  document with, so every `##` read as a page break rather than a section
+  break. 32px still clears the rule line under the heading comfortably
+- This puts `h2` (32px) below `h3` (38px) in top margin. Deliberate — the
+  rule line under `h2` already carries the hierarchy, so the space above it
+  does not also have to. `h3` and `h4` are unchanged
+- `modern` only. The eight palette themes ship the same `52px 0 14px` and
+  keep it
+
 ## v0.7.1 — `claude` dark is warm charcoal, with a terracotta accent
 
 - The dark block was a cool purple-gray (`#29262D` page, `#302D33` borders) under a warm ivory light block, so the two modes never read as one theme. Every neutral now sits on the light side's brown axis: `#2A2724` page, `#211F1C` surfaces, `#1E1C1A` code

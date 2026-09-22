@@ -100,7 +100,7 @@
 }.md-editor h2 {
     font-size: 1.625rem;
     font-weight: 600;
-    margin: 52px 0 14px;
+    margin: 32px 0 14px;
     padding-bottom: 6px;
     border-bottom: 1px solid var(--border);
 }.md-editor h3 {
