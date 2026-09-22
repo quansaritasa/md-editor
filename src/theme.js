@@ -13,7 +13,7 @@
 const THEMES = [
   'card', 'modern', 'glass', 'claude',
   'catppuccin', 'nord', 'gruvbox', 'solarized',
-  'terminal', 'editorial', 'eink', 'contrast',
+  'terminal', 'editorial', 'eink', 'blossom',
 ];
 
 const DEFAULTS = {

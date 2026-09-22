@@ -159,7 +159,7 @@ mount element, so a theme cannot reach out and restyle the host application.
 | `terminal` | Monospace throughout, Markdown hashes kept on headings, phosphor accents |
 | `editorial` | Newspaper — display serif, hairline rules, drop cap on the opening paragraph |
 | `eink` | Grayscale serif with no shadows; syntax is carried by weight and slant |
-| `contrast` | High contrast — black on white or white on black, thick borders, no grey text |
+| `blossom` | Soft pink paper with raspberry accents, rounded edges and a ❀ rule |
 
 Every theme carries a light and a dark block; `setDark` flips between them.
 

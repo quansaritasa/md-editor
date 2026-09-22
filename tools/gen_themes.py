@@ -19,6 +19,22 @@ modern = (ROOT / 'modern.css').read_text()
 # Everything from the first typography rule onward is the shared body.
 BODY = modern[modern.index('.md-editor {\n    font-family:'):]
 
+# BODY is sliced out of modern.css, so it arrives carrying modern's own spacing.
+# The eight generated palette themes run tighter than modern: their section gap
+# is 12px against modern's 32px, and an h2 outside a section falls back to a
+# wider top margin. Both deltas are applied here rather than hand-edited into
+# each generated file, so re-running this tool reproduces what is committed
+# instead of quietly reverting to modern's numbers.
+_RHYTHM_AT = BODY.index('/* \u2500\u2500 Section rhythm')
+SECTION_RHYTHM = BODY[_RHYTHM_AT:].rstrip('\n')
+BODY = BODY[:_RHYTHM_AT].rstrip('\n').replace(
+    '    margin: 32px 0 14px;\n    padding-bottom: 6px;',
+    '    margin: 52px 0 14px;\n    padding-bottom: 6px;')
+# The block trails the per-theme overrides so a theme can reshape .section and
+# still have the gap land last.
+SECTION_RHYTHM = SECTION_RHYTHM.replace('.md-editor .section { margin-bottom: 32px; }',
+                                        '.md-editor .section { margin-bottom: 12px; }')
+
 MONO = 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace'
 SERIF = '"Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif'
 SANS = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif'
@@ -48,7 +64,7 @@ def emit(name, desc, light, dark, hl_light, hl_dark, overrides):
              f'html.dark .md-editor .hljs-attr {{ color: {hl_dark[1]}; }}',
              BODY.rstrip('\n'),
              f'/* ── {name}: typography and component reshaping ── */',
-             overrides.strip('\n'), '']
+             overrides.strip('\n'), '', SECTION_RHYTHM, '']
     (ROOT / f'{name}.css').write_text('\n'.join(parts))
     print(name, (ROOT / f'{name}.css').stat().st_size)
 
@@ -243,55 +259,39 @@ emit('editorial', 'Newspaper — display serif headings, hairline rules, drop ca
 .md-editor .example-box, .md-editor .block-card {{ font-family: {SANS}; font-size: 0.95rem; }}
 ''')
 
-# ─────────────────────────── contrast ───────────────────────────
-emit('contrast', 'High contrast — black on white, white on black, thick borders, no grey text',
-     {**COMMON_LIGHT, 'mermaid-bg': '#ffffff', 'book-bg': '#FFFFFF', 'bg': '#FFFFFF', 'surface': '#F2F2F2', 'text': '#000000',
-      'text-secondary': '#000000', 'border': '#000000', 'accent': '#0000EE', 'accent-soft': '#E5E5FF',
-      'code-bg': '#F2F2F2', 'code-text': '#000000', 'radius': '0px',
-      'note-amber': '#000000', 'note-amber-lt': '#FFF3C4', 'note-amber-border': '#000000',
-      'info-blue': '#000000', 'info-blue-lt': '#DDEBFF', 'info-blue-border': '#000000', 'fields-key': '#000000'},
-     {'book-bg': '#000000', 'bg': '#000000', 'surface': '#1A1A1A', 'text': '#FFFFFF',
-      'text-secondary': '#FFFFFF', 'border': '#FFFFFF', 'accent': '#FFFF00', 'accent-soft': '#333300',
-      'code-bg': '#1A1A1A', 'code-text': '#FFFFFF',
-      'note-amber': '#FFFFFF', 'note-amber-lt': '#332B00', 'note-amber-border': '#FFFFFF',
-      'info-blue': '#FFFFFF', 'info-blue-lt': '#001A33', 'info-blue-border': '#FFFFFF', 'fields-key': '#FFFFFF'},
-     ('#000000', '#000000'), ('#FFFFFF', '#FFFFFF'),
+# ─────────────────────────── blossom ───────────────────────────
+emit('blossom', 'Blossom — soft pink paper, raspberry accents, rounded edges',
+     {**COMMON_LIGHT, 'mermaid-bg': '#fff5f8', 'book-bg': '#FFF5F8', 'bg': '#FFF5F8', 'surface': '#FDE9F0', 'text': '#3D2430',
+      'text-secondary': '#8A6B78', 'border': '#F2CEDD', 'accent': '#C2255C', 'accent-soft': '#FCE0EB',
+      'code-bg': '#FDE9F0', 'code-text': '#A61E4D', 'radius': '12px',
+      'note-amber': '#B54708', 'note-amber-lt': '#FFF1E3', 'note-amber-border': '#F0B27A',
+      'info-blue': '#7048A8', 'info-blue-lt': '#F3ECFB', 'info-blue-border': '#C4A7E7', 'fields-key': '#C2255C'},
+     {'book-bg': '#1E1419', 'bg': '#1E1419', 'surface': '#2A1B23', 'text': '#F6E4EC',
+      'text-secondary': '#C09FB0', 'border': '#432E38', 'accent': '#F783AC', 'accent-soft': '#3A2129',
+      'code-bg': '#2A1B23', 'code-text': '#FFA8C5',
+      'note-amber': '#F0B27A', 'note-amber-lt': '#33210F', 'note-amber-border': '#B54708',
+      'info-blue': '#C4A7E7', 'info-blue-lt': '#241A33', 'info-blue-border': '#7048A8', 'fields-key': '#F783AC'},
+     ('#0B7285', '#C2255C'), ('#63C8B0', '#F783AC'),
      '''
-.md-editor { font-size: 17px; line-height: 1.7; }
-.md-editor h1 { border-bottom: 3px solid var(--text); }
-.md-editor h2 { border-bottom: 2px solid var(--text); }
-.md-editor .header { border-bottom: 2px solid var(--text); }
-.md-editor .eyebrow { background: var(--text); color: var(--bg); border-radius: 0; font-weight: 700; }
-.md-editor a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; font-weight: 600; }
-.md-editor a:hover { background: var(--accent); color: var(--bg); }
-.md-editor a:focus-visible, .md-editor button:focus-visible, .md-editor select:focus-visible {
-    outline: 3px solid var(--accent); outline-offset: 2px;
-}
-.md-editor th, .md-editor td { border: 2px solid var(--text); }
-.md-editor th { background: var(--text); color: var(--bg); }
+.md-editor h1 { color: var(--accent); border-bottom: 2px solid var(--accent-soft); }
+.md-editor h2 { color: var(--accent); border-bottom: 1px solid var(--border); }
+.md-editor h3 { color: var(--accent); }
+.md-editor .header { border-bottom: 1px solid var(--border); }
+.md-editor .eyebrow { border-radius: 999px; letter-spacing: 0.08em; font-weight: 600; }
+.md-editor a { text-decoration-color: var(--accent-soft); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.md-editor a:hover { text-decoration-color: var(--accent); }
+.md-editor th { background: var(--accent-soft); color: var(--accent); }
 .md-editor tr:nth-child(even) td { background: var(--surface); }
-.md-editor code { border: 1px solid var(--text); font-size: 0.9em; }
-.md-editor pre { border: 2px solid var(--text); font-size: 0.9rem; }
-/* Colour alone is never the signal here: weight and slant carry the syntax. */
-.md-editor [class*="hljs-"] { color: var(--text); }
-.md-editor .hljs-comment, .md-editor .hljs-quote { font-style: italic; }
-.md-editor .hljs-keyword, .md-editor .hljs-built_in, .md-editor .hljs-title, .md-editor .hljs-section,
-.md-editor .hljs-selector-tag, .md-editor .hljs-name { font-weight: 700; }
-.md-editor .hljs-string { text-decoration: underline; text-underline-offset: 2px; }
-.md-editor blockquote, .md-editor .blockquotes { border-left: 6px solid var(--text); color: var(--text); background: var(--surface); }
-.md-editor .blockquotes.note, .md-editor .blockquotes.info { border-left-color: var(--text); color: var(--text); }
-.md-editor .blockquotes.note strong, .md-editor .blockquotes.note p,
-.md-editor .blockquotes.info strong, .md-editor .blockquotes.info p { color: var(--text); }
-.md-editor .example-box, .md-editor .block-card, .md-editor .mermaid-wrapper { border: 2px solid var(--text); }
-.md-editor .example-box.good-box { border-left: 8px solid var(--text); }
-.md-editor .example-box.bad-box { border-left: 8px dashed var(--text); }
-.md-editor hr { border-top: 2px solid var(--text); }
+.md-editor code { border-radius: 6px; }
+.md-editor pre { border-radius: var(--radius); }
+.md-editor blockquote, .md-editor .blockquotes { border-left-width: 4px; border-radius: 0 var(--radius) var(--radius) 0; }
+.md-editor .example-box, .md-editor .block-card, .md-editor .mermaid-wrapper { border-radius: var(--radius); }
+.md-editor hr { border: none; text-align: center; margin: 36px 0; }
+.md-editor hr::after { content: "❀"; color: var(--accent); font-size: 1.1rem; }
 .md-editor .code-copy-btn, .md-editor .code-full-btn, .md-editor .code-wrap-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select, .md-editor .theme-btn {
-    border: 2px solid var(--text); border-radius: 0; color: var(--text); font-weight: 700;
+    border-radius: 999px;
 }
-.md-editor .code-copy-btn:hover, .md-editor .code-full-btn:hover, .md-editor .code-wrap-btn:hover,
-.md-editor .code-wrap-btn.active, .md-editor .mermaid-zoom-btn:hover { background: var(--text); color: var(--bg); }
 ''')
 
 # ─────────────────────────── nord ───────────────────────────

@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.9.0 — `contrast` gives way to `blossom`; the generator stops lying
+
+- `contrast` is gone and `blossom` takes its slot: soft pink paper
+  (`#FFF5F8` / `#1E1419`), raspberry accents, 12px corners, pill-shaped
+  eyebrow and code buttons, a 4px quote bar and `❀` for a rule. Both text
+  colours clear 4.5:1 on their own paper in light and dark
+- `tools/gen_themes.py` reproduced `modern`'s spacing rather than the tighter
+  numbers v0.8.1 hand-edited into the eight palette themes, so re-running it
+  silently reverted that release. The two deltas — a 52px h2 fallback and a
+  12px section gap, the block moved after the per-theme overrides — now live
+  in `emit()`, and regenerating leaves the other seven themes byte-identical
+- `card` h3 gains headroom: `24px` top margin becomes `38px`, so a subsection
+  no longer crowds the paragraph above it
+
 ## v0.8.2 — `glass` headings stop being padded like sections
 
 - `glass` styles an h2 as its own floating card by grouping it with
