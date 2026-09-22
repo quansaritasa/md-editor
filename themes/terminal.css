@@ -530,5 +530,5 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
    nameable. The gap now belongs to .section alone; the h2 rule above is kept
    as the fallback for an h2 rendered outside a section. Card has worked this
    way from the start; this brings the rest into line. */
-.md-editor .section { margin-bottom: 52px; }
+.md-editor .section { margin-bottom: 12px; }
 .md-editor .section > h2:first-child { margin-top: 0; }

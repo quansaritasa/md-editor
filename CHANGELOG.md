@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.8.1 — the eight palette themes close the gap between sections
+
+- `catppuccin`, `contrast`, `editorial`, `eink`, `gruvbox`, `nord`,
+  `solarized` and `terminal` carried a 52px `.section` margin, inherited from
+  the h2 top margin v0.8.0 moved there. 12px. With each section's own padding
+  the visible gap goes from 68px to 28px
+- Correction to the v0.8.0 notes: they said `glass` "declares neither value,
+  so its sections still sit flush". Wrong on both counts — `glass` sets
+  `margin-bottom: 32px` and a 4px h2 top margin in a selector that groups
+  `.section` with `h2`, giving it the widest gap of any theme. It is still the
+  one theme paying the gap twice; unchanged here
+- `card` (26px), `modern` (32px) and `claude` (1rem) keep their own values
+
 ## v0.8.0 — one value decides the gap between sections
 
 - An h2 is always the first child of the `.section` the postprocess wraps it
