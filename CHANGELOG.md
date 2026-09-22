@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.9.1 — `card` h3 sits a step below h2
+
+- `card` h3 drops from 20px to 19px, widening the gap to the 26px h2 above it
+  so the two heading levels read as distinct at a glance
+
 ## v0.9.0 — `contrast` gives way to `blossom`; the generator stops lying
 
 - `contrast` is gone and `blossom` takes its slot: soft pink paper

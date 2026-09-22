@@ -184,7 +184,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor h3{
     margin: 38px 0 10px;
-    font-size: 20px;
+    font-size: 19px;
     color: var(--sub-title);
 }
 .md-editor h4{
