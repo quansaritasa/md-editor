@@ -512,3 +512,14 @@ html.dark .md-editor .hljs-attr { color: #E6E6E6; }
 .md-editor hr { border-top: 1px solid var(--text); }
 .md-editor .code-copy-btn, .md-editor .code-full-btn, .md-editor .code-wrap-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select, .md-editor .theme-btn { border-radius: 0; }
+
+/* ── Section rhythm ───────────────────────────
+   md-editor's postprocess cuts the document into .section wrappers at each h2,
+   so an h2 is always that wrapper's first child. Its top margin therefore
+   stacked INSIDE the section's own padding, and any .section margin stacked on
+   top of that again — three separate values deciding one gap, none of them
+   nameable. The gap now belongs to .section alone; the h2 rule above is kept
+   as the fallback for an h2 rendered outside a section. Card has worked this
+   way from the start; this brings the rest into line. */
+.md-editor .section { margin-bottom: 52px; }
+.md-editor .section > h2:first-child { margin-top: 0; }

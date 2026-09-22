@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.8.0 — one value decides the gap between sections
+
+- An h2 is always the first child of the `.section` the postprocess wraps it
+  in, so its top margin was stacking inside that section's padding, and a
+  theme's own `.section` margin stacked on top again. Three values decided one
+  gap and none of them could be pointed at. `.section` now owns it alone
+- Nine themes move their h2 top margin onto `.section` unchanged, so the
+  rendered gap is identical to v0.7.3. `claude` was paying it twice and loses
+  roughly 40px between sections
+- The `h2` margin rules are untouched and still apply to an h2 rendered
+  outside a `.section`
+- `card` already worked this way and is unchanged. `glass` declares neither
+  value, so its sections still sit flush — not addressed here
+
 ## v0.7.3 — `claude` sections sit closer together
 
 - `.section` carried a 2rem bottom margin, and each section also pays its own

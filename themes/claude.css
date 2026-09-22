@@ -420,3 +420,9 @@
     align-items: center;
     justify-content: center;
 }
+
+/* See the section-rhythm note in the other themes: the h2 top margin was
+   stacking on top of .section's own 1rem, so one gap was being paid twice.
+   .section keeps the gap; the h2 rule stays as the outside-a-section
+   fallback. */
+.md-editor .section > h2:first-child { margin-top: 0; }
