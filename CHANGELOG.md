@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.7.3 — `claude` sections sit closer together
+
+- `.section` carried a 2rem bottom margin, and each section also pays its own
+  top and bottom padding, so consecutive sections were separated by far more
+  empty space than the gap between a heading and its own text. 1rem
+- Only the margin moved. Section padding is the host's to set, and the other
+  themes' `.section` spacing is unchanged
+
 ## v0.7.2 — `modern` h2 opens a section, not a page
 
 - The 52px above an `h2` was taller than the gap `h1` itself opens the
