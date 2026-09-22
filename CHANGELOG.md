@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.8.2 — `glass` headings stop being padded like sections
+
+- `glass` styles an h2 as its own floating card by grouping it with
+  `.section`, which also gave it `.section`'s full vertical padding — 24px
+  here, more wherever a host substitutes its own value. A one-line heading
+  came out at 117px in such a host, only 43px of it text. Vertical padding is
+  now 14px; the horizontal inset is untouched, so headings stay aligned with
+  the text below them
+- `glass` also takes the section-rhythm fix from v0.8.0, which it was left out
+  of: an h2 that is a section's first child no longer adds its own top margin
+  on top of `.section`'s bottom margin
+
 ## v0.8.1 — the eight palette themes close the gap between sections
 
 - `catppuccin`, `contrast`, `editorial`, `eink`, `gruvbox`, `nord`,

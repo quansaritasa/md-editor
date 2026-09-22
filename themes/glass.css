@@ -545,3 +545,19 @@
     align-items: center;
     justify-content: center;
 }
+
+/* ── h2 card: a heading, not a section ────────
+   glass groups h2 with .section so the heading floats as its own glass card.
+   That also handed it .section's full padding on all four sides, so a
+   one-line heading was padded like a block of content. The horizontal inset
+   stays grouped with .section so a heading still lines up with the text
+   beneath it, and still tracks whatever a host substitutes for that padding;
+   only the vertical shrinks.
+
+   The second rule is the section-rhythm fix the other themes took in v0.8.0,
+   which glass was left out of: h2 is the section's first child, so its top
+   margin stacked on top of .section's own bottom margin and one gap was paid
+   twice. .section owns it alone now. The 4px above stays for an h2 rendered
+   outside a section. */
+.md-editor h2 { padding-block: 14px; }
+.md-editor .section > h2:first-child { margin-top: 0; }
