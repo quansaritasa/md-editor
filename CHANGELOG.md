@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.9 — a touch more room for ER row values
+
+- ER row values sit a little further again off their column's left line
+
 ## v0.10.8 — more daylight between an ER value and its column line
 
 - The inset added in v0.10.7 was too slight to see; ER row values now sit

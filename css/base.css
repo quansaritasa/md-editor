@@ -159,7 +159,7 @@ html.dark .md-editor-source {
    1px here is one SVG user unit, so the inset scales with the diagram like the
    text does, instead of growing as the reader zooms out. */
 .md-editor .mermaid svg.erDiagram g.node g.label:not(.name) foreignObject {
-  translate: 5px 0;
+  translate: 7px 0;
 }
 
 /* Relationship labels on the lines: 40px, wrapping inside 480px — the same
