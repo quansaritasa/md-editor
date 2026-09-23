@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.10.1 — diagrams take the theme's colours; the minimap frame stops hiding them
+
+- Mermaid diagrams were drawn in mermaid's own palette under every theme. Node
+  fills, ER row stripes, borders and lines now come from the theme's
+  `--accent` over its `--mermaid-bg` paper, text staying dark ink. mermaid is
+  re-initialised when those colours change instead of once per page, and the
+  new `features.mermaid.refreshTheme(root)` redraws diagrams already on the
+  page — a host calls it after a theme or light/dark switch. Hosts' own
+  `mermaidConfig.themeVariables` still take precedence
+- The minimap's view frame was filled with `--accent-soft`, an opaque colour
+  in every theme, so it hid the tables it framed. It is now a 20% `--accent`
+  tint
+
 ## v0.10.0 — big diagrams stay readable: focus, minimap, search
 
 - Click a node in a mermaid ER, flowchart or class diagram to light it, its

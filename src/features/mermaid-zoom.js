@@ -77,11 +77,16 @@ function bindInlinePointer(wrap, win, view) {
 }
 
 // Click a table to light it and its neighbours. Read lazily: most diagrams
-// are never clicked, and the SVG is final by the time anyone can click.
+// are never clicked. Re-read when the SVG was swapped — a theme change
+// redraws the diagram in place (mermaid.refreshTheme).
 function bindInlineFocus(wrap, el) {
-  let focus = null;
+  let focus = null, svg = null;
   focusLib.bindClicks(wrap, {
-    get graph() { return (focus = focus || focusLib.create([el.querySelector('svg')])).graph; },
+    get graph() {
+      const now = el.querySelector('svg');
+      if (!focus || svg !== now) { svg = now; focus = focusLib.create([now]); }
+      return focus.graph;
+    },
     get key() { return focus && focus.key; },
     toggle(n) { focus.toggle(n); },
     clear() { if (focus) focus.clear(); },

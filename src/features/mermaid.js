@@ -6,6 +6,7 @@
 
 const deps = require('../deps');
 const zoom = require('./mermaid-zoom');
+const mermaidTheme = require('./mermaid-theme');
 
 const INIT = {
   startOnLoad: false,
@@ -14,15 +15,22 @@ const INIT = {
   themeVariables: { background: '#f6f8fa' },
 };
 
-let initialized = false;
+let lastKey = null;
 
-// Initialised on first use rather than at load, so a host that pulls mermaid in
-// late still gets a configured instance, and one that never renders a diagram
-// never touches it.
-function ensureInit(m, overrides) {
-  if (initialized) return;
-  m.initialize(Object.assign({}, INIT, overrides || {}));
-  initialized = true;
+// (Re)initialised whenever the page theme's colours change, not once: mermaid
+// bakes its palette into every SVG it draws, so a diagram drawn before a theme
+// switch keeps the old theme's colours. Initialised lazily, so a host that
+// pulls mermaid in late still gets a configured instance. Returns whether it
+// (re)initialised. The host's mermaidConfig wins over the theme's colours.
+function ensureInit(m, overrides, root) {
+  const vars = root ? mermaidTheme.themeVars(root) : null;
+  const key = JSON.stringify([vars, overrides || null]);
+  if (key === lastKey) return false;
+  const o = overrides || {};
+  const themeVariables = Object.assign({}, INIT.themeVariables, vars || {}, o.themeVariables || {});
+  m.initialize(Object.assign({}, INIT, o, { themeVariables }));
+  lastKey = key;
+  return true;
 }
 
 // Every scratch element this module can strand is id'd 'd' + a render id, and
@@ -38,53 +46,79 @@ function sweepScratch(doc) {
   }
 }
 
+// One diagram to SVG markup, or null when it will not parse.
+async function drawOne(m, id, src, doc) {
+  try {
+    return (await m.render(id, src)).svg;
+  } catch (err) {
+    console.warn('md-editor: mermaid failed:', err);
+    return null;
+  } finally {
+    // A diagram that will not parse still gets drawn: mermaid renders its
+    // "Syntax error in text" graphic into a scratch element it appends to
+    // <body> — id 'd' + the render id — and then throws, leaving it there.
+    // That element sits OUTSIDE the mounted document, so neither the next
+    // render nor the host replacing the document's innerHTML can reach it,
+    // and the error then shows on top of every file opened afterwards,
+    // including files that contain no diagram at all.
+    const scratch = doc && typeof doc.getElementById === 'function' ? doc.getElementById('d' + id) : null;
+    if (scratch && scratch.remove) scratch.remove();
+  }
+}
+
 async function render(root, options) {
   const o = options || {};
   const m = deps.mermaid();
   if (!m) return 0;
+  const doc = root.ownerDocument;
   // Before the early return on purpose: a leftover outlives the document that
   // produced it, so the file that has to clear it is usually one with no
-  // diagrams at all. See the finally below for how it gets there.
-  sweepScratch(root.ownerDocument);
+  // diagrams at all. See drawOne's finally for how it gets there.
+  sweepScratch(doc);
   const blocks = root.querySelectorAll('code.language-mermaid');
   if (!blocks.length) return 0;
-  ensureInit(m, o.mermaidConfig);
+  ensureInit(m, o.mermaidConfig, root);
 
   let n = 0;
   for (let i = 0; i < blocks.length; i++) {
-    const el = blocks[i];
-    const src = (el.textContent || '').trim();
-    const pre = el.closest('pre');
+    const src = (blocks[i].textContent || '').trim();
+    const pre = blocks[i].closest('pre');
     if (!pre || !src) continue;
     // The id must be unique per render or mermaid reuses a stale definition;
     // the counter is passed in so the caller stays deterministic under test.
-    const id = 'mmd-' + i + '-' + (o.idSeed != null ? o.idSeed : Date.now());
-    try {
-      const out = await m.render(id, src);
-      const wrap = root.ownerDocument.createElement('div');
-      wrap.className = 'mermaid-wrapper';
-      const dia = root.ownerDocument.createElement('div');
-      dia.className = 'mermaid';
-      dia.innerHTML = out.svg;
-      wrap.appendChild(dia);
-      pre.replaceWith(wrap);
-      n++;
-    } catch (err) {
-      console.warn('md-editor: mermaid failed:', err);
-    } finally {
-      // A diagram that will not parse still gets drawn: mermaid renders its
-      // "Syntax error in text" graphic into a scratch element it appends to
-      // <body> — id 'd' + the render id — and then throws, leaving it there.
-      // That element sits OUTSIDE the mounted document, so neither the next
-      // render nor the host replacing the document's innerHTML can reach it,
-      // and the error then shows on top of every file opened afterwards,
-      // including files that contain no diagram at all.
-      const doc = root.ownerDocument;
-      const scratch = doc && typeof doc.getElementById === 'function' ? doc.getElementById('d' + id) : null;
-      if (scratch && scratch.remove) scratch.remove();
-    }
+    const svg = await drawOne(m, 'mmd-' + i + '-' + (o.idSeed != null ? o.idSeed : Date.now()), src, doc);
+    if (svg == null) continue;
+    const wrap = doc.createElement('div');
+    wrap.className = 'mermaid-wrapper';
+    const dia = doc.createElement('div');
+    dia.className = 'mermaid';
+    dia.setAttribute('data-mermaid-src', src); // kept so refreshTheme can redraw it
+    dia.innerHTML = svg;
+    wrap.appendChild(dia);
+    pre.replaceWith(wrap);
+    n++;
   }
   if (o.mermaidZoom !== false) zoom.init(root, o);
+  return n;
+}
+
+// Redraw the diagrams already on the page when the theme's colours changed —
+// call it after a theme or light/dark switch has applied. A no-op, and cheap,
+// when the colours are the same. Zoom and pan are kept; a focus is dropped.
+async function refreshTheme(root, options) {
+  const o = options || {};
+  const m = deps.mermaid();
+  if (!m || !root.querySelector('.mermaid[data-mermaid-src]')) return 0;
+  if (!ensureInit(m, o.mermaidConfig, root)) return 0;
+  const doc = root.ownerDocument;
+  const dias = root.querySelectorAll('.mermaid-wrapper > .mermaid[data-mermaid-src]');
+  let n = 0;
+  for (let i = 0; i < dias.length; i++) {
+    const svg = await drawOne(m, 'mmd-r' + i + '-' + Date.now(), dias[i].getAttribute('data-mermaid-src'), doc);
+    if (svg == null) continue;
+    dias[i].innerHTML = svg;
+    n++;
+  }
   return n;
 }
 
@@ -99,4 +133,4 @@ function highlight(root) {
   return n;
 }
 
-module.exports = { render, highlight, INIT, sweepScratch };
+module.exports = { render, refreshTheme, highlight, INIT, sweepScratch };

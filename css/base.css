@@ -163,7 +163,9 @@ html.dark .md-editor-source {
 .md-editor .mermaid-minimap-frame {
   position: absolute;
   border: 2px solid var(--accent);
-  background: var(--accent-soft, transparent);
+  /* Tinted, never solid: --accent-soft is an opaque colour in every theme,
+     and a solid frame hides the very tables it is framing. */
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
   border-radius: 2px;
   pointer-events: none;
   box-sizing: border-box;

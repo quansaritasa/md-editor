@@ -119,8 +119,14 @@ and zoom as before, without them.
 | Search | Fullscreen | `/` opens the search box. Type part of a name, pick with ↑/↓ and Enter: the node is focused, centred and zoomed to at least 100% |
 
 In fullscreen, Esc clears a focus first and closes the overlay on the next
-press. Colours come from the theme's `--accent`, `--accent-soft`, `--border`
+press. The aids' own colours come from the theme's `--accent`, `--border`
 and `--surface`.
+
+Diagram colours follow the page theme: nodes, ER rows and lines are drawn
+from the theme's `--accent` over its `--mermaid-bg` paper, with dark text. mermaid
+bakes colours into each SVG, so after a theme or light/dark switch has applied
+call `MdEditor.features.mermaid.refreshTheme(content)`; it redraws only when the
+colours changed. A host's own `mermaidConfig.themeVariables` still win.
 
 The pieces are exposed for hosts that want them elsewhere:
 `features.mermaidGraph.readGraph(svg)` reads nodes and edges back out of a
