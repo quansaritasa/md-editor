@@ -61,3 +61,12 @@ test('an element the host owns is never swept', async () => {
   await MdEditor.mount(p.content, '# Text\n', {});
   assert.ok(p.document.getElementById('dashboard'), 'host element untouched');
 });
+
+test('ER diagrams, and only ER diagrams, get the larger font', () => {
+  const { withErFont } = require('../src/features/mermaid');
+  assert.match(withErFont('erDiagram\n  A ||--o{ B : has'), /^%%\{init: \{"fontSize": 42, "themeVariables": \{"fontSize": "42px"\}.*\nerDiagram/);
+  assert.strictEqual(withErFont('flowchart LR\n  a --> b'), 'flowchart LR\n  a --> b');
+  const fm = withErFont('---\ntitle: T\n---\nerDiagram\n  A');
+  assert.ok(fm.startsWith('---\ntitle: T\n---\n%%{init:'), 'directive goes after frontmatter');
+  assert.ok(withErFont('%% note\nerDiagram\n  A').startsWith('%%{init:'), 'leading comment still ER');
+});

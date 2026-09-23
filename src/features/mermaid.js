@@ -15,6 +15,24 @@ const INIT = {
   themeVariables: { background: '#f6f8fa' },
 };
 
+// ER tables are wide, so the SVG gets shrunk to fit the column and their text
+// ends up smaller than any other diagram's. mermaid 11 ignores er.fontSize;
+// a per-diagram init directive is the one knob that reaches ER alone, and it
+// sits after any frontmatter so the frontmatter still parses. Column widths
+// come from the top-level fontSize, box heights from themeVariables.fontSize,
+// so both are set — to the table-name size, the largest; base.css then draws
+// rows a little smaller inside those boxes.
+const ER_FONT = '%%{init: {"fontSize": 42, "themeVariables": {"fontSize": "42px"}, '
+  + '"er": {"nodeSpacing": 160, "rankSpacing": 120}}}%%\n';
+const FRONTMATTER = /^---\r?\n[\s\S]*?\r?\n---\r?\n/;
+
+function withErFont(src) {
+  const fm = FRONTMATTER.exec(src);
+  const head = fm ? fm[0] : '';
+  const body = src.slice(head.length);
+  return /^(\s*%%.*\n)*\s*erDiagram\b/.test(body) ? head + ER_FONT + body : src;
+}
+
 let lastKey = null;
 
 // (Re)initialised whenever the page theme's colours change, not once: mermaid
@@ -49,7 +67,7 @@ function sweepScratch(doc) {
 // One diagram to SVG markup, or null when it will not parse.
 async function drawOne(m, id, src, doc) {
   try {
-    return (await m.render(id, src)).svg;
+    return (await m.render(id, withErFont(src))).svg;
   } catch (err) {
     console.warn('md-editor: mermaid failed:', err);
     return null;
@@ -133,4 +151,4 @@ function highlight(root) {
   return n;
 }
 
-module.exports = { render, refreshTheme, highlight, INIT, sweepScratch };
+module.exports = { render, refreshTheme, highlight, INIT, sweepScratch, withErFont };

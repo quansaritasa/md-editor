@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.10.3 — ER tables get big, readable text
+
+- ER table text was pinned to 14px by every theme, while the tables were laid
+  out for mermaid's own font, so it stayed tiny in a wide diagram. Table names
+  now draw at 42px and rows at 38px, only in ER diagrams
+- Columns are measured at the same size the text is drawn at, so long comments
+  no longer run past their column
+- Tables sit further apart (160 across, 120 between ranks) to match the larger
+  boxes
+
 ## v0.10.2 — ER tables read as tables; the minimap frame gets lighter
 
 - ER entity rows ignored the theme: mermaid 11 reads `rowOdd`/`rowEven`, the

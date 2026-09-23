@@ -115,6 +115,20 @@ html.dark .md-editor-source {
   stroke: color-mix(in srgb, color-mix(in srgb, var(--accent) 60%, #1f2937) 30%, var(--mermaid-bg, #f6f8fa));
 }
 
+/* ER text: every theme pins mermaid labels to 14px !important, but mermaid
+   sized the ER boxes with its own 42px font (mermaid.js ER_FONT). Table names
+   inherit that size; rows draw at 38px, so they never outgrow their columns. */
+.md-editor .mermaid-wrapper .mermaid svg.erDiagram g.node p,
+.md-editor .mermaid-wrapper .mermaid svg.erDiagram g.node text,
+.md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram g.node p,
+.md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram g.node text {
+  font-size: inherit !important;
+}
+.md-editor .mermaid-wrapper .mermaid svg.erDiagram g.node g.label:not(.name) p,
+.md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram g.node g.label:not(.name) p {
+  font-size: 38px !important;
+}
+
 /* ---------- mermaid navigation: focus, minimap, table search ---------- */
 /* Focus: a clicked node, its neighbours and the edges between them stay; the
    rest fades. Markers (crow's feet, arrowheads) hang off the edge path, so
