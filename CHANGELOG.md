@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.11 — Card ER tables go sky blue
+
+- ER tables in the Card theme read sky blue instead of green
+
 ## v0.10.10 — a focused relationship keeps its own label readable
 
 - Clicking a table no longer dims the relationship labels it lights up

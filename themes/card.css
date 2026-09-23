@@ -35,7 +35,9 @@
     --header-bg-end: #f7fbfb;
     --table-bg: #fff;
     --mermaid-bg: #f6f8fa;
-    --mermaid-er-header: color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg));
+    --mermaid-er-blue: #0ea5e9;
+    --mermaid-er-ink: color-mix(in srgb, var(--mermaid-er-blue) 70%, #1f2937);
+    --mermaid-er-header: color-mix(in srgb, var(--mermaid-er-blue) 45%, var(--mermaid-bg));
     --copy-btn-bg: rgba(30, 41, 59, 0.9);
     --copy-btn-border: rgba(229, 238, 252, 0.2);
     --note-amber: #7c5c00;
@@ -697,4 +699,31 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* ===================== ER tables — sky, not the theme's teal =====================
+   mermaid builds an ER table's whole palette from --accent, and Card's accent
+   is teal, so the title band and the grid inside a table read green. The rules
+   below repaint the ER table alone; flowchart, sequence and class diagrams keep
+   the accent.
+
+   --mermaid-er-blue is a fixed colour rather than a tint of --accent because a
+   diagram's paper stays light in dark mode too — one value serves both. The
+   mixes copy the formulas in features/mermaid-theme.js, so the band, the rows
+   and the rules keep the same order of depth as the rest of a diagram.
+
+   The row fills need !important: mermaid draws them with rough.js, which writes
+   the colour onto the path itself (and, for even rows, into an inline style),
+   where an ordinary rule cannot reach. The stroke rule only has to out-specify
+   the one in css/base.css, hence the svg.erDiagram in front of it. */
+.md-editor .mermaid svg.erDiagram g.node .row-rect-odd path[stroke="none"] {
+    fill: color-mix(in srgb, var(--mermaid-er-ink) 3%, var(--mermaid-bg)) !important;
+}
+.md-editor .mermaid svg.erDiagram g.node .row-rect-even path[stroke="none"] {
+    fill: color-mix(in srgb, var(--mermaid-er-ink) 8%, var(--mermaid-bg)) !important;
+}
+.md-editor .mermaid svg.erDiagram .row-rect-odd path[fill="none"],
+.md-editor .mermaid svg.erDiagram .row-rect-even path[fill="none"],
+.md-editor .mermaid svg.erDiagram .divider path[fill="none"] {
+    stroke: color-mix(in srgb, color-mix(in srgb, var(--mermaid-er-blue) 60%, #1f2937) 30%, var(--mermaid-bg));
 }
