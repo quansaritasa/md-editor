@@ -1,6 +1,6 @@
 {
   "name": "md-editor",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Markdown viewer + editor core — parse, transform, theme. Framework-free, host-agnostic. Not published to npm; consumed as a git dependency.",
   "license": "MIT",
   "author": "Quan Dao",

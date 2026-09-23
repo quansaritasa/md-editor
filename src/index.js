@@ -48,6 +48,10 @@ module.exports = {
   features: {
     mermaid: require('./features/mermaid'),
     mermaidZoom: require('./features/mermaid-zoom'),
+    mermaidFullscreen: require('./features/mermaid-fullscreen'),
+    mermaidGraph: require('./features/mermaid-graph'),
+    mermaidFocus: require('./features/mermaid-focus'),
+    mermaidSearch: require('./features/mermaid-search'),
     codeBlocks: require('./features/codeblocks'),
     collapse: require('./features/collapse'),
     outline: require('./features/outline'),

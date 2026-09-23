@@ -105,6 +105,30 @@ MdEditor.features.collapse.bind(content);   // after the outline: the toggle
 outline.updateActions();            // ...and after both sets of toggles exist
 ```
 
+## Diagram navigation
+
+Rendered mermaid diagrams come with zoom and pan built in, plus three aids
+for diagrams too large to read at one zoom level — a many-table ER diagram,
+typically. They work on ER, flowchart and class diagrams; other kinds render
+and zoom as before, without them.
+
+| Aid | Where | How |
+|---|---|---|
+| Focus | Inline and fullscreen | Click a node: it, its direct neighbours and the edges between them stay lit while the rest fades. Click it again, or empty space, to clear |
+| Minimap | Fullscreen | A thumbnail in the corner frames the part on screen. Click or drag on it to move there |
+| Search | Fullscreen | `/` opens the search box. Type part of a name, pick with ↑/↓ and Enter: the node is focused, centred and zoomed to at least 100% |
+
+In fullscreen, Esc clears a focus first and closes the overlay on the next
+press. Colours come from the theme's `--accent`, `--accent-soft`, `--border`
+and `--surface`.
+
+The pieces are exposed for hosts that want them elsewhere:
+`features.mermaidGraph.readGraph(svg)` reads nodes and edges back out of a
+rendered SVG, `features.mermaidFocus.create([svg, …])` drives a focus across
+several copies of one diagram, and `features.mermaidFullscreen.openFullscreen(el, parent)`
+returns `{ close, view, focus }`, where `view` offers `fit()`, `panTo(x, y)`,
+`centerOn(element, minScale)` and `onChange(fn)`.
+
 ## Theme and layout
 
 `createTheme` holds the state and applies it. The toolbar that drives it —

@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.10.0 — big diagrams stay readable: focus, minimap, search
+
+- Click a node in a mermaid ER, flowchart or class diagram to light it, its
+  direct neighbours and the edges between them; everything else fades. Works
+  inline and in fullscreen, and a drag to pan never counts as a click
+- Fullscreen gains a minimap: a thumbnail of the whole diagram with a frame
+  showing what is on screen; click or drag on it to move there
+- Fullscreen gains a search box (`/`): pick a table by name and it is focused,
+  centred and zoomed to at least 100%
+- Esc in fullscreen clears a focus before it closes the overlay
+- Fullscreen zoom steps are now proportional (×1.25) instead of ±150%, so a
+  large diagram fitted at 20% no longer jumps straight to 170%
+- Closing fullscreen now removes its window listeners; each diagram opened
+  used to leave a mousemove handler behind
+
 ## v0.9.1 — `card` h3 sits a step below h2
 
 - `card` h3 drops from 20px to 19px, widening the gap to the 26px h2 above it
