@@ -128,6 +128,23 @@ html.dark .md-editor-source {
 .md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram g.node g.label:not(.name) p {
   font-size: 38px !important;
 }
+/* Relationship labels on the lines: 40px, wrapping inside 480px — the same
+   rules mermaid measured them with (mermaid.js ER_EDGE_CSS). */
+.md-editor .mermaid-wrapper .mermaid svg.erDiagram .edgeLabel p,
+.md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram .edgeLabel p {
+  font-size: 40px !important;
+}
+.md-editor .mermaid-wrapper .mermaid svg.erDiagram .edgeLabel div,
+.md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram .edgeLabel div {
+  max-width: 480px !important;
+  white-space: normal !important;
+}
+/* Themes pad this box by 2px a side, which mermaid never measured: a label
+   laid out on one line then wraps to two and spills out of its box. */
+.md-editor .mermaid-wrapper .mermaid svg.erDiagram .edgeLabel foreignObject,
+.md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram .edgeLabel foreignObject {
+  padding: 0 !important;
+}
 
 /* ---------- mermaid navigation: focus, minimap, table search ---------- */
 /* Focus: a clicked node, its neighbours and the edges between them stay; the

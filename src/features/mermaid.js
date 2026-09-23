@@ -21,8 +21,13 @@ const INIT = {
 // sits after any frontmatter so the frontmatter still parses. Column widths
 // come from the top-level fontSize, box heights from themeVariables.fontSize,
 // so both are set — to the table-name size, the largest; base.css then draws
-// rows a little smaller inside those boxes.
+// rows a little smaller inside those boxes. mermaid pins relationship labels
+// to 14px and a nowrap 200px box, so themeCSS widens and wraps them before it
+// measures; base.css repeats the same rules for the drawn page.
+const ER_EDGE_CSS = '.edgeLabel .label, .edgeLabel p { font-size: 40px; } '
+  + '.edgeLabel div { max-width: 480px !important; white-space: normal !important; }';
 const ER_FONT = '%%{init: {"fontSize": 42, "themeVariables": {"fontSize": "42px"}, '
+  + '"themeCSS": "' + ER_EDGE_CSS + '", '
   + '"er": {"nodeSpacing": 160, "rankSpacing": 120}}}%%\n';
 const FRONTMATTER = /^---\r?\n[\s\S]*?\r?\n---\r?\n/;
 

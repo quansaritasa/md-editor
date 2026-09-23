@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.4 — ER relationship labels get big too
+
+- Labels on ER relationship lines draw at 40px instead of 14px, wrapping
+  inside 480px so long ones stay on their line without spilling out of
+  their box
+
 ## v0.10.3 — ER tables get big, readable text
 
 - ER table text was pinned to 14px by every theme, while the tables were laid
