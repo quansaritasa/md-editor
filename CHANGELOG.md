@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.13 — a touch more weight on ER relationships
+
+- ER relationship lines and their crow's feet are a step heavier again
+
 ## v0.10.12 — ER cardinality you can actually see
 
 - The crow's foot at each end of an ER relationship is readable without
