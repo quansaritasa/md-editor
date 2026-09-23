@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.14 — a lighter touch on the focused ER relationship
+
+- A clicked ER relationship stands out without drawing a heavy line
+
 ## v0.10.13 — a touch more weight on ER relationships
 
 - ER relationship lines and their crow's feet are a step heavier again

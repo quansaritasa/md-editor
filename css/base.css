@@ -217,10 +217,10 @@ html.dark .md-editor-source {
   stroke-width: 2.5px !important;
 }
 /* 2.5 was chosen against a 1px line. An ER relationship now starts at 3, so a
-   lit one goes further to keep the same margin — and its crow's feet, sized by
-   the same stroke-width, grow with it. */
+   lit one goes to 4 — enough of a step to read as lit, without the line and its
+   crow's feet, both sized by this stroke-width, turning heavy. */
 .md-editor .mermaid svg.erDiagram.mmd-focus path[data-edge].mmd-hit {
-  stroke-width: 5px !important;
+  stroke-width: 4px !important;
 }
 .md-editor .mermaid svg.mmd-focus g.node.mmd-hit-root {
   filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 6px var(--accent));
