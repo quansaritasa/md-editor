@@ -9,7 +9,8 @@
    Every theme keeps diagrams on light paper (--mermaid-bg), in dark mode too,
    and forces dark ink on their text. So the palette stays light: fills are the
    paper tinted with --accent, borders and lines are --accent darkened toward
-   that ink, and text stays ink. Each theme reads as its own colour; none
+   that ink, and text stays ink. Table rows alternate two faint tints under a
+   stronger header tint. Each theme reads as its own colour; none
    loses contrast.
 
    Colours are resolved by the browser (a probe element's computed colour), so
@@ -18,26 +19,32 @@
 
 const INK = '#1f2937';
 const BG = 'var(--mermaid-bg, #f6f8fa)';
-const tint = (p) => 'color-mix(in srgb, var(--accent) ' + p + '%, ' + BG + ')';
 const ink = (p) => 'color-mix(in srgb, var(--accent) ' + p + '%, ' + INK + ')';
+// Tints start from the accent pulled toward the ink: a dark mode's accent is a
+// pastel made for dark paper, and a pastel tint of light paper is just paper.
+const tint = (p) => 'color-mix(in srgb, ' + ink(70) + ' ' + p + '%, ' + BG + ')';
 
 // mermaid themeVariable -> CSS colour expression
 const PALETTE = {
   background: BG,
-  mainBkg: tint(10),
-  primaryColor: tint(10),
-  secondaryColor: tint(20),
-  tertiaryColor: tint(5),
-  primaryBorderColor: ink(75),
-  secondaryBorderColor: ink(75),
-  tertiaryBorderColor: ink(75),
-  nodeBorder: ink(75),
+  mainBkg: tint(14),
+  primaryColor: tint(14),
+  secondaryColor: tint(22),
+  tertiaryColor: tint(6),
+  primaryBorderColor: ink(60),
+  secondaryBorderColor: ink(60),
+  tertiaryBorderColor: ink(60),
+  nodeBorder: ink(60),
   clusterBkg: tint(6),
-  clusterBorder: ink(75),
-  lineColor: ink(55),
+  clusterBorder: ink(60),
+  lineColor: ink(45),
   edgeLabelBackground: BG,
-  attributeBackgroundColorOdd: tint(4),
-  attributeBackgroundColorEven: tint(12),
+  // table rows (ER entities): mermaid 11 reads rowOdd/rowEven; the
+  // attributeBackground pair is what older releases read
+  rowOdd: tint(3),
+  rowEven: tint(8),
+  attributeBackgroundColorOdd: tint(3),
+  attributeBackgroundColorEven: tint(8),
 };
 const TEXT = ['primaryTextColor', 'secondaryTextColor', 'tertiaryTextColor', 'textColor', 'titleColor'];
 

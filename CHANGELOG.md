@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.10.2 — ER tables read as tables; the minimap frame gets lighter
+
+- ER entity rows ignored the theme: mermaid 11 reads `rowOdd`/`rowEven`, the
+  palette only set the older `attributeBackgroundColor*` pair, so odd rows fell
+  back to near-white holes on tinted paper. Rows now alternate a 3% and an 8%
+  tint under a 14% header, and the lines inside a table are faint while its
+  header outline stays
+- In dark mode the accent is a pastel made for dark paper, and tints of it over
+  the light diagram paper vanished. Fills now start from the accent pulled
+  toward the ink, and borders sit closer to the ink, so every theme keeps its
+  contrast in both modes
+- The minimap's view frame fill drops from a 20% to an 8% `--accent` tint
+
 ## v0.10.1 — diagrams take the theme's colours; the minimap frame stops hiding them
 
 - Mermaid diagrams were drawn in mermaid's own palette under every theme. Node

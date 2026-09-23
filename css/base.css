@@ -107,6 +107,14 @@ html.dark .md-editor-source {
   overflow-x: auto;
 }
 
+/* ER tables: mermaid strokes every row and column in the border colour, which
+   reads as a dense grid. Lines inside a table go faint; its outline stays. */
+.md-editor .mermaid svg .row-rect-odd path[fill="none"],
+.md-editor .mermaid svg .row-rect-even path[fill="none"],
+.md-editor .mermaid svg .divider path[fill="none"] {
+  stroke: color-mix(in srgb, color-mix(in srgb, var(--accent) 60%, #1f2937) 30%, var(--mermaid-bg, #f6f8fa));
+}
+
 /* ---------- mermaid navigation: focus, minimap, table search ---------- */
 /* Focus: a clicked node, its neighbours and the edges between them stay; the
    rest fades. Markers (crow's feet, arrowheads) hang off the edge path, so
@@ -165,7 +173,7 @@ html.dark .md-editor-source {
   border: 2px solid var(--accent);
   /* Tinted, never solid: --accent-soft is an opaque colour in every theme,
      and a solid frame hides the very tables it is framing. */
-  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
   border-radius: 2px;
   pointer-events: none;
   box-sizing: border-box;
