@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.5 — ER table headers stand out from their rows
+
+- An ER table's title band is now several shades stronger than the rows
+  beneath it, so a table reads header-then-rows instead of one block of
+  the theme's colour
+
 ## v0.10.4 — ER relationship labels get big too
 
 - Labels on ER relationship lines draw at 40px instead of 14px, wrapping

@@ -9,9 +9,10 @@
    Every theme keeps diagrams on light paper (--mermaid-bg), in dark mode too,
    and forces dark ink on their text. So the palette stays light: fills are the
    paper tinted with --accent, borders and lines are --accent darkened toward
-   that ink, and text stays ink. Table rows alternate two faint tints under a
-   stronger header tint. Each theme reads as its own colour; none
-   loses contrast.
+   that ink, and text stays ink. ER table rows alternate two faint tints; the
+   title band above them is not a variable mermaid exposes, so css/base.css
+   repaints it much stronger — keep the two in step. Each theme reads as its
+   own colour; none loses contrast.
 
    Colours are resolved by the browser (a probe element's computed colour), so
    a theme may write them as hex, var() or color-mix(). mermaid's colour maths
