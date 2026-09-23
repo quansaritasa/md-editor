@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.10 — a focused relationship keeps its own label readable
+
+- Clicking a table no longer dims the relationship labels it lights up
+
 ## v0.10.9 — a touch more room for ER row values
 
 - ER row values sit a little further again off their column's left line

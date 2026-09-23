@@ -63,6 +63,24 @@ test('focus lights the neighbourhood, fades the rest, and clears', () => {
   assert.strictEqual(svg.querySelectorAll('.mmd-hit').length, 0);
 });
 
+// mermaid writes class="edgeLabel" twice per relationship: on the outer <g>
+// and on the <span> holding the text. Fading by the class alone dimmed a lit
+// relationship's own text, since only the <g> ever carries mmd-hit.
+test('a lit relationship keeps its label text at full strength', () => {
+  const css = fs.readFileSync(path.join(__dirname, '..', 'css', 'base.css'), 'utf8');
+  const fade = css.match(/([^}]+)\{\s*opacity: 0\.12;/)[1].trim();
+  const { svg } = diagram('er');
+  const f = focusLib.create([svg]);
+  f.set(f.graph.nodes.find((n) => n.name === 'ORDER').key);
+  const lit = [...svg.querySelectorAll('g.edgeLabel.mmd-hit')];
+  assert.strictEqual(lit.length, 2);
+  lit.forEach((g) => g.querySelectorAll('.edgeLabel').forEach((inner) => {
+    assert.ok(!inner.matches(fade), 'label text inside a lit relationship is not faded');
+  }));
+  const dark = [...svg.querySelectorAll('g.edgeLabel:not(.mmd-hit)')];
+  assert.ok(dark.length && dark.every((g) => g.matches(fade)), 'the other relationships still fade');
+});
+
 test('a focus spans every copy, and a copy made mid-focus starts focused', () => {
   const { svg } = diagram('er');
   const copy = svg.cloneNode(true);
