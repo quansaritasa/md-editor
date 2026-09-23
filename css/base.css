@@ -146,6 +146,22 @@ html.dark .md-editor-source {
 .md-editor .mermaid-fullscreen-canvas .mermaid svg.erDiagram g.node g.label:not(.name) p {
   font-size: 38px !important;
 }
+/* ER rows: mermaid insets a cell's text by half of er.entityPadding and nothing
+   more, so a value sits almost against its column's left rule. Nudge it over.
+
+   The nudge moves the label box; it is not padding inside it. mermaid measured
+   every foreignObject with its own 42px font while the cell draws at 38px,
+   which leaves most cells a sliver of slack but not all — the tightest cell of
+   a real schema already overflows its box by 0.6 units, and a foreignObject
+   clips what overflows, so padding would eat the end of that text. Moving the
+   box carries the text with it and clips nothing.
+
+   1px here is one SVG user unit, so the inset scales with the diagram like the
+   text does, instead of growing as the reader zooms out. */
+.md-editor .mermaid svg.erDiagram g.node g.label:not(.name) foreignObject {
+  translate: 2px 0;
+}
+
 /* Relationship labels on the lines: 40px, wrapping inside 480px — the same
    rules mermaid measured them with (mermaid.js ER_EDGE_CSS). */
 .md-editor .mermaid-wrapper .mermaid svg.erDiagram .edgeLabel p,

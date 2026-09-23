@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.7 — ER row values sit off the column rule
+
+- A value in an ER table no longer starts hard against its column's left
+  line — every cell gains a small inset that scales with the diagram
+
 ## v0.10.6 — themes choose their own ER header colour
 
 - New `--mermaid-er-header` token: every theme now paints an ER table's
