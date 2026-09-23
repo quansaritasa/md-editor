@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.8 — more daylight between an ER value and its column line
+
+- The inset added in v0.10.7 was too slight to see; ER row values now sit
+  two and a half times further off their column's left line
+
 ## v0.10.7 — ER row values sit off the column rule
 
 - A value in an ER table no longer starts hard against its column's left
