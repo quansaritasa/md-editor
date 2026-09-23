@@ -162,6 +162,20 @@ html.dark .md-editor-source {
   translate: 7px 0;
 }
 
+/* ER relationships: mermaid leaves markerUnits at the SVG default of
+   strokeWidth, so a crow's foot is drawn at markerWidth TIMES the line's own
+   stroke-width — the markers are sized by the line, not set on their own. An ER
+   diagram is laid out in 42-unit type and then scaled down to fit its frame, so
+   the 1px mermaid bakes in lands under a screen pixel, and the markers shrink
+   with it: the cardinality at each end of a relationship is the one part of the
+   diagram a reader cannot make out. Two units carries both back.
+
+   !important because the width is baked as #<svg id> .edge-thickness-normal,
+   and no rule made of classes outranks an id. */
+.md-editor .mermaid svg.erDiagram path[data-edge] {
+  stroke-width: 2px !important;
+}
+
 /* Relationship labels on the lines: 40px, wrapping inside 480px — the same
    rules mermaid measured them with (mermaid.js ER_EDGE_CSS). */
 .md-editor .mermaid-wrapper .mermaid svg.erDiagram .edgeLabel p,
@@ -201,6 +215,12 @@ html.dark .md-editor-source {
 .md-editor .mermaid svg.mmd-focus path[data-edge].mmd-hit {
   stroke: var(--accent) !important;
   stroke-width: 2.5px !important;
+}
+/* 2.5 was chosen against a 1px line. An ER relationship now starts at 2, so a
+   lit one goes further to keep the same margin — and its crow's feet, sized by
+   the same stroke-width, grow with it. */
+.md-editor .mermaid svg.erDiagram.mmd-focus path[data-edge].mmd-hit {
+  stroke-width: 4px !important;
 }
 .md-editor .mermaid svg.mmd-focus g.node.mmd-hit-root {
   filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 6px var(--accent));

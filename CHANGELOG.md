@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.12 — ER cardinality you can actually see
+
+- The crow's foot at each end of an ER relationship is readable without
+  clicking a table first
+
 ## v0.10.11 — Card ER tables go sky blue
 
 - ER tables in the Card theme read sky blue instead of green
