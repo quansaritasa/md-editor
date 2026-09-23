@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.15 — ER tables coloured by how connected they are
+
+- An ER table's title band now says how many other tables it links to: slate
+  when nothing references it, the theme's usual colour for one to four, amber
+  for five or more, with a legend naming the scale
+
 ## v0.10.14 — a lighter touch on the focused ER relationship
 
 - A clicked ER relationship stands out without drawing a heavy line

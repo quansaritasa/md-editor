@@ -133,6 +133,26 @@ html.dark .md-editor-source {
   fill: var(--mermaid-er-header, color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg, #f6f8fa)));
 }
 
+/* ER tables: how connected a table is, in the colour of its title band.
+   mermaid-degree.js counts the OTHER tables each one links to and tags it —
+   none, one to four, five or more — so a hub and a stranded table are told
+   apart before any line is traced. Only the band changes; the rows keep the
+   theme's tints and stay readable.
+
+   These win over the plain band rule above by carrying one class more. The
+   middle bucket deliberately resolves to that same rule's colour, so a normal
+   table looks exactly as it did and only the two ends stand out. The band's
+   text is #1f2937, so an override has to stay light enough to keep 3:1. */
+.md-editor .mermaid svg.erDiagram g.node.mmd-deg-0 > g.outer-path path[stroke="none"] {
+  fill: var(--mermaid-er-deg-0, color-mix(in srgb, #64748b 35%, var(--mermaid-bg, #f6f8fa)));
+}
+.md-editor .mermaid svg.erDiagram g.node.mmd-deg-low > g.outer-path path[stroke="none"] {
+  fill: var(--mermaid-er-deg-low, var(--mermaid-er-header, color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg, #f6f8fa))));
+}
+.md-editor .mermaid svg.erDiagram g.node.mmd-deg-high > g.outer-path path[stroke="none"] {
+  fill: var(--mermaid-er-deg-high, color-mix(in srgb, #f59e0b 55%, var(--mermaid-bg, #f6f8fa)));
+}
+
 /* ER text: every theme pins mermaid labels to 14px !important, but mermaid
    sized the ER boxes with its own 42px font (mermaid.js ER_FONT). Table names
    inherit that size; rows draw at 38px, so they never outgrow their columns. */
@@ -265,6 +285,49 @@ html.dark .md-editor-source {
   border-radius: 2px;
   pointer-events: none;
   box-sizing: border-box;
+}
+
+/* The ER degree scale, named. It sits opposite the minimap, and passes every
+   pointer event through: a drag that starts on it still pans the diagram, and
+   a click still clears a focus. Swatch fills come from the same variables the
+   title bands use, so a theme that repaints one repaints the other. */
+.md-editor .mermaid-degree-legend {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 9px;
+  background: var(--mermaid-bg, var(--surface));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 1;
+  color: #1f2937;
+  pointer-events: none;
+  z-index: 10;
+}
+.md-editor .mermaid-degree-legend-title { opacity: 0.7; }
+.md-editor .mermaid-degree-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.md-editor .mermaid-degree-key i {
+  width: 11px;
+  height: 11px;
+  border: 1px solid color-mix(in srgb, #1f2937 30%, transparent);
+  border-radius: 2px;
+}
+.md-editor .mermaid-degree-key.mmd-deg-0 i {
+  background: var(--mermaid-er-deg-0, color-mix(in srgb, #64748b 35%, var(--mermaid-bg, #f6f8fa)));
+}
+.md-editor .mermaid-degree-key.mmd-deg-low i {
+  background: var(--mermaid-er-deg-low, var(--mermaid-er-header, color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg, #f6f8fa))));
+}
+.md-editor .mermaid-degree-key.mmd-deg-high i {
+  background: var(--mermaid-er-deg-high, color-mix(in srgb, #f59e0b 55%, var(--mermaid-bg, #f6f8fa)));
 }
 
 .md-editor .mermaid-search { position: relative; }

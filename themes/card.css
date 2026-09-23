@@ -38,6 +38,13 @@
     --mermaid-er-blue: #0ea5e9;
     --mermaid-er-ink: color-mix(in srgb, var(--mermaid-er-blue) 70%, #1f2937);
     --mermaid-er-header: color-mix(in srgb, var(--mermaid-er-blue) 45%, var(--mermaid-bg));
+    /* Degree scale: a table's title band says how many other tables it links to.
+       The middle bucket is the sky blue above, so an ordinary table is unchanged
+       and only the two ends read as special — slate for one nothing references,
+       amber for a hub. Both are mixed against the same paper as the header. */
+    --mermaid-er-deg-0: color-mix(in srgb, #64748b 30%, var(--mermaid-bg));
+    --mermaid-er-deg-low: var(--mermaid-er-header);
+    --mermaid-er-deg-high: color-mix(in srgb, #f59e0b 55%, var(--mermaid-bg));
     --copy-btn-bg: rgba(30, 41, 59, 0.9);
     --copy-btn-border: rgba(229, 238, 252, 0.2);
     --note-amber: #7c5c00;
