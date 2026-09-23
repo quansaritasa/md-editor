@@ -118,12 +118,19 @@ html.dark .md-editor-source {
 /* ER tables: the title band is not a shape of its own — it is the entity box
    showing through above the first row, so mermaid fills it with mainBkg, the
    same pale tint every flowchart node gets and a shade away from the rows.
-   mermaid has no theme variable for that band alone, so repaint it here,
-   several shades stronger: a table then reads header-then-rows instead of one
-   block of colour. Only the filled path is touched — the outline path of the
-   same group carries fill="none". */
+   mermaid has no theme variable for that band alone, so repaint it here: a
+   table then reads header-then-rows instead of one block of colour. Only the
+   filled path is touched — the outline path of the same group carries
+   fill="none".
+
+   --mermaid-er-header is the theme's to set, because no single formula suits
+   every theme: the fallback below tints the paper with the accent, which a
+   monochrome theme like eink cannot use — its light accent is near-black and
+   its dark accent near-white, so the same mix lands on a slab or on nothing.
+   Themes that fit the formula may simply leave it alone. The band's text is
+   #1f2937, so keep whatever a theme sets at 3:1 or better against that. */
 .md-editor .mermaid svg.erDiagram g.node > g.outer-path path[stroke="none"] {
-  fill: color-mix(in srgb, color-mix(in srgb, var(--accent) 70%, #1f2937) 34%, var(--mermaid-bg, #f6f8fa));
+  fill: var(--mermaid-er-header, color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg, #f6f8fa)));
 }
 
 /* ER text: every theme pins mermaid labels to 14px !important, but mermaid

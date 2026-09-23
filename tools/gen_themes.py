@@ -39,7 +39,7 @@ MONO = 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mo
 SERIF = '"Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif'
 SANS = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif'
 
-TOKENS = ['book-bg', 'mermaid-bg', 'bg', 'surface', 'text', 'text-secondary', 'border',
+TOKENS = ['book-bg', 'mermaid-bg', 'mermaid-er-header', 'bg', 'surface', 'text', 'text-secondary', 'border',
           'accent', 'accent-soft', 'code-bg', 'code-text', 'radius', 'max-w',
           'note-amber', 'note-amber-lt', 'note-amber-border',
           'info-blue', 'info-blue-lt', 'info-blue-border', 'fields-key']
@@ -69,7 +69,11 @@ def emit(name, desc, light, dark, hl_light, hl_dark, overrides):
     print(name, (ROOT / f'{name}.css').stat().st_size)
 
 
-COMMON_LIGHT = {'mermaid-bg': '#f6f8fa', 'max-w': '900px'}
+# --mermaid-er-header paints the title band of an ER table (css/base.css).
+# It is declared in the light block only: the value reads --accent, which the
+# dark block overrides on the same element, so one line serves both modes.
+COMMON_LIGHT = {'mermaid-bg': '#f6f8fa', 'max-w': '900px',
+                'mermaid-er-header': 'color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg))'}
 
 # ─────────────────────────── terminal ───────────────────────────
 emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
@@ -161,7 +165,11 @@ html.dark .md-editor .example-box.bad-box { border-left-color: #f38ba8; }
 
 # ─────────────────────────── eink ───────────────────────────
 emit('eink', 'Grayscale, serif, no shadows — an e-reader on the desktop',
-     {**COMMON_LIGHT, 'mermaid-bg': '#ffffff', 'book-bg': '#F4F4F2', 'bg': '#F4F4F2', 'surface': '#E9E9E6', 'text': '#111111',
+     # eink is the one theme the accent formula cannot serve: its light accent is
+     # near-black and its dark one near-white, so the same mix gives a slab in one
+     # mode and nothing in the other. A fixed grey suits a greyscale theme anyway.
+     {**COMMON_LIGHT, 'mermaid-bg': '#ffffff', 'mermaid-er-header': '#d6d6d3',
+      'book-bg': '#F4F4F2', 'bg': '#F4F4F2', 'surface': '#E9E9E6', 'text': '#111111',
       'text-secondary': '#444444', 'border': '#9A9A96', 'accent': '#111111', 'accent-soft': '#E2E2DF',
       'code-bg': '#E9E9E6', 'code-text': '#111111', 'radius': '0px',
       'note-amber': '#111111', 'note-amber-lt': '#E9E9E6', 'note-amber-border': '#444444',

@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.6 — themes choose their own ER header colour
+
+- New `--mermaid-er-header` token: every theme now paints an ER table's
+  title band in a clear tint of its own accent rather than a grey-tinged
+  one, and a theme whose accent cannot carry the band sets its own colour
+
 ## v0.10.5 — ER table headers stand out from their rows
 
 - An ER table's title band is now several shades stronger than the rows

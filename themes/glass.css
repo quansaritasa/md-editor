@@ -5,6 +5,7 @@
        a book wants paper, not a document card. */
     --book-bg: #F2EEE6;
     --mermaid-bg: #ffffff;
+    --mermaid-er-header: color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg));
     --bg: #e8ecf1;
     --surface: rgba(255, 255, 255, 0.5);
     --text: #1a1a2e;

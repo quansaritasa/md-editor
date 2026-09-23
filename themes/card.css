@@ -35,6 +35,7 @@
     --header-bg-end: #f7fbfb;
     --table-bg: #fff;
     --mermaid-bg: #f6f8fa;
+    --mermaid-er-header: color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg));
     --copy-btn-bg: rgba(30, 41, 59, 0.9);
     --copy-btn-border: rgba(229, 238, 252, 0.2);
     --note-amber: #7c5c00;

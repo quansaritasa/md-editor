@@ -2,6 +2,7 @@
 .md-editor {
     --book-bg: #FBF8F2;
     --mermaid-bg: #ffffff;
+    --mermaid-er-header: color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg));
     --bg: #FFFDF9;
     --surface: #F5F1EA;
     --text: #1A1A1A;
