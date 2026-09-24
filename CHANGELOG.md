@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.16 — a focused ER table lists its keys and relationships
+
+- In fullscreen, clicking an ER table opens a panel with its primary and foreign
+  keys and every relationship it has: the other table, one-to-many or similar
+  with exact cardinality, the label, and that table's keys. Click a table in
+  the list to move there
+
 ## v0.10.15 — ER tables coloured by how connected they are
 
 - An ER table's title band now says how many other tables it links to: slate

@@ -44,17 +44,23 @@ function create(svgs) {
   const list = svgs.filter(Boolean);
   const graphs = list.map(readGraph);
   let key = (list[0] && list[0].getAttribute('data-mmd-focus')) || null;
+  const listeners = [];
+  const changed = () => listeners.forEach((fn) => fn(key));
   const f = {
     graph: graphs[0] || { nodes: [], edges: [] },
     get key() { return key; },
     set(k) {
       key = k;
       list.forEach((svg, i) => paint(svg, graphs[i], k));
+      changed();
     },
     clear() {
       key = null;
       list.forEach(clearSvg);
+      changed();
     },
+    // fn(key) after every set and clear; key is null once cleared.
+    onChange(fn) { listeners.push(fn); },
     toggle(node) {
       if (!node || node.key === key) f.clear();
       else f.set(node.key);

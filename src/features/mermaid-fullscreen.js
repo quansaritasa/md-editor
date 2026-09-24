@@ -12,6 +12,7 @@
 const focusLib = require('./mermaid-focus');
 const minimap = require('./mermaid-minimap');
 const search = require('./mermaid-search');
+const relations = require('./mermaid-relations');
 const { makeBtn } = require('./mermaid-ui');
 
 const STEP = 1.25;     // one zoom notch, multiplied — even steps at 5% and at 400%
@@ -142,8 +143,12 @@ function openFullscreen(el, parent) {
   const view = createView(canvas, clone, sh.label);
   const map = minimap.attach(canvas, clone, view);
   const focus = focusLib.create([clone.querySelector('svg'), map && map.svg]);
-  focusLib.bindClicks(canvas, focus, '.mermaid-zoom-controls, .mermaid-minimap');
+  focusLib.bindClicks(canvas, focus, '.mermaid-zoom-controls, .mermaid-minimap, .mermaid-relations');
   const finder = search.attach(controls, focus, view);
+  // ER only: the panel's model comes from the source mermaid.render kept on el.
+  const svg = clone.querySelector('svg');
+  const rel = svg && svg.classList.contains('erDiagram')
+    ? relations.attach(canvas, focus, view, el.getAttribute('data-mermaid-src')) : null;
   controls.appendChild(makeBtn(doc, '−', () => view.step(-1)));
   controls.appendChild(makeBtn(doc, '⊕', () => view.fit()));
   controls.appendChild(sh.label);
@@ -156,11 +161,12 @@ function openFullscreen(el, parent) {
     doc.removeEventListener('keydown', onKey);
     unbind();
     if (map) map.detach();
+    if (rel) rel.detach();
   };
   const onKey = keyHandler(focus, finder, close);
   doc.addEventListener('keydown', onKey);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-  return { close, view, focus };
+  return { close, view, focus, relations: rel };
 }
 
 module.exports = { openFullscreen, createView };

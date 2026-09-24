@@ -370,3 +370,97 @@ html.dark .md-editor-source {
 }
 .md-editor .mermaid-search-list li.is-active,
 .md-editor .mermaid-search-list li:hover { background: var(--accent-soft, var(--border)); }
+
+/* The focused ER table's keys and relationships. Top-left, clear of the
+   toolbar (top-right), the minimap (bottom-right) and the degree legend
+   (bottom-left); a long list scrolls inside it. */
+.md-editor .mermaid-relations {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  width: 300px;
+  max-height: calc(100% - 80px);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  line-height: 1.4;
+  z-index: 11;
+}
+.md-editor .mermaid-relations[hidden] { display: none; }
+.md-editor .mermaid-relations-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.md-editor .mermaid-relations-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.md-editor .mermaid-relations-close {
+  border: 0;
+  background: none;
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.md-editor .mermaid-relations-close:hover { opacity: 1; }
+.md-editor .mermaid-relations-keys {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  margin: 2px 0;
+}
+.md-editor .mermaid-relations-tag {
+  flex: none;
+  padding: 0 4px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.md-editor .mermaid-relations-tag.is-pk { background: color-mix(in srgb, #f59e0b 30%, transparent); }
+.md-editor .mermaid-relations-cols {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  overflow-wrap: anywhere;
+}
+.md-editor .mermaid-relations-none { opacity: 0.6; font-style: italic; }
+.md-editor .mermaid-relations-heading {
+  margin: 10px 0 4px;
+  font-weight: 600;
+  opacity: 0.75;
+}
+.md-editor .mermaid-relations-list { margin: 0; padding: 0; list-style: none; }
+.md-editor .mermaid-relations-item {
+  padding: 6px 0;
+  border-top: 1px solid var(--border);
+}
+.md-editor .mermaid-relations-head {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.md-editor .mermaid-relations-partner {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.md-editor .mermaid-relations-partner:hover { text-decoration: underline; }
+.md-editor .mermaid-relations-label { font-style: italic; opacity: 0.8; }
+.md-editor .mermaid-relations-kind { opacity: 0.7; font-size: 11px; }
