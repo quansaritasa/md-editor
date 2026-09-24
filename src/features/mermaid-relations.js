@@ -4,15 +4,13 @@
    A panel in the fullscreen view. Focus a table and it lists the table's
    primary and foreign keys, then every relationship it takes part in: the
    partner table, the kind (one-to-many, …) with the exact cardinalities, the
-   relationship's label, and the partner's own keys. Clicking a partner moves
-   the focus there, so a schema can be walked table by table.
+   relationship's label, and the partner's own keys. Clicking a partner pans
+   the view to it — zoom, focus and panel all stay as they were.
 
    Presses, clicks and wheel turns stop at the panel: no pan, no focus toggle,
    and a long list scrolls instead of moving the diagram. */
 
 const model = require('./mermaid-er-model');
-
-const READ_SCALE = 1; // zoom a jumped-to table is shown at, at least
 
 function el(doc, tag, cls, text) {
   const e = doc.createElement(tag);
@@ -46,13 +44,14 @@ function relItem(doc, table, rel, go) {
   const self = rel.partner.key === table.key;
   const name = el(doc, 'button', 'mermaid-relations-partner', self ? rel.partner.label + ' (itself)' : rel.partner.label);
   name.type = 'button';
-  name.title = 'Focus ' + rel.partner.label;
+  name.title = 'Show ' + rel.partner.label + ' (keeps the zoom and the selection)';
   name.addEventListener('click', () => go(rel.partner.key));
   head.appendChild(name);
   if (rel.label) head.appendChild(el(doc, 'span', 'mermaid-relations-label', rel.label));
   li.appendChild(head);
-  const kind = model.kind(rel) + ' · ' + rel.mine.short + ' : ' + rel.theirs.short + (rel.identifying ? '' : ' · non-identifying');
-  const meta = el(doc, 'div', 'mermaid-relations-kind', kind);
+  const d = model.describe(table, rel);
+  li.appendChild(el(doc, 'div', 'mermaid-relations-says', d.text));
+  const meta = el(doc, 'div', 'mermaid-relations-kind', d.kind + ' · ' + d.cards + (rel.identifying ? '' : ' · non-identifying'));
   meta.title = 'Each ' + table.label + ' has ' + rel.theirs.short + ' ' + rel.partner.label
     + '; each ' + rel.partner.label + ' has ' + rel.mine.short + ' ' + table.label;
   li.appendChild(meta);
@@ -91,10 +90,10 @@ function attach(canvas, focus, view, src) {
   ['mousedown', 'click', 'wheel'].forEach((t) => panel.addEventListener(t, (e) => e.stopPropagation()));
   canvas.appendChild(panel);
   let m = null;
+  // Only the view moves: same zoom, same focused table, same panel.
   const go = (key) => {
     const node = focus.graph.nodes.find((n) => n.key === key);
-    focus.set(key);
-    if (node) view.centerOn(node.el, READ_SCALE);
+    if (node) view.centerOn(node.el);
   };
   const show = () => fill(panel, m, focus.key, go, () => focus.clear());
   focus.onChange(show);

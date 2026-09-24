@@ -243,7 +243,7 @@ html.dark .md-editor-source {
   stroke-width: 4px !important;
 }
 .md-editor .mermaid svg.mmd-focus g.node.mmd-hit-root {
-  filter: drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 6px var(--accent));
+  filter: drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 14px var(--accent)) drop-shadow(0 0 28px var(--accent));
 }
 
 /* Fullscreen: the diagram is placed by one transform from the top-left corner,
@@ -463,4 +463,5 @@ html.dark .md-editor-source {
 }
 .md-editor .mermaid-relations-partner:hover { text-decoration: underline; }
 .md-editor .mermaid-relations-label { font-style: italic; opacity: 0.8; }
+.md-editor .mermaid-relations-says { margin-top: 1px; }
 .md-editor .mermaid-relations-kind { opacity: 0.7; font-size: 11px; }

@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.10.17 — ER relations read one-first; jumping keeps your place
+
+- Each relationship now reads in plain words with the "one" side first, such as
+  "One CUSTOMER – many ORDER"
+- Clicking a table in the relationships panel moves the view to it without
+  changing the zoom, the selected table or the panel
+- The selected table glows more strongly, so it is easier to spot
+
 ## v0.10.16 — a focused ER table lists its keys and relationships
 
 - In fullscreen, clicking an ER table opens a panel with its primary and foreign

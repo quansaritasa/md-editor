@@ -61,9 +61,18 @@ function relationsOf(model, key) {
   return out;
 }
 
-// "many-to-one" reads from this table: many of this table, one partner.
-function kind(rel) {
-  return (rel.mine.many ? 'many' : 'one') + '-to-' + (rel.theirs.many ? 'many' : 'one');
+// A relationship in plain words, the "one" side always first: from ORDER,
+// CUSTOMER places ORDER reads "One CUSTOMER – many ORDER", never "many-to-one".
+// kind and cards follow the same order, so all three read left to right alike.
+function describe(table, rel) {
+  let ends = [{ name: table.label, card: rel.mine }, { name: rel.partner.label, card: rel.theirs }];
+  if (ends[0].card.many && !ends[1].card.many) ends = [ends[1], ends[0]];
+  const word = (e) => (e.card.many ? 'many' : 'one');
+  return {
+    text: ends.map((e, i) => (i ? word(e) : word(e)[0].toUpperCase() + word(e).slice(1)) + ' ' + e.name).join(' – '),
+    kind: word(ends[0]) + '-to-' + word(ends[1]),
+    cards: ends[0].card.short + ' : ' + ends[1].card.short,
+  };
 }
 
 // Parse `src` with the host's mermaid. null for anything that is not an ER
@@ -82,4 +91,4 @@ async function load(src) {
   }
 }
 
-module.exports = { load, fromDb, relationsOf, kind };
+module.exports = { load, fromDb, relationsOf, describe };

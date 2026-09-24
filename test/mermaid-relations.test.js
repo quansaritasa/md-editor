@@ -47,13 +47,19 @@ function fakeDb() {
 
 test('model: keys per table, cardinality straightened to each end', () => {
   const m = model.fromDb(fakeDb());
-  const order = m.tables.get('entity-ORDER-1');
-  assert.deepStrictEqual(order.pks.map((c) => c.name), ['id']);
-  assert.deepStrictEqual(order.fks.map((c) => c.name), ['customer_id']);
+  const orderT = m.tables.get('entity-ORDER-1');
+  assert.deepStrictEqual(orderT.pks.map((c) => c.name), ['id']);
+  assert.deepStrictEqual(orderT.fks.map((c) => c.name), ['customer_id']);
   const rels = model.relationsOf(m, 'entity-ORDER-1');
-  assert.deepStrictEqual(rels.map((r) => [r.partner.name, model.kind(r), r.mine.short, r.theirs.short]), [
-    ['CUSTOMER', 'many-to-one', '0..*', '1'],
-    ['LINE_ITEM', 'one-to-many', '1', '1..*'],
+  const order = m.tables.get('entity-ORDER-1');
+  assert.deepStrictEqual(rels.map((r) => [r.partner.name, r.mine.short, r.theirs.short]), [
+    ['CUSTOMER', '0..*', '1'],
+    ['LINE_ITEM', '1', '1..*'],
+  ]);
+  // The "one" side always reads first, whichever table is focused.
+  assert.deepStrictEqual(rels.map((r) => model.describe(order, r)), [
+    { text: 'One CUSTOMER – many ORDER', kind: 'one-to-many', cards: '1 : 0..*' },
+    { text: 'One ORDER – many LINE_ITEM', kind: 'one-to-many', cards: '1 : 1..*' },
   ]);
   assert.strictEqual(model.relationsOf(m, 'entity-AUDIT_LOG-4').length, 0);
 });
@@ -92,7 +98,8 @@ test('fullscreen ER: panel follows the focus and lists keys and relationships', 
   assert.deepStrictEqual(text(panel, ':scope > .mermaid-relations-keys .mermaid-relations-cols'), ['id', 'customer_id']);
   assert.deepStrictEqual(text(panel, '.mermaid-relations-partner'), ['CUSTOMER', 'LINE_ITEM']);
   assert.deepStrictEqual(text(panel, '.mermaid-relations-label'), ['places', 'contains']);
-  assert.ok(text(panel, '.mermaid-relations-kind')[0].startsWith('many-to-one'));
+  assert.deepStrictEqual(text(panel, '.mermaid-relations-says'), ['One CUSTOMER – many ORDER', 'One ORDER – many LINE_ITEM']);
+  assert.ok(text(panel, '.mermaid-relations-kind')[0].startsWith('one-to-many · 1 : 0..*'));
   // LINE_ITEM's composite key shows as both PK and FK columns.
   const li = panel.querySelectorAll('.mermaid-relations-item')[1];
   assert.deepStrictEqual(text(li, '.mermaid-relations-cols'), ['order_id, product_id', 'order_id, product_id']);
@@ -100,14 +107,16 @@ test('fullscreen ER: panel follows the focus and lists keys and relationships', 
   assert.ok(panel.hidden);
 });
 
-test('fullscreen ER: clicking a partner moves the focus; × clears it; close removes the panel', async () => {
+test('fullscreen ER: clicking a partner only pans; × clears; close removes the panel', async () => {
   const { p, f, panel } = fullscreen();
   await f.relations.ready;
   f.focus.set('entity-ORDER-1');
+  const s0 = f.view.get().s;
   panel.querySelector('.mermaid-relations-partner').click();
-  assert.strictEqual(f.focus.key, 'entity-CUSTOMER-0');
-  assert.strictEqual(panel.querySelector('.mermaid-relations-name').textContent, 'CUSTOMER');
-  assert.ok(text(panel, '.mermaid-relations-kind')[0].startsWith('one-to-many'));
+  assert.strictEqual(f.focus.key, 'entity-ORDER-1', 'selection kept');
+  assert.strictEqual(f.view.get().s, s0, 'zoom kept');
+  assert.ok(!panel.hidden, 'panel kept');
+  assert.strictEqual(panel.querySelector('.mermaid-relations-name').textContent, 'ORDER');
   panel.querySelector('.mermaid-relations-close').click();
   assert.strictEqual(f.focus.key, null);
   f.close();
