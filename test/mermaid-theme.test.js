@@ -72,10 +72,21 @@ test("the host's mermaidConfig colours win over the theme's", async () => {
   assert.strictEqual(tv.lineColor, '#111111');
 });
 
-test('no theme loaded: mermaid keeps its defaults', () => {
+test('colours the browser cannot resolve: mermaid keeps its defaults', () => {
   const p = makePage();
   // A fresh copy of the module: the one above has its reader stubbed.
   delete require.cache[require.resolve('../src/features/mermaid-theme')];
   const fresh = require('../src/features/mermaid-theme');
-  assert.strictEqual(fresh.themeVars(p.content), null, 'no --accent on the page');
+  assert.strictEqual(fresh.themeVars(p.content), null, 'jsdom resolves no colours');
+});
+
+test('the palette is fixed, not derived from the page accent', () => {
+  const fresh = require('../src/features/mermaid-theme');
+  const resolver = () => ({ resolve: (expr) => (expr.startsWith('#') ? expr : '#f6f8fa') });
+  const tv = fresh.themeVars(makePage().content, resolver);
+  assert.strictEqual(tv.primaryColor, '#e6f4f1');
+  assert.strictEqual(tv.secondaryColor, '#f6d078');
+  assert.strictEqual(tv.tertiaryColor, '#78b3f6');
+  assert.strictEqual(tv.primaryTextColor, '#1f2937');
+  assert.strictEqual(tv.clusterBkg, undefined, 'subgraph shade left to mermaid');
 });

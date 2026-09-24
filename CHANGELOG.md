@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.24 — colourful diagrams
+
+- Diagrams share one palette in every theme: mint nodes, gold edge labels,
+  blue subgraphs, slate lines
+- In a flowchart, each branch below the first split gets its own colour, so
+  what hangs off each side reads at a glance; a node's own style still wins
+
 ## v0.10.23 — dragging a diagram stays smooth
 
 - Dragging a mermaid diagram, inline or fullscreen, no longer stutters on

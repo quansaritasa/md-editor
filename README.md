@@ -122,10 +122,14 @@ In fullscreen, Esc clears a focus first and closes the overlay on the next
 press. The aids' own colours come from the theme's `--accent`, `--border`
 and `--surface`.
 
-Diagram colours follow the page theme: nodes, ER rows and lines are drawn
-from the theme's `--accent` over its `--mermaid-bg` paper, with dark text. mermaid
-bakes colours into each SVG, so after a theme or light/dark switch has applied
-call `MdEditor.features.mermaid.refreshTheme(content)`; it redraws only when the
+Diagrams share one palette in every theme, over the theme's `--mermaid-bg`
+paper: mint nodes with teal borders, gold edge labels, blue subgraphs, slate
+lines and dark text. In a flowchart, each branch below the first node that fans
+out gets its own pastel (gold, blue, rose, violet, lime, then round again); a
+theme may override them with `--mermaid-branch-1-fill` / `-stroke` … `-5-`.
+A node's own `style` or `classDef` always wins. mermaid bakes colours into each
+SVG, so after a theme or light/dark switch has applied call
+`MdEditor.features.mermaid.refreshTheme(content)`; it redraws only when the
 colours changed. A host's own `mermaidConfig.themeVariables` still win.
 
 The pieces are exposed for hosts that want them elsewhere:

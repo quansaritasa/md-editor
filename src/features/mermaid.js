@@ -8,6 +8,7 @@ const deps = require('../deps');
 const zoom = require('./mermaid-zoom');
 const mermaidTheme = require('./mermaid-theme');
 const degree = require('./mermaid-degree');
+const branch = require('./mermaid-branch');
 
 const INIT = {
   startOnLoad: false,
@@ -120,6 +121,7 @@ async function render(root, options) {
     dia.innerHTML = svg;
     wrap.appendChild(dia);
     degree.decorate(wrap, dia);
+    branch.paint(dia.querySelector('svg'));
     pre.replaceWith(wrap);
     n++;
   }
@@ -142,8 +144,10 @@ async function refreshTheme(root, options) {
     const svg = await drawOne(m, 'mmd-r' + i + '-' + Date.now(), dias[i].getAttribute('data-mermaid-src'), doc);
     if (svg == null) continue;
     dias[i].innerHTML = svg;
-    // The redraw threw the old SVG away, and every degree class with it.
+    // The redraw threw the old SVG away, and every degree class and branch
+    // colour with it.
     degree.decorate(dias[i].parentNode, dias[i]);
+    branch.paint(dias[i].querySelector('svg'));
     n++;
   }
   return n;
