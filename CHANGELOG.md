@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.18 — true fullscreen diagrams; see both ends of a relationship
+
+- The fullscreen diagram view now fills the whole screen; Esc leaves it
+- The selected table glows red, and a related table you jump to from the panel
+  glows in the theme colour, so both ends of the relationship stand out
+- The selected table's name in the panel is a link that brings it back into view
+
 ## v0.10.17 — ER relations read one-first; jumping keeps your place
 
 - Each relationship now reads in plain words with the "one" side first, such as

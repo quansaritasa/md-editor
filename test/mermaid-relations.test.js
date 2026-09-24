@@ -117,8 +117,36 @@ test('fullscreen ER: clicking a partner only pans; × clears; close removes the 
   assert.strictEqual(f.view.get().s, s0, 'zoom kept');
   assert.ok(!panel.hidden, 'panel kept');
   assert.strictEqual(panel.querySelector('.mermaid-relations-name').textContent, 'ORDER');
+  // The partner glows in its own colour, in the fullscreen copy and the minimap alike.
+  const peeks = () => [...p.content.querySelectorAll('g.node.mmd-peek')].map((n) => n.id.replace(/^.*entity-/, ''));
+  assert.ok(peeks().length >= 1 && peeks().every((k) => k === 'CUSTOMER-0'), 'only CUSTOMER peeked');
+  assert.ok(panel.querySelector('.mermaid-relations-item').classList.contains('is-peek'));
+  assert.ok(p.content.querySelector('g.node.mmd-hit-root[id$="entity-ORDER-1"]'), 'focused table keeps its glow');
+  // The table's own name pans back and drops the partner's glow.
+  panel.querySelector('.mermaid-relations-name').click();
+  assert.strictEqual(f.focus.key, 'entity-ORDER-1');
+  assert.deepStrictEqual(peeks(), []);
+  assert.strictEqual(panel.querySelectorAll('.is-peek').length, 0);
   panel.querySelector('.mermaid-relations-close').click();
   assert.strictEqual(f.focus.key, null);
   f.close();
   assert.strictEqual(p.content.querySelector('.mermaid-relations'), null);
+});
+
+test('osFullscreen: fits on entry, closes once on exit, no-op without the API', async () => {
+  const { osFullscreen } = require('../src/features/mermaid-ui');
+  const { document: doc } = makePage();
+  const none = doc.createElement('div');
+  assert.strictEqual(typeof osFullscreen(none, () => {}, () => {}), 'function');
+  const el = doc.createElement('div');
+  let fs = null;
+  Object.defineProperty(doc, 'fullscreenElement', { get: () => fs, configurable: true });
+  el.requestFullscreen = async () => { fs = el; doc.dispatchEvent(new doc.defaultView.Event('fullscreenchange')); };
+  const seen = [];
+  osFullscreen(el, () => seen.push('enter'), () => seen.push('exit'));
+  await new Promise((r) => setTimeout(r, 0));
+  fs = null;
+  doc.dispatchEvent(new doc.defaultView.Event('fullscreenchange'));
+  doc.dispatchEvent(new doc.defaultView.Event('fullscreenchange'));
+  assert.deepStrictEqual(seen, ['enter', 'exit']);
 });

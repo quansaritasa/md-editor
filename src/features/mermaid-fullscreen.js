@@ -13,7 +13,7 @@ const focusLib = require('./mermaid-focus');
 const minimap = require('./mermaid-minimap');
 const search = require('./mermaid-search');
 const relations = require('./mermaid-relations');
-const { makeBtn } = require('./mermaid-ui');
+const { makeBtn, osFullscreen } = require('./mermaid-ui');
 
 const STEP = 1.25;     // one zoom notch, multiplied — even steps at 5% and at 400%
 const MIN = 0.05, MAX = 8;
@@ -156,7 +156,9 @@ function openFullscreen(el, parent) {
   view.fit();
 
   const unbind = bindPointer(canvas, view, doc.defaultView);
+  let leaveOs = () => {};
   const close = () => {
+    leaveOs();
     overlay.remove();
     doc.removeEventListener('keydown', onKey);
     unbind();
@@ -166,6 +168,9 @@ function openFullscreen(el, parent) {
   const onKey = keyHandler(focus, finder, close);
   doc.addEventListener('keydown', onKey);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+  // The canvas grows to the whole screen once there, so fit again; leaving
+  // OS fullscreen (Esc is the browser's then) closes the view with it.
+  leaveOs = osFullscreen(overlay, () => view.fit(), close);
   return { close, view, focus, relations: rel };
 }
 

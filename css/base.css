@@ -243,7 +243,21 @@ html.dark .md-editor-source {
   stroke-width: 4px !important;
 }
 .md-editor .mermaid svg.mmd-focus g.node.mmd-hit-root {
+  filter: drop-shadow(0 0 6px var(--mermaid-focus-glow, #e11d48)) drop-shadow(0 0 14px var(--mermaid-focus-glow, #e11d48)) drop-shadow(0 0 28px var(--mermaid-focus-glow, #e11d48));
+}
+/* The neighbour the relations panel just jumped to: same glow in the theme's
+   accent, so it reads apart from the red focused table while both stay lit. */
+.md-editor .mermaid svg.mmd-focus g.node.mmd-peek {
   filter: drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 14px var(--accent)) drop-shadow(0 0 28px var(--accent));
+}
+
+/* OS fullscreen: every theme sizes the canvas to 90% of the viewport inside a
+   dimmed backdrop; once the overlay owns the screen the canvas takes all of it. */
+.md-editor .mermaid-fullscreen-overlay:fullscreen { background: var(--mermaid-bg, #f6f8fa); }
+.md-editor .mermaid-fullscreen-overlay:fullscreen .mermaid-fullscreen-canvas {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
 }
 
 /* Fullscreen: the diagram is placed by one transform from the top-left corner,
@@ -401,10 +415,18 @@ html.dark .md-editor-source {
 }
 .md-editor .mermaid-relations-name {
   flex: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
   font-size: 14px;
   font-weight: 600;
   overflow-wrap: anywhere;
 }
+.md-editor .mermaid-relations-name:hover { text-decoration: underline; }
 .md-editor .mermaid-relations-close {
   border: 0;
   background: none;
@@ -445,6 +467,12 @@ html.dark .md-editor-source {
 .md-editor .mermaid-relations-item {
   padding: 6px 0;
   border-top: 1px solid var(--border);
+}
+.md-editor .mermaid-relations-item.is-peek {
+  margin: 0 -12px;
+  padding: 6px 12px 6px 9px;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 .md-editor .mermaid-relations-head {
   display: flex;

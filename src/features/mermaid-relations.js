@@ -5,7 +5,8 @@
    primary and foreign keys, then every relationship it takes part in: the
    partner table, the kind (one-to-many, …) with the exact cardinalities, the
    relationship's label, and the partner's own keys. Clicking a partner pans
-   the view to it — zoom, focus and panel all stay as they were.
+   the view to it and gives it a glow of its own — zoom, focus and panel all
+   stay as they were. The table's own name pans back to it.
 
    Presses, clicks and wheel turns stop at the panel: no pan, no focus toggle,
    and a long list scrolls instead of moving the diagram. */
@@ -45,7 +46,11 @@ function relItem(doc, table, rel, go) {
   const name = el(doc, 'button', 'mermaid-relations-partner', self ? rel.partner.label + ' (itself)' : rel.partner.label);
   name.type = 'button';
   name.title = 'Show ' + rel.partner.label + ' (keeps the zoom and the selection)';
-  name.addEventListener('click', () => go(rel.partner.key));
+  name.addEventListener('click', () => {
+    go(rel.partner.key);
+    li.parentNode.querySelectorAll('.is-peek').forEach((x) => x.classList.remove('is-peek'));
+    if (!self) li.classList.add('is-peek');
+  });
   head.appendChild(name);
   if (rel.label) head.appendChild(el(doc, 'span', 'mermaid-relations-label', rel.label));
   li.appendChild(head);
@@ -66,7 +71,11 @@ function fill(panel, m, key, go, close) {
   panel.hidden = !table;
   if (!table) return;
   const top = el(doc, 'div', 'mermaid-relations-title');
-  top.appendChild(el(doc, 'span', 'mermaid-relations-name', table.label));
+  const me = el(doc, 'button', 'mermaid-relations-name', table.label);
+  me.type = 'button';
+  me.title = 'Show ' + table.label;
+  me.addEventListener('click', () => go(table.key));
+  top.appendChild(me);
   const x = el(doc, 'button', 'mermaid-relations-close', '×');
   x.type = 'button';
   x.title = 'Clear focus (Esc)';
@@ -90,9 +99,12 @@ function attach(canvas, focus, view, src) {
   ['mousedown', 'click', 'wheel'].forEach((t) => panel.addEventListener(t, (e) => e.stopPropagation()));
   canvas.appendChild(panel);
   let m = null;
-  // Only the view moves: same zoom, same focused table, same panel.
+  // Only the view moves: same zoom, same focused table, same panel. A partner
+  // gets its own glow so it is found at once; back to the focused table drops it.
   const go = (key) => {
     const node = focus.graph.nodes.find((n) => n.key === key);
+    focus.peek(key);
+    if (key === focus.key) panel.querySelectorAll('.is-peek').forEach((x) => x.classList.remove('is-peek'));
     if (node) view.centerOn(node.el);
   };
   const show = () => fill(panel, m, focus.key, go, () => focus.clear());

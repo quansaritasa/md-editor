@@ -15,12 +15,13 @@ const { readGraph, neighbourhood, nodeOf } = require('./mermaid-graph');
 const ON = 'mmd-focus';
 const HIT = 'mmd-hit';
 const ROOT = 'mmd-hit-root';
+const PEEK = 'mmd-peek'; // a neighbour the relations panel jumped to
 const DRAG_PX = 4; // a press that travels further than this was a pan, not a click
 
 function clearSvg(svg) {
   svg.classList.remove(ON);
   svg.removeAttribute('data-mmd-focus');
-  svg.querySelectorAll('.' + HIT + ', .' + ROOT).forEach((el) => el.classList.remove(HIT, ROOT));
+  svg.querySelectorAll('.' + HIT + ', .' + ROOT + ', .' + PEEK).forEach((el) => el.classList.remove(HIT, ROOT, PEEK));
 }
 
 function paint(svg, graph, key) {
@@ -58,6 +59,15 @@ function create(svgs) {
       key = null;
       list.forEach(clearSvg);
       changed();
+    },
+    // Mark one node as looked-at, in its own colour, without moving the focus.
+    // A new focus (or a clear) drops it; null drops it now.
+    peek(k) {
+      list.forEach((svg, i) => {
+        svg.querySelectorAll('.' + PEEK).forEach((el) => el.classList.remove(PEEK));
+        const n = k && k !== key && graphs[i].nodes.find((x) => x.key === k);
+        if (n) n.el.classList.add(PEEK);
+      });
     },
     // fn(key) after every set and clear; key is null once cleared.
     onChange(fn) { listeners.push(fn); },
