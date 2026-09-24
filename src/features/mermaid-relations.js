@@ -5,7 +5,8 @@
    primary and foreign keys, then every relationship it takes part in: the
    partner table, the kind (one-to-many, …) with the exact cardinalities, the
    relationship's label, and the partner's own keys. Clicking a partner pans
-   the view to it and gives it a glow of its own — zoom, focus and panel all
+   the view so it and the focused table are both in sight, and gives it a
+   glow of its own — zoom, focus and panel all
    stay as they were. The table's own name pans back to it.
 
    Presses, clicks and wheel turns stop at the panel: no pan, no focus toggle,
@@ -90,6 +91,33 @@ function fill(panel, m, key, go, close) {
   panel.appendChild(list);
 }
 
+const MARGIN = 24; // canvas px kept clear around a framed pair
+
+// Nudge offset x (diagram point p sits at x + p·s) until the span [a, b] lies
+// within [lo, hi]. A span wider than that keeps its start in view.
+function fitAxis(x0, s, a, b, lo, hi) {
+  let x = x0;
+  if (x + b * s > hi) x = hi - b * s;
+  if (x + a * s < lo) x = lo - a * s;
+  return x;
+}
+
+// Pan, never zoom, so the focused table and `partner` share the free part of
+// the canvas — right of the panel, inside a margin. When the pair is wider or
+// taller than that at this zoom, the partner stays whole and the focused
+// table shows as much as still fits.
+function frame(view, panel, focusEl, partnerEl) {
+  const v = view.get();
+  const A = view.boxOf(focusEl), P = view.boxOf(partnerEl);
+  const left = (panel.hidden ? 0 : panel.offsetLeft + panel.offsetWidth) + MARGIN;
+  const area = { l: left, t: MARGIN, r: v.W - MARGIN, b: v.H - MARGIN };
+  if (area.r <= area.l) { area.l = MARGIN; } // a canvas too narrow for the panel's reserve
+  const mid = (lo, hi, a, b) => (lo + hi) / 2 - ((a + b) / 2) * v.s;
+  const x = fitAxis(mid(area.l, area.r, Math.min(A.l, P.l), Math.max(A.r, P.r)), v.s, P.l, P.r, area.l, area.r);
+  const y = fitAxis(mid(area.t, area.b, Math.min(A.t, P.t), Math.max(A.b, P.b)), v.s, P.t, P.b, area.t, area.b);
+  view.pan(x - v.x, y - v.y);
+}
+
 // Add the panel to `canvas` and keep it on the focused table. `src` is the
 // diagram's mermaid source; nothing is shown until it has been parsed.
 function attach(canvas, focus, view, src) {
@@ -100,12 +128,16 @@ function attach(canvas, focus, view, src) {
   canvas.appendChild(panel);
   let m = null;
   // Only the view moves: same zoom, same focused table, same panel. A partner
-  // gets its own glow so it is found at once; back to the focused table drops it.
+  // is framed together with the focused table and gets its own glow; the
+  // focused table's own name centres it and drops that glow.
   const go = (key) => {
     const node = focus.graph.nodes.find((n) => n.key === key);
     focus.peek(key);
     if (key === focus.key) panel.querySelectorAll('.is-peek').forEach((x) => x.classList.remove('is-peek'));
-    if (node) view.centerOn(node.el);
+    if (!node) return;
+    const own = focus.graph.nodes.find((n) => n.key === focus.key);
+    if (own && own !== node) frame(view, panel, own.el, node.el);
+    else view.centerOn(node.el);
   };
   const show = () => fill(panel, m, focus.key, go, () => focus.clear());
   focus.onChange(show);
@@ -113,4 +145,4 @@ function attach(canvas, focus, view, src) {
   return { panel, ready, detach() { panel.remove(); } };
 }
 
-module.exports = { attach, fill };
+module.exports = { attach, fill, frame };

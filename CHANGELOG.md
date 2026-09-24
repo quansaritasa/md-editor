@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.19 — jumping to a related table keeps both tables in view
+
+- Clicking a related table in the ER panel now shows it together with the
+  selected table, at the same zoom; when they are too far apart for that zoom,
+  the related table is shown whole and the selected one as much as fits
+
 ## v0.10.18 — true fullscreen diagrams; see both ends of a relationship
 
 - The fullscreen diagram view now fills the whole screen; Esc leaves it

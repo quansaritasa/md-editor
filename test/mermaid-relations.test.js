@@ -150,3 +150,30 @@ test('osFullscreen: fits on entry, closes once on exit, no-op without the API', 
   doc.dispatchEvent(new doc.defaultView.Event('fullscreenchange'));
   assert.deepStrictEqual(seen, ['enter', 'exit']);
 });
+
+// A view at scale s over a W×H canvas, with boxes given in diagram coordinates.
+function fakeView(s, W, H, boxes) {
+  const v = { x: 0, y: 0 };
+  return { v, get: () => ({ x: v.x, y: v.y, s, W, H }), boxOf: (el) => boxes[el], pan(dx, dy) { v.x += dx; v.y += dy; } };
+}
+const onCanvas = (view, b) => ({ l: view.v.x + b.l * 2, r: view.v.x + b.r * 2, t: view.v.y + b.t * 2, b: view.v.y + b.b * 2 });
+
+test('frame: a pair that fits is centred right of the panel, zoom untouched', () => {
+  const { frame } = require('../src/features/mermaid-relations');
+  const boxes = { A: { l: 0, t: 0, r: 100, b: 50 }, P: { l: 300, t: 200, r: 400, b: 250 } };
+  const view = fakeView(2, 1600, 900, boxes);
+  frame(view, { hidden: false, offsetLeft: 16, offsetWidth: 300 }, 'A', 'P');
+  const a = onCanvas(view, boxes.A), p = onCanvas(view, boxes.P);
+  assert.ok(a.l >= 340 && p.r <= 1576 && a.t >= 24 && p.b <= 876, 'both inside the free area');
+  assert.strictEqual(Math.round((a.l + p.r) / 2), Math.round((340 + 1576) / 2), 'pair centred across it');
+});
+
+test('frame: a pair too far apart keeps the partner whole', () => {
+  const { frame } = require('../src/features/mermaid-relations');
+  const boxes = { A: { l: 0, t: 0, r: 100, b: 50 }, P: { l: 2000, t: 0, r: 2100, b: 50 } };
+  const view = fakeView(2, 1600, 900, boxes);
+  frame(view, { hidden: true }, 'A', 'P');
+  const p = onCanvas(view, boxes.P);
+  assert.ok(p.l >= 24 && p.r <= 1576, 'partner fully visible');
+  assert.strictEqual(p.r, 1576, 'pushed only as far as needed, towards the focused table');
+});

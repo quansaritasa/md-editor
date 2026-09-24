@@ -62,13 +62,16 @@ function createView(canvas, clone, label) {
       apply();
     },
     // Bring an element of the clone to the centre, zoomed in to at least `minScale`.
-    centerOn(el, minScale) {
+    // An element of the clone as a box in diagram coordinates.
+    boxOf(el) {
       const r = el.getBoundingClientRect();
       const c = clone.getBoundingClientRect();
-      const px = (r.left + r.width / 2 - c.left) / v.s;
-      const py = (r.top + r.height / 2 - c.top) / v.s;
+      return { l: (r.left - c.left) / v.s, t: (r.top - c.top) / v.s, r: (r.right - c.left) / v.s, b: (r.bottom - c.top) / v.s };
+    },
+    centerOn(el, minScale) {
+      const bx = view.boxOf(el);
       if (minScale && v.s < minScale) v.s = Math.min(MAX, minScale);
-      view.panTo(px, py);
+      view.panTo((bx.l + bx.r) / 2, (bx.t + bx.b) / 2);
     },
   };
   return view;
