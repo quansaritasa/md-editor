@@ -13,7 +13,7 @@ const focusLib = require('./mermaid-focus');
 const minimap = require('./mermaid-minimap');
 const search = require('./mermaid-search');
 const relations = require('./mermaid-relations');
-const { makeBtn, osFullscreen } = require('./mermaid-ui');
+const { makeBtn, osFullscreen, panBatcher, setDragLayer } = require('./mermaid-ui');
 
 const STEP = 1.25;     // one zoom notch, multiplied — even steps at 5% and at 400%
 const MIN = 0.05, MAX = 8;
@@ -77,22 +77,31 @@ function createView(canvas, clone, label) {
   return view;
 }
 
-function bindPointer(canvas, view, win) {
+function bindPointer(canvas, clone, view, win) {
   let drag = null;
+  const batch = panBatcher(win, (dx, dy) => view.pan(dx, dy));
   const onMove = (e) => {
     if (!drag) return;
-    view.pan(e.clientX - drag.x, e.clientY - drag.y);
+    batch.add(e.clientX - drag.x, e.clientY - drag.y);
     drag = { x: e.clientX, y: e.clientY };
   };
-  const onUp = () => { drag = null; canvas.style.cursor = 'grab'; };
+  const onUp = () => {
+    if (!drag) return;
+    drag = null;
+    batch.flush();
+    setDragLayer(clone, false);
+    canvas.style.cursor = 'grab';
+  };
   canvas.addEventListener('mousedown', (e) => {
     if (e.target.closest('button, input, .mermaid-zoom-controls, .mermaid-minimap')) return;
     drag = { x: e.clientX, y: e.clientY };
+    setDragLayer(clone, true);
     canvas.style.cursor = 'grabbing';
   });
   canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
-    if (!(e.ctrlKey || e.metaKey)) { view.pan(-e.deltaX, -e.deltaY); return; }
+    if (!(e.ctrlKey || e.metaKey)) { batch.add(-e.deltaX, -e.deltaY); return; }
+    batch.flush();
     const r = canvas.getBoundingClientRect();
     const s = view.get().s * Math.pow(STEP, -Math.sign(e.deltaY));
     view.zoomAt(e.clientX - r.left, e.clientY - r.top, s);
@@ -163,7 +172,7 @@ function openFullscreen(el, parent) {
   controls.appendChild(makeBtn(doc, '+', () => view.step(1)));
   view.fit();
 
-  const unbind = bindPointer(canvas, view, doc.defaultView);
+  const unbind = bindPointer(canvas, clone, view, doc.defaultView);
   let leaveOs = () => {};
   const close = () => {
     leaveOs();

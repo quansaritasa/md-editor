@@ -2,7 +2,7 @@
 
 /* ================= mermaid zoom / pan / fullscreen ================= */
 
-const { makeBtn } = require('./mermaid-ui');
+const { makeBtn, panBatcher, setDragLayer } = require('./mermaid-ui');
 const { openFullscreen } = require('./mermaid-fullscreen');
 const focusLib = require('./mermaid-focus');
 
@@ -19,10 +19,15 @@ function overlayHost(root, options) {
 // The inline view: one transform on the diagram, the wrapper's height following it.
 function inlineView(wrap, el, label) {
   const v = { scale: 1, offX: 0, offY: 0 };
+  el.style.transformOrigin = 'top left';
+  const place = () => {
+    el.style.transform = 'translate(' + v.offX + 'px,' + v.offY + 'px) scale(' + v.scale + ')';
+  };
+  // Only a scale change can change the height; a pan skips the measuring,
+  // which forced a full layout on every mouse move.
   const update = () => {
     v.scale = Math.max(0.1, v.scale);
-    el.style.transform = 'translate(' + v.offX + 'px,' + v.offY + 'px) scale(' + v.scale + ')';
-    el.style.transformOrigin = 'top left';
+    place();
     wrap.style.height = (el.getBoundingClientRect().height * 1.15) + 'px';
     label.textContent = Math.round(v.scale * 100) + '%';
   };
@@ -44,26 +49,30 @@ function inlineView(wrap, el, label) {
     // A button has no cursor to anchor to, so it anchors at the visible centre.
     zoomCenter: (delta) => zoomAt(wrap.clientWidth / 2, wrap.clientHeight / 2, delta),
     reset() { v.scale = 1; v.offX = 0; v.offY = 0; update(); },
-    pan(dx, dy) { v.offX += dx; v.offY += dy; update(); },
+    pan(dx, dy) { v.offX += dx; v.offY += dy; place(); },
   };
 }
 
-function bindInlinePointer(wrap, win, view) {
+function bindInlinePointer(wrap, el, win, view) {
   let panning = false, px = 0, py = 0;
+  const batch = panBatcher(win, (dx, dy) => view.pan(dx, dy));
   wrap.addEventListener('mousedown', (e) => {
     if (e.target.tagName === 'BUTTON') return;
     panning = true;
     px = e.clientX; py = e.clientY;
+    setDragLayer(el, true);
     wrap.style.cursor = 'grabbing';
   });
   win.addEventListener('mousemove', (e) => {
     if (!panning) return;
-    view.pan(e.clientX - px, e.clientY - py);
+    batch.add(e.clientX - px, e.clientY - py);
     px = e.clientX; py = e.clientY;
   });
   win.addEventListener('mouseup', () => {
     if (!panning) return;
     panning = false;
+    batch.flush();
+    setDragLayer(el, false);
     wrap.style.cursor = 'grab';
   });
   wrap.addEventListener('wheel', (e) => {
@@ -71,6 +80,7 @@ function bindInlinePointer(wrap, win, view) {
     // accepts either.
     if (!(e.ctrlKey || e.metaKey)) return;
     e.preventDefault();
+    batch.flush();
     const r = wrap.getBoundingClientRect();
     view.zoomAt(e.clientX - r.left, e.clientY - r.top, -Math.sign(e.deltaY) * 0.3);
   }, { passive: false });
@@ -112,7 +122,7 @@ function setupWrapper(wrap, root, options) {
   wrap.appendChild(controls);
 
   bindInlineFocus(wrap, el);
-  bindInlinePointer(wrap, doc.defaultView, view);
+  bindInlinePointer(wrap, el, doc.defaultView, view);
 }
 
 function init(root, options) {

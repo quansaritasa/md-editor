@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.23 — dragging a diagram stays smooth
+
+- Dragging a mermaid diagram, inline or fullscreen, no longer stutters on
+  large ER diagrams; trackpad panning in fullscreen is smoother too
+
 ## v0.10.22 — your table's side of each ER relationship in bold
 
 - In the relations panel, the "one" or "many" that belongs to the selected

@@ -37,4 +37,34 @@ function osFullscreen(el, onEnter, onExit) {
   };
 }
 
-module.exports = { makeBtn, osFullscreen };
+// A mouse or trackpad reports moves faster than the screen redraws — often
+// several per frame — and every pan used to restyle and repaint the diagram.
+// Sum the deltas and pan once per frame; flush() applies what is pending now.
+function panBatcher(win, pan) {
+  const raf = win && win.requestAnimationFrame
+    ? (f) => win.requestAnimationFrame(f) : (f) => setTimeout(f, 16);
+  let dx = 0, dy = 0, queued = false;
+  const flush = () => {
+    queued = false;
+    const x = dx, y = dy;
+    dx = 0; dy = 0;
+    if (x || y) pan(x, y);
+  };
+  return {
+    add(x, y) {
+      dx += x; dy += y;
+      if (!queued) { queued = true; raf(flush); }
+    },
+    flush,
+  };
+}
+
+// While dragging, the diagram gets its own compositor layer, so moving it
+// only shifts pixels already drawn instead of repainting every table and
+// label. Only while dragging: a layer kept through a zoom stays rasterised at
+// the old scale and turns blurry.
+function setDragLayer(el, on) {
+  el.style.willChange = on ? 'transform' : '';
+}
+
+module.exports = { makeBtn, osFullscreen, panBatcher, setDragLayer };
