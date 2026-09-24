@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.21 — Shift+click to read two ER tables side by side
+
+- With a table selected, Shift+click or Ctrl+click a related table to pick it
+  out: both tables and the line between them stay lit, the other related
+  tables fade back, and the panel highlights that relationship. Do it again to
+  let go
+
 ## v0.10.20 — the relations panel stays put and starts at the top
 
 - Selecting another ER table shows its panel from the top, instead of where the

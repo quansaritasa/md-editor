@@ -7,7 +7,8 @@
    relationship's label, and the partner's own keys. Clicking a partner pans
    the view so it and the focused table are both in sight, and gives it a
    glow of its own — zoom, focus and panel all
-   stay as they were. The table's own name pans back to it.
+   stay as they were. The table's own name pans back to it. Shift/Ctrl+click
+   on a related table in the diagram picks it out the same way, in place.
 
    Presses, clicks and wheel turns stop at the panel: no pan, no focus toggle,
    and a long list scrolls instead of moving the diagram. */
@@ -47,11 +48,8 @@ function relItem(doc, table, rel, go) {
   const name = el(doc, 'button', 'mermaid-relations-partner', self ? rel.partner.label + ' (itself)' : rel.partner.label);
   name.type = 'button';
   name.title = 'Show ' + rel.partner.label + ' (keeps the zoom and the selection)';
-  name.addEventListener('click', () => {
-    go(rel.partner.key);
-    li.parentNode.querySelectorAll('.is-peek').forEach((x) => x.classList.remove('is-peek'));
-    if (!self) li.classList.add('is-peek');
-  });
+  name.addEventListener('click', () => go(rel.partner.key));
+  if (!self) li.setAttribute('data-partner', rel.partner.key);
   head.appendChild(name);
   if (rel.label) head.appendChild(el(doc, 'span', 'mermaid-relations-label', rel.label));
   li.appendChild(head);
@@ -124,6 +122,19 @@ function frame(view, panel, focusEl, partnerEl) {
   view.pan(x - v.x, y - v.y);
 }
 
+// Mark every row about `key` — a pair can share several relationships — and
+// bring the first into the panel's own view. Scrolled by hand, not with
+// scrollIntoView, which would also try to scroll the canvas behind it.
+function markRows(panel, key) {
+  const rows = [...panel.querySelectorAll('.mermaid-relations-item')];
+  rows.forEach((li) => li.classList.toggle('is-peek', !!key && li.getAttribute('data-partner') === key));
+  const first = rows.find((li) => li.classList.contains('is-peek'));
+  if (!first) return;
+  const top = first.offsetTop, bottom = top + first.offsetHeight;
+  if (top < panel.scrollTop) panel.scrollTop = top - 8;
+  else if (bottom > panel.scrollTop + panel.clientHeight) panel.scrollTop = bottom - panel.clientHeight + 8;
+}
+
 // Add the panel to `canvas` and keep it on the focused table. `src` is the
 // diagram's mermaid source; nothing is shown until it has been parsed.
 function attach(canvas, focus, view, src) {
@@ -139,7 +150,6 @@ function attach(canvas, focus, view, src) {
   const go = (key) => {
     const node = focus.graph.nodes.find((n) => n.key === key);
     focus.peek(key);
-    if (key === focus.key) panel.querySelectorAll('.is-peek').forEach((x) => x.classList.remove('is-peek'));
     if (!node) return;
     const own = focus.graph.nodes.find((n) => n.key === focus.key);
     if (own && own !== node) frame(view, panel, own.el, node.el);
@@ -147,6 +157,7 @@ function attach(canvas, focus, view, src) {
   };
   const show = () => fill(panel, m, focus.key, go, () => focus.clear());
   focus.onChange(show);
+  focus.onPeek((key) => markRows(panel, key));
   const ready = model.load(src).then((parsed) => { m = parsed; show(); return !!parsed; });
   return { panel, ready, detach() { panel.remove(); } };
 }

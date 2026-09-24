@@ -15,13 +15,42 @@ const { readGraph, neighbourhood, nodeOf } = require('./mermaid-graph');
 const ON = 'mmd-focus';
 const HIT = 'mmd-hit';
 const ROOT = 'mmd-hit-root';
-const PEEK = 'mmd-peek'; // a neighbour the relations panel jumped to
+const PEEK = 'mmd-peek'; // a neighbour picked out beside the focus
+const PAIR = 'mmd-pair'; // an edge (and its label) between the focus and the peek
+const PEEKING = 'mmd-peeking'; // on the svg while a peek is shown
 const DRAG_PX = 4; // a press that travels further than this was a pan, not a click
 
 function clearSvg(svg) {
   svg.classList.remove(ON);
   svg.removeAttribute('data-mmd-focus');
-  svg.querySelectorAll('.' + HIT + ', .' + ROOT + ', .' + PEEK).forEach((el) => el.classList.remove(HIT, ROOT, PEEK));
+  svg.querySelectorAll('.' + HIT + ', .' + ROOT).forEach((el) => el.classList.remove(HIT, ROOT));
+  clearPeek(svg);
+}
+
+function clearPeek(svg) {
+  svg.classList.remove(PEEKING);
+  svg.querySelectorAll('.' + PEEK + ', .' + PAIR).forEach((el) => el.classList.remove(PEEK, PAIR));
+}
+
+// Pick out `peekKey` and every edge joining it to `key`; css/base.css fades
+// the rest of the neighbourhood so the pair reads on its own.
+function paintPeek(svg, graph, key, peekKey) {
+  clearPeek(svg);
+  const n = peekKey && peekKey !== key && graph.nodes.find((x) => x.key === peekKey);
+  if (!n) return;
+  svg.classList.add(PEEKING);
+  n.el.classList.add(PEEK);
+  graph.edges.forEach((e) => {
+    const ends = [e.from.key, e.to.key];
+    if (!ends.includes(key) || !ends.includes(peekKey)) return;
+    e.path.classList.add(PAIR);
+    if (e.label) e.label.classList.add(PAIR);
+  });
+}
+
+// Is `node` one hop from the table with key `key`?
+function isNeighbour(graph, key, node) {
+  return graph.edges.some((e) => (e.from.key === key && e.to === node) || (e.to.key === key && e.from === node));
 }
 
 function paint(svg, graph, key) {
@@ -45,8 +74,9 @@ function create(svgs) {
   const list = svgs.filter(Boolean);
   const graphs = list.map(readGraph);
   let key = (list[0] && list[0].getAttribute('data-mmd-focus')) || null;
-  const listeners = [];
-  const changed = () => listeners.forEach((fn) => fn(key));
+  let peeked = null;
+  const listeners = [], peekers = [];
+  const changed = () => { peeked = null; listeners.forEach((fn) => fn(key)); };
   const f = {
     graph: graphs[0] || { nodes: [], edges: [] },
     get key() { return key; },
@@ -60,15 +90,23 @@ function create(svgs) {
       list.forEach(clearSvg);
       changed();
     },
-    // Mark one node as looked-at, in its own colour, without moving the focus.
-    // A new focus (or a clear) drops it; null drops it now.
+    get peeked() { return peeked; },
+    // Pick out one neighbour beside the focus, in its own colour, without
+    // moving the focus. A new focus (or a clear) drops it; null drops it now.
     peek(k) {
-      list.forEach((svg, i) => {
-        svg.querySelectorAll('.' + PEEK).forEach((el) => el.classList.remove(PEEK));
-        const n = k && k !== key && graphs[i].nodes.find((x) => x.key === k);
-        if (n) n.el.classList.add(PEEK);
-      });
+      peeked = k && k !== key ? k : null;
+      list.forEach((svg, i) => paintPeek(svg, graphs[i], key, peeked));
+      peekers.forEach((fn) => fn(peeked));
     },
+    // Shift/Ctrl+click: peek a neighbour of the focus, or drop it when it is
+    // the one already peeked. Anything else — no focus, the focus itself, a
+    // table that is not related — is ignored.
+    peekToggle(node) {
+      if (!key || !node || node.key === key || !isNeighbour(f.graph, key, node)) return;
+      f.peek(node.key === peeked ? null : node.key);
+    },
+    // fn(peekKey) after every peek; null once dropped.
+    onPeek(fn) { peekers.push(fn); },
     // fn(key) after every set and clear; key is null once cleared.
     onChange(fn) { listeners.push(fn); },
     toggle(node) {
@@ -80,6 +118,7 @@ function create(svgs) {
 }
 
 // A click on a node toggles its focus; a click on empty diagram clears it.
+// With Shift or Ctrl held it peeks a related table instead (where supported).
 // Buttons and other controls inside `host` are left alone.
 function bindClicks(host, focus, ignore) {
   let x0 = 0, y0 = 0;
@@ -89,6 +128,7 @@ function bindClicks(host, focus, ignore) {
     if (e.target.closest('button, input, ' + (ignore || '.mermaid-zoom-controls'))) return;
     if (!e.target.closest('svg')) { if (focus.key) focus.clear(); return; }
     const node = nodeOf(focus.graph, e.target);
+    if ((e.shiftKey || e.ctrlKey || e.metaKey) && focus.peekToggle) { focus.peekToggle(node); return; }
     if (node) focus.toggle(node);
     else if (focus.key) focus.clear();
   });

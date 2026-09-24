@@ -251,6 +251,19 @@ html.dark .md-editor-source {
   filter: drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 14px var(--accent)) drop-shadow(0 0 28px var(--accent));
 }
 
+/* While a neighbour is peeked, the pair reads on its own: the focused table,
+   the peeked one and the line(s) between them stay lit; the rest of the
+   neighbourhood steps back, still visible. */
+.md-editor .mermaid svg.mmd-focus.mmd-peeking g.node.mmd-hit:not(.mmd-hit-root):not(.mmd-peek),
+.md-editor .mermaid svg.mmd-focus.mmd-peeking path[data-edge].mmd-hit:not(.mmd-pair),
+.md-editor .mermaid svg.mmd-focus.mmd-peeking g.edgeLabel.mmd-hit:not(.mmd-pair) {
+  opacity: 0.35;
+}
+
+/* Shift+click picks out a table; it must not also select diagram text. */
+.md-editor .mermaid-fullscreen-canvas { user-select: none; }
+.md-editor .mermaid-relations { user-select: text; }
+
 /* OS fullscreen: every theme sizes the canvas to 90% of the viewport inside a
    dimmed backdrop; once the overlay owns the screen the canvas takes all of it. */
 .md-editor .mermaid-fullscreen-overlay:fullscreen { background: var(--mermaid-bg, #f6f8fa); }

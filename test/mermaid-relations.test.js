@@ -177,3 +177,29 @@ test('frame: a pair too far apart keeps the partner whole', () => {
   assert.ok(p.l >= 24 && p.r <= 1576, 'partner fully visible');
   assert.strictEqual(p.r, 1576, 'pushed only as far as needed, towards the focused table');
 });
+
+test('Shift/Ctrl+click peeks a related table, fades the rest, marks its row; again drops it', async () => {
+  const { p, f, panel } = fullscreen();
+  await f.relations.ready;
+  const W = p.window;
+  const svg = p.content.querySelector('.mermaid-fullscreen-diagram svg');
+  const node = (t) => svg.querySelector('g.node[id$="entity-' + t + '"]');
+  const click = (el, mods) => el.dispatchEvent(new W.MouseEvent('click', Object.assign({ bubbles: true }, mods)));
+  f.focus.set('entity-ORDER-1');
+  click(node('CUSTOMER-0'), { shiftKey: true });
+  assert.strictEqual(f.focus.key, 'entity-ORDER-1', 'focus kept');
+  assert.strictEqual(f.focus.peeked, 'entity-CUSTOMER-0');
+  assert.ok(svg.classList.contains('mmd-peeking'));
+  assert.ok(node('CUSTOMER-0').classList.contains('mmd-peek'));
+  assert.strictEqual(svg.querySelectorAll('path[data-edge].mmd-pair').length, 1, 'only the ORDER–CUSTOMER line is the pair');
+  assert.deepStrictEqual([...panel.querySelectorAll('.is-peek')].map((li) => li.getAttribute('data-partner')), ['entity-CUSTOMER-0']);
+  // An unrelated table and the focus itself are ignored.
+  click(node('PRODUCT-3'), { ctrlKey: true });
+  click(node('ORDER-1'), { ctrlKey: true });
+  assert.strictEqual(f.focus.peeked, 'entity-CUSTOMER-0');
+  // The same table again drops the peek.
+  click(node('CUSTOMER-0'), { ctrlKey: true });
+  assert.strictEqual(f.focus.peeked, null);
+  assert.ok(!svg.classList.contains('mmd-peeking'));
+  assert.strictEqual(panel.querySelectorAll('.is-peek').length, 0);
+});
