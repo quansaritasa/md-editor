@@ -121,6 +121,11 @@ function buildShell(el, parent) {
   controls.style.right = '16px';
   canvas.appendChild(clone);
   canvas.appendChild(controls);
+  // A zoomed-in clone overflows the canvas, which makes the canvas scrollable
+  // even at overflow: hidden; any scroll the browser gives it (focus, text
+  // selection) would shift the panel, toolbar and minimap with the diagram.
+  // The view moves by transform only, so the canvas never scrolls.
+  canvas.addEventListener('scroll', () => { canvas.scrollLeft = 0; canvas.scrollTop = 0; });
   overlay.appendChild(canvas);
   parent.appendChild(overlay);
   return { doc, overlay, canvas, clone, label, controls };

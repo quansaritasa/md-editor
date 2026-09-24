@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.20 — the relations panel stays put and starts at the top
+
+- Selecting another ER table shows its panel from the top, instead of where the
+  last table's list was scrolled to
+- The panel, toolbar and minimap stay pinned in place after zooming in
+
 ## v0.10.19 — jumping to a related table keeps both tables in view
 
 - Clicking a related table in the ER panel now shows it together with the

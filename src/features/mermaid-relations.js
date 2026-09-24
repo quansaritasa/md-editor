@@ -69,6 +69,7 @@ function fill(panel, m, key, go, close) {
   const doc = panel.ownerDocument;
   const table = m && m.tables.get(key);
   panel.textContent = '';
+  panel.scrollTop = 0; // a new table's list starts at its name, not where the last one was scrolled to
   panel.hidden = !table;
   if (!table) return;
   const top = el(doc, 'div', 'mermaid-relations-title');
@@ -93,14 +94,17 @@ function fill(panel, m, key, go, close) {
 
 const MARGIN = 24; // canvas px kept clear around a framed pair
 
-// Nudge offset x (diagram point p sits at x + p·s) until the span [a, b] lies
-// within [lo, hi]. A span wider than that keeps its start in view.
-function fitAxis(x0, s, a, b, lo, hi) {
+// Nudge offset x (diagram point p sits at x + p·s) until `span` {a, b} lies
+// within `range` {lo, hi}. A span wider than that keeps its start in view.
+function fitAxis(x0, s, span, range) {
   let x = x0;
-  if (x + b * s > hi) x = hi - b * s;
-  if (x + a * s < lo) x = lo - a * s;
+  if (x + span.b * s > range.hi) x = range.hi - span.b * s;
+  if (x + span.a * s < range.lo) x = range.lo - span.a * s;
   return x;
 }
+
+// The offset that centres `span` in `range` at scale s.
+const centre = (s, span, range) => (range.lo + range.hi) / 2 - ((span.a + span.b) / 2) * s;
 
 // Pan, never zoom, so the focused table and `partner` share the free part of
 // the canvas — right of the panel, inside a margin. When the pair is wider or
@@ -110,11 +114,13 @@ function frame(view, panel, focusEl, partnerEl) {
   const v = view.get();
   const A = view.boxOf(focusEl), P = view.boxOf(partnerEl);
   const left = (panel.hidden ? 0 : panel.offsetLeft + panel.offsetWidth) + MARGIN;
-  const area = { l: left, t: MARGIN, r: v.W - MARGIN, b: v.H - MARGIN };
-  if (area.r <= area.l) { area.l = MARGIN; } // a canvas too narrow for the panel's reserve
-  const mid = (lo, hi, a, b) => (lo + hi) / 2 - ((a + b) / 2) * v.s;
-  const x = fitAxis(mid(area.l, area.r, Math.min(A.l, P.l), Math.max(A.r, P.r)), v.s, P.l, P.r, area.l, area.r);
-  const y = fitAxis(mid(area.t, area.b, Math.min(A.t, P.t), Math.max(A.b, P.b)), v.s, P.t, P.b, area.t, area.b);
+  // A canvas too narrow for the panel's reserve falls back to the plain margin.
+  const cols = { lo: v.W - MARGIN > left ? left : MARGIN, hi: v.W - MARGIN };
+  const rows = { lo: MARGIN, hi: v.H - MARGIN };
+  const pairX = { a: Math.min(A.l, P.l), b: Math.max(A.r, P.r) };
+  const pairY = { a: Math.min(A.t, P.t), b: Math.max(A.b, P.b) };
+  const x = fitAxis(centre(v.s, pairX, cols), v.s, { a: P.l, b: P.r }, cols);
+  const y = fitAxis(centre(v.s, pairY, rows), v.s, { a: P.t, b: P.b }, rows);
   view.pan(x - v.x, y - v.y);
 }
 
