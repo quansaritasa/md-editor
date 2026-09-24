@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.22 — your table's side of each ER relationship in bold
+
+- In the relations panel, the "one" or "many" that belongs to the selected
+  table is bold, as in "One organizations – **many** users"
+
 ## v0.10.21 — Shift+click to read two ER tables side by side
 
 - With a table selected, Shift+click or Ctrl+click a related table to pick it

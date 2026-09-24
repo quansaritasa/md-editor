@@ -65,11 +65,16 @@ function relationsOf(model, key) {
 // CUSTOMER places ORDER reads "One CUSTOMER – many ORDER", never "many-to-one".
 // kind and cards follow the same order, so all three read left to right alike.
 function describe(table, rel) {
-  let ends = [{ name: table.label, card: rel.mine }, { name: rel.partner.label, card: rel.theirs }];
+  let ends = [{ name: table.label, card: rel.mine, me: true }, { name: rel.partner.label, card: rel.theirs, me: false }];
   if (ends[0].card.many && !ends[1].card.many) ends = [ends[1], ends[0]];
   const word = (e) => (e.card.many ? 'many' : 'one');
+  const cap = (w) => w[0].toUpperCase() + w.slice(1);
+  // parts: each end's word ("One", "many") and table name, `me` marking the
+  // focused table's own end so the panel can pick it out.
+  const parts = ends.map((e, i) => ({ word: i ? word(e) : cap(word(e)), name: e.name, me: e.me }));
   return {
-    text: ends.map((e, i) => (i ? word(e) : word(e)[0].toUpperCase() + word(e).slice(1)) + ' ' + e.name).join(' – '),
+    parts,
+    text: parts.map((p) => p.word + ' ' + p.name).join(' – '),
     kind: word(ends[0]) + '-to-' + word(ends[1]),
     cards: ends[0].card.short + ' : ' + ends[1].card.short,
   };

@@ -57,10 +57,13 @@ test('model: keys per table, cardinality straightened to each end', () => {
     ['LINE_ITEM', '1', '1..*'],
   ]);
   // The "one" side always reads first, whichever table is focused.
-  assert.deepStrictEqual(rels.map((r) => model.describe(order, r)), [
+  const said = rels.map((r) => model.describe(order, r));
+  assert.deepStrictEqual(said.map(({ text, kind, cards }) => ({ text, kind, cards })), [
     { text: 'One CUSTOMER – many ORDER', kind: 'one-to-many', cards: '1 : 0..*' },
     { text: 'One ORDER – many LINE_ITEM', kind: 'one-to-many', cards: '1 : 1..*' },
   ]);
+  // `me` marks the focused table's own end, wherever it lands in the line.
+  assert.deepStrictEqual(said.map((d) => d.parts.map((p) => p.me)), [[false, true], [true, false]]);
   assert.strictEqual(model.relationsOf(m, 'entity-AUDIT_LOG-4').length, 0);
 });
 
@@ -99,6 +102,7 @@ test('fullscreen ER: panel follows the focus and lists keys and relationships', 
   assert.deepStrictEqual(text(panel, '.mermaid-relations-partner'), ['CUSTOMER', 'LINE_ITEM']);
   assert.deepStrictEqual(text(panel, '.mermaid-relations-label'), ['places', 'contains']);
   assert.deepStrictEqual(text(panel, '.mermaid-relations-says'), ['One CUSTOMER – many ORDER', 'One ORDER – many LINE_ITEM']);
+  assert.deepStrictEqual(text(panel, '.mermaid-relations-says strong'), ['many', 'One'], "ORDER's own word is bold");
   assert.ok(text(panel, '.mermaid-relations-kind')[0].startsWith('one-to-many · 1 : 0..*'));
   // LINE_ITEM's composite key shows as both PK and FK columns.
   const li = panel.querySelectorAll('.mermaid-relations-item')[1];

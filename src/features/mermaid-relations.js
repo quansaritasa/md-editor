@@ -41,6 +41,18 @@ function appendKeys(doc, box, table) {
   return !!(pk || fk);
 }
 
+// "One organizations – **many** users": the focused table's own word in bold,
+// so its end of the relationship is found without reading the names.
+function says(doc, parts) {
+  const line = el(doc, 'div', 'mermaid-relations-says');
+  parts.forEach((p, i) => {
+    if (i) line.appendChild(doc.createTextNode(' – '));
+    line.appendChild(el(doc, p.me ? 'strong' : 'span', p.me ? 'is-me' : null, p.word));
+    line.appendChild(doc.createTextNode(' ' + p.name));
+  });
+  return line;
+}
+
 function relItem(doc, table, rel, go) {
   const li = el(doc, 'li', 'mermaid-relations-item');
   const head = el(doc, 'div', 'mermaid-relations-head');
@@ -54,7 +66,7 @@ function relItem(doc, table, rel, go) {
   if (rel.label) head.appendChild(el(doc, 'span', 'mermaid-relations-label', rel.label));
   li.appendChild(head);
   const d = model.describe(table, rel);
-  li.appendChild(el(doc, 'div', 'mermaid-relations-says', d.text));
+  li.appendChild(says(doc, d.parts));
   const meta = el(doc, 'div', 'mermaid-relations-kind', d.kind + ' · ' + d.cards + (rel.identifying ? '' : ' · non-identifying'));
   meta.title = 'Each ' + table.label + ' has ' + rel.theirs.short + ' ' + rel.partner.label
     + '; each ' + rel.partner.label + ' has ' + rel.mine.short + ' ' + table.label;
