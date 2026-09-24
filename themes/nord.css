@@ -113,7 +113,7 @@ html.dark .md-editor .hljs-attr { color: #EBCB8B; }
 }.md-editor h4 {
     font-size: 0.95rem;
     font-weight: 600;
-    margin: 20px 0 4px;
+    margin: 24px 0 8px;
 }
 /* ── Paragraphs & Links ───────────────────── */
 .md-editor p {

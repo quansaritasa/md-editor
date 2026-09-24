@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.25 — #### titles sit on their content
+
+- Level-4 headings get more room above and a small, even gap below in every
+  theme, so a title reads as part of the paragraph, list or table it introduces
+
 ## v0.10.24 — colourful diagrams
 
 - Diagrams share one palette in every theme: mint nodes, gold edge labels,

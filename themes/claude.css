@@ -150,7 +150,7 @@
 }.md-editor h4 {
     color: var(--title);
     font-weight: 600;
-    margin: 1rem 0 0.25rem;
+    margin: 1.5rem 0 0.5rem;
 }.md-editor p { margin: 0 0 0.9rem; }.md-editor a, .md-editor h1 { color: var(--accent); text-decoration: none; }.md-editor a:hover { text-decoration: underline; }.md-editor ul, .md-editor ol { margin: 4px 0 1em 20px; }.md-editor li { margin-bottom: 4px; }.md-editor table {
     width: 100%;
     border-collapse: collapse;

@@ -198,7 +198,13 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     color: var(--sub-title);
 }
 .md-editor h4{
+    margin: 28px 0 8px;
     color: var(--title);
+}
+/* Card lists pull up 5px to hug a paragraph; under an h4 that would crowd the title. */
+.md-editor h4 + ul,
+.md-editor h4 + ol{
+    margin-top: 0;
 }
 .md-editor p.note{
     margin: 0 0 14px;
