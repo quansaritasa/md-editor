@@ -5,10 +5,15 @@
    them; the rest of the diagram fades. It answers "what does this table touch?"
    at any zoom level, where following lines by eye stops working.
 
+   Right-clicking reaches one hop further: the same set plus the neighbours of
+   those neighbours, for the question "what is this table wrapped up with?" on a
+   diagram where one hop is not enough to see the shape of a cluster. A left
+   click on the same table drops back to its direct relations.
+
    A focus spans several copies of one diagram at once — the inline SVG, the
    fullscreen clone and the minimap — so they never disagree. The key lives on
    each SVG as data-mmd-focus, which is what lets a clone made mid-focus start
-   out focused on the same node. */
+   out focused on the same node; the reach rides along in data-mmd-hops. */
 
 const { readGraph, neighbourhood, nodeOf } = require('./mermaid-graph');
 
@@ -18,11 +23,20 @@ const ROOT = 'mmd-hit-root';
 const PEEK = 'mmd-peek'; // a neighbour picked out beside the focus
 const PAIR = 'mmd-pair'; // an edge (and its label) between the focus and the peek
 const PEEKING = 'mmd-peeking'; // on the svg while a peek is shown
+const KEY_ATTR = 'data-mmd-focus';
+const HOPS_ATTR = 'data-mmd-hops';
 const DRAG_PX = 4; // a press that travels further than this was a pan, not a click
+
+// How far a focus reaches: a click lights the table's direct relations, a right
+// click also their own. Two is the widest a focus goes, whatever a host passes.
+const NEAR = 1;
+const FAR = 2;
+const clampHops = (v) => (v >= FAR ? FAR : NEAR);
 
 function clearSvg(svg) {
   svg.classList.remove(ON);
-  svg.removeAttribute('data-mmd-focus');
+  svg.removeAttribute(KEY_ATTR);
+  svg.removeAttribute(HOPS_ATTR);
   svg.querySelectorAll('.' + HIT + ', .' + ROOT).forEach((el) => el.classList.remove(HIT, ROOT));
   clearPeek(svg);
 }
@@ -53,13 +67,14 @@ function isNeighbour(graph, key, node) {
   return graph.edges.some((e) => (e.from.key === key && e.to === node) || (e.to.key === key && e.from === node));
 }
 
-function paint(svg, graph, key) {
+function paint(svg, graph, key, hops) {
   clearSvg(svg);
   const node = graph.nodes.find((n) => n.key === key);
   if (!node) return false;
-  const hood = neighbourhood(graph, node);
+  const hood = neighbourhood(graph, node, hops);
   svg.classList.add(ON);
-  svg.setAttribute('data-mmd-focus', key);
+  svg.setAttribute(KEY_ATTR, key);
+  svg.setAttribute(HOPS_ATTR, String(hops));
   hood.nodes.forEach((n) => n.el.classList.add(HIT));
   hood.edges.forEach((e) => {
     e.path.classList.add(HIT);
@@ -73,20 +88,26 @@ function paint(svg, graph, key) {
 function create(svgs) {
   const list = svgs.filter(Boolean);
   const graphs = list.map(readGraph);
-  let key = (list[0] && list[0].getAttribute('data-mmd-focus')) || null;
+  const first = list[0];
+  let key = (first && first.getAttribute(KEY_ATTR)) || null;
+  let hops = clampHops(Number(first && first.getAttribute(HOPS_ATTR)));
   let peeked = null;
   const listeners = [], peekers = [];
   const changed = () => { peeked = null; listeners.forEach((fn) => fn(key)); };
   const f = {
     graph: graphs[0] || { nodes: [], edges: [] },
     get key() { return key; },
-    set(k) {
+    // How far the current focus reaches — 2 after a right click, else 1.
+    get reach() { return hops; },
+    set(k, to) {
       key = k;
-      list.forEach((svg, i) => paint(svg, graphs[i], k));
+      hops = clampHops(to);
+      list.forEach((svg, i) => paint(svg, graphs[i], k, hops));
       changed();
     },
     clear() {
       key = null;
+      hops = NEAR;
       list.forEach(clearSvg);
       changed();
     },
@@ -109,9 +130,14 @@ function create(svgs) {
     onPeek(fn) { peekers.push(fn); },
     // fn(key) after every set and clear; key is null once cleared.
     onChange(fn) { listeners.push(fn); },
-    toggle(node) {
-      if (!node || node.key === key) f.clear();
-      else f.set(node.key);
+    // A press on a table focuses it as far as `to` reaches. Pressing the table
+    // that is already focused that far clears; pressing it from a wider focus
+    // narrows it back instead, so a left click after a right click shows the
+    // direct relations again.
+    toggle(node, to) {
+      const want = clampHops(to);
+      if (!node || (node.key === key && want === hops)) f.clear();
+      else f.set(node.key, want);
     },
   };
   return f;
@@ -119,18 +145,33 @@ function create(svgs) {
 
 // A click on a node toggles its focus; a click on empty diagram clears it.
 // With Shift or Ctrl held it peeks a related table instead (where supported).
+// A right click on a node focuses two hops out — its relations and theirs.
 // Buttons and other controls inside `host` are left alone.
 function bindClicks(host, focus, ignore) {
   let x0 = 0, y0 = 0;
+  const inner = 'button, input, ' + (ignore || '.mermaid-zoom-controls');
+  const dragged = (e) => Math.abs(e.clientX - x0) > DRAG_PX || Math.abs(e.clientY - y0) > DRAG_PX;
   host.addEventListener('mousedown', (e) => { x0 = e.clientX; y0 = e.clientY; });
   host.addEventListener('click', (e) => {
-    if (Math.abs(e.clientX - x0) > DRAG_PX || Math.abs(e.clientY - y0) > DRAG_PX) return;
-    if (e.target.closest('button, input, ' + (ignore || '.mermaid-zoom-controls'))) return;
+    if (dragged(e)) return;
+    if (e.target.closest(inner)) return;
     if (!e.target.closest('svg')) { if (focus.key) focus.clear(); return; }
     const node = nodeOf(focus.graph, e.target);
     if ((e.shiftKey || e.ctrlKey || e.metaKey) && focus.peekToggle) { focus.peekToggle(node); return; }
     if (node) focus.toggle(node);
     else if (focus.key) focus.clear();
+  });
+  // Right click reads one hop further. It is only a focus when the press landed
+  // on a table and did not pan: off a table the browser's own menu stays.
+  // macOS turns a Ctrl+left click into this event too, and Ctrl+click is the
+  // peek modifier there, so that one is left to the click handler above.
+  host.addEventListener('contextmenu', (e) => {
+    if (e.ctrlKey && e.button !== 2) return;
+    if (dragged(e) || e.target.closest(inner)) return;
+    const node = e.target.closest('svg') && nodeOf(focus.graph, e.target);
+    if (!node) return;
+    e.preventDefault();
+    focus.toggle(node, FAR);
   });
 }
 

@@ -153,7 +153,7 @@ function attach(canvas, focus, view, src) {
   const doc = canvas.ownerDocument;
   const panel = el(doc, 'aside', 'mermaid-relations');
   panel.hidden = true;
-  ['mousedown', 'click', 'wheel'].forEach((t) => panel.addEventListener(t, (e) => e.stopPropagation()));
+  ['mousedown', 'click', 'wheel', 'contextmenu'].forEach((t) => panel.addEventListener(t, (e) => e.stopPropagation()));
   canvas.appendChild(panel);
   let m = null;
   // Only the view moves: same zoom, same focused table, same panel. A partner

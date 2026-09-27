@@ -114,7 +114,7 @@ and zoom as before, without them.
 
 | Aid | Where | How |
 |---|---|---|
-| Focus | Inline and fullscreen | Click a node: it, its direct neighbours and the edges between them stay lit while the rest fades. Click it again, or empty space, to clear |
+| Focus | Inline and fullscreen | Click a node: it, its direct neighbours and the edges between them stay lit while the rest fades. Right-click: the same, one hop wider — the neighbours of those neighbours. Click it again, or empty space, to clear |
 | Minimap | Fullscreen | A thumbnail in the corner frames the part on screen. Click or drag on it to move there |
 | Search | Fullscreen | `/` opens the search box. Type part of a name, pick with ↑/↓ and Enter: the node is focused, centred and zoomed to at least 100% |
 

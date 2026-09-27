@@ -27,6 +27,9 @@ function diagram(name) {
 }
 const pairs = (g) => g.edges.map((e) => e.from.name + '>' + e.to.name).sort();
 const names = (set) => [...set].map((n) => n.name).sort();
+// The tables a focus has lit, by name.
+const lit = (svg) => [...svg.querySelectorAll('g.node.mmd-hit')]
+  .map((el) => graph.shortName(el.id.slice(svg.id.length + 1))).sort();
 
 test('ER: tables and relationships are read back, underscores and all', () => {
   const g = graph.readGraph(diagram('er').svg);
@@ -41,12 +44,17 @@ test('flowchart and class diagrams read the same way', () => {
   assert.deepStrictEqual(pairs(graph.readGraph(diagram('cls').svg)), ['Animal>Duck', 'Duck>Egg']);
 });
 
-test('neighbourhood is the node plus one hop, never two', () => {
+test('neighbourhood is the node plus the hops asked for, one by default', () => {
   const g = graph.readGraph(diagram('er').svg);
   const order = g.nodes.find((n) => n.name === 'ORDER');
   const hood = graph.neighbourhood(g, order);
   assert.deepStrictEqual(names(hood.nodes), ['CUSTOMER', 'LINE_ITEM', 'ORDER']);
   assert.strictEqual(hood.edges.length, 2);
+  // Two hops bring in what the neighbours touch — and stop there, so the lone
+  // AUDIT_LOG stays out either way.
+  const far = graph.neighbourhood(g, order, 2);
+  assert.deepStrictEqual(names(far.nodes), ['CUSTOMER', 'LINE_ITEM', 'ORDER', 'PRODUCT']);
+  assert.strictEqual(far.edges.length, 3);
 });
 
 test('focus lights the neighbourhood, fades the rest, and clears', () => {
@@ -108,6 +116,60 @@ test('a click toggles focus; a drag does not', () => {
   assert.ok(f.key && f.key.includes('CUSTOMER'));
   press(11);
   assert.strictEqual(f.key, null, 'second click on the same table clears');
+});
+
+// A right click answers the same question one hop wider: this table's
+// relations, and the relations of those. Left click narrows it back.
+test('a right click lights two hops; a left click narrows it back', () => {
+  const { p, svg } = diagram('er');
+  const wrap = p.content.querySelector('.mermaid-wrapper');
+  const f = focusLib.create([svg]);
+  focusLib.bindClicks(wrap, f);
+  const W = p.window;
+  const order = f.graph.nodes.find((n) => n.name === 'ORDER');
+  const target = order.el.querySelector('*') || svg;
+  const at = (type, opts) => target.dispatchEvent(new W.MouseEvent(type,
+    Object.assign({ bubbles: true, cancelable: true, clientX: 10, clientY: 10 }, opts)));
+
+  at('mousedown', { button: 2 });
+  assert.strictEqual(at('contextmenu', { button: 2 }), false, 'the browser menu is suppressed on a table');
+  assert.ok(f.key.includes('ORDER'));
+  assert.strictEqual(f.reach, 2);
+  assert.deepStrictEqual(lit(svg), ['CUSTOMER', 'LINE_ITEM', 'ORDER', 'PRODUCT']);
+  assert.strictEqual(svg.querySelectorAll('path[data-edge].mmd-hit').length, 3);
+  assert.strictEqual(svg.getAttribute('data-mmd-hops'), '2');
+
+  // A left click on the same table steps back to its direct relations; the
+  // same table pressed that far clears.
+  at('mousedown', { button: 0 });
+  at('click', { button: 0 });
+  assert.strictEqual(f.reach, 1);
+  assert.deepStrictEqual(lit(svg), ['CUSTOMER', 'LINE_ITEM', 'ORDER']);
+  at('mousedown', { button: 0 });
+  at('click', { button: 0 });
+  assert.strictEqual(f.key, null);
+
+  // Off a table the event is the host's again: no focus, no suppression.
+  f.set(order.key, 2);
+  at('mousedown', { button: 2 });
+  assert.strictEqual(svg.dispatchEvent(new W.MouseEvent('contextmenu', { bubbles: true, cancelable: true, button: 2 })), true);
+  assert.strictEqual(f.reach, 2, 'a right click on the background leaves the focus alone');
+
+  // macOS turns Ctrl+left click into the same event; that is the peek
+  // modifier, and must not widen the focus behind the click handler's back.
+  at('mousedown', { button: 0, ctrlKey: true });
+  assert.strictEqual(at('contextmenu', { button: 0, ctrlKey: true }), true);
+  assert.strictEqual(f.reach, 2);
+});
+
+test('a copy made mid-focus keeps the reach it was made at', () => {
+  const { svg } = diagram('er');
+  const f = focusLib.create([svg]);
+  const order = f.graph.nodes.find((n) => n.name === 'ORDER');
+  f.set(order.key, 2);
+  assert.strictEqual(focusLib.create([svg.cloneNode(true)]).reach, 2);
+  f.set(f.graph.nodes.find((n) => n.name === 'LINE_ITEM').key);
+  assert.strictEqual(focusLib.create([svg.cloneNode(true)]).reach, 1, 'a plain set goes back to one hop');
 });
 
 test('search ranks prefix matches first and ignores case', () => {

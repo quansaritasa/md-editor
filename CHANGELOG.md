@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.26 — right-click a table for two hops
+
+- Right-clicking a table in a diagram lights its relationships and theirs, so a
+  cluster reads as a whole; a left click on it goes back to the direct ones
+
 ## v0.10.25 — #### titles sit on their content
 
 - Level-4 headings get more room above and a small, even gap below in every

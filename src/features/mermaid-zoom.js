@@ -98,7 +98,7 @@ function bindInlineFocus(wrap, el) {
       return focus.graph;
     },
     get key() { return focus && focus.key; },
-    toggle(n) { focus.toggle(n); },
+    toggle(n, hops) { focus.toggle(n, hops); },
     clear() { if (focus) focus.clear(); },
   });
 }

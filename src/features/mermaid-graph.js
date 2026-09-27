@@ -63,15 +63,27 @@ function readGraph(svg) {
   return { nodes, edges };
 }
 
-// The node, every node one hop away, and the edges between them.
-function neighbourhood(graph, node) {
+// The node, every node within `hops` of it, and the edges that touch any of
+// them. One hop by default — the node and its direct neighbours; two reaches
+// the neighbours' own neighbours as well. An isolated node stops the walk early.
+function neighbourhood(graph, node, hops) {
+  const depth = Math.max(1, hops > 1 ? 2 : 1);
   const nodes = new Set([node]);
   const edges = [];
-  graph.edges.forEach((e) => {
-    if (e.from !== node && e.to !== node) return;
-    edges.push(e);
-    nodes.add(e.from === node ? e.to : e.from);
-  });
+  let ring = new Set([node]);
+  for (let i = 0; i < depth && ring.size; i++) {
+    const next = new Set();
+    graph.edges.forEach((e) => {
+      const from = ring.has(e.from), to = ring.has(e.to);
+      if (!from && !to) return;
+      if (!edges.includes(e)) edges.push(e);
+      const out = from ? e.to : e.from;
+      if (nodes.has(out)) return;
+      nodes.add(out);
+      next.add(out);
+    });
+    ring = next;
+  }
   return { nodes, edges };
 }
 
