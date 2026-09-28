@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.10.27 — card lists space like every other theme
+
+- The card theme opened a list 5px ABOVE where the flow put it and left its
+  items flush against each other; every other theme opens 6px below and spaces
+  items 4px apart. The same document therefore read as a tighter, differently
+  aligned list under card than under modern or nord. It now matches them.
+- The `h4 + ul/ol { margin-top: 0 }` rule is gone with it. It existed only to
+  cancel the negative pull under a `####` title, and the gap it produced —
+  h4's 8px bottom margin — is exactly what a 6px top margin collapses to, so
+  lists under a `####` title look the same as before.
+
 ## v0.10.26 — right-click a table for two hops
 
 - Right-clicking a table in a diagram lights its relationships and theirs, so a
