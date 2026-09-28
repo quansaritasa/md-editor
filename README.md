@@ -177,7 +177,7 @@ the library asks for a mount element and a scroller, and nothing else.
 
 ## Themes
 
-Twelve document themes ship with the library. Every rule is scoped to the
+Thirteen document themes ship with the library. Every rule is scoped to the
 mount element, so a theme cannot reach out and restyle the host application.
 
 | Theme | Look |
@@ -194,6 +194,7 @@ mount element, so a theme cannot reach out and restyle the host application.
 | `editorial` | Newspaper — display serif, hairline rules, drop cap on the opening paragraph |
 | `eink` | Grayscale serif with no shadows; syntax is carried by weight and slant |
 | `blossom` | Soft pink paper with raspberry accents, rounded edges and a ❀ rule |
+| `block` | Cool paper, teal accent, hairline structure; IBM Plex serif headings over sans prose |
 
 Every theme carries a light and a dark block; `setDark` flips between them.
 

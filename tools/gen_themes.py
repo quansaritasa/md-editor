@@ -38,6 +38,11 @@ SECTION_RHYTHM = SECTION_RHYTHM.replace('.md-editor .section { margin-bottom: 32
 MONO = 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace'
 SERIF = '"Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif'
 SANS = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif'
+# Block names the IBM Plex faces first and falls back to the stacks above, so a
+# machine that has Plex gets the intended type and nobody pays a font request.
+PLEX_SANS = '"IBM Plex Sans", ' + SANS
+PLEX_SERIF = '"IBM Plex Serif", ' + SERIF
+PLEX_MONO = '"IBM Plex Mono", ' + MONO
 
 TOKENS = ['book-bg', 'mermaid-bg', 'mermaid-er-header', 'bg', 'surface', 'text', 'text-secondary', 'border',
           'accent', 'accent-soft', 'code-bg', 'code-text', 'radius', 'max-w',
@@ -384,4 +389,71 @@ html.dark .md-editor h3 { color: #2AA198; }
 html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
 .md-editor .example-box.good-box { border-left-color: #859900; }
 .md-editor .example-box.bad-box { border-left-color: #DC322F; }
+''')
+
+# ─────────────────────────── block ───────────────────────────
+# Block — the RecordsFlow review-page identity: cool paper, teal accent, clay
+# counter-accent, hairlines instead of shadows, IBM Plex in three roles. The
+# Plex faces are named first and fall back to the system stacks, so the theme
+# never pulls a font over the network — no other theme here does either.
+emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex in three roles',
+     {**COMMON_LIGHT, 'mermaid-bg': '#f6f8f7', 'book-bg': '#EEF1F0', 'bg': '#FFFFFF', 'surface': '#F6F8F7',
+      'text': '#11191A', 'text-secondary': '#5B6A6B', 'border': '#D4DCDB',
+      'accent': '#0E6A61', 'accent-soft': '#E2EFEC',
+      'code-bg': '#F6F8F7', 'code-text': '#9B4732', 'radius': '5px',
+      'note-amber': '#9B4732', 'note-amber-lt': '#F6E9E4', 'note-amber-border': '#C08165',
+      'info-blue': '#1F5E6E', 'info-blue-lt': '#E3EEF0', 'info-blue-border': '#4F8B99', 'fields-key': '#0E6A61'},
+     {'book-bg': '#0D1413', 'bg': '#141C1B', 'surface': '#111817', 'text': '#E4ECEA',
+      'text-secondary': '#95A5A3', 'border': '#26312F',
+      'accent': '#52B6A7', 'accent-soft': '#12302C',
+      'code-bg': '#111817', 'code-text': '#D4866A',
+      'note-amber': '#D4866A', 'note-amber-lt': '#2C1D17', 'note-amber-border': '#A9603F',
+      'info-blue': '#8FC4CF', 'info-blue-lt': '#0E1E22', 'info-blue-border': '#4F8B99', 'fields-key': '#52B6A7'},
+     ('#0E6A61', '#9B4732'), ('#52B6A7', '#D4866A'),
+     f'''
+.md-editor {{
+    font-family: {PLEX_SANS};
+    font-size: 15px;
+    line-height: 1.5;
+}}
+/* Serif for headings, sans for prose, mono for anything counted. */
+.md-editor h1, .md-editor h2, .md-editor h3 {{
+    font-family: {PLEX_SERIF};
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    border-bottom: none;
+}}
+.md-editor h1 {{ font-size: 1.75rem; line-height: 1.15; margin-bottom: 18px; }}
+.md-editor h2 {{ font-size: 1.27rem; margin: 40px 0 13px; padding-bottom: 9px; border-bottom: 1px solid var(--border); }}
+.md-editor h3 {{ font-size: 1.05rem; margin: 26px 0 6px; }}
+/* h4 stops being a heading and becomes a label — the smallest structural mark. */
+.md-editor h4 {{
+    font-family: {PLEX_SANS};
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin: 22px 0 4px;
+}}
+.md-editor .eyebrow {{ background: none; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 2px; letter-spacing: 0.11em; padding: 2px 8px; }}
+.md-editor a {{ text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }}
+.md-editor a:hover {{ border-bottom-color: var(--accent); }}
+.md-editor strong {{ font-weight: 600; }}
+.md-editor code {{ font-family: {PLEX_MONO}; font-size: 0.88em; padding: 0.05em 0.3em; border: 1px solid var(--border); border-radius: 3px; }}
+.md-editor pre {{ font-family: {PLEX_MONO}; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; }}
+.md-editor pre code {{ border: none; padding: 0; font-size: inherit; }}
+/* A quote is a rail, not a filled box. */
+.md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }}
+/* Tables are read as data: hairlines, a label row, and digits that line up. */
+.md-editor table {{ font-size: 0.9rem; font-variant-numeric: tabular-nums; }}
+.md-editor th, .md-editor td {{ border-left: none; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 13px; }}
+.md-editor th {{ background: none; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }}
+.md-editor tr:nth-child(even) td {{ background: none; }}
+.md-editor hr {{ border: none; border-top: 1px solid var(--border); margin: 26px 0; }}
+/* A task box is drawn, never a glyph. */
+.md-editor li > input[type="checkbox"] {{ appearance: none; width: 10px; height: 10px; border: 1px solid var(--text-secondary); border-radius: 2px; background: none; }}
+.md-editor li > input[type="checkbox"]:checked {{ background: var(--accent); border-color: var(--accent); }}
+.md-editor .section {{ padding-bottom: 0; }}
 ''')

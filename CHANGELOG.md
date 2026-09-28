@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.10.28 — the Block theme
+
+- Block is the thirteenth document theme: cool grey-green paper, a teal accent,
+  a clay counter-accent for warnings and inline code, and hairlines instead of
+  shadows. Headings are serif, prose is sans, and anything counted is mono.
+- IBM Plex is named first in all three stacks and falls back to the system
+  fonts, so a machine that has Plex gets the intended type and no one pays a
+  font request — no theme here fetches a font over the network.
+- `####` stops being a heading under Block and becomes an uppercase label, the
+  smallest structural mark on the page. Quotes are a rail rather than a filled
+  box, table headers are label-cased with tabular figures, and a task box is
+  drawn rather than set as a glyph.
+
 ## v0.10.27 — card lists space like every other theme
 
 - The card theme opened a list 5px ABOVE where the flow put it and left its
