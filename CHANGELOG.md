@@ -10,6 +10,10 @@
   out to the card edge with a hairline under it. The pull tracks
   `--section-padding`, so a host driving that variable keeps the strip flush at
   whatever inset the reader picks.
+- A card is capped by a 3px accent rule along its top edge, and its header strip
+  sits on the sunk surface rather than the card's own. The accent goes on the
+  structure instead of on any text, so a link in the same colour still reads as
+  a link.
 - IBM Plex is named first in all three stacks and falls back to the system
   fonts, so a machine that has Plex gets the intended type and no one pays a
   font request — no theme here fetches a font over the network.

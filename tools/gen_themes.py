@@ -465,6 +465,12 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 .md-editor.md-editor .section {{
     background: var(--bg);
     border: 1px solid var(--border);
+    /* The accent is spent on the card's top edge rather than on any text, so it
+       competes with nothing — a link or an inline emphasis in the same colour
+       still means what it meant. A document of stacked cards gets a scannable
+       rhythm out of it. The rule sits outside the padding box, so the header
+       strip's full-bleed pull below is untouched: it is simply capped. */
+    border-top: 3px solid var(--accent);
     border-radius: var(--radius);
     padding: var(--section-padding, 22px);
     margin-bottom: 18px;
@@ -480,6 +486,9 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 .md-editor.md-editor .section > h2:first-child {{
     margin: calc(-1 * var(--section-padding, 22px)) calc(-1 * var(--section-padding, 22px)) var(--section-padding, 22px);
     padding: 15px var(--section-padding, 22px);
+    /* Sunk, not tinted with the accent: the strip earns its own band from the
+       surface it sits on, which leaves the heading reading as prose. */
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
     font-size: 1.15rem;
 }}
