@@ -543,10 +543,12 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
    a hairline under it, the way the ticket header it comes from is drawn. The
    pull tracks --section-padding rather than a fixed number, so a host that
    drives that variable (a padding slider, say) keeps the strip flush at any
-   inset the reader picks. */
+   inset the reader picks — and the strip's own side padding tracks it too, so
+   the header sits on the same left edge as the prose under it instead of
+   hanging inboard of it. */
 .md-editor.md-editor .section > h2:first-child {
     margin: calc(-1 * var(--section-padding, 22px)) calc(-1 * var(--section-padding, 22px)) var(--section-padding, 22px);
-    padding: 15px 18px;
+    padding: 15px var(--section-padding, 22px);
     border-bottom: 1px solid var(--border);
     font-size: 1.15rem;
 }
