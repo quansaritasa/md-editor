@@ -542,7 +542,7 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
     border-top: 3px solid var(--accent);
     border-radius: var(--radius);
     padding: var(--section-padding, 22px);
-    margin-bottom: 18px;
+    margin-bottom: 30px;
     overflow: hidden;
 }
 /* The opening h2 is the card's header strip — pulled out to the card edge with
@@ -560,6 +560,26 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     font-size: 1.15rem;
+}
+/* Collapsed, a card is only its header strip. The strip is pulled full-bleed
+   out of the card's inset, so once the body is hidden that inset stands as
+   empty white above and below the title — and it cannot be cancelled with a
+   negative margin, because .section is its own formatting context and an
+   auto height clamps at zero before the padding is reached. So the padding
+   itself goes and the strip stops pulling: the two undo each other and the
+   card ends exactly where the strip does. The strip's hairline goes too — the
+   card's own border now sits directly under it, and two lines a pixel apart
+   read as a mistake.
+
+   A host that drives --section-padding from an id-scoped rule (Qview's padding
+   slider does) outranks the padding line here and has to repeat it; the margin
+   and border below are this theme's alone and hold everywhere. */
+.md-editor.md-editor .section:has(> h2.sec-collapsed:first-child) {
+    padding: 0;
+}
+.md-editor.md-editor .section > h2.sec-collapsed:first-child {
+    margin: 0;
+    border-bottom: none;
 }
 
 /* ── Section rhythm ───────────────────────────

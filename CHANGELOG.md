@@ -21,6 +21,11 @@
   smallest structural mark on the page. Quotes are a rail rather than a filled
   box, table headers are label-cased with tabular figures, and a task box is
   drawn rather than set as a glyph.
+- Block's cards stand further apart, so a stack of them reads as separate
+  blocks rather than one ruled column.
+- Collapsing a Block section now leaves the header strip alone on the ground.
+  The strip's full-bleed pull used to leave the card's inset standing under it
+  twice over, so a folded section was a title above an empty white box.
 
 ## v0.10.27 — card lists space like every other theme
 
