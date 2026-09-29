@@ -5,6 +5,11 @@
 - Block is the thirteenth document theme: cool grey-green paper, a teal accent,
   a clay counter-accent for warnings and inline code, and hairlines instead of
   shadows. Headings are serif, prose is sans, and anything counted is mono.
+- Every section is a card: white on the grey-green ground, a hairline border,
+  no shadow. The section's opening heading is the card's header strip, pulled
+  out to the card edge with a hairline under it. The pull tracks
+  `--section-padding`, so a host driving that variable keeps the strip flush at
+  whatever inset the reader picks.
 - IBM Plex is named first in all three stacks and falls back to the system
   fonts, so a machine that has Plex gets the intended type and no one pays a
   font request — no theme here fetches a font over the network.

@@ -524,7 +524,32 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
 /* A task box is drawn, never a glyph. */
 .md-editor li > input[type="checkbox"] { appearance: none; width: 10px; height: 10px; border: 1px solid var(--text-secondary); border-radius: 2px; background: none; }
 .md-editor li > input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
-.md-editor .section { padding-bottom: 0; }
+/* The page is the ground and every section is a card standing on it. This is
+   the structure the RecordsFlow review page is built from and the one thing
+   that makes the theme "Block": a hairline border and no shadow at all. */
+.md-editor { background: var(--book-bg); }
+/* Doubled class throughout: the shared Section-rhythm block is emitted last
+   and claims both `.section` and its opening h2, so reshaping either into a
+   card needs one more point of specificity than the block that follows. */
+.md-editor.md-editor .section {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--section-padding, 22px);
+    margin-bottom: 18px;
+    overflow: hidden;
+}
+/* The opening h2 is the card's header strip — pulled out to the card edge with
+   a hairline under it, the way the ticket header it comes from is drawn. The
+   pull tracks --section-padding rather than a fixed number, so a host that
+   drives that variable (a padding slider, say) keeps the strip flush at any
+   inset the reader picks. */
+.md-editor.md-editor .section > h2:first-child {
+    margin: calc(-1 * var(--section-padding, 22px)) calc(-1 * var(--section-padding, 22px)) var(--section-padding, 22px);
+    padding: 15px 18px;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.15rem;
+}
 
 /* ── Section rhythm ───────────────────────────
    md-editor's postprocess cuts the document into .section wrappers at each h2,
