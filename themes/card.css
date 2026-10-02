@@ -210,7 +210,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     padding-left: 20px;
 }
 /* Same list spacing as every other theme: a list opens 6px below whatever comes
-   before it, and its items sit 4px apart. Card used to pull up 5px to hug the
+   before it, and its items sit 8px apart. Card used to pull up 5px to hug the
    paragraph above and leave its items flush, so the same document read as a
    denser, differently aligned list here than under modern or nord. The
    `h4 + ul/ol { margin-top: 0 }` rule that went with it is gone too — it existed
@@ -222,7 +222,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     padding-left: 22px;
 }
 .md-editor li{
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   line-height: 1.45;
 }
 .md-editor p {

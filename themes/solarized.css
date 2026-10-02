@@ -276,7 +276,7 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     margin: 6px 0 14px 24px;
     color: var(--text);
 }.md-editor li {
-    margin-bottom: 4px;
+    margin-bottom: 8px;
     line-height: 1.45;
 }
 /* ── Blockquotes ──────────────────────────── */

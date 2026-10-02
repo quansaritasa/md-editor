@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.10.29 — list items breathe
+
+- Every theme spaces list items 8px apart instead of 4px. A tight list (`- a`
+  then `- b`, no blank line) sat at 4px while the paragraphs around it got a
+  full 1em, so the list read as crowded next to its own prose. A loose list —
+  a blank line between items — still spaces wider, because marked wraps each
+  of its items in a `<p>` that carries the paragraph margin.
+
 ## v0.10.28 — the Block theme
 
 - Block is the thirteenth document theme: cool grey-green paper, a teal accent,
