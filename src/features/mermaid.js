@@ -63,13 +63,14 @@ function ensureInit(m, overrides, root) {
 // every render id this module hands out starts 'mmd-'. Matching that prefix
 // means the sweep only ever removes mermaid scratch we asked for, never an
 // element the host put on the page itself.
+// Mermaid appends its scratch straight to <body>, so only <body>'s children are
+// looked at: a selector over the whole document cost a scan of every element
+// per render, which a host mounting a big page in slices paid once per slice.
 function sweepScratch(doc) {
-  if (!doc || typeof doc.querySelectorAll !== 'function') return;
-  const strays = doc.querySelectorAll('[id^="dmmd-"]');
-  for (let i = 0; i < strays.length; i++) {
-    const e = strays[i];
-    if (e && e.remove) e.remove();
-  }
+  const body = doc && doc.body;
+  if (!body || !body.children) return;
+  const strays = Array.prototype.filter.call(body.children, (e) => (e.id || '').startsWith('dmmd-'));
+  for (const e of strays) if (e.remove) e.remove();
 }
 
 // One diagram to SVG markup, or null when it will not parse.

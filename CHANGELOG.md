@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.34 — mermaid cleanup scans less
+
+- The leftover-diagram sweep that runs on every mount looks only at the
+  page body's own children, not every element on the page.
+
 ## v0.10.33 — faster mounts on big pages
 
 - Editable code blocks become editable on first click or focus instead of at
