@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.10.31 — callouts
+
+- GitHub alerts (`> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`,
+  `[!CAUTION]`) render as titled, coloured boxes around their markdown.
+- `:::` containers render the same way, in the VitePress (`::: tip Title`),
+  Docusaurus (`:::note[Label]`) and remark-directive (`:::name{k=v}`)
+  spellings. More colons nest, a `:::` inside a code fence never closes one,
+  an unclosed one stays text, `details` folds, and an unknown name is a plain
+  titled box. Inline `:name` and leaf `::name` are not read.
+
 ## v0.10.30 — diagrams draw as you reach them
 
 - `mount()` takes `mermaidLazy: true`: each mermaid diagram is drawn when it

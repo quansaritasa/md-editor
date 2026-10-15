@@ -514,3 +514,29 @@ html.dark .md-editor-source {
   letter-spacing: inherit;
 }
 .md-editor .mermaid-relations-kind { opacity: 0.7; font-size: 11px; }
+
+/* ---------- callouts: > [!NOTE] and ::: containers (src/callouts.js) ---------- */
+/* One hue per kind, mixed toward the theme's own text and background so the
+   same rule reads in light and dark themes alike. An unknown container name
+   keeps the neutral --callout-c. */
+.md-editor .callout {
+  --callout-c: var(--text-secondary, #656d76);
+  margin: 0 0 var(--good-view-gap, 1em);
+  padding: 0.6em 1em;
+  border-left: 4px solid var(--callout-c);
+  border-radius: var(--radius, 6px);
+  background: color-mix(in srgb, var(--callout-c) 9%, transparent);
+}
+.md-editor .callout > :last-child { margin-bottom: 0; }
+.md-editor .callout-title {
+  margin: 0 0 0.4em;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--callout-c) 75%, var(--text, currentColor));
+}
+.md-editor details.callout > summary.callout-title { cursor: pointer; margin: 0; }
+.md-editor details.callout[open] > summary.callout-title { margin-bottom: 0.4em; }
+.md-editor .callout-note, .md-editor .callout-info { --callout-c: #2f81f7; }
+.md-editor .callout-tip { --callout-c: #2da44e; }
+.md-editor .callout-important { --callout-c: #8250df; }
+.md-editor .callout-warning { --callout-c: #d4a72c; }
+.md-editor .callout-caution, .md-editor .callout-danger { --callout-c: #e5534b; }

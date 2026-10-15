@@ -11,6 +11,7 @@ const deps = require('./deps');
 const parse = require('./parse');
 const transform = require('./transform');
 const goodview = require('./goodview');
+const callouts = require('./callouts');
 
 const DEFAULTS = {
   fallbackStem: '',   // titleizes into a title when the document supplies none
@@ -43,7 +44,9 @@ function build(md, options) {
     meta = p.meta;
   }
 
-  let html = deps.marked().parse(source, { breaks: o.breaks });
+  const marked = deps.marked();
+  callouts.install(marked); // > [!NOTE] and ::: containers, see callouts.js
+  let html = marked.parse(source, { breaks: o.breaks });
 
   if (o.postprocess) html = transform.run(html, { transforms: t, title, meta });
   if (t.has('good-view')) html = goodview.goodViewHtml(html);
