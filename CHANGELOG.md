@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.10.32 — large documents
+
+- A document with thousands of `:::` containers renders in milliseconds again;
+  a 15 MB file with about 3,000 of them no longer freezes the page.
+
 ## v0.10.31 — callouts
 
 - GitHub alerts (`> [!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`,

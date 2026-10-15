@@ -69,24 +69,31 @@ const alert = {
 const OPEN = /^ {0,3}(:{3,})[ \t]*([A-Za-z][\w-]*)[ \t]*(?:\[([^\]\n]*)\])?[ \t]*(?:\{([^}\n]*)\})?[ \t]*([^\n]*)(?:\n|$)/;
 const FENCE = /^ {0,3}(`{3,}|~{3,})/;
 
-// The body's line count up to its closing fence: a line of at least as many
-// colons and nothing else. A same-length opener inside nests, and code fences
-// are skipped so a `:::` in a code sample never closes anything. -1: unclosed.
-function closeAt(lines, colons) {
+// Where the closing fence line starts and ends in `text`: a line of at least as
+// many colons and nothing else. A same-length opener inside nests, and code
+// fences are skipped so a `:::` in a code sample never closes anything. null:
+// unclosed. Walks line by line rather than splitting `text` — it is the whole
+// rest of the document, and splitting it at every opener is quadratic.
+function closeAt(text, colons) {
   let depth = 0;
   let fence = null;
-  for (let i = 0; i < lines.length; i++) {
-    const l = lines[i];
+  for (let at = 0; at <= text.length;) {
+    let nl = text.indexOf('\n', at);
+    if (nl === -1) nl = text.length;
+    const l = text.slice(at, nl);
+    const next = nl + 1;
     const f = FENCE.exec(l);
-    if (fence) { if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null; continue; }
-    if (f) { fence = f[1]; continue; }
+    if (fence) { if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null; at = next; continue; }
+    if (f) { fence = f[1]; at = next; continue; }
     const c = /^ {0,3}(:{3,})[ \t]*(\S*)/.exec(l);
-    if (!c || c[1].length !== colons) continue;
-    if (c[2]) depth++;
-    else if (depth) depth--;
-    else return i;
+    if (c && c[1].length === colons) {
+      if (c[2]) depth++;
+      else if (depth) depth--;
+      else return { at, end: nl };
+    }
+    at = next;
   }
-  return -1;
+  return null;
 }
 
 const container = {
@@ -102,11 +109,11 @@ const container = {
   tokenizer(src) {
     const open = OPEN.exec(src);
     if (!open) return;
-    const lines = src.slice(open[0].length).split('\n');
-    const end = closeAt(lines, open[1].length);
-    if (end === -1) return; // an unclosed fence stays text rather than eating the document
-    const body = lines.slice(0, end).join('\n');
-    const raw = open[0] + lines.slice(0, end + 1).join('\n') + (end + 1 < lines.length ? '\n' : '');
+    const rest = src.slice(open[0].length);
+    const close = closeAt(rest, open[1].length);
+    if (!close) return; // an unclosed fence stays text rather than eating the document
+    const body = rest.slice(0, Math.max(0, close.at - 1));
+    const raw = open[0] + rest.slice(0, close.end + 1);
     const kind = open[2].toLowerCase();
     const attrs = parseAttrs(open[4]);
     const title = (open[3] || open[5] || attrs.title || KINDS[kind] || '').trim();
