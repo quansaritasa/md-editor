@@ -9,6 +9,7 @@ const zoom = require('./mermaid-zoom');
 const mermaidTheme = require('./mermaid-theme');
 const degree = require('./mermaid-degree');
 const branch = require('./mermaid-branch');
+const lazy = require('./mermaid-lazy');
 
 const INIT = {
   startOnLoad: false,
@@ -100,33 +101,50 @@ async function render(root, options) {
   // produced it, so the file that has to clear it is usually one with no
   // diagrams at all. See drawOne's finally for how it gets there.
   sweepScratch(doc);
+  lazy.stop(root);
   const blocks = root.querySelectorAll('code.language-mermaid');
   if (!blocks.length) return 0;
   ensureInit(m, o.mermaidConfig, root);
+  // The id must be unique per render or mermaid reuses a stale definition;
+  // the counter is passed in so the caller stays deterministic under test.
+  const seed = o.idSeed != null ? o.idSeed : Date.now();
+  const idOf = new Map();
+  for (let i = 0; i < blocks.length; i++) {
+    const pre = blocks[i].closest('pre');
+    if (pre && (blocks[i].textContent || '').trim()) idOf.set(pre, 'mmd-' + i + '-' + seed);
+  }
+  const draw = (pre) => drawBlock(m, pre, idOf.get(pre), doc);
+
+  // Lazy: nothing is drawn yet, so 0. Each diagram re-reads the theme as it is
+  // drawn — the colours may have changed since this call.
+  if (o.mermaidLazy && lazy.watch(root, [...idOf.keys()], async (pre) => {
+    ensureInit(m, o.mermaidConfig, root);
+    if (await draw(pre) && o.mermaidZoom !== false) zoom.init(root, o);
+  }, o)) return 0;
 
   let n = 0;
-  for (let i = 0; i < blocks.length; i++) {
-    const src = (blocks[i].textContent || '').trim();
-    const pre = blocks[i].closest('pre');
-    if (!pre || !src) continue;
-    // The id must be unique per render or mermaid reuses a stale definition;
-    // the counter is passed in so the caller stays deterministic under test.
-    const svg = await drawOne(m, 'mmd-' + i + '-' + (o.idSeed != null ? o.idSeed : Date.now()), src, doc);
-    if (svg == null) continue;
-    const wrap = doc.createElement('div');
-    wrap.className = 'mermaid-wrapper';
-    const dia = doc.createElement('div');
-    dia.className = 'mermaid';
-    dia.setAttribute('data-mermaid-src', src); // kept so refreshTheme can redraw it
-    dia.innerHTML = svg;
-    wrap.appendChild(dia);
-    degree.decorate(wrap, dia);
-    branch.paint(dia.querySelector('svg'));
-    pre.replaceWith(wrap);
-    n++;
-  }
+  for (const pre of idOf.keys()) if (await draw(pre)) n++;
   if (o.mermaidZoom !== false) zoom.init(root, o);
   return n;
+}
+
+// One fence's <pre> to a drawn diagram in its place. False when it will not
+// parse — the fence then stays a readable code block.
+async function drawBlock(m, pre, id, doc) {
+  const src = (pre.querySelector('code.language-mermaid').textContent || '').trim();
+  const svg = await drawOne(m, id, src, doc);
+  if (svg == null) return false;
+  const wrap = doc.createElement('div');
+  wrap.className = 'mermaid-wrapper';
+  const dia = doc.createElement('div');
+  dia.className = 'mermaid';
+  dia.setAttribute('data-mermaid-src', src); // kept so refreshTheme can redraw it
+  dia.innerHTML = svg;
+  wrap.appendChild(dia);
+  degree.decorate(wrap, dia);
+  branch.paint(dia.querySelector('svg'));
+  pre.replaceWith(wrap);
+  return true;
 }
 
 // Redraw the diagrams already on the page when the theme's colours changed —

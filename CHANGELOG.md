@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.10.30 — diagrams draw as you reach them
+
+- `mount()` takes `mermaidLazy: true`: each mermaid diagram is drawn when it
+  scrolls within `mermaidLazyMargin` (default `800px 0px`) of the scrolling
+  viewer, instead of all of them before `mount()` returns. A document with 45
+  diagrams used to stay blank for six seconds while they drew. Off by default;
+  without IntersectionObserver it draws eagerly as before.
+
 ## v0.10.29 — list items breathe
 
 - Every theme spaces list items 8px apart instead of 4px. A tight list (`- a`

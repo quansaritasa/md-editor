@@ -92,6 +92,10 @@ const doc = await MdEditor.mount(content, markdown, {
   docPath: '/docs/guide.md',        // resolves relative links and pictures
   transforms: ['strip-hr', 'data-labels'],
   editableCode: true,
+  // Draw each diagram as it nears the view instead of all before mount
+  // returns. The scrolling ancestor is found itself; mermaidLazyMargin
+  // ('800px 0px') sets how far ahead. No IntersectionObserver: drawn eagerly.
+  mermaidLazy: true,
   // `other.md#section`: path is the file, hash the fragment. Open the file,
   // then MdEditor.jumpToAnchor(document, hash, onHash) lands on the anchor.
   onNavigate: (path, a, hash) => openInHost(path, hash),
