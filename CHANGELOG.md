@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.33 — faster mounts on big pages
+
+- Editable code blocks become editable on first click or focus instead of at
+  mount; each stays a tab stop. Mounting many blocks no longer costs seconds.
+- With lazy diagrams, mounting no longer reads the theme colours up front.
+
 ## v0.10.32 — large documents
 
 - A document with thousands of `:::` containers renders in milliseconds again;

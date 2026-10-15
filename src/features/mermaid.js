@@ -104,7 +104,6 @@ async function render(root, options) {
   lazy.stop(root);
   const blocks = root.querySelectorAll('code.language-mermaid');
   if (!blocks.length) return 0;
-  ensureInit(m, o.mermaidConfig, root);
   // The id must be unique per render or mermaid reuses a stale definition;
   // the counter is passed in so the caller stays deterministic under test.
   const seed = o.idSeed != null ? o.idSeed : Date.now();
@@ -116,12 +115,14 @@ async function render(root, options) {
   const draw = (pre) => drawBlock(m, pre, idOf.get(pre), doc);
 
   // Lazy: nothing is drawn yet, so 0. Each diagram re-reads the theme as it is
-  // drawn — the colours may have changed since this call.
+  // drawn — the colours may have changed since this call — so reading it here
+  // too would only cost a style pass over the page per mount.
   if (o.mermaidLazy && lazy.watch(root, [...idOf.keys()], async (pre) => {
     ensureInit(m, o.mermaidConfig, root);
     if (await draw(pre) && o.mermaidZoom !== false) zoom.init(root, o);
   }, o)) return 0;
 
+  ensureInit(m, o.mermaidConfig, root);
   let n = 0;
   for (const pre of idOf.keys()) if (await draw(pre)) n++;
   if (o.mermaidZoom !== false) zoom.init(root, o);

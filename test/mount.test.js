@@ -198,13 +198,20 @@ test('Wrap starts on and toggles', async () => {
   assert.strictEqual(code.style.whiteSpace, '');
 });
 
-test('code is only contenteditable when the host asks for it', async () => {
+test('code is only contenteditable when the host asks for it, from first focus', async () => {
+  const focus = (el) => el.dispatchEvent(new el.ownerDocument.defaultView.FocusEvent('focusin', { bubbles: true }));
   const ro = makePage();
   await MdEditor.mount(ro.content, '```\nx\n```\n', {});
-  assert.strictEqual(ro.content.querySelector('pre code').getAttribute('contenteditable'), null);
+  const roCode = ro.content.querySelector('pre code');
+  focus(roCode);
+  assert.strictEqual(roCode.getAttribute('contenteditable'), null);
   const rw = makePage();
   await MdEditor.mount(rw.content, '```\nx\n```\n', { editableCode: true });
-  assert.strictEqual(rw.content.querySelector('pre code').getAttribute('contenteditable'), 'true');
+  const rwCode = rw.content.querySelector('pre code');
+  assert.strictEqual(rwCode.getAttribute('tabindex'), '0');
+  assert.strictEqual(rwCode.getAttribute('contenteditable'), null);
+  focus(rwCode);
+  assert.strictEqual(rwCode.getAttribute('contenteditable'), 'true');
 });
 
 test('a mermaid fence survives untouched when the peer is absent', async () => {

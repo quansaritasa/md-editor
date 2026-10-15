@@ -50,6 +50,21 @@ const BIND_DEFAULTS = {
 // A read-only secondary view (a compare pane, say) passes editableCode:false and
 // fullButton:false: "Copy Full" there would splice in the OTHER document's
 // _pre/_post, and an editable code block in a pane edits nothing.
+// Root -> whether its code blocks are editable. A root is re-bound on every
+// mount, so the listeners go on once and read the latest answer from here.
+const editableRoots = new WeakMap();
+function armEditable(root) {
+  if (editableRoots.has(root)) return;
+  const arm = (e) => {
+    if (!editableRoots.get(root)) return;
+    const code = e.target && e.target.closest ? e.target.closest('.code-block pre code') : null;
+    if (code && !code.isContentEditable) code.setAttribute('contenteditable', 'true');
+  };
+  // Capture, so the block is editable before the press places the caret.
+  root.addEventListener('pointerdown', arm, true);
+  root.addEventListener('focusin', arm, true);
+}
+
 function bind(root, options) {
   const o = Object.assign({}, BIND_DEFAULTS, options || {});
   const adapter = o.adapter || createAdapter();
@@ -82,8 +97,14 @@ function bind(root, options) {
 
   if (o.fullButton) syncFullButtons(root, adapter, o.docPath);
   if (o.editableCode) {
-    root.querySelectorAll('.code-block pre code').forEach((code) => code.setAttribute('contenteditable', 'true'));
+    // Made editable on first touch, not up front: contenteditable on a
+    // highlighted block costs a style pass over every token span, and across a
+    // big document's blocks that was seconds. tabindex keeps each one a tab
+    // stop, as contenteditable made it.
+    root.querySelectorAll('.code-block pre code').forEach((code) => { code.tabIndex = 0; });
+    armEditable(root);
   }
+  editableRoots.set(root, !!o.editableCode);
 
   // Wrapping starts ON: a long line scrolled off-screen reads as truncated.
   root.querySelectorAll('.code-wrap-btn').forEach((btn) => {
