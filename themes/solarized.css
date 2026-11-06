@@ -5,7 +5,7 @@
     --mermaid-er-header: color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg));
     --bg: #FDF6E3;
     --surface: #EEE8D5;
-    --text: #586E75;
+    --text: #073642;
     --text-secondary: #839496;
     --border: #D9D2BC;
     --accent: #268BD2;
@@ -480,9 +480,10 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     justify-content: center;
 }
 /* ── solarized: typography and component reshaping ── */
-.md-editor h1, .md-editor h2, .md-editor h3, .md-editor h4, .md-editor strong, .md-editor th { color: #073642; }
-html.dark .md-editor h1, html.dark .md-editor h2, html.dark .md-editor h3, html.dark .md-editor h4,
-html.dark .md-editor strong, html.dark .md-editor th { color: #EEE8D5; }
+/* Bold runs, headings and table heads take the theme's own --text, as every
+   other theme here does (the shared body sets th to var(--text) and lets strong
+   and the headings inherit). A hardcoded base02/base1 made them a second,
+   separate ink from the paragraph they sit in. */
 .md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { color: #268BD2; }
 html.dark .md-editor h2 { color: #268BD2; }

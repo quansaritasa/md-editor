@@ -77,10 +77,19 @@
    surface was blurring nothing but the flat --bg colour behind it. Scoping the
    pseudo-element to .md-editor itself (with position+isolation above so it
    paints above the flat background but below real content) is what actually
-   gives the frosted panels something colourful to blur. */
+   gives the frosted panels something colourful to blur.
+
+   Absolute, not fixed: a theme is a component, and a fixed layer is measured
+   from the viewport, so on a host that mounts the editor in a box (an app's
+   description and comment panels) the glow escaped the mount and tinted the
+   whole window — the board behind the panel included. inset:0 on the editor's
+   own box keeps the look inside whatever the editor was given: the panels wear
+   the glow, the page around them keeps its own colours. On a full-page reader
+   the glow ends at the column rather than at the window edge, which is the
+   trade — a component cannot know where its host's page ends. */
 .md-editor::before {
     content: "";
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: -1;
     background:

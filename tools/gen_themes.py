@@ -140,7 +140,11 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 
 # ─────────────────────────── catppuccin ───────────────────────────
 emit('catppuccin', 'Catppuccin Latte (light) and Mocha (dark) palettes',
-     {**COMMON_LIGHT, 'mermaid-bg': '#eff1f5', 'book-bg': '#EFF1F5', 'bg': '#eff1f5', 'surface': '#e6e9ef', 'text': '#4c4f69',
+     # Latte's own body ink (text, #4c4f69) reads 7.06:1 on --bg but greys out
+     # beside its own bold runs and on a small UI panel, so the light --text is a
+     # near-black navy instead: 16.38:1 on --bg, 15.23:1 on --surface. The rest of
+     # the palette is untouched. Dark keeps Mocha's text (#cdd6f4).
+     {**COMMON_LIGHT, 'mermaid-bg': '#eff1f5', 'book-bg': '#EFF1F5', 'bg': '#eff1f5', 'surface': '#e6e9ef', 'text': '#111222',
       'text-secondary': '#6c6f85', 'border': '#ccd0da', 'accent': '#1e66f5', 'accent-soft': '#dce4fb',
       'code-bg': '#e6e9ef', 'code-text': '#ea76cb', 'radius': '8px',
       'note-amber': '#df8e1d', 'note-amber-lt': '#f8ecd6', 'note-amber-border': '#df8e1d',
@@ -365,7 +369,11 @@ html.dark .md-editor .example-box.bad-box { border-left-color: #FB4934; }
 
 # ─────────────────────────── solarized ───────────────────────────
 emit('solarized', 'Solarized — light and dark, the classic pair',
-     {**COMMON_LIGHT, 'mermaid-bg': '#FDF6E3', 'book-bg': '#FDF6E3', 'bg': '#FDF6E3', 'surface': '#EEE8D5', 'text': '#586E75',
+     # Solarized's light body ink is base01 (#586E75), which is deliberately
+     # low-contrast ink — 4.99:1 on base3 — and reads washed out in a small
+     # panel. base02 (#073642) is the same palette's own dark, one step in:
+     # 12.05:1 on --bg, 10.61:1 on --surface. Dark keeps base1 (#93A1A1).
+     {**COMMON_LIGHT, 'mermaid-bg': '#FDF6E3', 'book-bg': '#FDF6E3', 'bg': '#FDF6E3', 'surface': '#EEE8D5', 'text': '#073642',
       'text-secondary': '#839496', 'border': '#D9D2BC', 'accent': '#268BD2', 'accent-soft': '#E1E8DA',
       'code-bg': '#EEE8D5', 'code-text': '#D33682', 'radius': '4px',
       'note-amber': '#8A6700', 'note-amber-lt': '#F4EBC9', 'note-amber-border': '#B58900',
@@ -377,9 +385,10 @@ emit('solarized', 'Solarized — light and dark, the classic pair',
       'info-blue': '#4FA3DC', 'info-blue-lt': '#0A3F52', 'info-blue-border': '#268BD2', 'fields-key': '#859900'},
      ('#2AA198', '#B58900'), ('#2AA198', '#B58900'),
      '''
-.md-editor h1, .md-editor h2, .md-editor h3, .md-editor h4, .md-editor strong, .md-editor th { color: #073642; }
-html.dark .md-editor h1, html.dark .md-editor h2, html.dark .md-editor h3, html.dark .md-editor h4,
-html.dark .md-editor strong, html.dark .md-editor th { color: #EEE8D5; }
+/* Bold runs, headings and table heads take the theme's own --text, as every
+   other theme here does (the shared body sets th to var(--text) and lets strong
+   and the headings inherit). A hardcoded base02/base1 made them a second,
+   separate ink from the paragraph they sit in. */
 .md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { color: #268BD2; }
 html.dark .md-editor h2 { color: #268BD2; }

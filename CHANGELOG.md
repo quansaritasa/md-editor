@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.10.35 — the editor keeps its glow to itself
+
+- Glass paints its ambient glow on the editor's own box instead of the
+  viewport, so a host that mounts the editor in a panel — an app's task
+  description, a comment body — no longer gets its whole window tinted. The
+  glow now stops at whatever box the editor was given.
+- Catppuccin's light body ink is a near-black navy (`#111222`, 16.4:1 on `--bg`)
+  rather than Latte's grey-blue `#4c4f69` (7.1:1).
+- Solarized's light body ink is base02 (`#073642`, 12.1:1 on `--bg`) rather
+  than base01's deliberately washed-out `#586E75` (5.0:1).
+- Solarized's bold runs, headings and table heads take the theme's own `--text`
+  instead of a hardcoded base02/base1, so a paragraph and its emphasis are one
+  ink.
+
 ## v0.10.34 — mermaid cleanup scans less
 
 - The leftover-diagram sweep that runs on every mount looks only at the
