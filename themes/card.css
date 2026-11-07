@@ -12,6 +12,7 @@
     --border: #d9e0e7;
     --accent: #0f766e;
     --accent-soft: #e6f4f1;
+    --link-ink: var(--accent);
     --warning: #9a3412;
     --shadow: 0 6px 15px rgba(15, 23, 42, 0.2);
     --radius: 6px;
@@ -29,7 +30,7 @@
     --pre-bg: #eef3f7;
     --pre-text: #1e293b;
     --code-bg: #eef3f7;
-    --code-text: #e84a80;
+    --code-text: #c13d6a;
     --block-card-bg: #fbfcfd;
     --header-bg-start: #ffffff;
     --header-bg-end: #f7fbfb;
@@ -72,7 +73,7 @@ html.dark .md-editor {
     --accent-soft: #134e4a;
     --warning: #fbbf24;
     --shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    --title: #e2e8f0;
+    --title: color-mix(in srgb, var(--accent) 60%, var(--text));
     --sub-title: #cbd5e1;
     --th-bg: #0f172a;
     --th-title: #cbd5e1;
@@ -81,7 +82,7 @@ html.dark .md-editor {
     --table-border: #334155;
     --pre-bg: #0f172a;
     --pre-text: #e5eefc;
-    --code-bg: #334155;
+    --code-bg: #22303f;
     --code-text: #e695b0;
     --block-card-bg: #1e293b;
     --header-bg-start: #1e293b;
@@ -104,7 +105,8 @@ html.dark .md-editor {
    rule, which otherwise wins the load-order tie and silently overrides it. */
 .md-editor .hljs-string { color: #0e4bb9; }
 html.dark .hljs-string { color: #98c379; }
-.md-editor .hljs-attr { color: #d97706; }
+.md-editor .hljs-attr { color: #A55A05; }
+html.dark .md-editor .hljs-attr { color: #d97706; }
 .md-editor ::selection { background: #0f766e; color: #ffffff; }
 html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 
@@ -508,7 +510,10 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor h4{
     color: var(--title);
 }
-.md-editor a,
+.md-editor a{
+    color: var(--link-ink);
+    text-decoration: none;
+}
 .md-editor h1{
     color: var(--accent);
     text-decoration: none;

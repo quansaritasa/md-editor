@@ -6,24 +6,27 @@
     --bg: #eff1f5;
     --surface: #e6e9ef;
     --text: #111222;
-    --text-secondary: #6c6f85;
+    --text-secondary: #64667A;
     --border: #ccd0da;
     --accent: #1e66f5;
     --accent-soft: #dce4fb;
+    --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
+    --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
+    --link-ink: #1d63ee;
     --code-bg: #e6e9ef;
-    --code-text: #ea76cb;
+    --code-text: #9a4e86;
     --radius: 8px;
     --max-w: 900px;
-    --note-amber: #df8e1d;
+    --note-amber: #915C12;
     --note-amber-lt: #f8ecd6;
     --note-amber-border: #df8e1d;
-    --info-blue: #1e66f5;
+    --info-blue: #1b5ddf;
     --info-blue-lt: #dce4fb;
     --info-blue-border: #7287fd;
     --fields-key: #40a02b;
 }
-.md-editor .hljs-string { color: #40a02b; }
-.md-editor .hljs-attr { color: #df8e1d; }
+.md-editor .hljs-string { color: #2F7620; }
+.md-editor .hljs-attr { color: #915C13; }
 html.dark .md-editor {
     --book-bg: #1E1E2E;
     --bg: #1e1e2e;
@@ -33,6 +36,7 @@ html.dark .md-editor {
     --border: #313244;
     --accent: #89b4fa;
     --accent-soft: #26304a;
+    --link-ink: var(--accent);
     --code-bg: #181825;
     --code-text: #f5c2e7;
     --note-amber: #f9e2af;
@@ -115,6 +119,17 @@ html.dark .md-editor .hljs-attr { color: #f9e2af; }
     font-weight: 600;
     margin: 24px 0 8px;
 }
+/* Headings take --heading-ink, not the body ink they inherited: a heading the
+   same colour as the text under it leaned on size and weight alone, and in a
+   dense document that read as plain prose with a bigger font. h4 is left on
+   --text on purpose — it is a label, and the step down from h3 is the point.
+   --heading-ink / --strong-ink are mixed from --accent and --text (see
+   tools/gen_themes.py), so each palette keeps its hue and its contrast in both
+   modes. A theme's own h1/h2/h3 colour rule, where it has one, still wins by
+   source order. */
+.md-editor h1, .md-editor h2, .md-editor h3 {
+    color: var(--heading-ink);
+}
 /* ── Paragraphs & Links ───────────────────── */
 .md-editor p {
     margin: 0 0 12px;
@@ -122,11 +137,12 @@ html.dark .md-editor .hljs-attr { color: #f9e2af; }
 }.md-editor p + p {
     margin-top: 12px;
 }.md-editor a {
-    color: var(--accent);
+    color: var(--link-ink);
     text-decoration: none;
 }.md-editor a:hover {
     text-decoration: underline;
 }.md-editor strong {
+    color: var(--strong-ink);
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
@@ -181,6 +197,15 @@ html.dark .md-editor .hljs-attr { color: #f9e2af; }
     font-size: 0.85rem;
     line-height: 1.5;
     margin: 12px 0 20px;
+}
+/* A code block is a step off the page, not a light panel on it. --surface sits
+   well above --bg in the darker palettes — nord's #3B4252 on #2E3440 is a
+   1.24:1 jump, gruvbox's #3C3836 on #282828 1.27:1 — which reads as a glowing
+   box rather than a code block. Dark mode pulls the fill back toward --bg
+   (1.05:1, the same subtle step light mode already has at ~1.1:1); light mode
+   keeps --surface, where the border is doing the separating anyway. */
+html.dark .md-editor pre {
+    background: color-mix(in srgb, var(--bg) 78%, var(--surface));
 }.md-editor pre.mermaid {
     background: var(--mermaid-bg);
     color: #1f2937;
@@ -189,7 +214,8 @@ html.dark .md-editor .hljs-attr { color: #f9e2af; }
     padding: 0;
     color: var(--text);
     font-size: inherit;
-}.md-editor .code-block {
+}
+.md-editor .code-block {
     position: relative;
     margin: 12px 0 20px;
 }.md-editor .code-block pre {
@@ -483,11 +509,11 @@ html.dark .md-editor .hljs-attr { color: #f9e2af; }
 .md-editor h1 { color: #8839ef; border-bottom: none; }
 html.dark .md-editor h1 { color: #cba6f7; }
 .md-editor h2 { color: var(--accent); border-bottom: 1px solid var(--border); }
-.md-editor h3 { color: #179299; }
-html.dark .md-editor h3 { color: #94e2d5; }
+/* h3 takes the shared --heading-ink: Latte's teal (#179299) is 3.3:1 on --bg,
+   under AA at h3's 16.8px. */
 .md-editor .eyebrow { background: #8839ef; color: #eff1f5; }
 html.dark .md-editor .eyebrow { background: #cba6f7; color: #1e1e2e; }
-.md-editor th { background: var(--surface); color: var(--accent); }
+.md-editor th { background: var(--surface); color: var(--heading-ink); }
 .md-editor blockquote, .md-editor .blockquotes { border-left-width: 4px; }
 .md-editor .example-box.good-box { border-left-color: #40a02b; }
 .md-editor .example-box.bad-box { border-left-color: #d20f39; }

@@ -45,7 +45,7 @@ PLEX_SERIF = '"IBM Plex Serif", ' + SERIF
 PLEX_MONO = '"IBM Plex Mono", ' + MONO
 
 TOKENS = ['book-bg', 'mermaid-bg', 'mermaid-er-header', 'bg', 'surface', 'text', 'text-secondary', 'border',
-          'accent', 'accent-soft', 'code-bg', 'code-text', 'radius', 'max-w',
+          'accent', 'accent-soft', 'heading-ink', 'strong-ink', 'link-ink', 'code-bg', 'code-text', 'radius', 'max-w',
           'note-amber', 'note-amber-lt', 'note-amber-border',
           'info-blue', 'info-blue-lt', 'info-blue-border', 'fields-key']
 
@@ -77,8 +77,29 @@ def emit(name, desc, light, dark, hl_light, hl_dark, overrides):
 # --mermaid-er-header paints the title band of an ER table (css/base.css).
 # It is declared in the light block only: the value reads --accent, which the
 # dark block overrides on the same element, so one line serves both modes.
+#
+# --heading-ink / --strong-ink are the two inks the shared body uses for h1–h3
+# and for <strong>. Both are the theme's accent pulled back toward its body ink,
+# and they exist because inheriting --text made a heading and the paragraph
+# under it one colour; size and weight alone carried the hierarchy, which read
+# as flat next to plain prose. Derived here rather than hand-picked per palette:
+# an accent mixed with the body ink keeps the theme's hue, darkens toward the
+# page's own ink (so it clears AA at h3's 16.8px), and repaints itself in dark
+# mode off the same two variables. Headings take 60% accent, strong runs 42% —
+# bold text should register as emphasis, not compete with the heading above it.
+# A theme that wants a different ink for either role just declares its own
+# value; a grayscale theme (eink, accent == text) mixes to plain text by the
+# same formula, so it stays weight-and-rule only without a special case.
 COMMON_LIGHT = {'mermaid-bg': '#f6f8fa', 'max-w': '900px',
-                'mermaid-er-header': 'color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg))'}
+                'mermaid-er-header': 'color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg))',
+                'heading-ink': 'color-mix(in srgb, var(--accent) 60%, var(--text))',
+                'strong-ink': 'color-mix(in srgb, var(--accent) 42%, var(--text))',
+                # Link ink defaults to the accent. A palette whose accent is too
+                # light on its own page (solarized's blue, nord's blue, glass's
+                # indigo) overrides this one token instead of darkening --accent
+                # itself, which would repaint h1, borders and the eyebrow chip
+                # with it. See the per-theme blocks below.
+                'link-ink': 'var(--accent)'}
 
 # ─────────────────────────── terminal ───────────────────────────
 emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
@@ -144,26 +165,33 @@ emit('catppuccin', 'Catppuccin Latte (light) and Mocha (dark) palettes',
      # beside its own bold runs and on a small UI panel, so the light --text is a
      # near-black navy instead: 16.38:1 on --bg, 15.23:1 on --surface. The rest of
      # the palette is untouched. Dark keeps Mocha's text (#cdd6f4).
+     # Inline code, note/info blocks and meta text were tuned against the page
+     # they sit on: Latte's pink (#ea76cb) read at 2.2:1 on --code-bg, its amber
+     # (#df8e1d) at 2.2:1 on the note tint, its blue #1e66f5 at 3.9:1 on the info
+     # tint and 4.3:1 as a link. Each is the palette's own hue, darkened only as
+     # as far as AA needs (measured — see CHANGELOG).
      {**COMMON_LIGHT, 'mermaid-bg': '#eff1f5', 'book-bg': '#EFF1F5', 'bg': '#eff1f5', 'surface': '#e6e9ef', 'text': '#111222',
-      'text-secondary': '#6c6f85', 'border': '#ccd0da', 'accent': '#1e66f5', 'accent-soft': '#dce4fb',
-      'code-bg': '#e6e9ef', 'code-text': '#ea76cb', 'radius': '8px',
-      'note-amber': '#df8e1d', 'note-amber-lt': '#f8ecd6', 'note-amber-border': '#df8e1d',
-      'info-blue': '#1e66f5', 'info-blue-lt': '#dce4fb', 'info-blue-border': '#7287fd', 'fields-key': '#40a02b'},
+      'text-secondary': '#64667A', 'border': '#ccd0da', 'accent': '#1e66f5', 'accent-soft': '#dce4fb',
+      'link-ink': '#1d63ee',
+      'code-bg': '#e6e9ef', 'code-text': '#9a4e86', 'radius': '8px',
+      'note-amber': '#915C12', 'note-amber-lt': '#f8ecd6', 'note-amber-border': '#df8e1d',
+      'info-blue': '#1b5ddf', 'info-blue-lt': '#dce4fb', 'info-blue-border': '#7287fd', 'fields-key': '#40a02b'},
      {'book-bg': '#1E1E2E', 'bg': '#1e1e2e', 'surface': '#181825', 'text': '#cdd6f4',
       'text-secondary': '#a6adc8', 'border': '#313244', 'accent': '#89b4fa', 'accent-soft': '#26304a',
+      'link-ink': 'var(--accent)',
       'code-bg': '#181825', 'code-text': '#f5c2e7',
       'note-amber': '#f9e2af', 'note-amber-lt': '#2e2a24', 'note-amber-border': '#f9e2af',
       'info-blue': '#89b4fa', 'info-blue-lt': '#1f2637', 'info-blue-border': '#b4befe', 'fields-key': '#a6e3a1'},
-     ('#40a02b', '#df8e1d'), ('#a6e3a1', '#f9e2af'),
+     ('#2F7620', '#915C13'), ('#a6e3a1', '#f9e2af'),
      '''
 .md-editor h1 { color: #8839ef; border-bottom: none; }
 html.dark .md-editor h1 { color: #cba6f7; }
 .md-editor h2 { color: var(--accent); border-bottom: 1px solid var(--border); }
-.md-editor h3 { color: #179299; }
-html.dark .md-editor h3 { color: #94e2d5; }
+/* h3 takes the shared --heading-ink: Latte's teal (#179299) is 3.3:1 on --bg,
+   under AA at h3's 16.8px. */
 .md-editor .eyebrow { background: #8839ef; color: #eff1f5; }
 html.dark .md-editor .eyebrow { background: #cba6f7; color: #1e1e2e; }
-.md-editor th { background: var(--surface); color: var(--accent); }
+.md-editor th { background: var(--surface); color: var(--heading-ink); }
 .md-editor blockquote, .md-editor .blockquotes { border-left-width: 4px; }
 .md-editor .example-box.good-box { border-left-color: #40a02b; }
 .md-editor .example-box.bad-box { border-left-color: #d20f39; }
@@ -279,7 +307,7 @@ emit('editorial', 'Newspaper — display serif headings, hairline rules, drop ca
 # ─────────────────────────── blossom ───────────────────────────
 emit('blossom', 'Blossom — soft pink paper, raspberry accents, rounded edges',
      {**COMMON_LIGHT, 'mermaid-bg': '#fff5f8', 'book-bg': '#FFF5F8', 'bg': '#FFF5F8', 'surface': '#FDE9F0', 'text': '#3D2430',
-      'text-secondary': '#8A6B78', 'border': '#F2CEDD', 'accent': '#C2255C', 'accent-soft': '#FCE0EB',
+      'text-secondary': '#806470', 'border': '#F2CEDD', 'accent': '#C2255C', 'accent-soft': '#FCE0EB',
       'code-bg': '#FDE9F0', 'code-text': '#A61E4D', 'radius': '12px',
       'note-amber': '#B54708', 'note-amber-lt': '#FFF1E3', 'note-amber-border': '#F0B27A',
       'info-blue': '#7048A8', 'info-blue-lt': '#F3ECFB', 'info-blue-border': '#C4A7E7', 'fields-key': '#C2255C'},
@@ -315,24 +343,30 @@ emit('blossom', 'Blossom — soft pink paper, raspberry accents, rounded edges',
 emit('nord', 'Nord — arctic, bluish palette',
      {**COMMON_LIGHT, 'mermaid-bg': '#ECEFF4', 'book-bg': '#ECEFF4', 'bg': '#ECEFF4', 'surface': '#E5E9F0', 'text': '#2E3440',
       'text-secondary': '#4C566A', 'border': '#D8DEE9', 'accent': '#5E81AC', 'accent-soft': '#DFE6EF',
-      'code-bg': '#E5E9F0', 'code-text': '#BF616A', 'radius': '4px',
+      # Nord's blue is 3.5:1 as body-size link text and 3.3:1 as a table head;
+      # links take a darkened blue, table heads take the shared heading ink.
+      'link-ink': '#516F94',
+      'code-bg': '#E5E9F0', 'code-text': '#9F5158', 'radius': '4px',
       'note-amber': '#7A5A12', 'note-amber-lt': '#F4EDDC', 'note-amber-border': '#EBCB8B',
       'info-blue': '#3B5F8A', 'info-blue-lt': '#E1EAF2', 'info-blue-border': '#81A1C1', 'fields-key': '#4E7A3A'},
      {'book-bg': '#2E3440', 'bg': '#2E3440', 'surface': '#3B4252', 'text': '#ECEFF4',
       'text-secondary': '#D8DEE9', 'border': '#434C5E', 'accent': '#88C0D0', 'accent-soft': '#3B4A5A',
-      'code-bg': '#3B4252', 'code-text': '#D08770',
+      'link-ink': 'var(--accent)',
+      'code-bg': '#3B4252', 'code-text': '#DAA08E',
       'note-amber': '#EBCB8B', 'note-amber-lt': '#3D3A30', 'note-amber-border': '#EBCB8B',
       'info-blue': '#8FBCBB', 'info-blue-lt': '#33414A', 'info-blue-border': '#81A1C1', 'fields-key': '#A3BE8C'},
-     ('#4E7A3A', '#7A5A12'), ('#A3BE8C', '#EBCB8B'),
+     ('#497337', '#7A5A12'), ('#A3BE8C', '#EBCB8B'),
      '''
 .md-editor h1 { color: #5E81AC; border-bottom: 2px solid var(--border); }
 html.dark .md-editor h1 { color: #88C0D0; }
 .md-editor h2 { border-bottom: 1px solid var(--border); }
-.md-editor h3 { color: #5E81AC; }
-html.dark .md-editor h3 { color: #81A1C1; }
-.md-editor .eyebrow { background: #5E81AC; color: #ECEFF4; }
+/* h3 takes the shared --heading-ink: Nord's blue at h3's size is 3.5:1. */
+/* The eyebrow is an inverted chip: nordfrost at full strength put cream on
+   #5E81AC at 3.5:1 at 12px. The chip's own fill steps down to #4C6A94 (4.8:1)
+   rather than repainting the accent everywhere it is used. */
+.md-editor .eyebrow { background: #4C6A94; color: #ECEFF4; }
 html.dark .md-editor .eyebrow { background: #88C0D0; color: #2E3440; }
-.md-editor th { color: var(--accent); }
+.md-editor th { color: var(--heading-ink); }
 .md-editor .example-box.good-box { border-left-color: #A3BE8C; }
 .md-editor .example-box.bad-box { border-left-color: #BF616A; }
 ''')
@@ -341,26 +375,28 @@ html.dark .md-editor .eyebrow { background: #88C0D0; color: #2E3440; }
 emit('gruvbox', 'Gruvbox — warm retro palette',
      {**COMMON_LIGHT, 'mermaid-bg': '#FBF1C7', 'book-bg': '#FBF1C7', 'bg': '#FBF1C7', 'surface': '#EBDBB2', 'text': '#3C3836',
       'text-secondary': '#665C54', 'border': '#D5C4A1', 'accent': '#076678', 'accent-soft': '#E4DFC0',
-      'code-bg': '#EBDBB2', 'code-text': '#AF3A03', 'radius': '3px',
-      'note-amber': '#B57614', 'note-amber-lt': '#F4E8C1', 'note-amber-border': '#D79921',
+      'code-bg': '#EBDBB2', 'code-text': '#AD3903', 'radius': '3px',
+      'note-amber': '#85560F', 'note-amber-lt': '#F4E8C1', 'note-amber-border': '#D79921',
       'info-blue': '#076678', 'info-blue-lt': '#E6E5C6', 'info-blue-border': '#458588', 'fields-key': '#79740E'},
      {'book-bg': '#282828', 'bg': '#282828', 'surface': '#3C3836', 'text': '#EBDBB2',
       'text-secondary': '#A89984', 'border': '#504945', 'accent': '#83A598', 'accent-soft': '#3A4442',
       'code-bg': '#3C3836', 'code-text': '#FE8019',
       'note-amber': '#FABD2F', 'note-amber-lt': '#3D3521', 'note-amber-border': '#D79921',
-      'info-blue': '#83A598', 'info-blue-lt': '#2F3A3A', 'info-blue-border': '#458588', 'fields-key': '#B8BB26'},
-     ('#79740E', '#B57614'), ('#B8BB26', '#FABD2F'),
+      'info-blue': '#87A89B', 'info-blue-lt': '#2F3A3A', 'info-blue-border': '#458588', 'fields-key': '#B8BB26'},
+     ('#67630C', '#84560F'), ('#B8BB26', '#FABD2F'),
      '''
 .md-editor h1 { color: #9D0006; border-bottom: 2px solid var(--border); }
 html.dark .md-editor h1 { color: #FB4934; }
 .md-editor h2 { color: #79740E; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: #B8BB26; }
-.md-editor h3 { color: #B57614; }
-html.dark .md-editor h3 { color: #FABD2F; }
+/* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page. */
 .md-editor .eyebrow { background: #AF3A03; color: #FBF1C7; }
 html.dark .md-editor .eyebrow { background: #FE8019; color: #282828; }
 .md-editor strong { color: #9D0006; }
-html.dark .md-editor strong { color: #FB4934; }
+/* Bold runs in dark were #FB4934 — 4.29:1 at body size, and 3.4:1 on a
+   --surface block, so emphasis faded on cards and quotes. The palette's orange
+   clears both (5.8:1 / 4.6:1) and stays in the warm family. */
+html.dark .md-editor strong { color: #FE8019; }
 .md-editor .example-box.good-box { border-left-color: #79740E; }
 .md-editor .example-box.bad-box { border-left-color: #9D0006; }
 html.dark .md-editor .example-box.good-box { border-left-color: #B8BB26; }
@@ -373,28 +409,37 @@ emit('solarized', 'Solarized — light and dark, the classic pair',
      # low-contrast ink — 4.99:1 on base3 — and reads washed out in a small
      # panel. base02 (#073642) is the same palette's own dark, one step in:
      # 12.05:1 on --bg, 10.61:1 on --surface. Dark keeps base1 (#93A1A1).
+     # Secondary, code and the note/info inks were all under AA on the page they
+     # sit on (base0 meta at 2.9:1, magenta code at 3.7:1, amber note at 4.4:1).
      {**COMMON_LIGHT, 'mermaid-bg': '#FDF6E3', 'book-bg': '#FDF6E3', 'bg': '#FDF6E3', 'surface': '#EEE8D5', 'text': '#073642',
-      'text-secondary': '#839496', 'border': '#D9D2BC', 'accent': '#268BD2', 'accent-soft': '#E1E8DA',
-      'code-bg': '#EEE8D5', 'code-text': '#D33682', 'radius': '4px',
-      'note-amber': '#8A6700', 'note-amber-lt': '#F4EBC9', 'note-amber-border': '#B58900',
-      'info-blue': '#1D6FA8', 'info-blue-lt': '#E1E8DA', 'info-blue-border': '#268BD2', 'fields-key': '#6C7B00'},
+      'text-secondary': '#5E6A6C', 'border': '#D9D2BC', 'accent': '#268BD2', 'accent-soft': '#E1E8DA',
+      'link-ink': '#2076B2',
+      'code-bg': '#EEE8D5', 'code-text': '#B52E6F', 'radius': '4px',
+      'note-amber': '#836200', 'note-amber-lt': '#F4EBC9', 'note-amber-border': '#B58900',
+      'info-blue': '#1C6CA3', 'info-blue-lt': '#E1E8DA', 'info-blue-border': '#268BD2', 'fields-key': '#6C7B00'},
      {'book-bg': '#002B36', 'bg': '#002B36', 'surface': '#073642', 'text': '#93A1A1',
-      'text-secondary': '#657B83', 'border': '#0E4553', 'accent': '#268BD2', 'accent-soft': '#0A3F52',
-      'code-bg': '#073642', 'code-text': '#CB4B16',
-      'note-amber': '#B58900', 'note-amber-lt': '#0F3A3A', 'note-amber-border': '#B58900',
-      'info-blue': '#4FA3DC', 'info-blue-lt': '#0A3F52', 'info-blue-border': '#268BD2', 'fields-key': '#859900'},
-     ('#2AA198', '#B58900'), ('#2AA198', '#B58900'),
+      'text-secondary': '#82939A', 'border': '#0E4553', 'accent': '#268BD2',
+      # 48% accent (not the shared 60%): this palette's blue is its dimmest ink,
+      # and above ~50% the syntax tokens land under AA on the code surface.
+      'heading-ink': 'color-mix(in srgb, var(--accent) 48%, var(--text))',
+      # accent-soft is the quote's fill, and #0A3F52 held --text at 4.25:1. One
+      # step darker (5.1:1) keeps the quote legible without touching the ink.
+      'accent-soft': '#08323F',
+      'link-ink': '#3B96D8',
+      'code-bg': '#073642', 'code-text': '#DB815C',
+      'note-amber': '#BE971F', 'note-amber-lt': '#0F3A3A', 'note-amber-border': '#B58900',
+      'info-blue': '#66AFE3', 'info-blue-lt': '#0A3F52', 'info-blue-border': '#268BD2', 'fields-key': '#859900'},
+     ('#1E726C', '#826300'), ('#2AA198', '#B58900'),
      '''
-/* Bold runs, headings and table heads take the theme's own --text, as every
-   other theme here does (the shared body sets th to var(--text) and lets strong
-   and the headings inherit). A hardcoded base02/base1 made them a second,
-   separate ink from the paragraph they sit in. */
+/* Solarized's own ink is deliberately low-contrast: base1 (#93A1A1) is 4.0:1 on
+   base03 and base01 the same on base3, so headings and bold runs take the
+   shared --heading-ink / --strong-ink, which mix the palette's blue and ink
+   into something that clears AA instead of vanishing into the page. h2 keeps
+   solarized's blue — at 25.6px it is large text and 3.4:1 clears AA-large. */
 .md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { color: #268BD2; }
 html.dark .md-editor h2 { color: #268BD2; }
-.md-editor h3 { color: #2AA198; }
-html.dark .md-editor h3 { color: #2AA198; }
-.md-editor .eyebrow { background: #B58900; color: #FDF6E3; }
+.md-editor .eyebrow { background: #8A6700; color: #FDF6E3; }
 html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
 .md-editor .example-box.good-box { border-left-color: #859900; }
 .md-editor .example-box.bad-box { border-left-color: #DC322F; }
@@ -482,7 +527,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
     border-top: 3px solid var(--accent);
     border-radius: var(--radius);
     padding: var(--section-padding, 22px);
-    margin-bottom: 18px;
+    margin-bottom: 30px;
     overflow: hidden;
 }}
 /* The opening h2 is the card's header strip — pulled out to the card edge with
@@ -500,5 +545,25 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     font-size: 1.15rem;
+}}
+/* Collapsed, a card is only its header strip. The strip is pulled full-bleed
+   out of the card's inset, so once the body is hidden that inset stands as
+   empty white above and below the title — and it cannot be cancelled with a
+   negative margin, because .section is its own formatting context and an
+   auto height clamps at zero before the padding is reached. So the padding
+   itself goes and the strip stops pulling: the two undo each other and the
+   card ends exactly where the strip does. The strip's hairline goes too — the
+   card's own border now sits directly under it, and two lines a pixel apart
+   read as a mistake.
+
+   A host that drives --section-padding from an id-scoped rule (Qview's padding
+   slider does) outranks the padding line here and has to repeat it; the margin
+   and border below are this theme's alone and hold everywhere. */
+.md-editor.md-editor .section:has(> h2.sec-collapsed:first-child) {{
+    padding: 0;
+}}
+.md-editor.md-editor .section > h2.sec-collapsed:first-child {{
+    margin: 0;
+    border-bottom: none;
 }}
 ''')

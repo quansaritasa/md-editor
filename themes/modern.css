@@ -13,6 +13,15 @@
     --border: #d0d7de;
     --accent: #0969da;
     --accent-soft: #ddf4ff;
+    /* See tools/gen_themes.py: accent pulled toward the body ink. Declared in
+       the light block only — the mix re-reads --accent/--text where it is used,
+       so dark mode gets its own pair without a second declaration. */
+    --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
+    --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
+    /* Link ink is its own token because a palette's accent can be too light to
+       read as body-size text while still being the right colour for h1, borders
+       and the eyebrow chip. */
+    --link-ink: var(--accent);
     --code-bg: #f6f8fa;
     --code-text: #cf222e;
     --radius: 6px;
@@ -24,7 +33,8 @@
     --info-blue-lt: #eaf1f9;
     --info-blue-border: #5b9bd5;
     --fields-key: #2d6a4f;
-}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
+}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #A95D05; }
+html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     --book-bg: #191F26;
     --mermaid-bg: #f6f8fa;
     --bg: #131b24;
@@ -113,6 +123,17 @@
     font-weight: 600;
     margin: 24px 0 8px;
 }
+/* Headings take --heading-ink, not the body ink they inherited: a heading the
+   same colour as the text under it leaned on size and weight alone, and in a
+   dense document that read as plain prose with a bigger font. h4 is left on
+   --text on purpose — it is a label, and the step down from h3 is the point.
+   --heading-ink / --strong-ink are mixed from --accent and --text (see
+   tools/gen_themes.py), so each palette keeps its hue and its contrast in both
+   modes. A theme's own h1/h2/h3 colour rule, where it has one, still wins by
+   source order. */
+.md-editor h1, .md-editor h2, .md-editor h3 {
+    color: var(--heading-ink);
+}
 /* ── Paragraphs & Links ───────────────────── */
 .md-editor p {
     margin: 0 0 12px;
@@ -120,11 +141,12 @@
 }.md-editor p + p {
     margin-top: 12px;
 }.md-editor a {
-    color: var(--accent);
+    color: var(--link-ink);
     text-decoration: none;
 }.md-editor a:hover {
     text-decoration: underline;
 }.md-editor strong {
+    color: var(--strong-ink);
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
@@ -179,6 +201,15 @@
     font-size: 0.85rem;
     line-height: 1.5;
     margin: 12px 0 20px;
+}
+/* A code block is a step off the page, not a light panel on it. --surface sits
+   well above --bg in the darker palettes — nord's #3B4252 on #2E3440 is a
+   1.24:1 jump, gruvbox's #3C3836 on #282828 1.27:1 — which reads as a glowing
+   box rather than a code block. Dark mode pulls the fill back toward --bg
+   (1.05:1, the same subtle step light mode already has at ~1.1:1); light mode
+   keeps --surface, where the border is doing the separating anyway. */
+html.dark .md-editor pre {
+    background: color-mix(in srgb, var(--bg) 78%, var(--surface));
 }.md-editor pre.mermaid {
     background: var(--mermaid-bg);
     color: #1f2937;
@@ -187,7 +218,8 @@
     padding: 0;
     color: var(--text);
     font-size: inherit;
-}.md-editor .code-block {
+}
+.md-editor .code-block {
     position: relative;
     margin: 12px 0 20px;
 }.md-editor .code-block pre {

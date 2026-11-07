@@ -531,6 +531,13 @@ html.dark .md-editor-source {
 .md-editor .callout-title {
   margin: 0 0 0.4em;
   font-weight: 700;
+  /* 45%, not 75%: the callout's own 9% tint is the background, and at 75% the
+     title sat at 2.7-3.0:1 on a light page (warning's amber was the worst).
+     The hue still carries the type; the rail and tint carry it too. Dark pages
+     keep the stronger share — measured 6.8:1 or better there. */
+  color: color-mix(in srgb, var(--callout-c) 45%, var(--text, currentColor));
+}
+html.dark .md-editor .callout-title {
   color: color-mix(in srgb, var(--callout-c) 75%, var(--text, currentColor));
 }
 .md-editor details.callout > summary.callout-title { cursor: pointer; margin: 0; }
@@ -540,3 +547,54 @@ html.dark .md-editor-source {
 .md-editor .callout-important { --callout-c: #8250df; }
 .md-editor .callout-warning { --callout-c: #d4a72c; }
 .md-editor .callout-caution, .md-editor .callout-danger { --callout-c: #e5534b; }
+
+/* ── Syntax palette ─────────────────────────
+   Lives in base, not in a theme body, because every theme needs it — including
+   the three hand-maintained ones, which never had it at all.
+
+   The host ships one highlight.js stylesheet for the whole app; the demo and
+   the first consumer both load github-dark. On a light theme every token then
+   arrived in a dark-theme colour: measured on the themes' own code surface,
+   github-dark's keyword (#ff7b72) read 2.1:1 and its name/quote/bullet
+   (#c9d1d9) 1.2:1 — not dim, invisible. Theme tokens paint them instead, so a
+   light theme gets light-theme syntax and every role lands on an ink already
+   verified against the page.
+
+   Strings and attrs keep their per-theme colours (the two the palettes
+   genuinely differ on, set in each theme's override block, which loads after
+   this file and wins); eink's own grayscale block still wins over all of it.
+   Anything a language emits that is not listed here inherits --text from
+   `pre code`, because these rules carry the .md-editor scope and outrank an
+   unscoped `.hljs-*` at equal weight. */
+.md-editor .hljs-keyword, .md-editor .hljs-doctag, .md-editor .hljs-meta,
+.md-editor .hljs-built_in, .md-editor .hljs-type, .md-editor .hljs-title,
+.md-editor .hljs-section, .md-editor .hljs-selector-tag, .md-editor .hljs-selector-id,
+.md-editor .hljs-selector-class, .md-editor .hljs-selector-attr,
+.md-editor .hljs-selector-pseudo, .md-editor .hljs-template-tag,
+.md-editor .hljs-formula, .md-editor .hljs-addition {
+  color: var(--heading-ink);
+}
+.md-editor .hljs-number, .md-editor .hljs-literal {
+  color: var(--note-amber);
+}
+.md-editor .hljs-comment, .md-editor .hljs-quote {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.md-editor .hljs-regexp, .md-editor .hljs-code, .md-editor .hljs-template-variable,
+.md-editor .hljs-deletion, .md-editor .hljs-symbol {
+  color: var(--code-text);
+}
+.md-editor .hljs-variable, .md-editor .hljs-operator, .md-editor .hljs-attribute,
+.md-editor .hljs-name, .md-editor .hljs-bullet, .md-editor .hljs-subst {
+  color: var(--text);
+}
+/* Markup marks, not colours: inherit so they never bring the host's ink in. */
+.md-editor .hljs-emphasis {
+  color: inherit;
+  font-style: italic;
+}
+.md-editor .hljs-strong {
+  color: inherit;
+  font-weight: 700;
+}

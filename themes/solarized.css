@@ -6,39 +6,44 @@
     --bg: #FDF6E3;
     --surface: #EEE8D5;
     --text: #073642;
-    --text-secondary: #839496;
+    --text-secondary: #5E6A6C;
     --border: #D9D2BC;
     --accent: #268BD2;
     --accent-soft: #E1E8DA;
+    --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
+    --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
+    --link-ink: #2076B2;
     --code-bg: #EEE8D5;
-    --code-text: #D33682;
+    --code-text: #B52E6F;
     --radius: 4px;
     --max-w: 900px;
-    --note-amber: #8A6700;
+    --note-amber: #836200;
     --note-amber-lt: #F4EBC9;
     --note-amber-border: #B58900;
-    --info-blue: #1D6FA8;
+    --info-blue: #1C6CA3;
     --info-blue-lt: #E1E8DA;
     --info-blue-border: #268BD2;
     --fields-key: #6C7B00;
 }
-.md-editor .hljs-string { color: #2AA198; }
-.md-editor .hljs-attr { color: #B58900; }
+.md-editor .hljs-string { color: #1E726C; }
+.md-editor .hljs-attr { color: #826300; }
 html.dark .md-editor {
     --book-bg: #002B36;
     --bg: #002B36;
     --surface: #073642;
     --text: #93A1A1;
-    --text-secondary: #657B83;
+    --text-secondary: #82939A;
     --border: #0E4553;
     --accent: #268BD2;
-    --accent-soft: #0A3F52;
+    --accent-soft: #08323F;
+    --heading-ink: color-mix(in srgb, var(--accent) 48%, var(--text));
+    --link-ink: #3B96D8;
     --code-bg: #073642;
-    --code-text: #CB4B16;
-    --note-amber: #B58900;
+    --code-text: #DB815C;
+    --note-amber: #BE971F;
     --note-amber-lt: #0F3A3A;
     --note-amber-border: #B58900;
-    --info-blue: #4FA3DC;
+    --info-blue: #66AFE3;
     --info-blue-lt: #0A3F52;
     --info-blue-border: #268BD2;
     --fields-key: #859900;
@@ -115,6 +120,17 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     font-weight: 600;
     margin: 24px 0 8px;
 }
+/* Headings take --heading-ink, not the body ink they inherited: a heading the
+   same colour as the text under it leaned on size and weight alone, and in a
+   dense document that read as plain prose with a bigger font. h4 is left on
+   --text on purpose — it is a label, and the step down from h3 is the point.
+   --heading-ink / --strong-ink are mixed from --accent and --text (see
+   tools/gen_themes.py), so each palette keeps its hue and its contrast in both
+   modes. A theme's own h1/h2/h3 colour rule, where it has one, still wins by
+   source order. */
+.md-editor h1, .md-editor h2, .md-editor h3 {
+    color: var(--heading-ink);
+}
 /* ── Paragraphs & Links ───────────────────── */
 .md-editor p {
     margin: 0 0 12px;
@@ -122,11 +138,12 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
 }.md-editor p + p {
     margin-top: 12px;
 }.md-editor a {
-    color: var(--accent);
+    color: var(--link-ink);
     text-decoration: none;
 }.md-editor a:hover {
     text-decoration: underline;
 }.md-editor strong {
+    color: var(--strong-ink);
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
@@ -181,6 +198,15 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     font-size: 0.85rem;
     line-height: 1.5;
     margin: 12px 0 20px;
+}
+/* A code block is a step off the page, not a light panel on it. --surface sits
+   well above --bg in the darker palettes — nord's #3B4252 on #2E3440 is a
+   1.24:1 jump, gruvbox's #3C3836 on #282828 1.27:1 — which reads as a glowing
+   box rather than a code block. Dark mode pulls the fill back toward --bg
+   (1.05:1, the same subtle step light mode already has at ~1.1:1); light mode
+   keeps --surface, where the border is doing the separating anyway. */
+html.dark .md-editor pre {
+    background: color-mix(in srgb, var(--bg) 78%, var(--surface));
 }.md-editor pre.mermaid {
     background: var(--mermaid-bg);
     color: #1f2937;
@@ -189,7 +215,8 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     padding: 0;
     color: var(--text);
     font-size: inherit;
-}.md-editor .code-block {
+}
+.md-editor .code-block {
     position: relative;
     margin: 12px 0 20px;
 }.md-editor .code-block pre {
@@ -480,16 +507,15 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     justify-content: center;
 }
 /* ── solarized: typography and component reshaping ── */
-/* Bold runs, headings and table heads take the theme's own --text, as every
-   other theme here does (the shared body sets th to var(--text) and lets strong
-   and the headings inherit). A hardcoded base02/base1 made them a second,
-   separate ink from the paragraph they sit in. */
+/* Solarized's own ink is deliberately low-contrast: base1 (#93A1A1) is 4.0:1 on
+   base03 and base01 the same on base3, so headings and bold runs take the
+   shared --heading-ink / --strong-ink, which mix the palette's blue and ink
+   into something that clears AA instead of vanishing into the page. h2 keeps
+   solarized's blue — at 25.6px it is large text and 3.4:1 clears AA-large. */
 .md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { color: #268BD2; }
 html.dark .md-editor h2 { color: #268BD2; }
-.md-editor h3 { color: #2AA198; }
-html.dark .md-editor h3 { color: #2AA198; }
-.md-editor .eyebrow { background: #B58900; color: #FDF6E3; }
+.md-editor .eyebrow { background: #8A6700; color: #FDF6E3; }
 html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
 .md-editor .example-box.good-box { border-left-color: #859900; }
 .md-editor .example-box.bad-box { border-left-color: #DC322F; }

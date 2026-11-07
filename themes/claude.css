@@ -10,11 +10,16 @@
     --surface: #EDECEA;
     --surface-2: #E5E3DF;
     --text: #1C2333;
-    --strong: #1C2333;
+    /* Bold runs take the derived ink, not --text: same colour as the paragraph
+       means only weight separates emphasis, which is invisible on a font whose
+       semibold falls back to regular. */
+    --strong: color-mix(in srgb, var(--accent) 42%, var(--text));
     --muted: #4A5568;
     --border: #D8D6D0;
     --accent: #3B6EA5;
     --accent-soft: #EAF1F9;
+    --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
+    --link-ink: var(--accent);
     --warning: #7C5C00;
     --shadow: 0 2px 8px rgba(0,0,0,0.06);
     --radius: 5px;
@@ -45,7 +50,8 @@
     --info-blue-lt: #EAF1F9;
     --info-blue-border: #5B9BD5;
     --fields-key: #2D6A4F;
-}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
+}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #9E5704; }
+html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     /* Warm charcoal, not the cool purple-gray it used to be — dark is the
        same ivory theme with the lights off, so every neutral sits on the
        light block's brown axis. Border (#453F3A) is deliberately 1.4:1
@@ -57,7 +63,7 @@
     --surface: #211F1C;
     --surface-2: #35312D;
     --text: #EDE8E3;
-    --strong: #EDE8E3;
+    --strong: color-mix(in srgb, var(--accent) 42%, var(--text));
     --muted: #A69F97;
     --border: #453F3A;
     --accent: #E08A6A;
@@ -140,7 +146,10 @@
     font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--title);
+    /* --title is the body ink in both modes, which left the section heading
+       the same colour as the prose under it. The derived ink keeps the
+       terracotta/ivory hue of the accent instead. */
+    color: var(--heading-ink);
     border-bottom: 2px solid var(--h2-border-line);
 }.md-editor h3 {
     margin: 1.5rem 0 0.5rem;
@@ -151,7 +160,7 @@
     color: var(--title);
     font-weight: 600;
     margin: 1.5rem 0 0.5rem;
-}.md-editor p { margin: 0 0 0.9rem; }.md-editor a, .md-editor h1 { color: var(--accent); text-decoration: none; }.md-editor a:hover { text-decoration: underline; }.md-editor ul, .md-editor ol { margin: 4px 0 1em 20px; }.md-editor li { margin-bottom: 8px; }.md-editor table {
+}.md-editor p { margin: 0 0 0.9rem; }.md-editor a { color: var(--link-ink); text-decoration: none; }.md-editor h1 { color: var(--accent); text-decoration: none; }.md-editor a:hover { text-decoration: underline; }.md-editor ul, .md-editor ol { margin: 4px 0 1em 20px; }.md-editor li { margin-bottom: 8px; }.md-editor table {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid var(--table-border);

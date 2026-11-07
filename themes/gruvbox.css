@@ -10,11 +10,14 @@
     --border: #D5C4A1;
     --accent: #076678;
     --accent-soft: #E4DFC0;
+    --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
+    --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
+    --link-ink: var(--accent);
     --code-bg: #EBDBB2;
-    --code-text: #AF3A03;
+    --code-text: #AD3903;
     --radius: 3px;
     --max-w: 900px;
-    --note-amber: #B57614;
+    --note-amber: #85560F;
     --note-amber-lt: #F4E8C1;
     --note-amber-border: #D79921;
     --info-blue: #076678;
@@ -22,8 +25,8 @@
     --info-blue-border: #458588;
     --fields-key: #79740E;
 }
-.md-editor .hljs-string { color: #79740E; }
-.md-editor .hljs-attr { color: #B57614; }
+.md-editor .hljs-string { color: #67630C; }
+.md-editor .hljs-attr { color: #84560F; }
 html.dark .md-editor {
     --book-bg: #282828;
     --bg: #282828;
@@ -38,7 +41,7 @@ html.dark .md-editor {
     --note-amber: #FABD2F;
     --note-amber-lt: #3D3521;
     --note-amber-border: #D79921;
-    --info-blue: #83A598;
+    --info-blue: #87A89B;
     --info-blue-lt: #2F3A3A;
     --info-blue-border: #458588;
     --fields-key: #B8BB26;
@@ -115,6 +118,17 @@ html.dark .md-editor .hljs-attr { color: #FABD2F; }
     font-weight: 600;
     margin: 24px 0 8px;
 }
+/* Headings take --heading-ink, not the body ink they inherited: a heading the
+   same colour as the text under it leaned on size and weight alone, and in a
+   dense document that read as plain prose with a bigger font. h4 is left on
+   --text on purpose — it is a label, and the step down from h3 is the point.
+   --heading-ink / --strong-ink are mixed from --accent and --text (see
+   tools/gen_themes.py), so each palette keeps its hue and its contrast in both
+   modes. A theme's own h1/h2/h3 colour rule, where it has one, still wins by
+   source order. */
+.md-editor h1, .md-editor h2, .md-editor h3 {
+    color: var(--heading-ink);
+}
 /* ── Paragraphs & Links ───────────────────── */
 .md-editor p {
     margin: 0 0 12px;
@@ -122,11 +136,12 @@ html.dark .md-editor .hljs-attr { color: #FABD2F; }
 }.md-editor p + p {
     margin-top: 12px;
 }.md-editor a {
-    color: var(--accent);
+    color: var(--link-ink);
     text-decoration: none;
 }.md-editor a:hover {
     text-decoration: underline;
 }.md-editor strong {
+    color: var(--strong-ink);
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
@@ -181,6 +196,15 @@ html.dark .md-editor .hljs-attr { color: #FABD2F; }
     font-size: 0.85rem;
     line-height: 1.5;
     margin: 12px 0 20px;
+}
+/* A code block is a step off the page, not a light panel on it. --surface sits
+   well above --bg in the darker palettes — nord's #3B4252 on #2E3440 is a
+   1.24:1 jump, gruvbox's #3C3836 on #282828 1.27:1 — which reads as a glowing
+   box rather than a code block. Dark mode pulls the fill back toward --bg
+   (1.05:1, the same subtle step light mode already has at ~1.1:1); light mode
+   keeps --surface, where the border is doing the separating anyway. */
+html.dark .md-editor pre {
+    background: color-mix(in srgb, var(--bg) 78%, var(--surface));
 }.md-editor pre.mermaid {
     background: var(--mermaid-bg);
     color: #1f2937;
@@ -189,7 +213,8 @@ html.dark .md-editor .hljs-attr { color: #FABD2F; }
     padding: 0;
     color: var(--text);
     font-size: inherit;
-}.md-editor .code-block {
+}
+.md-editor .code-block {
     position: relative;
     margin: 12px 0 20px;
 }.md-editor .code-block pre {
@@ -484,12 +509,14 @@ html.dark .md-editor .hljs-attr { color: #FABD2F; }
 html.dark .md-editor h1 { color: #FB4934; }
 .md-editor h2 { color: #79740E; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: #B8BB26; }
-.md-editor h3 { color: #B57614; }
-html.dark .md-editor h3 { color: #FABD2F; }
+/* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page. */
 .md-editor .eyebrow { background: #AF3A03; color: #FBF1C7; }
 html.dark .md-editor .eyebrow { background: #FE8019; color: #282828; }
 .md-editor strong { color: #9D0006; }
-html.dark .md-editor strong { color: #FB4934; }
+/* Bold runs in dark were #FB4934 — 4.29:1 at body size, and 3.4:1 on a
+   --surface block, so emphasis faded on cards and quotes. The palette's orange
+   clears both (5.8:1 / 4.6:1) and stays in the warm family. */
+html.dark .md-editor strong { color: #FE8019; }
 .md-editor .example-box.good-box { border-left-color: #79740E; }
 .md-editor .example-box.bad-box { border-left-color: #9D0006; }
 html.dark .md-editor .example-box.good-box { border-left-color: #B8BB26; }

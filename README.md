@@ -202,6 +202,32 @@ mount element, so a theme cannot reach out and restyle the host application.
 
 Every theme carries a light and a dark block; `setDark` flips between them.
 
+Every theme also paints headings (h1–h3) and `<strong>` with two derived inks,
+`--heading-ink` and `--strong-ink` — its `--accent` pulled back toward `--text`
+(60% and 42%). A heading the same colour as the prose under it left size and
+weight to carry the hierarchy alone, and several palettes' own heading colours
+fell under 4.5:1 at h3's 16.8px. h4 and every smaller label stay on `--text`.
+A theme overrides either token, or any single heading level, when it wants a
+different ink; `eink` mixes to plain text by the same formula and stays
+grayscale.
+
+Every text role is held to AA against the surface it actually sits on —
+`--text` on `--bg`, meta and secondary ink, inline code on `--code-bg`, note and
+info bodies on their tinted fills, table heads, and the two inverted eyebrow
+chips. Links read `--link-ink`, which defaults to `var(--accent)`; a palette
+whose accent is too light for body-size text overrides that one token instead of
+darkening the accent everywhere. 665 role × theme × mode cells are measured in
+Chromium; none fall under 4.5:1 (3.0:1 for large or bold).
+
+Syntax highlighting is painted by the themes, not left to whichever
+highlight.js stylesheet the host loads (`css/base.css` owns the mapping, so the
+hand-maintained themes get it too): keywords and titles take `--heading-ink`,
+numbers `--note-amber`, comments `--text-secondary`, regexps and symbols
+`--code-text`, identifiers `--text`, and each theme keeps its own string and
+attr colours. 884 token cells measured; none under 4.5:1. `eink` stays
+grayscale. A `<pre>` block is a step off the page, not a panel on it: dark mode
+fills it with 78% `--bg` / 22% `--surface` (1.01-1.05:1) so it does not glow.
+
 Themes are copied into `dist/themes/` rather than bundled, because a host
 switches them at runtime by rewriting a `<link href>`.
 

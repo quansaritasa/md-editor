@@ -13,6 +13,15 @@
     --border: rgba(255, 255, 255, 0.6);
     --accent: #6366f1;
     --accent-soft: rgba(99, 102, 241, 0.1);
+    /* Headings and bold runs: the accent pulled toward the body ink, so neither
+       reads as the same colour as the paragraph it sits in. Light block only —
+       the mix re-reads --accent/--text at the use site. */
+    --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
+    --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
+    /* Indigo at #6366f1 is 3.8:1 on this theme's --bg (3.9:1 on a frosted card),
+       so links take one stop darker while the accent keeps painting h1, the
+       eyebrow and the glow. Dark mode's accent already clears AA. */
+    --link-ink: #4f46e5;
     --code-bg: rgba(99, 102, 241, 0.06);
     --code-text: #be185d;
     --radius: 14px;
@@ -30,7 +39,8 @@
     --glow-2: rgba(236, 72, 153, 0.16);
     --glow-3: rgba(139, 92, 246, 0.24);
     --glow-4: rgba(45, 212, 191, 0.16);
-}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
+}.md-editor .hljs-string { color: #0e4bb9; }.md-editor .hljs-attr { color: #A15804; }
+html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     --book-bg: #10131F;
     --mermaid-bg: #ffffff;
     --bg: #0c0e1a;
@@ -40,6 +50,7 @@
     --border: rgba(255, 255, 255, 0.1);
     --accent: #a78bfa;
     --accent-soft: rgba(167, 139, 250, 0.15);
+    --link-ink: var(--accent);
     --code-bg: rgba(167, 139, 250, 0.1);
     --code-text: #f9a8d4;
     --note-amber: #fde68a;
@@ -121,7 +132,9 @@
     display: inline-block;
     font-size: 0.72rem;
     font-weight: 600;
-    color: var(--accent);
+    /* Indigo on its own translucent chip measured 3.6:1 at 11.5px; the chip
+       keeps the accent tint, the label takes the link ink. */
+    color: var(--link-ink);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 8px;
@@ -179,16 +192,22 @@
     font-size: 0.95rem;
     font-weight: 600;
     margin: 22px 0 8px;
+}
+/* h1 already carries its gradient; h2/h3 take the derived ink so a section
+   heading is not the same colour as the prose beneath it. h4 stays a label. */
+.md-editor h1, .md-editor h2, .md-editor h3 {
+    color: var(--heading-ink);
 }.md-editor p {
     margin: 0 0 12px;
     color: var(--text);
 }.md-editor a {
-    color: var(--accent);
+    color: var(--link-ink);
     text-decoration: none;
     font-weight: 500;
 }.md-editor a:hover {
     text-decoration: underline;
 }.md-editor strong {
+    color: var(--strong-ink);
     font-weight: 600;
 }.md-editor table {
     width: 100%;

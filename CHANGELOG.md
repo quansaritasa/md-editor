@@ -1,5 +1,74 @@
 # Changelog
 
+## v0.10.36 — headings and bold carry an ink of their own
+
+- Every theme now paints h1–h3 and `<strong>`. Nine of the thirteen left them
+  inheriting `--text`, so a heading and the paragraph under it were one colour
+  and size and weight did all the work: `modern`, `terminal`, `editorial`,
+  `block`, and the h2s of `glass`, `claude`, `nord` and `solarized`, plus every
+  theme's bold runs except `card`, `terminal` and `gruvbox`.
+- Two tokens do it, declared once per theme and mixed from its own palette:
+  `--heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text))` and
+  `--strong-ink` at 42%. Both repaint in dark mode off the same two variables.
+  Measured across all thirteen themes in both modes: worst heading contrast is
+  now 4.53:1 (`solarized` dark h3), worst bold run 4.8:1, and every heading sits
+  at least ΔE 16 from the body ink it sits beside. `eink` mixes to plain text by
+  the same formula, so it stays grayscale without a special case.
+- Headings whose palette colour missed AA at h3's 16.8px now take the derived
+  ink: `catppuccin` teal (3.3:1), `nord` blue (3.5:1), `gruvbox` amber (3.3:1)
+  and `solarized` cyan (2.9:1). Size-based colours are kept where the text is
+  large enough for AA-large — nord's h1, solarized's h2, gruvbox's h2.
+- `gruvbox` bold runs in dark move from `#FB4934` (4.3:1, 3.4:1 on a quote or
+  card) to the palette's orange `#FE8019` (5.8:1 / 4.6:1).
+- `card`'s dark `--title` was the body ink, so its h2 had no colour in dark;
+  `claude`'s `--title` and `--strong` were the body ink in both modes. All three
+  now resolve to the derived ink.
+- Second pass, every text role on the page it actually sits on (665 role ×
+  theme × mode cells measured in Chromium, not sampled): 46 cells were under
+  AA at body size — inline code, links, meta text, note/info blocks, table
+  heads and the two inverted eyebrow chips. All now clear 4.5:1 (3.0:1 for
+  large or bold text), with the palette's own hue kept:
+  - inline code: catppuccin's pink was 2.2:1, solarized's magenta 3.7:1 and
+    its dark orange 2.8:1, card's pink 3.3:1, nord's red 3.4:1 and its dark
+    orange 3.5:1.
+  - links get a `--link-ink` token, default `var(--accent)`. Solarized (3.4:1),
+    nord (3.5:1) and glass (3.8:1) override it, because darkening `--accent`
+    itself would repaint h1, borders and the eyebrow chip with it.
+  - meta/secondary ink: solarized light 2.9:1 and dark 3.4:1, catppuccin 4.4:1,
+    blossom 4.4:1.
+  - note and info blocks: catppuccin's amber 2.2:1, gruvbox's amber 3.1:1,
+    solarized's amber 3.9:1 dark / 4.4:1 light.
+  - table heads: nord 3.3:1 and catppuccin 4.0:1 take `--heading-ink`.
+  - eyebrow chips: nord's chip fill steps to `#4C6A94` (4.8:1) and solarized's
+    to `#8A6700` (4.8:1); their cream labels were 3.5:1 and 3.0:1.
+  - solarized dark's quote fill was `#0A3F52`, which held `--text` at 4.25:1;
+    it is now `#08323F` (5.1:1).
+- Third pass, fenced code blocks. Two problems, both measured on the block's own
+  surface rather than the page:
+  - **Syntax colours were never the theme's.** The host ships one highlight.js
+    stylesheet for the whole app and both known hosts load `github-dark`, so a
+    light theme received dark-theme token colours: keyword `#ff7b72` at 2.1:1 and
+    name/quote/bullet `#c9d1d9` at 1.2:1 — not dim, invisible. 210 of 884 token
+    cells were under AA. `card`, `glass` and `claude` had no syntax rules at all.
+    The palette now lives in `css/base.css` (so the hand-maintained themes get it
+    too) and paints each token role from an ink the theme already verifies:
+    keywords/titles/selectors → `--heading-ink`, numbers → `--note-amber`,
+    comments → `--text-secondary`, regexp/template/symbol → `--code-text`,
+    identifiers → `--text`. Strings and attrs keep their per-theme colours, which
+    were darkened where a light palette's own pick missed AA (solarized teal
+    2.6:1, catppuccin green 2.8:1, gruvbox olive 3.6:1, the shared `#d97706`
+    amber 2.7-3.0:1 — that amber is now the dark-mode-only value, where it reads
+    5.0-5.6:1). `eink` stays grayscale.
+  - **The block fill was a light panel, not a code block.** `--surface` sits well
+    above `--bg` in the darker palettes — nord 1.24:1, gruvbox 1.27:1 — which
+    read as a glowing box. Dark mode now mixes the fill back toward the page
+    (78% `--bg` / 22% `--surface`), landing at 1.01-1.05:1 in every dark theme
+    while light mode keeps `--surface` and its border.
+  - `card`'s dark inline-code chip was `#334155` on `#131e30` — a 1.61:1 slab;
+    it is `#22303f` (1.24:1) and its code ink reads 5.95:1 on it.
+  - Callout titles in light themes sat at 2.7-3.0:1 (the warning amber). The
+    title takes 45% of the callout hue against 75% before; dark keeps 75%.
+
 ## v0.10.35 — the editor keeps its glow to itself
 
 - Glass paints its ambient glow on the editor's own box instead of the
