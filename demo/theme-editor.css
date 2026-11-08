@@ -1,0 +1,138 @@
+/* Host chrome for the theme editor page. None of this is library CSS: the
+   preview's own look comes from ../dist/themes/<name>.css, and this file only
+   dresses the three columns around it — deliberately in neutral greys, so the
+   document on the stage is the only thing with the theme's colours. */
+
+:root {
+  --te-line: #cbd5e1;
+  --te-panel: #f8fafc;
+  --te-stage: #e2e8f0;
+  --te-ink: #1f2937;
+  --te-muted: #64748b;
+  --te-btn: #ffffff;
+  --te-dirty: #b45309;
+}
+html.dark {
+  --te-line: #263349;
+  --te-panel: #131926;
+  --te-stage: #0f131c;
+  --te-ink: #e2e8f0;
+  --te-muted: #94a3b8;
+  --te-btn: #1e293b;
+  --te-dirty: #e6a817;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--te-ink);
+  background: var(--te-stage);
+}
+
+/* ---------- top bar ---------- */
+#te-bar {
+  display: flex; gap: 12px; align-items: center;
+  height: 42px; padding: 0 14px;
+  border-bottom: 1px solid var(--te-line);
+  background: var(--te-panel);
+  position: relative; z-index: 20;
+}
+#te-bar .spacer { flex: 1; }
+#te-bar label { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+#te-bar button {
+  border: 1px solid var(--te-line); background: var(--te-btn); color: inherit;
+  border-radius: 4px; cursor: pointer; font-size: 12px; padding: 4px 9px;
+}
+#te-bar button:hover { border-color: var(--te-muted); }
+#te-ver, #te-name, #te-status { font-size: 12px; color: var(--te-muted); }
+#te-status.ok { color: #15803d; }
+
+/* ---------- three columns ---------- */
+#te-main {
+  display: grid; grid-template-columns: 190px minmax(0, 1fr) 304px;
+  height: calc(100vh - 42px);
+}
+#te-themes, #te-panel { overflow: auto; background: var(--te-panel); }
+#te-themes { border-right: 1px solid var(--te-line); padding: 10px 8px; }
+#te-panel { border-left: 1px solid var(--te-line); }
+
+#te-themes h2, #te-panel h2 {
+  margin: 2px 6px 8px; font-size: 11px; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--te-muted); font-weight: 600;
+}
+#te-which { font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+.te-theme {
+  display: flex; width: 100%; gap: 8px; align-items: baseline;
+  border: 1px solid transparent; border-radius: 5px; background: none; color: inherit;
+  cursor: pointer; text-align: left; padding: 5px 8px; font-size: 13px;
+}
+.te-theme:hover { background: rgba(127, 127, 127, .12); }
+.te-theme.active { border-color: var(--te-line); background: var(--te-btn); font-weight: 600; }
+
+#te-stage { overflow: auto; background: var(--te-page, var(--te-stage)); }
+/* The card theme leaves the page colour to its host — its sections are cards
+   sitting on --bg — so without this the Page background field would move a
+   token nothing paints. The themes that do set their own background set the
+   same colour, so this changes nothing for them. */
+#te-preview { margin: 0 auto; background: var(--bg); }
+
+/* ---------- attribute panel ---------- */
+.te-group { border-bottom: 1px solid var(--te-line); }
+.te-group > summary {
+  cursor: pointer; list-style: none; padding: 8px 10px;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--te-muted); display: flex; align-items: center; gap: 6px;
+}
+.te-group > summary::-webkit-details-marker { display: none; }
+.te-group > summary::before { content: '\25B8'; font-size: 10px; opacity: .7; }
+.te-group[open] > summary::before { content: '\25BE'; }
+.te-group > summary:hover { color: var(--te-ink); }
+.te-count {
+  margin-left: auto; font-size: 10px; letter-spacing: 0; text-transform: none;
+  color: var(--te-dirty); opacity: 0;
+}
+.te-group.dirty .te-count { opacity: 1; }
+
+.te-row { padding: 4px 10px 7px; }
+.te-row > label { display: block; font-size: 11px; color: var(--te-muted); margin-bottom: 3px; }
+.te-row.dirty > label { color: var(--te-dirty); }
+.te-ctl { display: flex; gap: 6px; align-items: center; }
+.te-ctl input[type="range"] { flex: 1; min-width: 0; accent-color: #2563eb; }
+.te-ctl input[type="number"], .te-ctl input[type="text"] {
+  width: 62px; padding: 3px 5px; font: inherit; font-size: 12px;
+  border: 1px solid var(--te-line); border-radius: 4px;
+  background: var(--te-btn); color: inherit;
+}
+.te-ctl input[type="text"] { width: 82px; font-family: ui-monospace, Menlo, monospace; }
+.te-chip {
+  width: 24px; height: 24px; flex: 0 0 24px; padding: 0; cursor: pointer;
+  border: 1px solid var(--te-line); border-radius: 4px;
+  background-image:
+    linear-gradient(45deg, #bbb 25%, transparent 25%, transparent 75%, #bbb 75%),
+    linear-gradient(45deg, #bbb 25%, transparent 25%, transparent 75%, #bbb 75%);
+  background-size: 8px 8px; background-position: 0 0, 4px 4px;
+}
+.te-chip > span { display: block; width: 100%; height: 100%; border-radius: 3px; }
+
+/* ---------- colour picker ---------- */
+#te-palette {
+  position: fixed; z-index: 40; width: 268px; padding: 8px;
+  border: 1px solid var(--te-line); border-radius: 7px;
+  background: var(--te-panel); box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
+}
+#te-palette h3 {
+  margin: 2px 2px 5px; font-size: 10px; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--te-muted); font-weight: 600;
+}
+.te-swatch-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
+.te-swatch {
+  height: 21px; padding: 0; cursor: pointer; border: 1px solid rgba(0, 0, 0, .16);
+  border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12);
+}
+.te-swatch:hover { transform: scale(1.18); border-color: #2563eb; }
+#te-palette .te-pal-foot {
+  margin: 7px 2px 0; font-size: 11px; color: var(--te-muted);
+  display: flex; gap: 6px; align-items: center;
+}

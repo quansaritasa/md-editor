@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Theme editor — md-editor</title>
+<!-- Theme first, base second: the same order a host uses, and the order the
+     editor's own override sheet is appended after. -->
+<link id="te-theme-css" rel="stylesheet" href="../dist/themes/card.css">
+<link rel="stylesheet" href="../dist/md-editor.css">
+<link rel="stylesheet" href="theme-editor.css">
+</head>
+<body>
+
+<header id="te-bar">
+  <strong>md-editor · theme editor</strong>
+  <span id="te-ver"></span>
+  <span id="te-name"></span>
+  <span class="spacer"></span>
+  <label for="te-file">Open…</label>
+  <input type="file" id="te-file" accept=".md,.markdown,.markdown,.txt" hidden>
+  <label title="Edit the light or the dark block">
+    <input type="checkbox" id="te-dark"> Dark block
+  </label>
+  <button type="button" id="te-reset">Reset overrides</button>
+  <button type="button" id="te-copy">Copy CSS</button>
+  <button type="button" id="te-download">Download CSS</button>
+  <span id="te-status"></span>
+</header>
+
+<main id="te-main">
+  <aside id="te-themes">
+    <h2>Themes</h2>
+    <div id="te-theme-list"></div>
+  </aside>
+
+  <section id="te-stage">
+    <article id="te-preview"></article>
+  </section>
+
+  <aside id="te-panel">
+    <h2>Attributes <span id="te-which"></span></h2>
+    <div id="te-groups"></div>
+  </aside>
+</main>
+
+<!-- Built by theme-editor.js on first use: 60 colours, one click each. -->
+<div id="te-palette" hidden></div>
+
+<script src="../node_modules/marked/marked.min.js"></script>
+<script src="../node_modules/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="../dist/md-editor.js"></script>
+<script src="theme-palette.js"></script>
+<script src="theme-fields.js"></script>
+<script src="theme-css.js"></script>
+<script src="theme-editor-read.js"></script>
+<script src="theme-editor-palette.js"></script>
+<script src="theme-editor-panel.js"></script>
+<script src="theme-editor-doc.js"></script>
+<script src="../node_modules/ui-inspector/dist/ui-inspector.js"></script>
+<script src="theme-editor.js"></script>
+<script src="uiinspect.js"></script>
+</body>
+</html>

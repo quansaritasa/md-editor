@@ -11,6 +11,8 @@ html.dark #bar { background: #131926; border-color: #263349; }
 #bar .spacer { flex: 1; }
 #bar label { display: flex; gap: 5px; align-items: center; font-size: 12px; }
 #ver { color: #64748b; font-size: 12px; }
+#te-link { color: #0f766e; font-size: 12px; text-decoration: none; border-bottom: 1px solid currentColor; }
+html.dark #te-link { color: #2dd4bf; }
 
 #row { display: flex; height: calc(100vh - 41px); }
 #viewer { flex: 1; overflow: auto; }

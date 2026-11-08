@@ -236,6 +236,43 @@ to the mount element. Run it when importing a new theme. `tools/gen_themes.py` r
 palette and reading-mode themes from their token tables; edit the table, rerun,
 commit the output.
 
+## Theme editor
+
+`demo/theme-editor.html` is a working page for tuning a theme without editing
+its CSS by hand. Thirteen themes on the left; the document on the stage — Qview's
+README, cloned to `demo/readme/`; and on the right every attribute a theme
+actually has: page and surface colours, column width and padding, each heading's
+size, colour, padding and margins, the prose size and line height, inline and
+block code, the table bands, link ink. Lengths get a slider and a number, colours
+a hex field and a picker of sixty web colours (name on hover), and both light and
+dark are edited separately.
+
+What you change becomes one override sheet, scoped to the preview by id so it
+outranks whichever theme is loaded. Untouched fields are absent from it — switch
+theme and the numbers follow that theme, not the last one. **Copy CSS** or
+**Download CSS** hands you the sheet to load after the theme; it carries the
+tokens and rules you moved and nothing else.
+
+```bash
+npm run build        # the page reads dist/, like the demo
+node demo/build-docs.js   # only after re-cloning demo/readme/qview-readme.md
+```
+
+The cloned README is inlined into `demo/theme-editor-doc.js` because a `file://`
+page cannot `fetch()` a neighbour, and its screenshots were copied to
+`demo/docs/screenshots/` so the relative `src`s resolve. **Open…** loads any
+other markdown file — it never leaves the browser.
+
+`Ctrl/Cmd + \` turns on [ui-inspector](https://github.com/quansaritasa/ui-inspector)
+over the page: hover a control to outline it, click to pin it, and the panel
+says what it is, which rule paints it and which variable it reads. Every field
+of the **Style** cards and every **Declared** row carries a **↺**: that one puts
+back just that value. The **DOM tree** opens with the panel and lists every
+element with a **↺** in front of each row, which puts back the edits made to
+*that* element — leaving the other elements and the page variables untouched. Those inspector edits are inline styles for the
+session; the override the right-hand panel builds is the separate, exportable
+one.
+
 ## Optional transforms
 
 Beyond standard markdown, the library can apply a set of document transforms:

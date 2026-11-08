@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.10.42 — a theme editor, and the sheet of what you moved
+
+- `demo/theme-editor.html`: thirteen themes on the left, the document on the
+  stage, and on the right the attributes a theme actually has — page and
+  surface colours, column width and padding, each heading's size, colour,
+  padding and margins, prose size and line height, inline and block code, the
+  table bands, link ink. 46 attributes in 9 groups, light and dark edited
+  separately.
+- Lengths get a slider and a number, colours a hex field and a picker of sixty
+  web colours. What you change becomes one override sheet scoped to the preview
+  by id; untouched fields are absent from it, so switching theme makes the
+  numbers follow that theme rather than the last one. **Copy CSS** /
+  **Download CSS** hands you that sheet to load after the theme.
+- The preview is a real document, not a fixture: Qview's README cloned to
+  `demo/readme/` and inlined to `demo/theme-editor-doc.js` by
+  `demo/build-docs.js`, because a `file://` page cannot `fetch()` a neighbour.
+  Its screenshots were copied to `demo/docs/screenshots/` so the relative
+  `src`s resolve. **Open…** loads any other markdown file, locally.
+- `Ctrl/Cmd + \` opens ui-inspector over the page (pinned devDependency). Every
+  style field and every declared row carries a ↺, as does every row of its DOM
+  tree, so one value or one element can be put back without touching the rest.
+- Panel, palette, fields, doc and read logic live in their own demo scripts
+  under the house IIFE rule; `test/theme-editor.test.js` covers the pure
+  helpers. `npm test` 201 pass.
+
 ## v0.10.41 — claude images fit the column
 
 - `claude.css` was the one theme of thirteen with no `img` rule, so a 1400px
