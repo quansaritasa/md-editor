@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.10.39 — block's header strip and its card share one inset
+
+- `block`'s card and its opening h2 strip now derive from one pair of values,
+  `--block-pad-y` / `--block-pad-x`, instead of each reading
+  `--section-padding` on its own. The strip's pull only matched the card when
+  the host padded all four sides equally; a host that pads the SIDES further —
+  Qview's `--section-pad-x` does, because an unboxed theme's top inset is
+  deeper than its sides — left the strip 25px inside a card it was meant to
+  span edge to edge (measured at a 880px pane: strip 782px in an 832px card).
+- `--section-pad-x` is read where the sides are decided, so the band is flush
+  (1px, the card's own border) in that host too. Undefined elsewhere, it
+  defaults to 0 and nothing moves for a plain host.
+- The card's own photo cap is unchanged (`max-width: 100%`); with the sides
+  square to the top the photo is 746px in the same pane, against Modern's
+  748px — the 2px being the card's border, not a second inset.
+
 ## v0.10.38 — the header band is muted ink, not the accent
 
 - `--table-head-bg` is now `color-mix(in srgb, var(--text) 16%, var(--surface))`

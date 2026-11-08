@@ -571,20 +571,31 @@ html.dark .md-editor pre {
        strip's full-bleed pull below is untouched: it is simply capped. */
     border-top: 3px solid var(--accent);
     border-radius: var(--radius);
-    padding: var(--section-padding, 22px);
+    /* The card's inset and its header strip's pull have to be ONE number, or the
+       strip stops at the edge of the padding box while the card runs on past it
+       — a host that pads the sides further than the top did exactly that, and
+       the strip stood 25px inside a card it was meant to span edge to edge.
+       --section-padding is the host's inset (a padding slider drives it);
+       --section-pad-x is how much further a host insets the SIDES only, which
+       an unboxed theme needs because its top inset is deeper than its sides
+       (Qview's model does this). Read the pair once, here, and derive the rest
+       of the card from it. */
+    --block-pad-y: var(--section-padding, 22px);
+    --block-pad-x: calc(var(--section-padding, 22px) + var(--section-pad-x, 0px));
+    padding: var(--block-pad-y) var(--block-pad-x);
     margin-bottom: 30px;
     overflow: hidden;
 }
 /* The opening h2 is the card's header strip — pulled out to the card edge with
    a hairline under it, the way the ticket header it comes from is drawn. The
-   pull tracks --section-padding rather than a fixed number, so a host that
-   drives that variable (a padding slider, say) keeps the strip flush at any
-   inset the reader picks — and the strip's own side padding tracks it too, so
-   the header sits on the same left edge as the prose under it instead of
-   hanging inboard of it. */
+   pull tracks the card's own inset (the pair above) rather than a fixed number,
+   so a host that drives --section-padding (a padding slider, say) keeps the
+   strip flush at any inset the reader picks — and the strip's own side padding
+   tracks it too, so the header sits on the same left edge as the prose under it
+   instead of hanging inboard of it. */
 .md-editor.md-editor .section > h2:first-child {
-    margin: calc(-1 * var(--section-padding, 22px)) calc(-1 * var(--section-padding, 22px)) var(--section-padding, 22px);
-    padding: 15px var(--section-padding, 22px);
+    margin: calc(-1 * var(--block-pad-y)) calc(-1 * var(--block-pad-x)) var(--block-pad-y);
+    padding: 15px var(--block-pad-x);
     /* Sunk, not tinted with the accent: the strip earns its own band from the
        surface it sits on, which leaves the heading reading as prose. */
     background: var(--surface);
