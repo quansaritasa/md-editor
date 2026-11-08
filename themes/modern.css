@@ -14,10 +14,13 @@
     --accent: #0969da;
     --accent-soft: #ddf4ff;
     /* The table's header band. It has to read as a header against BOTH the page
-       and the striped row, which is --surface — so it is the accent over
-       --surface, not --surface itself (that made the header one more zebra
-       row). Declared light-only for the same reason as --heading-ink below. */
-    --table-head-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
+       and the striped row, which is --surface — so it is the body ink over
+       --surface, not --surface itself (that made the header one more zebra row)
+       and not the accent (a header in the link colour competes with the
+       headings). Muted by construction: every palette's ink is near-neutral.
+       Declared light-only like --heading-ink below: the mix re-reads --text and
+       --surface where it is used. */
+    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
     /* See tools/gen_themes.py: accent pulled toward the body ink. Declared in
        the light block only — the mix re-reads --accent/--text where it is used,
        so dark mode gets its own pair without a second declaration. */

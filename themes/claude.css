@@ -25,8 +25,12 @@
     --radius: 5px;
     --title: #1C2333;
     --sub-title: #4A5568;
-    --th-bg: #EDECEA;
+    --th-bg: var(--table-head-bg);
     --th-title: #1C2333;
+    /* The table's header band: the body ink over --surface — muted, no accent
+       hue, and one solid step off both the page and the striped row. Light
+       block only; the mix re-reads --text/--surface where it is used. */
+    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
     --h2-border-line: #D8D6D0;
     --table-even-row: #F5F4F0;
     --table-border: #D8D6D0;
@@ -72,7 +76,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     --shadow: 0 2px 12px rgba(0,0,0,0.3);
     --title: #EDE8E3;
     --sub-title: #A69F97;
-    --th-bg: #211F1C;
+    --th-bg: var(--table-head-bg);
     --th-title: #EDE8E3;
     --h2-border-line: #453F3A;
     --table-even-row: #262320;

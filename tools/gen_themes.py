@@ -96,9 +96,13 @@ COMMON_LIGHT = {'mermaid-bg': '#f6f8fa', 'max-w': '900px',
                 # The table's header band. --surface is already the striped row,
                 # so a header painted with it looked like one more zebra row in
                 # five palettes (nord, catppuccin, gruvbox, modern, solarized).
-                # The accent over --surface separates both at once, and keeping
-                # it a mix of the theme's own two tokens keeps the hue.
-                'table-head-bg': 'color-mix(in srgb, var(--accent) 18%, var(--surface))',
+                # The body ink over --surface is a muted, near-neutral band: it
+                # takes no accent hue, so the header never competes with the
+                # links and headings above it, and it is one solid step off both
+                # the page and the stripe in either mode (measured 1.34:1 to
+                # 8.4:1 luminance across the palettes). 16% is the ceiling that
+                # still keeps every header label at or above 4.85:1.
+                'table-head-bg': 'color-mix(in srgb, var(--text) 16%, var(--surface))',
                 'heading-ink': 'color-mix(in srgb, var(--accent) 60%, var(--text))',
                 'strong-ink': 'color-mix(in srgb, var(--accent) 42%, var(--text))',
                 # Link ink defaults to the accent. A palette whose accent is too

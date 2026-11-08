@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.10.38 — the header band is muted ink, not the accent
+
+- `--table-head-bg` is now `color-mix(in srgb, var(--text) 16%, var(--surface))`
+  instead of the accent over `--surface`. An accent band put the header in the
+  same hue the theme already spends on links and headings; the body ink is
+  near-neutral in every palette, so the band is muted by construction and
+  competes with nothing above it.
+- Same job, more separation: the band sits 1.31:1–1.63:1 off the page in the
+  light palettes and 1.54:1–8.4:1 in the dark ones (it used to be 1.07:1 in
+  `card` and `claude`), it never equals the striped row, and every header label
+  is at or above 5.07:1 on it (16% is the ceiling: 22% dropped `glass` dark to
+  4.02:1 and `nord` dark to 4.51:1).
+- `card` and `claude` join the token: their own `--th-bg` was a sky and a warm
+  grey, both weaker than the rest (1.07:1 and 1.11:1 off the page). All thirteen
+  themes now take the band from one recipe.
+
 ## v0.10.37 — tables follow the page, and Nord's headings are ink again
 
 - Table type is `em`, not `rem`: a table is a step down from the prose around

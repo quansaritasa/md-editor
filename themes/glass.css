@@ -13,9 +13,10 @@
     --border: rgba(255, 255, 255, 0.6);
     --accent: #6366f1;
     --accent-soft: rgba(99, 102, 241, 0.1);
-    /* The table's header band: the accent over the frosted --surface, far enough
-       apart to read as a header while the rest of the sheet stays translucent. */
-    --table-head-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
+    /* The table's header band: the body ink over the frosted --surface — a
+       muted step with no accent hue, so the header does not compete with the
+       links and headings the indigo already paints. */
+    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
     /* Headings and bold runs: the accent pulled toward the body ink, so neither
        reads as the same colour as the paragraph it sits in. Light block only —
        the mix re-reads --accent/--text at the use site. */
