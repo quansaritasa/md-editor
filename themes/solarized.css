@@ -10,6 +10,7 @@
     --border: #D9D2BC;
     --accent: #268BD2;
     --accent-soft: #E1E8DA;
+    --table-head-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: #2076B2;
@@ -147,11 +148,15 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
+/* em, never rem: a table is a step down from the prose AROUND it, and the host
+   owns that prose size. rem reached past the host's size to the root element,
+   which is how a 13px panel got 14.4px tables that ignored its own text-size
+   control. 0.9em = one step down; the header cell keeps its own sub-step. */
 .md-editor table {
     width: 100%;
     border-collapse: collapse;
     margin: 12px 0 20px;
-    font-size: 0.9rem;
+    font-size: 0.9em;
 }.md-editor th, .md-editor td {
     padding: 8px 14px;
     text-align: left;
@@ -159,8 +164,8 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
     line-height: 1.4;
 }.md-editor th {
     font-weight: 600;
-    background: var(--surface);
-    font-size: 0.82rem;
+    background: var(--table-head-bg);
+    font-size: 0.91em;
     color: var(--text);
 }.md-editor td {
     color: var(--text);
@@ -169,7 +174,7 @@ html.dark .md-editor .hljs-attr { color: #B58900; }
 }.md-editor table.fields {
     font-variant-numeric: tabular-nums;
 }.md-editor table.fields th {
-    font-size: 0.72rem;
+    font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-secondary);
@@ -515,6 +520,9 @@ html.dark .md-editor pre {
 .md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { color: #268BD2; }
 html.dark .md-editor h2 { color: #268BD2; }
+/* base1 on the tinted header band was 3.9:1 — the band is a --surface mix, not
+   the page. base0 (#B8C4C4) is the same family, one step up: 5.8:1. */
+html.dark .md-editor th { color: #B8C4C4; }
 .md-editor .eyebrow { background: #8A6700; color: #FDF6E3; }
 html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
 .md-editor .example-box.good-box { border-left-color: #859900; }

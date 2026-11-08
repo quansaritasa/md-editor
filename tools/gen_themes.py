@@ -45,7 +45,8 @@ PLEX_SERIF = '"IBM Plex Serif", ' + SERIF
 PLEX_MONO = '"IBM Plex Mono", ' + MONO
 
 TOKENS = ['book-bg', 'mermaid-bg', 'mermaid-er-header', 'bg', 'surface', 'text', 'text-secondary', 'border',
-          'accent', 'accent-soft', 'heading-ink', 'strong-ink', 'link-ink', 'code-bg', 'code-text', 'radius', 'max-w',
+          'accent', 'accent-soft', 'table-head-bg', 'heading-ink', 'strong-ink', 'link-ink', 'code-bg', 'code-text',
+          'radius', 'max-w',
           'note-amber', 'note-amber-lt', 'note-amber-border',
           'info-blue', 'info-blue-lt', 'info-blue-border', 'fields-key']
 
@@ -92,6 +93,12 @@ def emit(name, desc, light, dark, hl_light, hl_dark, overrides):
 # same formula, so it stays weight-and-rule only without a special case.
 COMMON_LIGHT = {'mermaid-bg': '#f6f8fa', 'max-w': '900px',
                 'mermaid-er-header': 'color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg))',
+                # The table's header band. --surface is already the striped row,
+                # so a header painted with it looked like one more zebra row in
+                # five palettes (nord, catppuccin, gruvbox, modern, solarized).
+                # The accent over --surface separates both at once, and keeping
+                # it a mix of the theme's own two tokens keeps the hue.
+                'table-head-bg': 'color-mix(in srgb, var(--accent) 18%, var(--surface))',
                 'heading-ink': 'color-mix(in srgb, var(--accent) 60%, var(--text))',
                 'strong-ink': 'color-mix(in srgb, var(--accent) 42%, var(--text))',
                 # Link ink defaults to the accent. A palette whose accent is too
@@ -144,7 +151,7 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor pre code {{ font-size: inherit; }}
 .md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }}
 .md-editor blockquote p::before {{ content: "> "; color: var(--text-secondary); }}
-.md-editor th {{ text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78rem; }}
+.md-editor th {{ text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.87em; }}
 .md-editor tr:nth-child(even) td {{ background: none; }}
 .md-editor hr {{ border-top: 1px dashed var(--border); }}
 .md-editor ul {{ list-style: none; margin-left: 4px; }}
@@ -191,7 +198,7 @@ html.dark .md-editor h1 { color: #cba6f7; }
    under AA at h3's 16.8px. */
 .md-editor .eyebrow { background: #8839ef; color: #eff1f5; }
 html.dark .md-editor .eyebrow { background: #cba6f7; color: #1e1e2e; }
-.md-editor th { background: var(--surface); color: var(--heading-ink); }
+.md-editor th { color: var(--heading-ink); }
 .md-editor blockquote, .md-editor .blockquotes { border-left-width: 4px; }
 .md-editor .example-box.good-box { border-left-color: #40a02b; }
 .md-editor .example-box.bad-box { border-left-color: #d20f39; }
@@ -230,7 +237,7 @@ emit('eink', 'Grayscale, serif, no shadows — an e-reader on the desktop',
 .md-editor .eyebrow {{ background: none; border: 1px solid var(--text); color: var(--text); border-radius: 0; }}
 .md-editor a {{ text-decoration: underline; text-underline-offset: 2px; }}
 .md-editor a:hover {{ background: var(--accent-soft); }}
-.md-editor th {{ background: none; border-bottom: 2px solid var(--text); }}
+.md-editor th {{ background: var(--table-head-bg); border-bottom: 2px solid var(--text); }}
 .md-editor tr:nth-child(even) td {{ background: none; }}
 .md-editor th, .md-editor td {{ border-color: var(--border); }}
 .md-editor code {{ font-size: 0.85em; border: 1px solid var(--border); }}
@@ -293,9 +300,9 @@ emit('editorial', 'Newspaper — display serif headings, hairline rules, drop ca
 .md-editor strong {{ font-weight: 700; }}
 .md-editor blockquote {{ border-left: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: none; text-align: center; font-style: italic; font-size: 1.2em; line-height: 1.5; padding: 18px 28px; color: var(--text); border-radius: 0; margin: 24px 0; }}
 .md-editor blockquote p {{ text-align: center; }}
-.md-editor table {{ font-size: 0.92rem; font-family: {SANS}; }}
+.md-editor table {{ font-size: 0.92em; font-family: {SANS}; }}
 .md-editor th, .md-editor td {{ border-left: none; border-right: none; }}
-.md-editor th {{ background: none; border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; }}
+.md-editor th {{ background: var(--table-head-bg); border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.815em; }}
 .md-editor tr:nth-child(even) td {{ background: none; }}
 .md-editor code {{ font-size: 0.82em; }}
 .md-editor pre {{ font-size: 0.82rem; border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-radius: 0; }}
@@ -344,23 +351,32 @@ emit('nord', 'Nord — arctic, bluish palette',
      {**COMMON_LIGHT, 'mermaid-bg': '#ECEFF4', 'book-bg': '#ECEFF4', 'bg': '#ECEFF4', 'surface': '#E5E9F0', 'text': '#2E3440',
       'text-secondary': '#4C566A', 'border': '#D8DEE9', 'accent': '#5E81AC', 'accent-soft': '#DFE6EF',
       # Nord's blue is 3.5:1 as body-size link text and 3.3:1 as a table head;
-      # links take a darkened blue, table heads take the shared heading ink.
+      # links take a darkened blue, table heads take the heading ink.
       'link-ink': '#516F94',
+      # Headings, not a step down from the prose. The shared 60% mix landed on
+      # #4B6281 — 5.4:1 beside a 10.8:1 body — so every h1–h3 read as faded text
+      # rather than as a section opener, and h1's own #5E81AC was 3.5:1. This is
+      # the same blue carried into the palette's dark end: 7.9:1, still clearly
+      # blue against #2E3440 body copy.
+      'heading-ink': '#2F4A6B',
       'code-bg': '#E5E9F0', 'code-text': '#9F5158', 'radius': '4px',
       'note-amber': '#7A5A12', 'note-amber-lt': '#F4EDDC', 'note-amber-border': '#EBCB8B',
       'info-blue': '#3B5F8A', 'info-blue-lt': '#E1EAF2', 'info-blue-border': '#81A1C1', 'fields-key': '#4E7A3A'},
      {'book-bg': '#2E3440', 'bg': '#2E3440', 'surface': '#3B4252', 'text': '#ECEFF4',
       'text-secondary': '#D8DEE9', 'border': '#434C5E', 'accent': '#88C0D0', 'accent-soft': '#3B4A5A',
       'link-ink': 'var(--accent)',
+      # 7.9:1 (#B0D3DE) read as a dimmer grey beside a 10.8:1 body; at 10.1:1 the
+      # heading is level with the prose and keeps Nord's frost hue.
+      'heading-ink': '#D8EAF2',
       'code-bg': '#3B4252', 'code-text': '#DAA08E',
       'note-amber': '#EBCB8B', 'note-amber-lt': '#3D3A30', 'note-amber-border': '#EBCB8B',
       'info-blue': '#8FBCBB', 'info-blue-lt': '#33414A', 'info-blue-border': '#81A1C1', 'fields-key': '#A3BE8C'},
      ('#497337', '#7A5A12'), ('#A3BE8C', '#EBCB8B'),
      '''
-.md-editor h1 { color: #5E81AC; border-bottom: 2px solid var(--border); }
-html.dark .md-editor h1 { color: #88C0D0; }
+.md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { border-bottom: 1px solid var(--border); }
-/* h3 takes the shared --heading-ink: Nord's blue at h3's size is 3.5:1. */
+/* h1–h3 all take --heading-ink (see the token block): one ink per mode, so a
+   section opener cannot be dimmer than the size above or below it. */
 /* The eyebrow is an inverted chip: nordfrost at full strength put cream on
    #5E81AC at 3.5:1 at 12px. The chip's own fill steps down to #4C6A94 (4.8:1)
    rather than repainting the accent everywhere it is used. */
@@ -439,6 +455,9 @@ emit('solarized', 'Solarized — light and dark, the classic pair',
 .md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { color: #268BD2; }
 html.dark .md-editor h2 { color: #268BD2; }
+/* base1 on the tinted header band was 3.9:1 — the band is a --surface mix, not
+   the page. base0 (#B8C4C4) is the same family, one step up: 5.8:1. */
+html.dark .md-editor th { color: #B8C4C4; }
 .md-editor .eyebrow { background: #8A6700; color: #FDF6E3; }
 html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
 .md-editor .example-box.good-box { border-left-color: #859900; }
@@ -501,9 +520,9 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 /* A quote is a rail, not a filled box. */
 .md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }}
 /* Tables are read as data: hairlines, a label row, and digits that line up. */
-.md-editor table {{ font-size: 0.9rem; font-variant-numeric: tabular-nums; }}
+.md-editor table {{ font-size: 0.9em; font-variant-numeric: tabular-nums; }}
 .md-editor th, .md-editor td {{ border-left: none; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 13px; }}
-.md-editor th {{ background: none; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); }}
+.md-editor th {{ background: var(--table-head-bg); font-size: 0.78em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--text-secondary) 70%, var(--text)); }}
 .md-editor tr:nth-child(even) td {{ background: none; }}
 .md-editor hr {{ border: none; border-top: 1px solid var(--border); margin: 26px 0; }}
 /* A task box is drawn, never a glyph. */

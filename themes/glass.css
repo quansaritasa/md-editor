@@ -13,6 +13,9 @@
     --border: rgba(255, 255, 255, 0.6);
     --accent: #6366f1;
     --accent-soft: rgba(99, 102, 241, 0.1);
+    /* The table's header band: the accent over the frosted --surface, far enough
+       apart to read as a header while the rest of the sheet stays translucent. */
+    --table-head-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
     /* Headings and bold runs: the accent pulled toward the body ink, so neither
        reads as the same colour as the paragraph it sits in. Light block only —
        the mix re-reads --accent/--text at the use site. */
@@ -213,7 +216,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     width: 100%;
     border-collapse: collapse;
     margin: 16px 0 24px;
-    font-size: 0.9rem;
+    font-size: 0.9em;
     background: var(--surface);
     backdrop-filter: blur(var(--blur)) saturate(200%);
     -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);
@@ -229,9 +232,11 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }.md-editor th {
     font-weight: 600;
-    background: rgba(99, 102, 241, 0.06);
-    font-size: 0.82rem;
-    color: var(--text-secondary);
+    background: var(--table-head-bg);
+    font-size: 0.91em;
+    /* The band is tinted, so the label walks toward the body ink to clear AA on
+       it: 4.05:1 -> 5.3:1 in light, 4.47:1 -> 6.6:1 in dark. */
+    color: color-mix(in srgb, var(--text-secondary) 70%, var(--text));
 }.md-editor tr:last-child td {
     border-bottom: none;
 }.md-editor table.fields {

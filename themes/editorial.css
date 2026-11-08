@@ -10,6 +10,7 @@
     --border: #C9C4BA;
     --accent: #A31621;
     --accent-soft: #F8E9EA;
+    --table-head-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: var(--accent);
@@ -145,11 +146,15 @@ html.dark .md-editor .hljs-attr { color: #E0616B; }
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
+/* em, never rem: a table is a step down from the prose AROUND it, and the host
+   owns that prose size. rem reached past the host's size to the root element,
+   which is how a 13px panel got 14.4px tables that ignored its own text-size
+   control. 0.9em = one step down; the header cell keeps its own sub-step. */
 .md-editor table {
     width: 100%;
     border-collapse: collapse;
     margin: 12px 0 20px;
-    font-size: 0.9rem;
+    font-size: 0.9em;
 }.md-editor th, .md-editor td {
     padding: 8px 14px;
     text-align: left;
@@ -157,8 +162,8 @@ html.dark .md-editor .hljs-attr { color: #E0616B; }
     line-height: 1.4;
 }.md-editor th {
     font-weight: 600;
-    background: var(--surface);
-    font-size: 0.82rem;
+    background: var(--table-head-bg);
+    font-size: 0.91em;
     color: var(--text);
 }.md-editor td {
     color: var(--text);
@@ -167,7 +172,7 @@ html.dark .md-editor .hljs-attr { color: #E0616B; }
 }.md-editor table.fields {
     font-variant-numeric: tabular-nums;
 }.md-editor table.fields th {
-    font-size: 0.72rem;
+    font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-secondary);
@@ -531,9 +536,9 @@ html.dark .md-editor pre {
 .md-editor strong { font-weight: 700; }
 .md-editor blockquote { border-left: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: none; text-align: center; font-style: italic; font-size: 1.2em; line-height: 1.5; padding: 18px 28px; color: var(--text); border-radius: 0; margin: 24px 0; }
 .md-editor blockquote p { text-align: center; }
-.md-editor table { font-size: 0.92rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
+.md-editor table { font-size: 0.92em; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
 .md-editor th, .md-editor td { border-left: none; border-right: none; }
-.md-editor th { background: none; border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; }
+.md-editor th { background: var(--table-head-bg); border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.815em; }
 .md-editor tr:nth-child(even) td { background: none; }
 .md-editor code { font-size: 0.82em; }
 .md-editor pre { font-size: 0.82rem; border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-radius: 0; }

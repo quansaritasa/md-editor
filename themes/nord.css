@@ -10,7 +10,8 @@
     --border: #D8DEE9;
     --accent: #5E81AC;
     --accent-soft: #DFE6EF;
-    --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
+    --table-head-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
+    --heading-ink: #2F4A6B;
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: #516F94;
     --code-bg: #E5E9F0;
@@ -36,6 +37,7 @@ html.dark .md-editor {
     --border: #434C5E;
     --accent: #88C0D0;
     --accent-soft: #3B4A5A;
+    --heading-ink: #D8EAF2;
     --link-ink: var(--accent);
     --code-bg: #3B4252;
     --code-text: #DAA08E;
@@ -146,11 +148,15 @@ html.dark .md-editor .hljs-attr { color: #EBCB8B; }
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
+/* em, never rem: a table is a step down from the prose AROUND it, and the host
+   owns that prose size. rem reached past the host's size to the root element,
+   which is how a 13px panel got 14.4px tables that ignored its own text-size
+   control. 0.9em = one step down; the header cell keeps its own sub-step. */
 .md-editor table {
     width: 100%;
     border-collapse: collapse;
     margin: 12px 0 20px;
-    font-size: 0.9rem;
+    font-size: 0.9em;
 }.md-editor th, .md-editor td {
     padding: 8px 14px;
     text-align: left;
@@ -158,8 +164,8 @@ html.dark .md-editor .hljs-attr { color: #EBCB8B; }
     line-height: 1.4;
 }.md-editor th {
     font-weight: 600;
-    background: var(--surface);
-    font-size: 0.82rem;
+    background: var(--table-head-bg);
+    font-size: 0.91em;
     color: var(--text);
 }.md-editor td {
     color: var(--text);
@@ -168,7 +174,7 @@ html.dark .md-editor .hljs-attr { color: #EBCB8B; }
 }.md-editor table.fields {
     font-variant-numeric: tabular-nums;
 }.md-editor table.fields th {
-    font-size: 0.72rem;
+    font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-secondary);
@@ -506,10 +512,10 @@ html.dark .md-editor pre {
     justify-content: center;
 }
 /* ── nord: typography and component reshaping ── */
-.md-editor h1 { color: #5E81AC; border-bottom: 2px solid var(--border); }
-html.dark .md-editor h1 { color: #88C0D0; }
+.md-editor h1 { border-bottom: 2px solid var(--border); }
 .md-editor h2 { border-bottom: 1px solid var(--border); }
-/* h3 takes the shared --heading-ink: Nord's blue at h3's size is 3.5:1. */
+/* h1–h3 all take --heading-ink (see the token block): one ink per mode, so a
+   section opener cannot be dimmer than the size above or below it. */
 /* The eyebrow is an inverted chip: nordfrost at full strength put cream on
    #5E81AC at 3.5:1 at 12px. The chip's own fill steps down to #4C6A94 (4.8:1)
    rather than repainting the accent everywhere it is used. */

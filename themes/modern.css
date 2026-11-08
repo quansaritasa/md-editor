@@ -13,6 +13,11 @@
     --border: #d0d7de;
     --accent: #0969da;
     --accent-soft: #ddf4ff;
+    /* The table's header band. It has to read as a header against BOTH the page
+       and the striped row, which is --surface — so it is the accent over
+       --surface, not --surface itself (that made the header one more zebra
+       row). Declared light-only for the same reason as --heading-ink below. */
+    --table-head-bg: color-mix(in srgb, var(--accent) 18%, var(--surface));
     /* See tools/gen_themes.py: accent pulled toward the body ink. Declared in
        the light block only — the mix re-reads --accent/--text where it is used,
        so dark mode gets its own pair without a second declaration. */
@@ -150,11 +155,15 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     font-weight: 600;
 }
 /* ── Tables ───────────────────────────────── */
+/* em, never rem: a table is a step down from the prose AROUND it, and the host
+   owns that prose size. rem reached past the host's size to the root element,
+   which is how a 13px panel got 14.4px tables that ignored its own text-size
+   control. 0.9em = one step down; the header cell keeps its own sub-step. */
 .md-editor table {
     width: 100%;
     border-collapse: collapse;
     margin: 12px 0 20px;
-    font-size: 0.9rem;
+    font-size: 0.9em;
 }.md-editor th, .md-editor td {
     padding: 8px 14px;
     text-align: left;
@@ -162,8 +171,8 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     line-height: 1.4;
 }.md-editor th {
     font-weight: 600;
-    background: var(--surface);
-    font-size: 0.82rem;
+    background: var(--table-head-bg);
+    font-size: 0.91em;
     color: var(--text);
 }.md-editor td {
     color: var(--text);
@@ -172,7 +181,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor table.fields {
     font-variant-numeric: tabular-nums;
 }.md-editor table.fields th {
-    font-size: 0.72rem;
+    font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-secondary);

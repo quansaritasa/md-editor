@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.10.37 — tables follow the page, and Nord's headings are ink again
+
+- Table type is `em`, not `rem`: a table is a step down from the prose around
+  it, and the host owns that prose. At a 16px reading page nothing changes
+  (14.4px / 13.1px headers), but a host that sizes `.md-editor` itself — the
+  sprints-planner Task tab draws it at 13px — used to get 14.4px tables that
+  ignored its own text-size control. Now `0.9em` / `0.91em` there: 11.7px with
+  10.6px headers. `card` set its cells to a flat 15px (bigger than its own table
+  root) and `claude` to a flat `0.9rem`; both now inherit the table's size.
+- A table header is a band of its own: `--table-head-bg`, the theme's accent at
+  18% over its `--surface`. Five palettes painted the header with `--surface`
+  itself, which is also the striped row — nord, catppuccin, gruvbox, modern and
+  solarized read as one more zebra row; block, editorial and eink had no fill at
+  all. Every theme now separates the header from both the page and the stripe
+  (measured luminance step 1.07–9.0×), and no header label is under 4.5:1 on its
+  band: block light 4.05 → 5.85, glass dark 4.47 → 5.82, solarized dark
+  3.88 → 5.8. card and claude keep their own chosen header fills, which already
+  read as a header.
+- Nord's h1–h3 take one ink per mode instead of two dim ones. h1 was #5E81AC at
+  3.5:1 and the shared 60% mix put h2/h3 on #4B6281 at 5.4:1, beside a 10.8:1
+  body — every section opener read as faded text. Now #2F4A6B (7.9:1) in light
+  and #D8EAF2 (10.1:1) in dark; the hue is still Nord's blue.
+- `tools/gen_themes.py` writes the new token and the em sizes; the eight
+  generated themes are regenerated from it, `card`/`modern`/`glass`/`claude`
+  by hand.
+
 ## v0.10.36 — headings and bold carry an ink of their own
 
 - Every theme now paints h1–h3 and `<strong>`. Nine of the thirteen left them
