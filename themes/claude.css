@@ -319,7 +319,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor .blockquotes.note strong, .md-editor .blockquotes.note p { color: var(--note-amber); }.md-editor .blockquotes.info {
     border-left-color: var(--info-blue-border);
     background: var(--info-blue-lt);
-}.md-editor .blockquotes.info strong, .md-editor .blockquotes.info p { color: var(--info-blue); }.md-editor .theme-btn {
+}.md-editor .blockquotes.info strong, .md-editor .blockquotes.info p { color: var(--info-blue); }.md-editor img { max-width: 100%; height: auto; }.md-editor .theme-btn {
     position: fixed;
     top: 14px;
     right: 14px;

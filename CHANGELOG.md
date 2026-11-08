@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.10.41 — claude images fit the column
+
+- `claude.css` was the one theme of thirteen with no `img` rule, so a 1400px
+  screenshot inside a 542px column rendered at 1400px: the picture ran out of
+  its prose and the pane grew a horizontal scrollbar instead of the image
+  shrinking. It now carries the same `.md-editor img { max-width: 100%;
+  height: auto; }` the other twelve themes share.
+- Measured in Qview on `README.md` at a 682px pane: the three screenshots went
+  from 1400x898 / 1400x891 / 1400x894 to 542x348 / 542x345 / 542x346, and the
+  viewer's `scrollWidth` from 1470 back to 682.
+
 ## v0.10.40 — inline code is a step down in every theme, and it is one number
 
 - `code` is `0.9em` in all thirteen themes, stated once: `modern.css` is the
