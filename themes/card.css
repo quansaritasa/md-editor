@@ -415,7 +415,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     color: var(--code-text);
     padding: 2px 6px;
     border-radius: var(--radius);
-    font-size: 0.875em;
+    font-size: 0.9em;
     font-family:
         "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
         monospace;
@@ -438,7 +438,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     color: var(--code-text);
     padding: 2px 6px;
     border-radius: var(--radius);
-    font-size: 0.875em;
+    font-size: 0.9em;
 }
 .md-editor p li pre code,
 .md-editor p pre code,

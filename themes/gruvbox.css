@@ -184,12 +184,21 @@ html.dark .md-editor .hljs-attr { color: #FABD2F; }
     white-space: nowrap;
 }
 /* ── Code ─────────────────────────────────── */
+/* Inline code is a step DOWN from the prose, never 1em: the mono face draws a
+   taller ink box than the sans at the same size (cap 8.75px against 8.46px,
+   x-height 6.56 against 6.32 at 12px), so code pinned to the prose's size
+   reads bigger than the words around it. 0.9em is the step every theme now
+   takes — it is the same look the sprints-planner Task tab shipped when its
+   inline code was a flat 11px on 12px prose, and because it is an em it
+   follows whatever size the host sets. A fenced block is exempt: `pre code`
+   takes the block's own size below. This file is the shared body the eight
+   generated themes are cut from, so the number is stated once. */
 .md-editor code {
     background: var(--code-bg);
     color: var(--code-text);
     padding: 2px 6px;
     border-radius: var(--radius);
-    font-size: 0.875em;
+    font-size: 0.9em;
     font-family:
         ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }.md-editor pre {

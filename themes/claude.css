@@ -285,7 +285,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     color: var(--code-text);
     padding: 0.08em 0.4em;
     border-radius: 3px;
-    font-size: 0.875em;
+    font-size: 0.9em;
     font-family: "Cascadia Code", "Fira Code", "Courier New", monospace;
     border: 1px solid var(--border);
 }.md-editor pre code, .md-editor p pre code, .md-editor li pre code, .md-editor td pre code {

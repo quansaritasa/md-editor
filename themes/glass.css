@@ -258,7 +258,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     color: var(--code-text);
     padding: 3px 8px;
     border-radius: 6px;
-    font-size: 0.875em;
+    font-size: 0.9em;
     font-family:
         ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }.md-editor pre {

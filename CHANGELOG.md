@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.10.40 — inline code is a step down in every theme, and it is one number
+
+- `code` is `0.9em` in all thirteen themes, stated once: `modern.css` is the
+  shared body the eight generated themes are cut from, so its rule is the one
+  place the number lives; `card`, `glass` and `claude` carry it themselves.
+  The spread it replaces was noise — 0.82 (editorial), 0.85 (eink), 0.875
+  (modern, card, glass, claude and the eight generated ones), 0.88 (block),
+  0.95 (terminal) — and a host that pinned code to the prose's own size made
+  it read LARGER than the prose, because the mono face's ink box is taller at
+  the same size: cap 8.75px against 8.46px, x-height 6.56 against 6.32,
+  measured with `measureText` at 12px.
+- 0.9em is the step sprints-planner's Task tab already shipped when its inline
+  code was a flat 11px on 12px prose, and being an `em` it still follows
+  whatever size the host sets — so a Text-size slider keeps working while the
+  step stays the theme's decision, not the host's.
+- A fenced block is exempt and unchanged: `pre code` takes the block's own
+  size (`font-size: inherit`), which every theme already declared.
+
 ## v0.10.39 — block's header strip and its card share one inset
 
 - `block`'s card and its opening h2 strip now derive from one pair of values,

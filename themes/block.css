@@ -184,12 +184,21 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
     white-space: nowrap;
 }
 /* ── Code ─────────────────────────────────── */
+/* Inline code is a step DOWN from the prose, never 1em: the mono face draws a
+   taller ink box than the sans at the same size (cap 8.75px against 8.46px,
+   x-height 6.56 against 6.32 at 12px), so code pinned to the prose's size
+   reads bigger than the words around it. 0.9em is the step every theme now
+   takes — it is the same look the sprints-planner Task tab shipped when its
+   inline code was a flat 11px on 12px prose, and because it is an em it
+   follows whatever size the host sets. A fenced block is exempt: `pre code`
+   takes the block's own size below. This file is the shared body the eight
+   generated themes are cut from, so the number is stated once. */
 .md-editor code {
     background: var(--code-bg);
     color: var(--code-text);
     padding: 2px 6px;
     border-radius: var(--radius);
-    font-size: 0.875em;
+    font-size: 0.9em;
     font-family:
         ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }.md-editor pre {
@@ -540,7 +549,7 @@ html.dark .md-editor pre {
 .md-editor a { text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
 .md-editor a:hover { border-bottom-color: var(--accent); }
 .md-editor strong { font-weight: 600; }
-.md-editor code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.88em; padding: 0.05em 0.3em; border: 1px solid var(--border); border-radius: 3px; }
+.md-editor code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; padding: 0.05em 0.3em; border: 1px solid var(--border); border-radius: 3px; }
 .md-editor pre { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; }
 .md-editor pre code { border: none; padding: 0; font-size: inherit; }
 /* A quote is a rail, not a filled box. */

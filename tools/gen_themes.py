@@ -150,7 +150,7 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor a {{ text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }}
 .md-editor a:hover {{ text-decoration-style: solid; background: var(--accent-soft); }}
 .md-editor strong {{ color: var(--accent); font-weight: 700; }}
-.md-editor code {{ font-size: 0.95em; padding: 1px 5px; border: 1px solid var(--border); }}
+.md-editor code {{ padding: 1px 5px; border: 1px solid var(--border); }}
 .md-editor pre {{ font-size: 0.9rem; border-left: 3px solid var(--accent); }}
 .md-editor pre code {{ font-size: inherit; }}
 .md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }}
@@ -244,7 +244,7 @@ emit('eink', 'Grayscale, serif, no shadows — an e-reader on the desktop',
 .md-editor th {{ background: var(--table-head-bg); border-bottom: 2px solid var(--text); }}
 .md-editor tr:nth-child(even) td {{ background: none; }}
 .md-editor th, .md-editor td {{ border-color: var(--border); }}
-.md-editor code {{ font-size: 0.85em; border: 1px solid var(--border); }}
+.md-editor code {{ border: 1px solid var(--border); }}
 .md-editor pre {{ border: 1px solid var(--border); background: var(--surface); }}
 /* Syntax colour has nowhere to go on grey paper: weight and slant carry it. */
 .md-editor [class*="hljs-"] {{ color: var(--text); }}
@@ -308,7 +308,7 @@ emit('editorial', 'Newspaper — display serif headings, hairline rules, drop ca
 .md-editor th, .md-editor td {{ border-left: none; border-right: none; }}
 .md-editor th {{ background: var(--table-head-bg); border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.815em; }}
 .md-editor tr:nth-child(even) td {{ background: none; }}
-.md-editor code {{ font-size: 0.82em; }}
+
 .md-editor pre {{ font-size: 0.82rem; border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-radius: 0; }}
 .md-editor hr {{ border: none; text-align: center; margin: 36px 0; }}
 .md-editor hr::after {{ content: "❦"; color: var(--text-secondary); font-size: 1.2rem; }}
@@ -518,7 +518,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 .md-editor a {{ text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }}
 .md-editor a:hover {{ border-bottom-color: var(--accent); }}
 .md-editor strong {{ font-weight: 600; }}
-.md-editor code {{ font-family: {PLEX_MONO}; font-size: 0.88em; padding: 0.05em 0.3em; border: 1px solid var(--border); border-radius: 3px; }}
+.md-editor code {{ font-family: {PLEX_MONO}; padding: 0.05em 0.3em; border: 1px solid var(--border); border-radius: 3px; }}
 .md-editor pre {{ font-family: {PLEX_MONO}; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; }}
 .md-editor pre code {{ border: none; padding: 0; font-size: inherit; }}
 /* A quote is a rail, not a filled box. */
