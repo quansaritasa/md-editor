@@ -111,11 +111,11 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     max-width: 760px;
     margin: 0 auto;
     padding: 48px 20px 72px;
-}.md-editor .header {
+}.md-editor .md-header {
     border-bottom: 2px solid var(--text);
     padding-bottom: 1.5rem;
     margin-bottom: 2.5rem;
-}.md-editor .eyebrow {
+}.md-editor .md-eyebrow {
     display: inline-block;
     font-size: 0.72rem;
     font-weight: 600;
@@ -131,19 +131,19 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     line-height: 1.2;
     color: var(--text);
     text-wrap: balance;
-}.md-editor .meta {
+}.md-editor .md-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 8px 20px;
     margin-top: 14px;
-}.md-editor .meta-item {
+}.md-editor .md-meta-item {
     font-size: 0.85rem;
     color: var(--muted);
-}.md-editor .meta-label {
+}.md-editor .md-meta-label {
     font-weight: 600;
     color: var(--text);
     margin-right: 4px;
-}.md-editor .meta-label::after { content: ":"; }.md-editor .section {
+}.md-editor .md-meta-label::after { content: ":"; }.md-editor .md-section {
     margin-bottom: 1rem;
 }.md-editor h2 {
     margin: 2.5rem 0 0.75rem;
@@ -180,12 +180,12 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     font-weight: 600;
     color: var(--th-title);
     font-size: 0.91em;
-}.md-editor tr:last-child td, .md-editor tr:last-child th { border-bottom: none; }.md-editor tbody tr:nth-child(even) td { background: var(--table-even-row); }.md-editor td ul { margin: 0; padding-left: 16px; }.md-editor td li { margin: 3px 0; }.md-editor table.fields { font-variant-numeric: tabular-nums; }.md-editor table.fields th {
+}.md-editor tr:last-child td, .md-editor tr:last-child th { border-bottom: none; }.md-editor tbody tr:nth-child(even) td { background: var(--table-even-row); }.md-editor td ul { margin: 0; padding-left: 16px; }.md-editor td li { margin: 3px 0; }.md-editor table.md-fields { font-variant-numeric: tabular-nums; }.md-editor table.md-fields th {
     font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
-}.md-editor table.fields td { color: var(--text); }.md-editor table.fields td:first-child {
+}.md-editor table.md-fields td { color: var(--text); }.md-editor table.md-fields td:first-child {
     font-family: "Cascadia Code", "Fira Code", "Courier New", monospace;
     font-size: 0.85em;
     color: var(--fields-key);
@@ -203,7 +203,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor pre.mermaid {
     background: var(--mermaid-bg);
     color: #1C2333;
-}.md-editor .code-block { position: relative; margin: 0 0 1rem; }.md-editor .code-block pre { margin: 0; padding-top: 34px; }.md-editor .code-copy-btn {
+}.md-editor .md-code-block { position: relative; margin: 0 0 1rem; }.md-editor .md-code-block pre { margin: 0; padding-top: 34px; }.md-editor .md-code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -225,11 +225,11 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-copy-btn:hover, .md-editor .code-copy-btn.copied {
+}.md-editor .md-code-copy-btn:hover, .md-editor .md-code-copy-btn.md-copied {
     background: var(--accent-soft);
     color: var(--accent);
     border-color: var(--accent);
-}.md-editor .code-full-btn {
+}.md-editor .md-code-full-btn {
     position: absolute;
     top: 8px;
     right: 132px;
@@ -251,11 +251,11 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
+}.md-editor .md-code-full-btn:hover, .md-editor .md-code-full-btn.md-copied {
     background: var(--accent-soft);
     color: var(--accent);
     border-color: var(--accent);
-}.md-editor .code-wrap-btn {
+}.md-editor .md-code-wrap-btn {
     position: absolute;
     top: 8px;
     right: 70px;
@@ -277,7 +277,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover {
+}.md-editor .md-code-wrap-btn:hover {
     background: var(--accent-soft);
     color: var(--accent);
     border-color: var(--accent);
@@ -296,46 +296,31 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     border-radius: 0;
     font-size: inherit;
     border: none;
-}.md-editor .block-card {
+}.md-editor .md-block-card {
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: var(--radius);
     padding: 12px 14px;
-}.md-editor .block-grid { display: grid; gap: 12px; }.md-editor .q { font-weight: 700; margin: 0 0 6px; color: var(--text); }.md-editor .a { color: var(--muted); margin: 0; }.md-editor .example-box {
+}.md-editor .md-block-grid { display: grid; gap: 12px; }.md-editor .md-q { font-weight: 700; margin: 0 0 6px; color: var(--text); }.md-editor .md-a { color: var(--muted); margin: 0; }.md-editor .md-example-box {
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: var(--radius);
     padding: 12px 14px;
     margin: 10px 0;
-}.md-editor .example-box p { margin: 0; }.md-editor .example-box.good-box { border-left: 4px solid #2D6A4F; }.md-editor .example-box.bad-box { border-left: 4px solid #7C5C00; }.md-editor .blockquotes {
+}.md-editor .md-example-box p { margin: 0; }.md-editor .md-example-box.md-good-box { border-left: 4px solid #2D6A4F; }.md-editor .md-example-box.md-bad-box { border-left: 4px solid #7C5C00; }.md-editor .md-blockquotes {
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: var(--radius);
     padding: 12px 14px;
     margin: 10px 0;
     border-left: 4px solid var(--accent);
-}.md-editor .blockquotes p { margin: 0; }.md-editor .blockquotes.note {
+}.md-editor .md-blockquotes p { margin: 0; }.md-editor .md-blockquotes.md-note {
     border-left-color: var(--note-amber-border);
     background: var(--note-amber-lt);
-}.md-editor .blockquotes.note strong, .md-editor .blockquotes.note p { color: var(--note-amber); }.md-editor .blockquotes.info {
+}.md-editor .md-blockquotes.md-note strong, .md-editor .md-blockquotes.md-note p { color: var(--note-amber); }.md-editor .md-blockquotes.md-info {
     border-left-color: var(--info-blue-border);
     background: var(--info-blue-lt);
-}.md-editor .blockquotes.info strong, .md-editor .blockquotes.info p { color: var(--info-blue); }.md-editor img { max-width: 100%; height: auto; }.md-editor .theme-btn {
-    position: fixed;
-    top: 14px;
-    right: 14px;
-    z-index: 100;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 6px 14px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: inherit;
-    box-shadow: var(--shadow);
-    transition: background 0.12s;
-}.md-editor .theme-btn:hover { background: var(--surface-2); }.md-editor select {
+}.md-editor .md-blockquotes.md-info strong, .md-editor .md-blockquotes.md-info p { color: var(--info-blue); }.md-editor img { max-width: 100%; height: auto; }.md-editor select {
     padding: 5px 12px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
@@ -437,7 +422,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }
 
 /* See the section-rhythm note in the other themes: the h2 top margin was
-   stacking on top of .section's own 1rem, so one gap was being paid twice.
-   .section keeps the gap; the h2 rule stays as the outside-a-section
+   stacking on top of .md-section's own 1rem, so one gap was being paid twice.
+   .md-section keeps the gap; the h2 rule stays as the outside-a-section
    fallback. */
-.md-editor .section > h2:first-child { margin-top: 0; }
+.md-editor .md-section > h2:first-child { margin-top: 0; }

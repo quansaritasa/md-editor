@@ -26,15 +26,15 @@ function buildHeader(title, metadata) {
     eyebrow = title.slice(0, idx).trim();
     cleanTitle = title.slice(idx + 2).trim();
   }
-  const lines = ['<section class="header">'];
-  if (eyebrow) lines.push('  <div class="eyebrow">' + escapeHtml(eyebrow) + '</div>');
+  const lines = ['<section class="md-header">'];
+  if (eyebrow) lines.push('  <div class="md-eyebrow">' + escapeHtml(eyebrow) + '</div>');
   lines.push('  <h1>' + parseInline(cleanTitle) + '</h1>');
   if (metadata && Object.keys(metadata).length) {
-    lines.push('  <div class="meta">');
+    lines.push('  <div class="md-meta">');
     for (const k of Object.keys(metadata)) {
       const v = metadata[k];
       const valHtml = v ? parseInline(escapeHtml(String(v))) : '';
-      lines.push('    <div class="meta-item"><span class="meta-label">' + escapeHtml(String(k)) + ':</span> ' + valHtml + '</div>');
+      lines.push('    <div class="md-meta-item"><span class="md-meta-label">' + escapeHtml(String(k)) + ':</span> ' + valHtml + '</div>');
     }
     lines.push('  </div>');
   }
@@ -87,14 +87,14 @@ function buildQaCard(inner) {
   const aMarker = inner.includes('<strong>A') ? '<strong>A' : 'A:';
   const aStart = qMatch.index + qMatch[0].length - aMarker.length;
   const aContent = stripPTags(inner.slice(aStart));
-  return '<div class="block-card"><p class="q">' + qContent + '</p><p class="a">' + aContent + '</p></div>';
+  return '<div class="md-block-card"><p class="md-q">' + qContent + '</p><p class="md-a">' + aContent + '</p></div>';
 }
 
 // Only a section whose heading mentions "Question(s)" is eligible, and only if
 // its list items actually parse as Q/A pairs; otherwise the section is returned
 // untouched.
 function wrapQaCards(html) {
-  return html.replace(/<section class="section">\s*<h2>[^<]*Questions?[^<]*<\/h2>.*?<\/section>/gs, (section) => {
+  return html.replace(/<section class="md-section">\s*<h2>[^<]*Questions?[^<]*<\/h2>.*?<\/section>/gs, (section) => {
     const items = [...section.matchAll(/<li>(.*?)<\/li>/gs)].map((m) => m[1]);
     const cards = items.map(buildQaCard).filter(Boolean);
     if (!cards.length) return section;
@@ -103,9 +103,9 @@ function wrapQaCards(html) {
     const afterHeading = section.slice(headingMatch.index + headingMatch[0].length);
     const ulIdx = afterHeading.indexOf('<ul>');
     const prefix = ulIdx > 0 ? afterHeading.slice(0, ulIdx).trim() : '';
-    const grid = '<div class="block-grid">\n' + cards.join('\n') + '\n</div>';
+    const grid = '<div class="md-block-grid">\n' + cards.join('\n') + '\n</div>';
     const prefixBlock = prefix ? prefix + '\n' : '';
-    return '<section class="section">\n' + headingMatch[1] + '\n' + prefixBlock + grid + '\n</section>';
+    return '<section class="md-section">\n' + headingMatch[1] + '\n' + prefixBlock + grid + '\n</section>';
   });
 }
 
@@ -121,7 +121,7 @@ function wrapExampleBoxes(html) {
     }
     if (!items.length) return block;
     const boxes = items.map((it) => {
-      const klass = it.kind === 'good' ? 'example-box good-box' : 'example-box bad-box';
+      const klass = it.kind === 'good' ? 'md-example-box md-good-box' : 'md-example-box md-bad-box';
       return '<div class="' + klass + '"><p>' + it.content + '</p></div>';
     });
     let remaining = block;
@@ -139,7 +139,7 @@ function wrapExampleBoxes(html) {
 // A table right under a "Fields" heading is a key/type/description reference,
 // which the themes lay out differently from a data table.
 function wrapFieldTables(html) {
-  return html.replace(/(<h[23]>[^<]*[Ff]ields[^<]*<\/h[23]>\s*)(<table)/g, '$1<table class="fields"');
+  return html.replace(/(<h[23]>[^<]*[Ff]ields[^<]*<\/h[23]>\s*)(<table)/g, '$1<table class="md-fields"');
 }
 
 module.exports = {

@@ -1,5 +1,402 @@
-<section class="section">
+<section class="md-section">
 <ul>
+<li><p><span class="md-kv-label">Photos now fit the page:</span> Claude-theme screenshots stop running off the side, and Block-theme pictures span the full card width.</p>
+</li>
+<li><p><span class="md-kv-label">Inspect:</span> Copy ID names a control in two hops and its stylesheet by file name, so the line you paste into an AI prompt is half as long.</p>
+</li>
+<li><p>The Focus Line no longer stays lit over a PDF, the editor, or an inline diff.</p>
+</li>
+<li><p>Favorites and Recent now drag between the two tab bars like any other tab, and a dashed slot shows exactly where a dragged tab will land.</p>
+</li>
+<li><p>The ◇ Local pin in the file tree is bigger and lime green, so it no longer looks like the pink ★ beside it.</p>
+</li>
+<li><p>Large plain-text files open instantly instead of freezing, and a file too big to display now says so with its size instead of looking broken.</p>
+</li>
+<li><p>The Types filter works again in large folders — checking a kind now shows only that kind in the Flat, Date and File Type views.</p>
+</li>
+<li><p>Large Markdown files now open instantly instead of freezing, and very large plain-text files no longer fail to open at all.</p>
+</li>
+<li><p>Huge EPUBs open almost instantly — a 12,000-chapter book now takes a fraction of a second instead of five, and uses a fraction of the memory.</p>
+</li>
+<li><p>Big EPUB and Word files no longer slow the app down after you switch away from them.</p>
+</li>
+<li><p>UI inspector also opens with Ctrl/Cmd+backslash, and File Info shows file size in MB or GB instead of thousands of KB.</p>
+</li>
+<li><p>File Info now shows a Pages chip for PDFs and a Chapters chip for EPUB and MOBI books.</p>
+</li>
+<li><p>Favourite star and Local pin now sit exactly on the middle of their tree row, at any app text size.</p>
+</li>
+<li><p>ui-inspector 0.4.1: an edit stays in the Changes box after the app re-renders the element (Apply to similar), a ↕ / ↔ pair with different sides shows &quot;Mixed&quot;, right-click no longer scrubs or steps, and editCount() lets the host say how many edits outlive inspect mode.</p>
+</li>
+<li><p>ui-inspector 0.4.0: the Style section edits like a design tool (unit-aware number boxes, ▲▼, drag-to-scrub, minimize, resizable panel), text edits reach the text you see, Apply to similar edits the real CSS rule live, and All changes gives one paste-ready CSS prompt.</p>
+</li>
+<li><p>ui-inspector 0.3.0: inspect mode skips controls hidden behind a popup, and Copy for AI can lead with a stamped source location (srcAttr).</p>
+</li>
+<li><p>Global search answers instantly while you type, even with many tabs open.</p>
+</li>
+<li><p>Large markdown files (15 MB+) open in seconds and render as you read; files over 2 MB open in your default app for editing.</p>
+</li>
+<li><p>Tree hides cache folders like <strong>pycache</strong>, bin, obj and target (👁 Hidden shows them); .env.local-style files now open as text.</p>
+</li>
+<li><p><span class="md-kv-label">Top bar:</span> buttons sit on the right, 🔊 Read is icon-only, and the icon buttons are matching squares.</p>
+</li>
+<li><p><span class="md-kv-label">Markdown:</span> GitHub alerts (&gt; [!NOTE], [!TIP], [!WARNING]…) and ::: containers now show as coloured callout boxes.</p>
+</li>
+<li><p>Large markdown files open several times faster; diagrams draw as you scroll to them.</p>
+</li>
+<li><p>Right-click a folder tab to copy or move clipboard files into it, and press Ctrl/Cmd+A in the file tree to select every file shown.</p>
+</li>
+<li><p>Qview now shows a short search tip once per launch, with Next tip and Turn off tips buttons.</p>
+</li>
+<li><p>Ctrl+V now pastes into the open folder with nothing selected, works right after clicking a folder, and empties the clipboard after pasting so files never land twice or while editing.</p>
+</li>
+<li><p>Search hit stepping and content search now cover the whole list; the Git tab hides outside repositories, opens files as diffs, and the GitHub guide stops reappearing once signed in.</p>
+</li>
+<li><p>A pinned Recent or Favorites tab&#39;s right-click menu no longer shows Close entries left over from another tab, which could have closed every folder tab in the window.</p>
+</li>
+<li><p>Show in tree now finds the open file even when a file-type filter was hiding it, and clears that filter along with both search boxes.</p>
+</li>
+<li><p>Scrolling a long file list no longer leaves a huge blank gap below the last file when the app text size is not 100%.</p>
+</li>
+<li><p>The left tab rail now follows the app text size setting, so its folder names match the tabs along the top.</p>
+</li>
+<li><p>Chapter list on a book&#39;s own contents page now reads smaller, with more space between entries.</p>
+</li>
+<li><p>Ctrl/Cmd+T steps to the next document theme; add Shift to step back.</p>
+</li>
+<li><p>The ✕ in a sidebar search box now clears it whether or not the box is the one you are typing in.</p>
+</li>
+<li><p>Clicking the ✕ in a sidebar search box now clears the search instead of only widening the box.</p>
+</li>
+<li><p>EPUB contents pages no longer show stray numbers, and long lists no longer have their numbers cut off at the page edge.</p>
+</li>
+<li><p>Delete several files at once — right-click a multi-selection, or press Ctrl/Cmd+Backspace. Folders still need the right-click menu.</p>
+</li>
+<li><p>The duplicate 🔊 Read aloud button is gone from the right panel — 🔊 Read in the toolbar both starts and stops reading.</p>
+</li>
+<li><p>Both sidebar search boxes now remember what you typed in each collection, so switching to Recent, Local or Git no longer wipes your filter.</p>
+</li>
+<li><p>Layout settings now reach much further — wider text column, larger text and code, and far more padding and line spacing.</p>
+</li>
+<li><p>Books and documents now open with larger text, a wider column, and side margins that match the top.</p>
+</li>
+<li><p>EPUB chapters written as blank-line-separated lines now become real paragraphs, so bookmarks, read-aloud and the paragraph gap work; in a book every Layout slider now takes effect immediately.</p>
+</li>
+<li><p>File tree no longer freezes when a single folder holds thousands of files in Folder grouping.</p>
+</li>
+<li><p>The read-aloud voices guide has bigger text, and on Windows also shows how to add a voice through Language &amp; region.</p>
+</li>
+<li><p><span class="md-kv-label">The Support Qview popup is easier to read:</span> bigger text, with the key points highlighted.</p>
+</li>
+<li><p>Clicking the update notice in Settings → About opens the new release page; Support Qview opens its own popup with network logos.</p>
+</li>
+<li><p>The guided tour introduces the Git collection and read-aloud, and the 🔊 Read button now follows the file you open.</p>
+</li>
+<li><p><span class="md-kv-label">Folder tabs are no longer closed for you:</span> qview restores every tab you had open, however many.</p>
+</li>
+<li><p>Switching to Local, Recent or Git now shows that collection, and the Add-a-rule box updates a rule in place instead of adding a duplicate.</p>
+</li>
+<li><p>Focus line lights the line you are on in books made of line breaks, Settings reopens on your last tab, and the tree stays quick in huge folders.</p>
+</li>
+<li><p>Read aloud gains its own Voice tab — leave [bracketed] asides unspoken, respell words, move the rules as a file; outlines tick only chapters behind you.</p>
+</li>
+<li><p>Read aloud keeps playing when you switch folders, with the floating bar as its mini player; the bar drags anywhere, and V reads from the selection.</p>
+</li>
+<li><p>Qview can read documents and books aloud, starting either at the top of the page or at a sentence you pick.</p>
+</li>
+<li><p>The outline now ticks the chapters of a book you have already been through, so you can see how far you have got.</p>
+</li>
+<li><p><span class="md-kv-label">Reading mode:</span> Backspace now turns back a page in EPUB, MOBI and Word Pages.</p>
+</li>
+<li><p>Opening a folder cloned from GitHub now says once if the GitHub CLI is missing or signed out, with the commands to fix it.</p>
+</li>
+<li><p>⌘/Ctrl+D diffs the open file against HEAD in the pane — press it again for the file.</p>
+</li>
+<li><p><span class="md-kv-label">EPUB:</span> clicking the text no longer turns the page — only the margin beside it and a little space outside the page do.</p>
+</li>
+<li><p>The open tab now stands out with a lifted look and a bold top band, colour-labelled tabs fade when idle, and side-rail tabs are taller.</p>
+</li>
+<li><p><span class="md-kv-label">Lists in every document theme are less crowded:</span> items now sit a little further apart.</p>
+</li>
+<li><p>In books, PageDown and PageUp now jump to the next or previous chapter, and Enter turns the page like Space and the arrow keys.</p>
+</li>
+<li><p>Text width now matches the number you set in Word and book views, and the focus colour picker shows the colour actually on screen.</p>
+</li>
+<li><p>Markdown no longer runs scripts hidden inside a file; <style> blocks in markdown stop applying as a result.</p>
+</li>
+<li><p>Good View moved off the toolbar into ⚙ Settings → Reading, where it is on by default.</p>
+</li>
+<li><p>In EPUB books, clicking on a page&#39;s left or right border turns the page; everywhere else is free for selecting text.</p>
+</li>
+<li><p><span class="md-kv-label">Layout menu:</span> &quot;Focus line&quot; lights the paragraph you are reading, in six styles and any colour. Click one to pin it, arrows to walk it.</p>
+</li>
+<li><p><span class="md-kv-label">File and content search now take several terms:</span> a comma for any of them, AND for both, quotes for an exact phrase.</p>
+</li>
+<li><p><span class="md-kv-label">Pasting a web link into the file search now finds the file:</span> the box keeps the link, the search ignores the http:// the browser added.</p>
+</li>
+<li><p>Pasting a web link into the file search now says so, instead of silently filtering the tree down to nothing.</p>
+</li>
+<li><p>Settings closes from an ✕ in its corner, its tabs now match the All / Local / Recent strip, and the ⚙ button sits smaller in the bar.</p>
+</li>
+<li><p>Check for updates works again — Settings → About finds new releases, and the GitHub links open a page anyone can reach.</p>
+</li>
+<li><p>Tabs lost the × button you could misclick — close one from its right-click menu instead, and tab names now sit centered.</p>
+</li>
+<li><p>The ➕ button now opens a menu — open a file, open a folder, or jump back to a recent folder — and the Settings cog is bigger and easier to spot.</p>
+</li>
+<li><p>EPUB books now open in Source Serif 4 at 21px by default — a tighter line that keeps Vietnamese marks legible.</p>
+</li>
+<li><p><span class="md-kv-label">Pastel now reads with much stronger contrast:</span> a plain grey page and near-black text instead of the old soft blue-violet.</p>
+</li>
+<li><p>The Catppuccin theme is now called Pastel in the 🎨 menu; picking it still gives the same colours.</p>
+</li>
+<li><p>Books and paged Word documents now open with more breathing room above the first line.</p>
+</li>
+<li><p><span class="md-kv-label">New Block document theme:</span> grey-green paper, teal accent, hairline cards — and folding a Block section now leaves just its title behind.</p>
+</li>
+<li><p>Source and config files open much faster — a multi-megabyte file now appears almost instantly instead of stalling for half a second.</p>
+</li>
+<li><p>Qview opens faster — diagram and Word support now load only when a document actually needs them.</p>
+</li>
+<li><p>EPUB outline now opens with a link to the book&#39;s own table of contents page; chapter titles get more breathing room and a colour from the book theme.</p>
+</li>
+<li><p><span class="md-kv-label">Card theme:</span> bullet lists now open and space like every other theme, instead of hugging the paragraph above with their items packed together.</p>
+</li>
+<li><p>Big folders open and switch faster — the file list no longer blanks out, and clicking a tab selects it instantly.</p>
+</li>
+<li><p>Word documents can now be read page by page like a book — the 📖/📜 button switches — and their text starts larger on Windows and Linux.</p>
+</li>
+<li><p><span class="md-kv-label">Bookmarks:</span> markers at both page edges show where each bookmark sits; click to toggle, and rows say chapter, line or paragraph.</p>
+</li>
+<li><p><span class="md-kv-label">Bookmarks:</span> press Ctrl/Cmd+B to mark your place in Markdown, text or EPUB files, and jump back from the 🔖 Bookmarks panel.</p>
+</li>
+<li><p>Huge EPUB books and novel-length Word documents now open fast, and the Theme menu works while a .docx is open.</p>
+</li>
+<li><p>Tìm theo wildcard trong ô tên (<em>erd.md, erd</em>), và dán link file (file:///…, C:\…, /Users/…) là mở luôn — cả ở ô F3 lẫn palette Ctrl+/.</p>
+</li>
+<li><p>Right-click a table in a diagram to light its relations and their relations too; a left click goes back to the direct ones.</p>
+</li>
+<li><p>Typing in a search box gives it the whole row, Layout moved to the Appearance tab, the tour shows the global search popup, and edit mode shows line numbers.</p>
+</li>
+<li><p>The search palette now searches inside file contents too — Ctrl/Cmd+E switches between names and contents. The sidebar&#39;s 🌐 button is gone.</p>
+</li>
+<li><p>A globe-and-magnifier button at the right end of the tab bar opens Search everywhere, the same as Ctrl/Cmd+/.</p>
+</li>
+<li><p>Search boxes now match a path fragment like dev-plan/skill.md, keep the cursor where you&#39;re typing after auto-open, and step through hits with ↑↓ or Ctrl/Cmd+J/K.</p>
+</li>
+<li><p>Ctrl/Cmd+/ opens a search popup across every open folder: type a path to browse it, Tab to complete, Ctrl/Cmd+J/K to move, and results reveal in the tree.</p>
+</li>
+<li><p>Files sharing a name now show their folder, empty folders get their own icon, and documents, Word files and books each open at their own width and text size.</p>
+</li>
+<li><p>What&#39;s new now lists everything added since the first release note, instead of showing only the oldest one.</p>
+</li>
+<li><p>Mini player 🎯 now returns to full view — it opens the playing song or clip in the viewer, selects it in the tree, and closes the mini player.</p>
+</li>
+<li><p>The mini player&#39;s volume slider is longer and no longer runs into the bar&#39;s edge.</p>
+</li>
+<li><p>Hiding the mini player&#39;s picture box now makes the bar narrower instead of stretching the controls.</p>
+</li>
+<li><p>The mini player drops its picture box while a song plays, and the buttons stay exactly where they are.</p>
+</li>
+<li><p>The mini player hides its thumbnail in bigger-video mode, and no button moves or shrinks when you switch.</p>
+</li>
+<li><p>Switching the mini player to the bigger video no longer shifts its buttons sideways.</p>
+</li>
+<li><p>Mini player buttons are bigger and easier to hit, and the volume slider is shorter.</p>
+</li>
+<li><p>The song or clip playing in the mini player is now marked in the tree with a ▸, so its 🎯 button visibly lands on that file.</p>
+</li>
+<li><p><span class="md-kv-label">Mini player:</span> the volume slider sits beside the buttons again and reaches the bar&#39;s edge, ↺ replaces the stop square, and switching the video size no longer moves the player.</p>
+</li>
+<li><p><span class="md-kv-label">Mini player:</span> the new ⤴ button shows the video full width above the controls, the bar is narrower, and the volume slider now spans the whole width.</p>
+</li>
+<li><p>Mini player redesigned — play/pause, stop, a seek bar, volume, 🎯 to find the playing file in the tree, and an AUTO switch for the next clip or song.</p>
+</li>
+<li><p><span class="md-kv-label">Compare two photos in the same spot:</span> Slide drags a divider to wipe between them, Flip swaps between them with Space.</p>
+</li>
+<li><p>Press Enter or F2 in the file tree to rename the highlighted file or folder, the way Finder does.</p>
+</li>
+<li><p>Right-click a file or folder in the tree to copy its full path, and opening a folder now lands on its README instead of a stray image.</p>
+</li>
+<li><p>Outline panel numbers headings automatically (1., 1.1, 2.) when the document&#39;s own headings have no numbers.</p>
+</li>
+<li><p><span class="md-kv-label">Tabs:</span> right-click a folder tab and pick a colour under Tab colour to mark it, Finder-style. Pick it again to clear.</p>
+</li>
+<li><p>The 🎨 theme button&#39;s icon and name now look centred.</p>
+</li>
+<li><p>The 🎨 theme button keeps one width, so the toolbar no longer shifts when you switch themes.</p>
+</li>
+</ul>
+<h4>headings get more room above and sit closer to the text below them, in every theme.</h4>
+<ul>
+<li><p><span class="md-kv-label">Mermaid diagrams are colourful:</span> mint nodes, gold labels, blue subgraphs, and each flowchart branch in its own colour.</p>
+</li>
+<li><p><span class="md-kv-label">Windows:</span> folders in the file tree now show a 📁 folder icon instead of the odd-looking 🗂.</p>
+</li>
+<li><p>Dragging a mermaid diagram no longer stutters, even on large ER diagrams, both inline and in fullscreen.</p>
+</li>
+<li><p><span class="md-kv-label">ER relations panel:</span> the selected table&#39;s &quot;one&quot; or &quot;many&quot; is now bold, so you can spot its side of each relationship at a glance.</p>
+</li>
+<li><p><span class="md-kv-label">ER diagrams:</span> with a table selected, Shift+click or Ctrl+click a related table to see just those two and the line between them, highlighted in the panel too.</p>
+</li>
+<li><p>Jumping to a related ER table keeps both tables in view at the same zoom, and the relations panel stays in the top-left corner and opens at the top.</p>
+</li>
+<li><p>Diagram fullscreen now fills the whole screen; in ER diagrams the selected table glows red and a related table you jump to glows in the theme colour.</p>
+</li>
+<li><p>ER relationships now read with the one side first, like &quot;One CUSTOMER – many ORDER&quot;; clicking a related table moves the view there without losing your zoom or selection.</p>
+</li>
+<li><p><span class="md-kv-label">Fullscreen ER diagrams:</span> click a table to see its primary and foreign keys and every relationship it has, with cardinality; click a related table to jump there.</p>
+</li>
+<li><p>The last folder tab no longer has a close button — closing it used to swap in your home folder instead.</p>
+</li>
+<li><p>Folder rows use a new 🗂 icon, markdown files get their own 📝, and code files turn violet — so the three no longer blur together in the file tree.</p>
+</li>
+<li><p>ER diagrams now shade each table by how many other tables it links to — grey when none, amber at five or more — with a legend naming the scale.</p>
+</li>
+<li><p>ER relationship lines and the crow&#39;s foot markers at their ends are three times heavier, readable without clicking a table first</p>
+</li>
+<li><p>ER tables in the Card theme now read sky blue instead of green</p>
+</li>
+<li><p>The guided tour now points at Edit on its own, and two new steps open the 🎨 Theme and 📐 Layout menus over a sample document you can restyle.</p>
+</li>
+<li><p>Clicking a table in an ER diagram no longer dims the relationship labels it highlights.</p>
+</li>
+<li><p>ER diagram row values sit a little further again off their column&#39;s left line.</p>
+</li>
+<li><p>ER diagram row values now sit further off their column&#39;s left line.</p>
+</li>
+<li><p>ER diagram row values no longer start hard against their column&#39;s left line.</p>
+</li>
+<li><p>Each theme now gives ER diagram tables a title band in its own accent colour, so a table&#39;s header reads clearly apart from its rows.</p>
+</li>
+<li><p>ER diagram tables now show a clearly stronger title band, so a table&#39;s header no longer blends into the rows beneath it.</p>
+</li>
+<li><p><span class="md-kv-label">ER diagrams:</span> table names, rows and relationship labels now show in large, readable text, with more room between tables.</p>
+</li>
+<li><p>Mermaid ER tables look cleaner in every theme, light and dark: soft striped rows, a clear header, faint inner lines, and a lighter minimap highlight.</p>
+</li>
+<li><p><span class="md-kv-label">File info:</span> word count and reading time now look like the other details and no longer spill past the panel edge.</p>
+</li>
+<li><p>Diagrams now take each theme&#39;s colours, and the minimap frame no longer hides the tables beneath it.</p>
+</li>
+<li><p><span class="md-kv-label">Diagrams:</span> click a table to highlight what it connects to; fullscreen adds a minimap and &quot;/&quot; to jump to a table by name.</p>
+</li>
+<li><p>More text files now open (.config, .template, .log, .env, .bat, Dockerfile, LICENSE and more; .tmp/.temp only when text), and the file tree gets a 👁 Hidden checkbox.</p>
+</li>
+<li><p>Files double-clicked in Explorer now open near-instantly in the running window (Settings → Opening files), and the Print &amp; PDF buttons are hidden by default.</p>
+</li>
+<li><p>Opening a file from Finder or Explorer now shows it straight away instead of waiting for its folder to finish loading, and large folders list about twice as fast.</p>
+</li>
+<li><p>Opening a folder in a new tab no longer shows the previous folder&#39;s files instead.</p>
+</li>
+<li><p><span class="md-kv-label">Card theme:</span> subsection headings are slightly smaller, so they read a clear step below the section heading above them.</p>
+</li>
+<li><p>The Contrast theme is replaced by Blossom — soft pink paper, raspberry accents and rounded edges, in both light and dark mode.</p>
+</li>
+<li><p>Document themes now waste less space around headings and between sections, and eight themes show soft edges where the page meets the background.</p>
+</li>
+<li><p>Catppuccin, Nord, Gruvbox, Solarized, Terminal, Editorial, E-ink and Contrast themes now show soft edges where the page meets the background.</p>
+</li>
+<li><p>Right-click or select text in an HTML preview now opens the same card as anywhere else, and G / D / C run its Google, Dictionary and Copy buttons.</p>
+</li>
+<li><p>⛶ (or F11) now gives every document — markdown, text, code, PDF, EPUB, Word — a distraction-free fullscreen view; Esc exits.</p>
+</li>
+<li><p>Guided tour no longer pops up when you open a file from Explorer or Finder; large folders (even a whole drive) load without freezing. Settings has a new toggle to hide the Print/PDF toolbar buttons.</p>
+</li>
+<li><p><span class="md-kv-label">UI Inspector:</span> pressing Esc now always exits inspect mode, even right after clicking a button in its popup.</p>
+</li>
+<li><p>File path in the info panel now wraps instead of getting cut off with an ellipsis.</p>
+</li>
+<li><p>Print and PDF toolbar buttons now match the other toolbar buttons instead of showing the plain system look.</p>
+</li>
+<li><p>Settings → About can check GitHub for a newer Qview release — off by default, with a Check now button.</p>
+</li>
+<li><p>Print the open document with ⌘/Ctrl+P, or use the new ⤓ PDF button to save it as a PDF next to the original.</p>
+</li>
+<li><p>File Info now shows a Words row and a Reading row for Markdown, text and Word documents — code blocks, diagrams and formulas are not counted.</p>
+</li>
+<li><p>Obsidian-style [[wiki-links]] open the matching note, [[note#heading]] lands on the heading, and ![[picture.png]] shows the picture inline.</p>
+</li>
+<li><p>Footnotes in markdown now render as numbered superscripts with the notes listed at the end of the document.</p>
+</li>
+<li><p>Markdown now renders math formulas — $$ for a block, $ for inline — and shows a broken formula in red instead of hiding it.</p>
+</li>
+<li><p>Switching a collection or a jump-bar kind no longer opens a different file — what you are reading stays put. ⌘/Ctrl+J and K step back and forward through history.</p>
+</li>
+<li><p>Toolbar gains ◀ ▶ Back/Forward through every file and section you viewed (also Alt+←/→), and 🎯 reveals the open file in the tree even when a name filter hides it.</p>
+</li>
+<li><p><span class="md-kv-label">Tour:</span> a new &quot;What Qview opens&quot; section walks through each file type — Markdown, code, PDF, books, pictures, video, music.</p>
+</li>
+<li><p><span class="md-kv-label">Settings:</span> the Close button sits a little lower, with space above it.</p>
+</li>
+<li><p><span class="md-kv-label">UI inspector:</span> the Style rows are now editable — change a colour, font or padding and see it on screen at once, with Reset to undo; section headers are easier to read.</p>
+</li>
+<li><p><span class="md-kv-label">UI inspector:</span> &quot;Copy for AI&quot; is now one short line — the control&#39;s name plus the script and stylesheet files to edit, e.g. edit-btn (#edit-btn · edit.js · style.css).</p>
+</li>
+<li><p><span class="md-kv-label">UI inspector:</span> the &quot;Copy for AI&quot; line is shorter — repeated selectors collapse to &quot;×N&quot; and runtime-injected styles are labelled as such.</p>
+</li>
+<li><p><span class="md-kv-label">UI inspector:</span> &quot;Copy for AI&quot; now gives one short line that locates the control; the full colours-and-font block moved to a new &quot;Copy details&quot; button.</p>
+</li>
+<li><p>⌘/Ctrl+/ opens the UI inspector: every control gets an outline, hover shows its name, click shows its colours, font and CSS, with a &quot;Copy for AI&quot; button.</p>
+</li>
+<li><p><span class="md-kv-label">Theme menu:</span> the Card row is now white like its cards, and the Glass row shows the theme&#39;s soft colour glows.</p>
+</li>
+<li><p><span class="md-kv-label">Theme picker:</span> fixed Glass showing the wrong preview color.</p>
+</li>
+<li><p>Theme picker now previews each option in its own document background color.</p>
+</li>
+<li><p>Outline section toggles are now bigger in Terminal and E-ink themes, and centered on the heading in Editorial theme.</p>
+</li>
+<li><p>Outline section toggles now sit centered on the heading in every document theme, and the toggle is bigger in Claude theme.</p>
+</li>
+<li><p><span class="md-kv-label">Settings → Appearance:</span> preset borders now show up clearly instead of blending into the background.</p>
+</li>
+<li><p>New install defaults code syntax colours to Atom One Light; picking any Syntax colour other than Theme default hides the Theme button in code view</p>
+</li>
+<li><p>Theme button no longer disappears when you open a code file</p>
+</li>
+<li><p>Choosing a document theme now also colours headings, links and quotes when reading EPUB/MOBI books, not just the page background.</p>
+</li>
+<li><p>Nord theme reads brighter, Gruvbox theme less yellow.</p>
+</li>
+<li><p>Right-click on any text now opens the same popup as selecting it — Google, Copy, Dictionary, and colour preview when it&#39;s a colour.</p>
+</li>
+<li><p><span class="md-kv-label">Right-click a colour:</span> one popup now, not two — and it opens below the word so the text stays readable.</p>
+</li>
+<li><p>Right-click a colour (hex, name, or xkcd phrase) now shows the colour card right away — no need to click Colour… first.</p>
+</li>
+<li><p>Select a word or a colour code in a document to Google it, preview the colour, pick another and copy its code — or right-click a word for the same menu.</p>
+</li>
+<li><p>Layout ▸ font pickers now include ten bundled fonts (Inter, Literata, JetBrains Mono, Fira Code, …) that look the same on every computer and support Vietnamese.</p>
+</li>
+<li><p>Claude theme in dark mode is now warm charcoal with terracotta links, and no longer sits in a bright ivory frame.</p>
+</li>
+<li><p>🎨 Theme menu gains eight looks — Catppuccin, Nord, Gruvbox, Solarized, Terminal, Editorial, E-ink and Contrast — each with a light and a dark side.</p>
+</li>
+<li><p>Links to a section — inside the document or in another file — now jump there, unfolding it if needed. Right panel is tighter and the ⊟ ⊞ buttons are bigger.</p>
+</li>
+<li><p>Good View now starts on, section folding arrows became chevrons aligned with the heading text, and Card theme tables have more space beneath them.</p>
+</li>
+<li><p>Cmd/Ctrl+O now opens the selected file in its default app, or the selected folder in Finder or Explorer; the 📄 button still picks a file.</p>
+</li>
+<li><p>Tabs can run down the left edge as a collapsible, resizable rail (right-click a tab, or ⚙ Settings → Layout), and settings now survive quitting right after you change one.</p>
+</li>
+<li><p>Jump to any open tab from the new ☰ list or with Alt+1..9; the bar scrolls the active tab into view, and tabs no longer resize when selected.</p>
+</li>
+<li><p>Jump back to the previous file with Ctrl/Cmd+~ too, not just Ctrl/Cmd+`.</p>
+</li>
+<li><p>Switching back to a PDF you had open snaps back instantly, right where you left off.</p>
+</li>
+<li><p>The Types filter button no longer stays highlighted from your last session — only lights up when you check a type this time.</p>
+</li>
+<li><p>Settings is wider and has a new Shortcuts tab listing every keyboard shortcut in the app.</p>
+</li>
+<li><p>Alt+Left/Right (or Ctrl/Cmd+`) jumps back to whichever file you had open right before this one.</p>
+</li>
+<li><p>The picture icon in the file tree no longer looks wrong on Windows.</p>
+</li>
+<li><p>Press F3 to search files &amp; folders, F4 to search their contents — start typing right away, and the first match opens itself after a short pause.</p>
+</li>
 <li><p>Wide tables now scroll sideways instead of having their right-hand columns cut off, and a diagram that fails to draw no longer leaves an error over later files.</p>
 </li>
 <li><p>Large markdown files with long tables open several times faster, and cells containing a $ sign no longer come out mangled.</p>
@@ -30,13 +427,13 @@
 </li>
 <li><p>Books (EPUB, MOBI) now open at a narrower, more comfortable reading width by default.</p>
 </li>
-<li><p><span class="kv-label">Modern theme:</span> the page has soft shadows along its left and right edges.</p>
+<li><p><span class="md-kv-label">Modern theme:</span> the page has soft shadows along its left and right edges.</p>
 </li>
-<li><p><span class="kv-label">Settings:</span> the Change…, Reset… and Show buttons share one style, instead of the unstyled ones rendering as bare OS buttons beside the styled one.</p>
+<li><p><span class="md-kv-label">Settings:</span> the Change…, Reset… and Show buttons share one style, instead of the unstyled ones rendering as bare OS buttons beside the styled one.</p>
 </li>
 <li><p>AGENTS.md gains a token-saving cote workflow (scripts/cote.sh) and a rule that CHANGELOG entries stay one short, user-facing line; all 144 existing entries were rewritten to match.</p>
 </li>
-<li><p><span class="kv-label">Settings → Layout:</span> &quot;Swap the side panels&quot; moves the file tree to the right and the outline to the left.</p>
+<li><p><span class="md-kv-label">Settings → Layout:</span> &quot;Swap the side panels&quot; moves the file tree to the right and the outline to the left.</p>
 </li>
 <li><p>Content search no longer lags while you type in a large folder.</p>
 </li>
@@ -60,7 +457,7 @@
 </li>
 <li><p>Click anywhere in the margins beside an EPUB page to turn it, not just on the text.</p>
 </li>
-<li><p><span class="kv-label">Ctrl+F ignores punctuation now:</span> searching AD01 finds AD-01, AD 01 and AD:01.</p>
+<li><p><span class="md-kv-label">Ctrl+F ignores punctuation now:</span> searching AD01 finds AD-01, AD 01 and AD:01.</p>
 </li>
 <li><p>The sidebar name filter and content search ignore punctuation the same way, so all three searches agree on what counts as a match.</p>
 </li>
@@ -78,7 +475,7 @@
 </li>
 <li><p>Record a code review in plan-0908.md, including two defects the smoke suite misses — one still open: Reset appearance discards an unsaved edit.</p>
 </li>
-<li><p><span class="kv-label">Layout can set your reading fonts:</span> Body for prose, Mono for code, and a Syntax palette for keywords, strings and comments. Only installed fonts are offered.</p>
+<li><p><span class="md-kv-label">Layout can set your reading fonts:</span> Body for prose, Mono for code, and a Syntax palette for keywords, strings and comments. Only installed fonts are offered.</p>
 </li>
 <li><p>Source files get their own size slider (Code file, 9–36px), separate from the Snippet slider for fenced code inside a document.</p>
 </li>
@@ -94,7 +491,7 @@
 </li>
 <li><p>The Layout menu scrolls inside a short window instead of running its Reset button off the bottom.</p>
 </li>
-<li><p><span class="kv-label">Settings gains Reset appearance:</span> theme, light/dark, every Layout value, fonts, palettes, Good View and image modes back to defaults, behind a confirm. Tabs and favourites are untouched.</p>
+<li><p><span class="md-kv-label">Settings gains Reset appearance:</span> theme, light/dark, every Layout value, fonts, palettes, Good View and image modes back to defaults, behind a confirm. Tabs and favourites are untouched.</p>
 </li>
 <li><p>Ctrl/Cmd+, opens Settings and Ctrl/Cmd+L opens Layout.</p>
 </li>
@@ -108,7 +505,7 @@
 </li>
 <li><p>Past five folder tabs, Favorites and Recent shrink to their icon and count, freeing width for folder names.</p>
 </li>
-<li><p><span class="kv-label">Qview reads five more kinds of file:</span> source and config with line numbers, CSV/TSV as a table, audio with a player, ZIP as a listing, .docx as prose.</p>
+<li><p><span class="md-kv-label">Qview reads five more kinds of file:</span> source and config with line numbers, CSV/TSV as a table, audio with a player, ZIP as a listing, .docx as prose.</p>
 </li>
 <li><p>Source files are editable, not read-only — the same as a .txt.</p>
 </li>
@@ -132,7 +529,7 @@
 </li>
 <li><p>Split probes-groupsort.js: the per-tab memory probes move to probes-prefs.js.</p>
 </li>
-<li><p><span class="kv-label">A guided tour on first launch:</span> eleven bubbles pointing at the real controls, one at a time. Next/Back/Skip or the arrow keys; replay it from Help in Settings.</p>
+<li><p><span class="md-kv-label">A guided tour on first launch:</span> eleven bubbles pointing at the real controls, one at a time. Next/Back/Skip or the arrow keys; replay it from Help in Settings.</p>
 </li>
 <li><p>The tour&#39;s spotlight ring and the dim around it are one element, so they cannot drift apart on a resize. Clicks outside the bubble are swallowed.</p>
 </li>
@@ -162,7 +559,7 @@
 </li>
 <li><p>Split probes-shortcuts.js: the tree arrow probes move to probes-treearrows.js.</p>
 </li>
-<li><p><span class="kv-label">EPUB and MOBI paging follows the pointer:</span> rest the mouse over the page and the wheel and arrow keys turn it, without clicking first.</p>
+<li><p><span class="md-kv-label">EPUB and MOBI paging follows the pointer:</span> rest the mouse over the page and the wheel and arrow keys turn it, without clicking first.</p>
 </li>
 <li><p>Split the input half of epub.js into epubinput.js.</p>
 </li>
@@ -174,7 +571,7 @@
 </li>
 <li><p>Fix the splash icon going missing after the move.</p>
 </li>
-<li><p><span class="kv-label">Claude theme:</span> cool the background slightly, less yellow.</p>
+<li><p><span class="md-kv-label">Claude theme:</span> cool the background slightly, less yellow.</p>
 </li>
 <li><p>Document the npm run vendor step in the README — pulling the src/ move without it left the app blank.</p>
 </li>
@@ -186,7 +583,7 @@
 </li>
 <li><p>npm run dist bumps the patch version, so builds stop shipping as 0.1.0 forever.</p>
 </li>
-<li><p><span class="kv-label">Tree right-click:</span> a new &quot;Open file&quot; entry hands the file to your default app, and the paste entries stay hidden until the clipboard holds something.</p>
+<li><p><span class="md-kv-label">Tree right-click:</span> a new &quot;Open file&quot; entry hands the file to your default app, and the paste entries stay hidden until the clipboard holds something.</p>
 </li>
 <li><p>The tab close button sits flush against the tab&#39;s right edge after a short label.</p>
 </li>
@@ -232,7 +629,7 @@
 </li>
 <li><p>Double right-click on an image applies Auto Fit instead of Vertical fit.</p>
 </li>
-<li><p><span class="kv-label">Search is faster:</span> name filtering is debounced, and content search no longer blocks the app while it reads files — worst on Windows.</p>
+<li><p><span class="md-kv-label">Search is faster:</span> name filtering is debounced, and content search no longer blocks the app while it reads files — worst on Windows.</p>
 </li>
 <li><p>Add a Linux AppImage build.</p>
 </li>
@@ -248,17 +645,17 @@
 </li>
 <li><p>Fix the selection highlight not showing until you moved the pointer away.</p>
 </li>
-<li><p><span class="kv-label">Multi-select no longer slows down as a folder grows:</span> on 50,000 rows a Ctrl-click went from 19ms to 0.01ms.</p>
+<li><p><span class="md-kv-label">Multi-select no longer slows down as a folder grows:</span> on 50,000 rows a Ctrl-click went from 19ms to 0.01ms.</p>
 </li>
 <li><p>Split every oversized source file — 16 over the 200-line limit became 0. Pure code moves, no behaviour change.</p>
 </li>
 <li><p>Extend the smoke suite from 90 to 94 checks, covering image fit and zoom, tab drag and selection painting.</p>
 </li>
-<li><p><span class="kv-label">Windows:</span> switch the installer to NSIS with a directory picker, instead of a portable build that self-extracted somewhere new each run.</p>
+<li><p><span class="md-kv-label">Windows:</span> switch the installer to NSIS with a directory picker, instead of a portable build that self-extracted somewhere new each run.</p>
 </li>
 <li><p>Add a startup splash instead of a blank pane while the first tab loads.</p>
 </li>
-<li><p><span class="kv-label">File Info:</span> wrap long names onto two lines, split Date into Created and Modified, and spell the month (Sep 3, 2026, 10:14 AM).</p>
+<li><p><span class="md-kv-label">File Info:</span> wrap long names onto two lines, split Date into Created and Modified, and spell the month (Sep 3, 2026, 10:14 AM).</p>
 </li>
 <li><p>&quot;New folder here&quot; in the tree&#39;s right-click menu drops straight into rename mode.</p>
 </li>
@@ -266,19 +663,19 @@
 </li>
 <li><p>Empty folders show up in the tree, so a folder you just made does not vanish.</p>
 </li>
-<li><p><span class="kv-label">Compare:</span> double-click an image pane to fit the picture; opening the file for real moves to a 📂 button.</p>
+<li><p><span class="md-kv-label">Compare:</span> double-click an image pane to fit the picture; opening the file for real moves to a 📂 button.</p>
 </li>
 <li><p>Searching files matches folder names too — a matched folder opens with all its contents.</p>
 </li>
-<li><p><span class="kv-label">Right-click gains a file clipboard:</span> Cut, Copy, then Copy files here / Move files here. Files copied in Finder or Explorer paste too, and a clash never overwrites.</p>
+<li><p><span class="md-kv-label">Right-click gains a file clipboard:</span> Cut, Copy, then Copy files here / Move files here. Files copied in Finder or Explorer paste too, and a clash never overwrites.</p>
 </li>
 <li><p>Right-click a folder to open a terminal there — only the terminals you actually have installed are listed.</p>
 </li>
 <li><p>With two or more files selected, the arrow keys tour the selection instead of the whole tree. Esc clears it.</p>
 </li>
-<li><p><span class="kv-label">Compare:</span> a shared zoom bar drives both panes, and 🔗 Sync Photos ties the mouse together too, so the pair moves as one picture.</p>
+<li><p><span class="md-kv-label">Compare:</span> a shared zoom bar drives both panes, and 🔗 Sync Photos ties the mouse together too, so the pair moves as one picture.</p>
 </li>
-<li><p><span class="kv-label">Compare:</span> photo panes open filling the pane&#39;s short side instead of shrinking the whole picture into it.</p>
+<li><p><span class="md-kv-label">Compare:</span> photo panes open filling the pane&#39;s short side instead of shrinking the whole picture into it.</p>
 </li>
 <li><p>A copy, move or drag reports what happened in a toast instead of silently reshuffling the tree.</p>
 </li>
@@ -296,9 +693,9 @@
 </li>
 <li><p>Put a space between a collection&#39;s name and its count.</p>
 </li>
-<li><p><span class="kv-label">The right-click menu can be driven from the keyboard:</span> each entry shows the letter that runs it, so right-click then C copies.</p>
+<li><p><span class="md-kv-label">The right-click menu can be driven from the keyboard:</span> each entry shows the letter that runs it, so right-click then C copies.</p>
 </li>
-<li><p><span class="kv-label">Open Compare from a two-file selection without the menu:</span> double-click either file, or press Enter or Space.</p>
+<li><p><span class="md-kv-label">Open Compare from a two-file selection without the menu:</span> double-click either file, or press Enter or Space.</p>
 </li>
 <li><p>Add a ⚙ Settings popup with Show hidden files &amp; folders, Include node_modules, and the Library folder picker. Both flags default to off.</p>
 </li>
@@ -322,9 +719,9 @@
 </li>
 <li><p>File Info shows the aspect ratio beside the resolution (1080 × 1920 · 9:16 · 1K).</p>
 </li>
-<li><p><span class="kv-label">Compare:</span> Ctrl+Scroll or Shift+Scroll scrolls both text panes together, so a side-by-side read does not drift.</p>
+<li><p><span class="md-kv-label">Compare:</span> Ctrl+Scroll or Shift+Scroll scrolls both text panes together, so a side-by-side read does not drift.</p>
 </li>
-<li><p><span class="kv-label">Editing remembers where you were reading:</span> Ctrl+Enter carries your place into the source and back out again, instead of landing at the top.</p>
+<li><p><span class="md-kv-label">Editing remembers where you were reading:</span> Ctrl+Enter carries your place into the source and back out again, instead of landing at the top.</p>
 </li>
 <li><p>Layout gains a Line gap slider (0–3em) controlling paragraph and line spacing, independent of Good View.</p>
 </li>

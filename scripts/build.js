@@ -27,12 +27,15 @@ async function main() {
     // is nothing to mark external — src never require()s them.
     outfile: path.join(OUT, 'md-editor.js'),
     legalComments: 'inline',
+    minify: true,
+    sourcemap: true,
   });
 
   await esbuild.build({
     entryPoints: [path.join(ROOT, 'css', 'base.css')],
     bundle: true,
     outfile: path.join(OUT, 'md-editor.css'),
+    minify: true,
   });
 
   const themes = fs.readdirSync(path.join(ROOT, 'themes')).filter((f) => f.endsWith('.css'));

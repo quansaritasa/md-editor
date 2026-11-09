@@ -148,7 +148,7 @@ test('Copy puts the block text on the clipboard, minus its trailing newline', as
   const p = makePage();
   const clip = stubClipboard(p.window);
   await MdEditor.mount(p.content, '```js\nconst x = 1;\n```\n', {});
-  const btn = p.content.querySelector('.code-copy-btn');
+  const btn = p.content.querySelector('.md-code-copy-btn');
   btn.click();
   await tick();
   assert.deepStrictEqual(clip, ['const x = 1;']);
@@ -159,7 +159,7 @@ test('a rejected clipboard write reports failure rather than throwing', async ()
   const p = makePage();
   stubClipboard(p.window, { fail: true });
   await MdEditor.mount(p.content, '```\nx\n```\n', {});
-  const btn = p.content.querySelector('.code-copy-btn');
+  const btn = p.content.querySelector('.md-code-copy-btn');
   btn.click();
   await tick();
   assert.strictEqual(btn.textContent, 'Copy failed');
@@ -171,7 +171,7 @@ test('Copy Full splices the sidecar prompt around the code', async () => {
   const adapter = MdEditor.createAdapter({ readInject: () => ({ pre: 'BEFORE\n', post: '\nAFTER' }) });
   await MdEditor.mount(p.content, '```\nbody\n```\n', { docPath: DOC, adapter });
   await tick();
-  const full = p.content.querySelector('.code-full-btn');
+  const full = p.content.querySelector('.md-code-full-btn');
   assert.strictEqual(full.style.display, '', 'button revealed when a sidecar exists');
   full.click();
   await tick();
@@ -183,13 +183,13 @@ test('Copy Full stays hidden when no sidecar is on disk', async () => {
   stubClipboard(p.window);
   await MdEditor.mount(p.content, '```\nbody\n```\n', { docPath: DOC });
   await tick();
-  assert.strictEqual(p.content.querySelector('.code-full-btn').style.display, 'none');
+  assert.strictEqual(p.content.querySelector('.md-code-full-btn').style.display, 'none');
 });
 
 test('Wrap starts on and toggles', async () => {
   const p = makePage();
   await MdEditor.mount(p.content, '```\nx\n```\n', {});
-  const btn = p.content.querySelector('.code-wrap-btn');
+  const btn = p.content.querySelector('.md-code-wrap-btn');
   const code = p.content.querySelector('pre code');
   assert.strictEqual(btn.textContent, 'Unwrap');
   assert.strictEqual(code.style.whiteSpace, 'pre-wrap');
@@ -219,5 +219,5 @@ test('a mermaid fence survives untouched when the peer is absent', async () => {
   await MdEditor.mount(p.content, '```mermaid\ngraph TD; A-->B;\n```\n', {});
   assert.strictEqual(p.content.querySelectorAll('.mermaid-wrapper').length, 0);
   assert.ok(p.content.querySelector('code.language-mermaid'), 'fence left in place');
-  assert.ok(!p.content.querySelector('.code-copy-btn'), 'and gets no copy chrome');
+  assert.ok(!p.content.querySelector('.md-code-copy-btn'), 'and gets no copy chrome');
 });

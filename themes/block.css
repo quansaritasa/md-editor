@@ -65,11 +65,11 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
     line-height: 1.45;
 }
 /* ── Frontmatter Display ───────────────────── */
-.md-editor .header {
+.md-editor .md-header {
     margin-bottom: 36px;
     padding-bottom: 24px;
     border-bottom: 1px solid var(--border);
-}.md-editor .eyebrow {
+}.md-editor .md-eyebrow {
     display: inline-block;
     font-size: 0.75rem;
     font-weight: 500;
@@ -80,19 +80,19 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
     background: var(--accent-soft);
     padding: 3px 10px;
     border-radius: 12px;
-}.md-editor .meta {
+}.md-editor .md-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 8px 16px;
     margin-top: 14px;
-}.md-editor .meta-item {
+}.md-editor .md-meta-item {
     font-size: 0.85rem;
     color: var(--text-secondary);
-}.md-editor .meta-label {
+}.md-editor .md-meta-label {
     font-weight: 600;
     color: var(--text);
     margin-right: 6px;
-}.md-editor .meta-label::after {
+}.md-editor .md-meta-label::after {
     content: ":";
 }
 /* ── Headings ─────────────────────────────── */
@@ -169,14 +169,14 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
     color: var(--text);
 }.md-editor tr:nth-child(even) td {
     background: var(--surface);
-}.md-editor table.fields {
+}.md-editor table.md-fields {
     font-variant-numeric: tabular-nums;
-}.md-editor table.fields th {
+}.md-editor table.md-fields th {
     font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-secondary);
-}.md-editor table.fields td:first-child {
+}.md-editor table.md-fields td:first-child {
     font-family:
         ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.85em;
@@ -228,13 +228,13 @@ html.dark .md-editor pre {
     color: var(--text);
     font-size: inherit;
 }
-.md-editor .code-block {
+.md-editor .md-code-block {
     position: relative;
     margin: 12px 0 20px;
-}.md-editor .code-block pre {
+}.md-editor .md-code-block pre {
     margin: 0;
     padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
-}.md-editor .code-copy-btn {
+}.md-editor .md-code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -255,13 +255,13 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
-}.md-editor .code-copy-btn:hover {
+}.md-editor .md-code-copy-btn:hover {
     background: var(--border);
     color: var(--text);
-}.md-editor .code-copy-btn.copied {
+}.md-editor .md-code-copy-btn.md-copied {
     color: var(--accent);
     border-color: var(--accent);
-}.md-editor .code-full-btn {
+}.md-editor .md-code-full-btn {
     position: absolute;
     top: 8px;
     right: 132px;
@@ -282,10 +282,10 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
-}.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
+}.md-editor .md-code-full-btn:hover, .md-editor .md-code-full-btn.md-copied {
     background: var(--border);
     color: var(--text);
-}.md-editor .code-wrap-btn {
+}.md-editor .md-code-wrap-btn {
     position: absolute;
     top: 8px;
     right: 70px;
@@ -306,7 +306,7 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover {
+}.md-editor .md-code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }
@@ -319,47 +319,47 @@ html.dark .md-editor pre {
     line-height: 1.45;
 }
 /* ── Blockquotes ──────────────────────────── */
-.md-editor blockquote, .md-editor .blockquotes {
+.md-editor blockquote, .md-editor .md-blockquotes {
     border-left: 3px solid var(--accent);
     padding: 8px 16px;
     margin: 12px 0 20px;
     color: var(--text-secondary);
     background: var(--accent-soft);
     border-radius: 0 var(--radius) var(--radius) 0;
-}.md-editor blockquote p, .md-editor .blockquotes p {
+}.md-editor blockquote p, .md-editor .md-blockquotes p {
     margin: 0;
-}.md-editor .blockquotes.note {
+}.md-editor .md-blockquotes.md-note {
     border-left-color: var(--note-amber-border);
     background: var(--note-amber-lt);
     color: var(--note-amber);
-}.md-editor .blockquotes.note strong, .md-editor .blockquotes.note p {
+}.md-editor .md-blockquotes.md-note strong, .md-editor .md-blockquotes.md-note p {
     color: var(--note-amber);
-}.md-editor .blockquotes.info {
+}.md-editor .md-blockquotes.md-info {
     border-left-color: var(--info-blue-border);
     background: var(--info-blue-lt);
     color: var(--info-blue);
-}.md-editor .blockquotes.info strong, .md-editor .blockquotes.info p {
+}.md-editor .md-blockquotes.md-info strong, .md-editor .md-blockquotes.md-info p {
     color: var(--info-blue);
 }
 /* ── Misc ─────────────────────────────────── */
-.md-editor .example-box {
+.md-editor .md-example-box {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 12px 16px;
     margin: 12px 0;
     background: var(--surface);
-}.md-editor .example-box p {
+}.md-editor .md-example-box p {
     margin: 0;
-}.md-editor .example-box.good-box {
+}.md-editor .md-example-box.md-good-box {
     border-left: 4px solid #0f766e;
-}.md-editor .example-box.bad-box {
+}.md-editor .md-example-box.md-bad-box {
     border-left: 4px solid #9a3412;
-}.md-editor .block-card {
+}.md-editor .md-block-card {
     border: 1px solid var(--border);
     background: var(--surface);
     border-radius: var(--radius);
     padding: 14px 16px;
-}.md-editor .block-grid {
+}.md-editor .md-block-grid {
     display: grid;
     gap: 14px;
 }.md-editor hr {
@@ -371,29 +371,7 @@ html.dark .md-editor pre {
     height: auto;
 }
 /* ── Theme Toggle ─────────────────────────── */
-.md-editor .theme-btn {
-    position: fixed;
-    top: 14px;
-    right: 14px;
-    z-index: 100;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    padding: 6px 14px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition:
-        background 0.12s,
-        color 0.12s;
-}.md-editor .theme-btn:hover {
-    color: var(--text);
-    background: var(--bg);
-}
+
 /* ── Responsive ───────────────────────────── */
 .md-editor select {
     padding: 5px 12px;
@@ -545,7 +523,7 @@ html.dark .md-editor pre {
     color: var(--text-secondary);
     margin: 22px 0 4px;
 }
-.md-editor .eyebrow { background: none; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 2px; letter-spacing: 0.11em; padding: 2px 8px; }
+.md-editor .md-eyebrow { background: none; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 2px; letter-spacing: 0.11em; padding: 2px 8px; }
 .md-editor a { text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
 .md-editor a:hover { border-bottom-color: var(--accent); }
 .md-editor strong { font-weight: 600; }
@@ -553,7 +531,7 @@ html.dark .md-editor pre {
 .md-editor pre { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; background: var(--code-bg); }
 .md-editor pre code { border: none; padding: 0; font-size: inherit; }
 /* A quote is a rail, not a filled box. */
-.md-editor blockquote, .md-editor .blockquotes { background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }
+.md-editor blockquote, .md-editor .md-blockquotes { background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }
 /* Tables are read as data: hairlines, a label row, and digits that line up. */
 .md-editor table { font-size: 0.9em; font-variant-numeric: tabular-nums; }
 .md-editor th, .md-editor td { border-left: none; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 13px; }
@@ -568,9 +546,9 @@ html.dark .md-editor pre {
    that makes the theme "Block": a hairline border and no shadow at all. */
 .md-editor { background: var(--book-bg); }
 /* Doubled class throughout: the shared Section-rhythm block is emitted last
-   and claims both `.section` and its opening h2, so reshaping either into a
+   and claims both `.md-section` and its opening h2, so reshaping either into a
    card needs one more point of specificity than the block that follows. */
-.md-editor.md-editor .section {
+.md-editor.md-editor .md-section {
     background: var(--bg);
     border: 1px solid var(--border);
     /* The accent is spent on the card's top edge rather than on any text, so it
@@ -602,7 +580,7 @@ html.dark .md-editor pre {
    strip flush at any inset the reader picks — and the strip's own side padding
    tracks it too, so the header sits on the same left edge as the prose under it
    instead of hanging inboard of it. */
-.md-editor.md-editor .section > h2:first-child {
+.md-editor.md-editor .md-section > h2:first-child {
     margin: calc(-1 * var(--block-pad-y)) calc(-1 * var(--block-pad-x)) var(--block-pad-y);
     padding: 15px var(--block-pad-x);
     /* Sunk, not tinted with the accent: the strip earns its own band from the
@@ -614,7 +592,7 @@ html.dark .md-editor pre {
 /* Collapsed, a card is only its header strip. The strip is pulled full-bleed
    out of the card's inset, so once the body is hidden that inset stands as
    empty white above and below the title — and it cannot be cancelled with a
-   negative margin, because .section is its own formatting context and an
+   negative margin, because .md-section is its own formatting context and an
    auto height clamps at zero before the padding is reached. So the padding
    itself goes and the strip stops pulling: the two undo each other and the
    card ends exactly where the strip does. The strip's hairline goes too — the
@@ -624,21 +602,21 @@ html.dark .md-editor pre {
    A host that drives --section-padding from an id-scoped rule (Qview's padding
    slider does) outranks the padding line here and has to repeat it; the margin
    and border below are this theme's alone and hold everywhere. */
-.md-editor.md-editor .section:has(> h2.sec-collapsed:first-child) {
+.md-editor.md-editor .md-section:has(> h2.sec-collapsed:first-child) {
     padding: 0;
 }
-.md-editor.md-editor .section > h2.sec-collapsed:first-child {
+.md-editor.md-editor .md-section > h2.sec-collapsed:first-child {
     margin: 0;
     border-bottom: none;
 }
 
 /* ── Section rhythm ───────────────────────────
-   md-editor's postprocess cuts the document into .section wrappers at each h2,
+   md-editor's postprocess cuts the document into .md-section wrappers at each h2,
    so an h2 is always that wrapper's first child. Its top margin therefore
-   stacked INSIDE the section's own padding, and any .section margin stacked on
+   stacked INSIDE the section's own padding, and any .md-section margin stacked on
    top of that again — three separate values deciding one gap, none of them
-   nameable. The gap now belongs to .section alone; the h2 rule above is kept
+   nameable. The gap now belongs to .md-section alone; the h2 rule above is kept
    as the fallback for an h2 rendered outside a section. Card has worked this
    way from the start; this brings the rest into line. */
-.md-editor .section { margin-bottom: 12px; }
-.md-editor .section > h2:first-child { margin-top: 0; }
+.md-editor .md-section { margin-bottom: 12px; }
+.md-editor .md-section > h2:first-child { margin-top: 0; }

@@ -2,6 +2,12 @@
 
 # Changelog
 
+## Unreleased — unique class names
+
+- **Breaking for hosts that style library output.** Every generic class the library emits now carries the `md-` prefix, so a host's own `.header`, `.meta`, `.info`, `.a` or `.q` can no longer restyle a document: `header`, `eyebrow`, `meta`, `meta-item`, `meta-label`, `fields`, `section`, `q`, `a`, `copied`, `table-scroll`, `kv-label`, `txt-head`, `block-card`, `block-grid`, `code-block`, `code-copy-btn`, `code-full-btn`, `code-wrap-btn`, `info`, `note`, `blockquotes`, `example-box`, `good-box`, `bad-box`. The code-wrap button's `active` state is now `md-active`.
+- Removed dead CSS no code emits: `.theme-btn` (all themes) and `ul.clean` (`card.css`).
+- Themes regenerated from `tools/gen_themes.py`, which carries the same renames.
+
 ## v0.10.43 — theme editor picker, and a bluer Block card
 
 - The theme editor's colour picker is now a vendored picker

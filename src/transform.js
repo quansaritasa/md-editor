@@ -14,7 +14,7 @@ function boldTxtHeadings(md) {
   // Merge "LABEL:" + single value line into "LABEL: VALUE" so key-value pairs
   // (e.g. "OUTFIT:\n[USER_OUTFIT]", "MOOD:\nAUTO") stay on one line.
   md = md.replace(/(^|\n)([^\n:]+):[ \t]*\n[ \t]*([^\n]+)[ \t]*(?=\n[ \t]*\n|\n*$)/g, '$1$2: $3');
-  return md.replace(/^[ \t]*\[([^\]]+)\][ \t]*$/gm, '<h2 class="txt-head">[$1]</h2>\n');
+  return md.replace(/^[ \t]*\[([^\]]+)\][ \t]*$/gm, '<h2 class="md-txt-head">[$1]</h2>\n');
 }
 
 // Opt-in: a card layout uses <h2> boundaries as its dividers, so a document
@@ -29,7 +29,7 @@ function wrapSections(html) {
   html = html.trim();
   if (!html) return '';
   const chunks = html.split(/(?=<h2(?:\s|>))/);
-  return chunks.filter((c) => c.trim()).map((c) => '<section class="section">\n' + c.trim() + '\n</section>').join('\n');
+  return chunks.filter((c) => c.trim()).map((c) => '<section class="md-section">\n' + c.trim() + '\n</section>').join('\n');
 }
 
 // The buttons are emitted unwired; the code-blocks feature binds them later.
@@ -37,11 +37,11 @@ function wrapSections(html) {
 function wrapCodeBlocks(html) {
   return html.replace(/<pre><code(?: class="([^"]*)")?>(.*?)<\/code><\/pre>/gs, (match, classes, codeHtml) => {
     if (classes && classes.includes('language-mermaid')) return match;
-    const button = '<button class="code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button>'
-      + '<button class="code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button>'
-      + '<button class="code-copy-btn" type="button" aria-label="Copy code">Copy</button>';
+    const button = '<button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button>'
+      + '<button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button>'
+      + '<button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button>';
     const codeClassAttr = classes && classes.trim() ? ' class="' + classes.trim() + '"' : '';
-    return '<div class="code-block">' + button + '<pre><code' + codeClassAttr + '>' + codeHtml + '</code></pre></div>';
+    return '<div class="md-code-block">' + button + '<pre><code' + codeClassAttr + '>' + codeHtml + '</code></pre></div>';
   });
 }
 
@@ -50,9 +50,9 @@ function wrapCodeBlocks(html) {
 function wrapBlockquotes(html) {
   return html.replace(/<blockquote>(.*?)<\/blockquote>/gs, (m, inner) => {
     let extraClass = '';
-    if (/<p>\s*<strong>\s*(?:⚠️\s*)?(?:Note|Warning|Warn)\s*[:：]?\s*<\/strong>/i.test(inner)) extraClass = ' note';
-    else if (/<p>\s*<strong>\s*(?:ℹ️\s*)?(?:Info|Information|Tip)\s*[:：]?\s*<\/strong>/i.test(inner)) extraClass = ' info';
-    return '<div class="blockquotes' + extraClass + '">' + inner + '</div>';
+    if (/<p>\s*<strong>\s*(?:⚠️\s*)?(?:Note|Warning|Warn)\s*[:：]?\s*<\/strong>/i.test(inner)) extraClass = ' md-note';
+    else if (/<p>\s*<strong>\s*(?:ℹ️\s*)?(?:Info|Information|Tip)\s*[:：]?\s*<\/strong>/i.test(inner)) extraClass = ' md-info';
+    return '<div class="md-blockquotes' + extraClass + '">' + inner + '</div>';
   });
 }
 
@@ -64,7 +64,7 @@ function wrapBlockquotes(html) {
 // nest a table inside a table, so the lazy match is safe here.
 function wrapTables(html) {
   return html.replace(/<table(?:\s[^>]*)?>[\s\S]*?<\/table>/g,
-    (t) => '<div class="table-scroll">' + t + '</div>');
+    (t) => '<div class="md-table-scroll">' + t + '</div>');
 }
 
 const OPTIONAL = ['txt-headings', 'strip-hr', 'header', 'data-labels', 'qa-cards', 'example-boxes', 'field-tables', 'good-view'];

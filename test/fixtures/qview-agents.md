@@ -64,5 +64,18 @@ Cấm:
   `ship` tự in một dòng `git log --oneline -1` là đủ.
 - Tách `git add`, `git commit`, `git push` thành nhiều call.
 
-Commit message truyền vào `cote` phải giữ nguyên hai dòng trailer
-`Co-Authored-By:` và `Claude-Session:` như các commit trước trong repo.
+Commit message truyền vào `cote` là nguyên văn — không thêm trailer nào
+(`Co-Authored-By:`, `Claude-Session:`) vào cuối message.
+
+## `npm run smoke` — chỉ chạy khi được bảo
+
+Suite mất ~2.5 phút mỗi lần. **Không tự chạy sau mỗi lần sửa.** Đợi user nói.
+
+| Tình huống | Làm gì |
+|---|---|
+| Vừa sửa xong một thứ | Verify bằng `node .claude/skills/run-qview/driver.mjs` (`reload` rồi `batch`/`eval` để đo), rồi nói rõ là **chưa** chạy smoke |
+| User bảo chạy | Chạy `npm run smoke`, lọc `=false` |
+| Sắp build dist | **Nhắc user chạy smoke trước**, đừng tự chạy |
+
+`src/smoke/lines-gate.js` chạy được riêng (`node src/smoke/lines-gate.js`, ~0s) —
+dùng nó để kiểm tra rule 200 dòng mà không phải trả giá cả suite.

@@ -8,9 +8,9 @@ MdEditor.configure({ marked: require('marked') });
 
 test('transforms are off by default', () => {
   const out = MdEditor.build('# Title\n\n---\n\n## S\n\ntext\n');
-  assert.ok(!out.html.includes('class="header"'), 'no header card');
+  assert.ok(!out.html.includes('class="md-header"'), 'no header card');
   assert.ok(out.html.includes('<hr>'), 'horizontal rules survive');
-  assert.ok(out.html.includes('<section class="section">'), 'sections still wrap');
+  assert.ok(out.html.includes('<section class="md-section">'), 'sections still wrap');
 });
 
 test('postprocess:false returns marked output untouched', () => {
@@ -83,7 +83,7 @@ test('a long table is labelled in one pass, not once per row', () => {
 test('every table is wrapped in a scroll box', () => {
   const md = '| A | B |\n|---|---|\n| 1 | 2 |\n\ntext\n\n| C | D |\n|---|---|\n| 3 | 4 |\n';
   const out = MdEditor.build(md);
-  assert.ok(out.html.includes('<div class="table-scroll"><table>'), 'the wrapper opens around the table');
+  assert.ok(out.html.includes('<div class="md-table-scroll"><table>'), 'the wrapper opens around the table');
   assert.ok(out.html.includes('</table></div>'), 'and closes around it');
   assert.strictEqual((out.html.match(/table-scroll/g) || []).length, 2, 'one wrapper per table, not one for the pair');
 });
@@ -93,10 +93,10 @@ test('a document with no table gains no wrapper', () => {
   assert.ok(!out.html.includes('table-scroll'));
 });
 
-// field-tables invents its own <table class="fields">, after the point a
+// field-tables invents its own <table class="md-fields">, after the point a
 // wrapper placed earlier in the pipeline would have run.
 test('a table the transforms invent is wrapped as well', () => {
   const out = MdEditor.build('| Field | Type |\n|---|---|\n| id | int |\n', { transforms: ['field-tables'] });
-  const m = out.html.match(/<div class="table-scroll"><table[^>]*>/);
+  const m = out.html.match(/<div class="md-table-scroll"><table[^>]*>/);
   assert.ok(m, 'wrapped: ' + out.html.slice(0, 200));
 });

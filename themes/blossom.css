@@ -65,11 +65,11 @@ html.dark .md-editor .hljs-attr { color: #F783AC; }
     line-height: 1.45;
 }
 /* ── Frontmatter Display ───────────────────── */
-.md-editor .header {
+.md-editor .md-header {
     margin-bottom: 36px;
     padding-bottom: 24px;
     border-bottom: 1px solid var(--border);
-}.md-editor .eyebrow {
+}.md-editor .md-eyebrow {
     display: inline-block;
     font-size: 0.75rem;
     font-weight: 500;
@@ -80,19 +80,19 @@ html.dark .md-editor .hljs-attr { color: #F783AC; }
     background: var(--accent-soft);
     padding: 3px 10px;
     border-radius: 12px;
-}.md-editor .meta {
+}.md-editor .md-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 8px 16px;
     margin-top: 14px;
-}.md-editor .meta-item {
+}.md-editor .md-meta-item {
     font-size: 0.85rem;
     color: var(--text-secondary);
-}.md-editor .meta-label {
+}.md-editor .md-meta-label {
     font-weight: 600;
     color: var(--text);
     margin-right: 6px;
-}.md-editor .meta-label::after {
+}.md-editor .md-meta-label::after {
     content: ":";
 }
 /* ── Headings ─────────────────────────────── */
@@ -169,14 +169,14 @@ html.dark .md-editor .hljs-attr { color: #F783AC; }
     color: var(--text);
 }.md-editor tr:nth-child(even) td {
     background: var(--surface);
-}.md-editor table.fields {
+}.md-editor table.md-fields {
     font-variant-numeric: tabular-nums;
-}.md-editor table.fields th {
+}.md-editor table.md-fields th {
     font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-secondary);
-}.md-editor table.fields td:first-child {
+}.md-editor table.md-fields td:first-child {
     font-family:
         ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
     font-size: 0.85em;
@@ -228,13 +228,13 @@ html.dark .md-editor pre {
     color: var(--text);
     font-size: inherit;
 }
-.md-editor .code-block {
+.md-editor .md-code-block {
     position: relative;
     margin: 12px 0 20px;
-}.md-editor .code-block pre {
+}.md-editor .md-code-block pre {
     margin: 0;
     padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
-}.md-editor .code-copy-btn {
+}.md-editor .md-code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -255,13 +255,13 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
-}.md-editor .code-copy-btn:hover {
+}.md-editor .md-code-copy-btn:hover {
     background: var(--border);
     color: var(--text);
-}.md-editor .code-copy-btn.copied {
+}.md-editor .md-code-copy-btn.md-copied {
     color: var(--accent);
     border-color: var(--accent);
-}.md-editor .code-full-btn {
+}.md-editor .md-code-full-btn {
     position: absolute;
     top: 8px;
     right: 132px;
@@ -282,10 +282,10 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.12s;
-}.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
+}.md-editor .md-code-full-btn:hover, .md-editor .md-code-full-btn.md-copied {
     background: var(--border);
     color: var(--text);
-}.md-editor .code-wrap-btn {
+}.md-editor .md-code-wrap-btn {
     position: absolute;
     top: 8px;
     right: 70px;
@@ -306,7 +306,7 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover {
+}.md-editor .md-code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }
@@ -319,47 +319,47 @@ html.dark .md-editor pre {
     line-height: 1.45;
 }
 /* ── Blockquotes ──────────────────────────── */
-.md-editor blockquote, .md-editor .blockquotes {
+.md-editor blockquote, .md-editor .md-blockquotes {
     border-left: 3px solid var(--accent);
     padding: 8px 16px;
     margin: 12px 0 20px;
     color: var(--text-secondary);
     background: var(--accent-soft);
     border-radius: 0 var(--radius) var(--radius) 0;
-}.md-editor blockquote p, .md-editor .blockquotes p {
+}.md-editor blockquote p, .md-editor .md-blockquotes p {
     margin: 0;
-}.md-editor .blockquotes.note {
+}.md-editor .md-blockquotes.md-note {
     border-left-color: var(--note-amber-border);
     background: var(--note-amber-lt);
     color: var(--note-amber);
-}.md-editor .blockquotes.note strong, .md-editor .blockquotes.note p {
+}.md-editor .md-blockquotes.md-note strong, .md-editor .md-blockquotes.md-note p {
     color: var(--note-amber);
-}.md-editor .blockquotes.info {
+}.md-editor .md-blockquotes.md-info {
     border-left-color: var(--info-blue-border);
     background: var(--info-blue-lt);
     color: var(--info-blue);
-}.md-editor .blockquotes.info strong, .md-editor .blockquotes.info p {
+}.md-editor .md-blockquotes.md-info strong, .md-editor .md-blockquotes.md-info p {
     color: var(--info-blue);
 }
 /* ── Misc ─────────────────────────────────── */
-.md-editor .example-box {
+.md-editor .md-example-box {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 12px 16px;
     margin: 12px 0;
     background: var(--surface);
-}.md-editor .example-box p {
+}.md-editor .md-example-box p {
     margin: 0;
-}.md-editor .example-box.good-box {
+}.md-editor .md-example-box.md-good-box {
     border-left: 4px solid #0f766e;
-}.md-editor .example-box.bad-box {
+}.md-editor .md-example-box.md-bad-box {
     border-left: 4px solid #9a3412;
-}.md-editor .block-card {
+}.md-editor .md-block-card {
     border: 1px solid var(--border);
     background: var(--surface);
     border-radius: var(--radius);
     padding: 14px 16px;
-}.md-editor .block-grid {
+}.md-editor .md-block-grid {
     display: grid;
     gap: 14px;
 }.md-editor hr {
@@ -371,29 +371,7 @@ html.dark .md-editor pre {
     height: auto;
 }
 /* ── Theme Toggle ─────────────────────────── */
-.md-editor .theme-btn {
-    position: fixed;
-    top: 14px;
-    right: 14px;
-    z-index: 100;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    padding: 6px 14px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition:
-        background 0.12s,
-        color 0.12s;
-}.md-editor .theme-btn:hover {
-    color: var(--text);
-    background: var(--bg);
-}
+
 /* ── Responsive ───────────────────────────── */
 .md-editor select {
     padding: 5px 12px;
@@ -522,30 +500,30 @@ html.dark .md-editor pre {
 .md-editor h1 { color: var(--accent); border-bottom: 2px solid var(--accent-soft); }
 .md-editor h2 { color: var(--accent); border-bottom: 1px solid var(--border); }
 .md-editor h3 { color: var(--accent); }
-.md-editor .header { border-bottom: 1px solid var(--border); }
-.md-editor .eyebrow { border-radius: 999px; letter-spacing: 0.08em; font-weight: 600; }
+.md-editor .md-header { border-bottom: 1px solid var(--border); }
+.md-editor .md-eyebrow { border-radius: 999px; letter-spacing: 0.08em; font-weight: 600; }
 .md-editor a { text-decoration-color: var(--accent-soft); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .md-editor a:hover { text-decoration-color: var(--accent); }
 .md-editor th { background: var(--accent-soft); color: var(--accent); }
 .md-editor tr:nth-child(even) td { background: var(--surface); }
 .md-editor code { border-radius: 6px; }
 .md-editor pre { border-radius: var(--radius); }
-.md-editor blockquote, .md-editor .blockquotes { border-left-width: 4px; border-radius: 0 var(--radius) var(--radius) 0; }
-.md-editor .example-box, .md-editor .block-card, .md-editor .mermaid-wrapper { border-radius: var(--radius); }
+.md-editor blockquote, .md-editor .md-blockquotes { border-left-width: 4px; border-radius: 0 var(--radius) var(--radius) 0; }
+.md-editor .md-example-box, .md-editor .md-block-card, .md-editor .mermaid-wrapper { border-radius: var(--radius); }
 .md-editor hr { border: none; text-align: center; margin: 36px 0; }
 .md-editor hr::after { content: "❀"; color: var(--accent); font-size: 1.1rem; }
-.md-editor .code-copy-btn, .md-editor .code-full-btn, .md-editor .code-wrap-btn,
-.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select, .md-editor .theme-btn {
+.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
+.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {
     border-radius: 999px;
 }
 
 /* ── Section rhythm ───────────────────────────
-   md-editor's postprocess cuts the document into .section wrappers at each h2,
+   md-editor's postprocess cuts the document into .md-section wrappers at each h2,
    so an h2 is always that wrapper's first child. Its top margin therefore
-   stacked INSIDE the section's own padding, and any .section margin stacked on
+   stacked INSIDE the section's own padding, and any .md-section margin stacked on
    top of that again — three separate values deciding one gap, none of them
-   nameable. The gap now belongs to .section alone; the h2 rule above is kept
+   nameable. The gap now belongs to .md-section alone; the h2 rule above is kept
    as the fallback for an h2 rendered outside a section. Card has worked this
    way from the start; this brings the rest into line. */
-.md-editor .section { margin-bottom: 12px; }
-.md-editor .section > h2:first-child { margin-top: 0; }
+.md-editor .md-section { margin-bottom: 12px; }
+.md-editor .md-section > h2:first-child { margin-top: 0; }

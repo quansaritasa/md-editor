@@ -6,12 +6,12 @@ const { createAdapter } = require('../adapter');
 
 function flash(btn, text, revertTo, ok) {
   btn.textContent = text;
-  if (ok) btn.classList.add('copied');
-  setTimeout(() => { btn.textContent = revertTo; btn.classList.remove('copied'); }, 1500);
+  if (ok) btn.classList.add('md-copied');
+  setTimeout(() => { btn.textContent = revertTo; btn.classList.remove('md-copied'); }, 1500);
 }
 
 function codeOf(btn) {
-  const block = btn.closest('.code-block');
+  const block = btn.closest('.md-code-block');
   return block ? block.querySelector('pre code') : null;
 }
 
@@ -33,7 +33,7 @@ async function readInject(adapter, docPath) {
 // hidden rather than sitting there as a duplicate. The markup ships it hidden
 // and this reveals it once the check comes back.
 async function syncFullButtons(root, adapter, docPath) {
-  const btns = root.querySelectorAll('.code-full-btn');
+  const btns = root.querySelectorAll('.md-code-full-btn');
   if (!btns.length) return false;
   const inject = await readInject(adapter, docPath);
   const has = !!(inject && ((inject.pre && inject.pre.trim()) || (inject.post && inject.post.trim())));
@@ -57,7 +57,7 @@ function armEditable(root) {
   if (editableRoots.has(root)) return;
   const arm = (e) => {
     if (!editableRoots.get(root)) return;
-    const code = e.target && e.target.closest ? e.target.closest('.code-block pre code') : null;
+    const code = e.target && e.target.closest ? e.target.closest('.md-code-block pre code') : null;
     if (code && !code.isContentEditable) code.setAttribute('contenteditable', 'true');
   };
   // Capture, so the block is editable before the press places the caret.
@@ -70,7 +70,7 @@ function bind(root, options) {
   const adapter = o.adapter || createAdapter();
   const win = root.ownerDocument.defaultView;
 
-  root.querySelectorAll('.code-copy-btn').forEach((btn) => {
+  root.querySelectorAll('.md-code-copy-btn').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const code = codeOf(btn);
       if (!code) return;
@@ -80,7 +80,7 @@ function bind(root, options) {
     });
   });
 
-  root.querySelectorAll('.code-full-btn').forEach((btn) => {
+  root.querySelectorAll('.md-code-full-btn').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const code = codeOf(btn);
       if (!code) return;
@@ -101,20 +101,20 @@ function bind(root, options) {
     // highlighted block costs a style pass over every token span, and across a
     // big document's blocks that was seconds. tabindex keeps each one a tab
     // stop, as contenteditable made it.
-    root.querySelectorAll('.code-block pre code').forEach((code) => { code.tabIndex = 0; });
+    root.querySelectorAll('.md-code-block pre code').forEach((code) => { code.tabIndex = 0; });
     armEditable(root);
   }
   editableRoots.set(root, !!o.editableCode);
 
   // Wrapping starts ON: a long line scrolled off-screen reads as truncated.
-  root.querySelectorAll('.code-wrap-btn').forEach((btn) => {
+  root.querySelectorAll('.md-code-wrap-btn').forEach((btn) => {
     const code = codeOf(btn);
     if (!code) return;
     const setWrap = (on) => {
       code.style.whiteSpace = on ? 'pre-wrap' : '';
       code.style.wordBreak = on ? 'break-word' : '';
       btn.textContent = on ? 'Unwrap' : 'Wrap';
-      btn.classList.toggle('active', on);
+      btn.classList.toggle('md-active', on);
     };
     setWrap(true);
     btn.addEventListener('click', () => setWrap(code.style.whiteSpace !== 'pre-wrap'));

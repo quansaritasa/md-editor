@@ -83,7 +83,7 @@ function createOutline(config) {
     if (!(typeof c.kvLabels === 'function' ? c.kvLabels() : c.kvLabels)) return [];
     // No markdown headings, but every "header: content" line is one — list them
     // so a flat document stays navigable.
-    return Array.from(c.content.querySelectorAll('p .kv-label'), (l) => {
+    return Array.from(c.content.querySelectorAll('p .md-kv-label'), (l) => {
       const text = l.textContent.replace(/[:=]\s*$/, '').trim();
       return { el: l.closest('p'), text: text || l.textContent.trim(), sub: false };
     });

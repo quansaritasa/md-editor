@@ -27,7 +27,7 @@ function highlightKvLabels(html) {
       if (bLabel === undefined && !/^[A-ZÀ-Þ]/.test(label)) return m; // unbracketed headers start capitalized
       if (/^[a-z][a-z0-9+.-]*:\/\//i.test(label)) return m; // URL scheme
       if (/[\/.]/.test(label)) return m;                    // paths / dotted names
-      return lead + '<span class="kv-label">' + label + sep + '</span> ';
+      return lead + '<span class="md-kv-label">' + label + sep + '</span> ';
     })
   );
 }

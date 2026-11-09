@@ -131,7 +131,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 0 auto;
     padding: 32px 20px 56px;
 }
-.md-editor .header{
+.md-editor .md-header{
     background: linear-gradient(
         180deg,
         var(--header-bg-start) 0%,
@@ -144,7 +144,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin-bottom: 26px;
     overflow: hidden;
 }
-.md-editor .eyebrow{
+.md-editor .md-eyebrow{
     display: inline-block;
     padding: 6px 10px;
     border-radius: 9px;
@@ -162,19 +162,19 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     line-height: 1.15;
     color: var(--title);
 }
-.md-editor .meta{
+.md-editor .md-meta{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
     margin-top: 18px;
 }
-.md-editor .meta-item{
+.md-editor .md-meta-item{
     background: var(--surface-2);
     border: 1px solid var(--border);
     border-radius: 9px;
     padding: 12px 14px;
 }
-.md-editor .meta-label{
+.md-editor .md-meta-label{
     display: block;
     font-size: 12px;
     text-transform: uppercase;
@@ -183,7 +183,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin-bottom: 4px;
     font-weight: 700;
 }
-.md-editor .section{
+.md-editor .md-section{
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 9px;
@@ -207,14 +207,11 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 28px 0 8px;
     color: var(--title);
 }
-.md-editor p.note{
+.md-editor p.md-note{
     margin: 0 0 14px;
     color: var(--muted);
 }
-.md-editor ul.clean{
-    margin: 0;
-    padding-left: 20px;
-}
+
 /* Same list spacing as every other theme: a list opens 6px below whatever comes
    before it, and its items sit 8px apart. Card used to pull up 5px to hug the
    paragraph above and leave its items flush, so the same document read as a
@@ -234,9 +231,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor p {
     margin: 0 0 1em;
 }
-.md-editor ul.clean li{
-    margin: 6px 0;
-}
+
 .md-editor table{
     width: 100%;
     border-collapse: separate;
@@ -276,20 +271,20 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 0;
     padding-left: 18px;
 }
-.md-editor table.fields{
+.md-editor table.md-fields{
     font-variant-numeric: tabular-nums;
 }
-.md-editor table.fields th{
+.md-editor table.md-fields th{
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
     border-bottom: 1px solid var(--border);
 }
-.md-editor table.fields td{
+.md-editor table.md-fields td{
     color: var(--text);
 }
-.md-editor table.fields td:first-child{
+.md-editor table.md-fields td:first-child{
     font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
     font-size: 0.85em;
     color: var(--fields-key);
@@ -312,15 +307,15 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--mermaid-bg);
     color: #1f2937;
 }
-.md-editor .code-block{
+.md-editor .md-code-block{
     position: relative;
     margin: 0 0 20px;
 }
-.md-editor .code-block pre{
+.md-editor .md-code-block pre{
     margin: 0;
     padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
 }
-.md-editor .code-copy-btn {
+.md-editor .md-code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -342,15 +337,15 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.12s;
 }
-.md-editor .code-copy-btn:hover {
+.md-editor .md-code-copy-btn:hover {
     background: var(--border);
     color: var(--text);
 }
-.md-editor .code-copy-btn.copied {
+.md-editor .md-code-copy-btn.md-copied {
     color: var(--accent);
     border-color: var(--accent);
 }
-.md-editor .code-full-btn {
+.md-editor .md-code-full-btn {
     position: absolute;
     top: 8px;
     right: 132px;
@@ -372,11 +367,11 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.12s;
 }
-.md-editor .code-full-btn:hover, .md-editor .code-full-btn.copied {
+.md-editor .md-code-full-btn:hover, .md-editor .md-code-full-btn.md-copied {
     background: var(--border);
     color: var(--text);
 }
-.md-editor .code-wrap-btn {
+.md-editor .md-code-wrap-btn {
     position: absolute;
     top: 8px;
     right: 70px;
@@ -398,17 +393,17 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }
-.md-editor .code-wrap-btn:hover {
+.md-editor .md-code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }
-.md-editor .code-block pre code[contenteditable="true"]::selection{
+.md-editor .md-code-block pre code[contenteditable="true"]::selection{
     background: transparent;
 }
-.md-editor .code-block pre code[contenteditable="true"]::-moz-selection{
+.md-editor .md-code-block pre code[contenteditable="true"]::-moz-selection{
     background: transparent;
 }
-.md-editor .code-block pre code[contenteditable="true"]:focus{
+.md-editor .md-code-block pre code[contenteditable="true"]:focus{
     outline: none;
 }
 .md-editor code{
@@ -448,30 +443,30 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     background: transparent;
     padding: 0;
 }
-.md-editor .block-card{
+.md-editor .md-block-card{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: 9px;
     padding: 14px 16px;
     overflow: hidden;
 }
-.md-editor .example-box{
+.md-editor .md-example-box{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: 9px;
     padding: 14px 16px;
     margin: 12px 0;
 }
-.md-editor .example-box p{
+.md-editor .md-example-box p{
     margin: 0;
 }
-.md-editor .example-box.good-box{
+.md-editor .md-example-box.md-good-box{
     border-left: 4px solid #0f766e;
 }
-.md-editor .example-box.bad-box{
+.md-editor .md-example-box.md-bad-box{
     border-left: 4px solid #9a3412;
 }
-.md-editor .blockquotes{
+.md-editor .md-blockquotes{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
     border-radius: 9px;
@@ -479,35 +474,35 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 12px 0;
     border-left: 4px solid #e67e22;
 }
-.md-editor .blockquotes p{
+.md-editor .md-blockquotes p{
     margin: 0;
 }
-.md-editor .blockquotes.note{
+.md-editor .md-blockquotes.md-note{
     border-left-color: var(--note-amber-border);
     background: var(--note-amber-lt);
 }
-.md-editor .blockquotes.note strong,
-.md-editor .blockquotes.note p{
+.md-editor .md-blockquotes.md-note strong,
+.md-editor .md-blockquotes.md-note p{
     color: var(--note-amber);
 }
-.md-editor .blockquotes.info{
+.md-editor .md-blockquotes.md-info{
     border-left-color: var(--info-blue-border);
     background: var(--info-blue-lt);
 }
-.md-editor .blockquotes.info strong,
-.md-editor .blockquotes.info p{
+.md-editor .md-blockquotes.md-info strong,
+.md-editor .md-blockquotes.md-info p{
     color: var(--info-blue);
 }
-.md-editor .block-grid{
+.md-editor .md-block-grid{
     display: grid;
     gap: 14px;
 }
-.md-editor .q{
+.md-editor .md-q{
     font-weight: 700;
     margin: 0 0 8px;
     color: var(--text);
 }
-.md-editor .a{
+.md-editor .md-a{
     color: var(--muted);
     margin: 0;
 }
@@ -526,25 +521,8 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor a:hover{
     text-decoration: underline;
 }
-.md-editor .theme-btn{
-    position: fixed;
-    top: 14px;
-    right: 14px;
-    z-index: 100;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 6px 14px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: inherit;
-    box-shadow: var(--shadow);
-    transition: background 0.12s;
-}
-.md-editor .theme-btn:hover{
-    background: var(--surface-2);
-}
+
+
 .md-editor select{
     padding: 6px 12px;
     border-radius: var(--radius);
@@ -560,8 +538,8 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     .md-editor{
         padding: 18px 12px 36px;
     }
-    .md-editor .header,
-.md-editor .section{
+    .md-editor .md-header,
+.md-editor .md-section{
         padding: 16px;
     }
     .md-editor h1{

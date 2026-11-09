@@ -1,11 +1,11 @@
-<section class="section">
+<section class="md-section">
 <h1>Rules for AI — qview</h1>
 <p>Rule chung nằm ở <code>~/.claude/CLAUDE.md</code> — global, tự nạp cho mọi repo. Đừng chép<br>lại vào đây; sửa rule chung thì sửa ở đó.</p>
 <p>File này chỉ giữ thứ <strong>riêng</strong> của repo <code>qview</code>.</p>
 </section>
-<section class="section">
+<section class="md-section">
 <h2>Override rule chung</h2>
-<div class="table-scroll"><table>
+<div class="md-table-scroll"><table>
 <thead>
 <tr>
 <th>Shortcut</th>
@@ -20,12 +20,12 @@
 </tr>
 </tbody></table></div>
 </section>
-<section class="section">
+<section class="md-section">
 <h2><code>CHANGELOG.md</code> — viết cho người dùng, không cho lập trình viên</h2>
 <p>Mỗi entry là <strong>một dòng, tối đa 30 từ</strong>, tả thứ người dùng nhìn thấy hoặc làm được.<br>Không tên file, hàm, biến, CSS, regex, số đo ms. Chi tiết kỹ thuật thuộc về<br>commit message — ai cần thì đọc <code>git log</code>.</p>
 <p>File là <strong>danh sách phẳng, mới nhất trên cùng</strong> — không tiêu đề, không mục<br><code>## Unreleased</code>, không nhóm theo version. <code>cote</code> chèn thẳng vào dòng đầu; thêm<br>heading vào sẽ khiến entry sau lọt lên trên nó.</p>
 <p>Chỉ được nhắc tên khi người dùng thật sự thấy nó trên màn hình: nhãn menu,<br>tên setting, phím tắt, định dạng file.</p>
-<div class="table-scroll"><table>
+<div class="md-table-scroll"><table>
 <thead>
 <tr>
 <th>Nên</th>
@@ -61,10 +61,10 @@
 </li>
 </ul>
 </section>
-<section class="section">
+<section class="md-section">
 <h2><code>cote</code> — kỷ luật tiết kiệm token</h2>
 <p>Mỗi tool call gửi lại toàn bộ conversation, nên số call mới là thứ tốn tiền —<br>không phải độ dài lệnh. <code>cote</code> phải gói trọn trong <strong>1–2 Bash call</strong>.</p>
-<div class="table-scroll"><table>
+<div class="md-table-scroll"><table>
 <thead>
 <tr>
 <th>Tình huống</th>
@@ -96,5 +96,30 @@
 <li>Verify sau commit bằng <code>git log</code> / <code>git status</code>. Lệnh fail thì Bash đã báo lỗi;<br><code>ship</code> tự in một dòng <code>git log --oneline -1</code> là đủ.</li>
 <li>Tách <code>git add</code>, <code>git commit</code>, <code>git push</code> thành nhiều call.</li>
 </ul>
-<p>Commit message truyền vào <code>cote</code> phải giữ nguyên hai dòng trailer<br><code>Co-Authored-By:</code> và <code>Claude-Session:</code> như các commit trước trong repo.</p>
+<p>Commit message truyền vào <code>cote</code> là nguyên văn — không thêm trailer nào<br>(<code>Co-Authored-By:</code>, <code>Claude-Session:</code>) vào cuối message.</p>
+</section>
+<section class="md-section">
+<h2><code>npm run smoke</code> — chỉ chạy khi được bảo</h2>
+<p>Suite mất ~2.5 phút mỗi lần. <strong>Không tự chạy sau mỗi lần sửa.</strong> Đợi user nói.</p>
+<div class="md-table-scroll"><table>
+<thead>
+<tr>
+<th>Tình huống</th>
+<th>Làm gì</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="Tình huống">Vừa sửa xong một thứ</td>
+<td data-label="Làm gì">Verify bằng <code>node .claude/skills/run-qview/driver.mjs</code> (<code>reload</code> rồi <code>batch</code>/<code>eval</code> để đo), rồi nói rõ là <strong>chưa</strong> chạy smoke</td>
+</tr>
+<tr>
+<td data-label="Tình huống">User bảo chạy</td>
+<td data-label="Làm gì">Chạy <code>npm run smoke</code>, lọc <code>=false</code></td>
+</tr>
+<tr>
+<td data-label="Tình huống">Sắp build dist</td>
+<td data-label="Làm gì"><strong>Nhắc user chạy smoke trước</strong>, đừng tự chạy</td>
+</tr>
+</tbody></table></div>
+<p><code>src/smoke/lines-gate.js</code> chạy được riêng (<code>node src/smoke/lines-gate.js</code>, ~0s) —<br>dùng nó để kiểm tra rule 200 dòng mà không phải trả giá cả suite.</p>
 </section>

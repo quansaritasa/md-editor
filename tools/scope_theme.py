@@ -52,8 +52,6 @@ def transform_selector(sel, scope=DEFAULT_SCOPE):
             out.append("html.dark " + scope + " " + p[len("html.dark"):].lstrip())
         elif p.startswith(".hljs-") or p.startswith("html.dark .hljs-"):
             out.append(p)
-        elif p.startswith(".theme-btn"):
-            out.append(scope + " " + p)
         else:
             out.append(scope + " " + p)
     return ", ".join(out) if out else None

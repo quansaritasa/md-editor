@@ -30,7 +30,7 @@
 }
 
 /* "header: content" lines — the leading header becomes a highlighted chip. */
-.md-editor.good-view .kv-label {
+.md-editor.good-view .md-kv-label {
   font-weight: 700;
   color: var(--accent);
   background: var(--accent-soft);
@@ -103,7 +103,7 @@ html.dark .md-editor-source {
    the spec computes a visible axis to auto the moment the other axis scrolls —
    but the box is content-height, so there is never anything to scroll
    vertically and the page keeps owning up-and-down. */
-.md-editor .table-scroll {
+.md-editor .md-table-scroll {
   overflow-x: auto;
 }
 

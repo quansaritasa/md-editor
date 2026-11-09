@@ -30,10 +30,10 @@ SECTION_RHYTHM = BODY[_RHYTHM_AT:].rstrip('\n')
 BODY = BODY[:_RHYTHM_AT].rstrip('\n').replace(
     '    margin: 32px 0 14px;\n    padding-bottom: 6px;',
     '    margin: 52px 0 14px;\n    padding-bottom: 6px;')
-# The block trails the per-theme overrides so a theme can reshape .section and
+# The block trails the per-theme overrides so a theme can reshape .md-section and
 # still have the gap land last.
-SECTION_RHYTHM = SECTION_RHYTHM.replace('.md-editor .section { margin-bottom: 32px; }',
-                                        '.md-editor .section { margin-bottom: 12px; }')
+SECTION_RHYTHM = SECTION_RHYTHM.replace('.md-editor .md-section { margin-bottom: 32px; }',
+                                        '.md-editor .md-section { margin-bottom: 12px; }')
 
 MONO = 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace'
 SERIF = '"Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif'
@@ -150,14 +150,14 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor h2 {{ font-size: 1.25rem; margin: 44px 0 12px; padding-bottom: 6px; border-bottom: 1px dashed var(--border); }}
 .md-editor h3 {{ font-size: 1.05rem; }}
 .md-editor h4 {{ font-size: 0.95rem; }}
-.md-editor .eyebrow {{ border-radius: 0; background: none; border: 1px solid var(--accent); padding: 2px 8px; }}
+.md-editor .md-eyebrow {{ border-radius: 0; background: none; border: 1px solid var(--accent); padding: 2px 8px; }}
 .md-editor a {{ text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }}
 .md-editor a:hover {{ text-decoration-style: solid; background: var(--accent-soft); }}
 .md-editor strong {{ color: var(--accent); font-weight: 700; }}
 .md-editor code {{ padding: 1px 5px; border: 1px solid var(--border); }}
 .md-editor pre {{ font-size: 0.9rem; border-left: 3px solid var(--accent); }}
 .md-editor pre code {{ font-size: inherit; }}
-.md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }}
+.md-editor blockquote, .md-editor .md-blockquotes {{ background: none; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }}
 .md-editor blockquote p::before {{ content: "> "; color: var(--text-secondary); }}
 .md-editor th {{ text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.87em; }}
 .md-editor tr:nth-child(even) td {{ background: color-mix(in srgb, var(--text) 5%, transparent); }}
@@ -166,8 +166,8 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor ul > li {{ padding-left: 18px; position: relative; }}
 .md-editor ul > li::before {{ content: "-"; position: absolute; left: 0; color: var(--accent); }}
 .md-editor ul ul > li::before {{ content: "·"; }}
-.md-editor .code-copy-btn, .md-editor .code-full-btn, .md-editor .code-wrap-btn,
-.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select, .md-editor .theme-btn {{
+.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
+.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {{
     border-radius: 0;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -204,14 +204,14 @@ html.dark .md-editor h1 { color: #cba6f7; }
 .md-editor h2 { color: var(--accent); border-bottom: 1px solid var(--border); }
 /* h3 takes the shared --heading-ink: Latte's teal (#179299) is 3.3:1 on --bg,
    under AA at h3's 16.8px. */
-.md-editor .eyebrow { background: #8839ef; color: #eff1f5; }
-html.dark .md-editor .eyebrow { background: #cba6f7; color: #1e1e2e; }
+.md-editor .md-eyebrow { background: #8839ef; color: #eff1f5; }
+html.dark .md-editor .md-eyebrow { background: #cba6f7; color: #1e1e2e; }
 .md-editor th { color: var(--heading-ink); }
-.md-editor blockquote, .md-editor .blockquotes { border-left-width: 4px; }
-.md-editor .example-box.good-box { border-left-color: #40a02b; }
-.md-editor .example-box.bad-box { border-left-color: #d20f39; }
-html.dark .md-editor .example-box.good-box { border-left-color: #a6e3a1; }
-html.dark .md-editor .example-box.bad-box { border-left-color: #f38ba8; }
+.md-editor blockquote, .md-editor .md-blockquotes { border-left-width: 4px; }
+.md-editor .md-example-box.md-good-box { border-left-color: #40a02b; }
+.md-editor .md-example-box.md-bad-box { border-left-color: #d20f39; }
+html.dark .md-editor .md-example-box.md-good-box { border-left-color: #a6e3a1; }
+html.dark .md-editor .md-example-box.md-bad-box { border-left-color: #f38ba8; }
 .md-editor pre { border-radius: 10px; }
 ''')
 
@@ -242,7 +242,7 @@ emit('eink', 'Grayscale, serif, no shadows — an e-reader on the desktop',
 .md-editor h1, .md-editor h2, .md-editor h3, .md-editor h4 {{ font-family: inherit; font-weight: 700; letter-spacing: 0; }}
 .md-editor h1 {{ font-size: 1.9rem; border-bottom: 2px solid var(--text); }}
 .md-editor h2 {{ font-size: 1.4rem; border-bottom: 1px solid var(--border); }}
-.md-editor .eyebrow {{ background: none; border: 1px solid var(--text); color: var(--text); border-radius: 0; }}
+.md-editor .md-eyebrow {{ background: none; border: 1px solid var(--text); color: var(--text); border-radius: 0; }}
 .md-editor a {{ text-decoration: underline; text-underline-offset: 2px; }}
 .md-editor a:hover {{ background: var(--accent-soft); }}
 .md-editor th {{ background: var(--table-head-bg); border-bottom: 2px solid var(--text); }}
@@ -256,16 +256,16 @@ emit('eink', 'Grayscale, serif, no shadows — an e-reader on the desktop',
 .md-editor .hljs-keyword, .md-editor .hljs-built_in, .md-editor .hljs-title, .md-editor .hljs-section,
 .md-editor .hljs-selector-tag, .md-editor .hljs-name {{ font-weight: 700; }}
 .md-editor .hljs-string, .md-editor .hljs-attr {{ text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 2px; }}
-.md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 2px solid var(--text); color: var(--text); font-style: italic; }}
-.md-editor .blockquotes.note {{ border-left-style: dashed; background: var(--surface); font-style: normal; }}
-.md-editor .blockquotes.info {{ border-left-style: double; border-left-width: 5px; background: none; font-style: normal; }}
-.md-editor .example-box.good-box {{ border-left: 4px solid var(--text); }}
-.md-editor .example-box.bad-box {{ border-left: 4px dashed var(--text); }}
+.md-editor blockquote, .md-editor .md-blockquotes {{ background: none; border-left: 2px solid var(--text); color: var(--text); font-style: italic; }}
+.md-editor .md-blockquotes.md-note {{ border-left-style: dashed; background: var(--surface); font-style: normal; }}
+.md-editor .md-blockquotes.md-info {{ border-left-style: double; border-left-width: 5px; background: none; font-style: normal; }}
+.md-editor .md-example-box.md-good-box {{ border-left: 4px solid var(--text); }}
+.md-editor .md-example-box.md-bad-box {{ border-left: 4px dashed var(--text); }}
 .md-editor img {{ filter: grayscale(1) contrast(1.05); }}
 .md-editor .mermaid-wrapper {{ filter: grayscale(1); }}
 .md-editor hr {{ border-top: 1px solid var(--text); }}
-.md-editor .code-copy-btn, .md-editor .code-full-btn, .md-editor .code-wrap-btn,
-.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select, .md-editor .theme-btn {{ border-radius: 0; }}
+.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
+.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {{ border-radius: 0; }}
 ''')
 
 # ─────────────────────────── editorial ───────────────────────────
@@ -289,16 +289,16 @@ emit('editorial', 'Newspaper — display serif headings, hairline rules, drop ca
     -webkit-font-smoothing: auto;
 }}
 .md-editor h1, .md-editor h2, .md-editor h3, .md-editor h4 {{ font-family: inherit; }}
-.md-editor .header {{ text-align: center; border-bottom: 3px double var(--text); padding-bottom: 20px; }}
-.md-editor .header h1 {{ border-bottom: none; }}
-.md-editor .meta {{ justify-content: center; font-style: italic; }}
-.md-editor .eyebrow {{ background: none; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); border-radius: 0; color: var(--text); letter-spacing: 0.2em; padding: 3px 0; }}
+.md-editor .md-header {{ text-align: center; border-bottom: 3px double var(--text); padding-bottom: 20px; }}
+.md-editor .md-header h1 {{ border-bottom: none; }}
+.md-editor .md-meta {{ justify-content: center; font-style: italic; }}
+.md-editor .md-eyebrow {{ background: none; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); border-radius: 0; color: var(--text); letter-spacing: 0.2em; padding: 3px 0; }}
 .md-editor h1 {{ font-size: 2.8rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; text-align: center; border-bottom: 3px double var(--text); padding-bottom: 14px; margin-bottom: 20px; }}
 .md-editor h2 {{ font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; border-bottom: none; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 44px; }}
 .md-editor h3 {{ font-size: 1.05rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }}
 .md-editor h4 {{ font-style: italic; font-weight: 600; font-size: 1.05rem; }}
 /* The opening paragraph gets a drop cap, the way a front-page column does. */
-.md-editor h1 + p::first-letter, .md-editor .header + p::first-letter {{
+.md-editor h1 + p::first-letter, .md-editor .md-header + p::first-letter {{
     float: left; font-size: 3.6em; line-height: 0.8; padding: 6px 8px 0 0; font-weight: 800; color: var(--accent);
 }}
 .md-editor p {{ text-align: justify; hyphens: auto; }}
@@ -316,7 +316,7 @@ emit('editorial', 'Newspaper — display serif headings, hairline rules, drop ca
 .md-editor pre {{ font-size: 0.82rem; border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-radius: 0; }}
 .md-editor hr {{ border: none; text-align: center; margin: 36px 0; }}
 .md-editor hr::after {{ content: "❦"; color: var(--text-secondary); font-size: 1.2rem; }}
-.md-editor .example-box, .md-editor .block-card {{ font-family: {SANS}; font-size: 0.95rem; }}
+.md-editor .md-example-box, .md-editor .md-block-card {{ font-family: {SANS}; font-size: 0.95rem; }}
 ''')
 
 # ─────────────────────────── blossom ───────────────────────────
@@ -336,20 +336,20 @@ emit('blossom', 'Blossom — soft pink paper, raspberry accents, rounded edges',
 .md-editor h1 { color: var(--accent); border-bottom: 2px solid var(--accent-soft); }
 .md-editor h2 { color: var(--accent); border-bottom: 1px solid var(--border); }
 .md-editor h3 { color: var(--accent); }
-.md-editor .header { border-bottom: 1px solid var(--border); }
-.md-editor .eyebrow { border-radius: 999px; letter-spacing: 0.08em; font-weight: 600; }
+.md-editor .md-header { border-bottom: 1px solid var(--border); }
+.md-editor .md-eyebrow { border-radius: 999px; letter-spacing: 0.08em; font-weight: 600; }
 .md-editor a { text-decoration-color: var(--accent-soft); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 .md-editor a:hover { text-decoration-color: var(--accent); }
 .md-editor th { background: var(--accent-soft); color: var(--accent); }
 .md-editor tr:nth-child(even) td { background: var(--surface); }
 .md-editor code { border-radius: 6px; }
 .md-editor pre { border-radius: var(--radius); }
-.md-editor blockquote, .md-editor .blockquotes { border-left-width: 4px; border-radius: 0 var(--radius) var(--radius) 0; }
-.md-editor .example-box, .md-editor .block-card, .md-editor .mermaid-wrapper { border-radius: var(--radius); }
+.md-editor blockquote, .md-editor .md-blockquotes { border-left-width: 4px; border-radius: 0 var(--radius) var(--radius) 0; }
+.md-editor .md-example-box, .md-editor .md-block-card, .md-editor .mermaid-wrapper { border-radius: var(--radius); }
 .md-editor hr { border: none; text-align: center; margin: 36px 0; }
 .md-editor hr::after { content: "❀"; color: var(--accent); font-size: 1.1rem; }
-.md-editor .code-copy-btn, .md-editor .code-full-btn, .md-editor .code-wrap-btn,
-.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select, .md-editor .theme-btn {
+.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
+.md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {
     border-radius: 999px;
 }
 ''')
@@ -388,11 +388,11 @@ emit('nord', 'Nord — arctic, bluish palette',
 /* The eyebrow is an inverted chip: nordfrost at full strength put cream on
    #5E81AC at 3.5:1 at 12px. The chip's own fill steps down to #4C6A94 (4.8:1)
    rather than repainting the accent everywhere it is used. */
-.md-editor .eyebrow { background: #4C6A94; color: #ECEFF4; }
-html.dark .md-editor .eyebrow { background: #88C0D0; color: #2E3440; }
+.md-editor .md-eyebrow { background: #4C6A94; color: #ECEFF4; }
+html.dark .md-editor .md-eyebrow { background: #88C0D0; color: #2E3440; }
 .md-editor th { color: var(--heading-ink); }
-.md-editor .example-box.good-box { border-left-color: #A3BE8C; }
-.md-editor .example-box.bad-box { border-left-color: #BF616A; }
+.md-editor .md-example-box.md-good-box { border-left-color: #A3BE8C; }
+.md-editor .md-example-box.md-bad-box { border-left-color: #BF616A; }
 ''')
 
 # ─────────────────────────── gruvbox ───────────────────────────
@@ -414,17 +414,17 @@ html.dark .md-editor h1 { color: #FB4934; }
 .md-editor h2 { color: #79740E; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: #B8BB26; }
 /* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page. */
-.md-editor .eyebrow { background: #AF3A03; color: #FBF1C7; }
-html.dark .md-editor .eyebrow { background: #FE8019; color: #282828; }
+.md-editor .md-eyebrow { background: #AF3A03; color: #FBF1C7; }
+html.dark .md-editor .md-eyebrow { background: #FE8019; color: #282828; }
 .md-editor strong { color: #9D0006; }
 /* Bold runs in dark were #FB4934 — 4.29:1 at body size, and 3.4:1 on a
    --surface block, so emphasis faded on cards and quotes. The palette's orange
    clears both (5.8:1 / 4.6:1) and stays in the warm family. */
 html.dark .md-editor strong { color: #FE8019; }
-.md-editor .example-box.good-box { border-left-color: #79740E; }
-.md-editor .example-box.bad-box { border-left-color: #9D0006; }
-html.dark .md-editor .example-box.good-box { border-left-color: #B8BB26; }
-html.dark .md-editor .example-box.bad-box { border-left-color: #FB4934; }
+.md-editor .md-example-box.md-good-box { border-left-color: #79740E; }
+.md-editor .md-example-box.md-bad-box { border-left-color: #9D0006; }
+html.dark .md-editor .md-example-box.md-good-box { border-left-color: #B8BB26; }
+html.dark .md-editor .md-example-box.md-bad-box { border-left-color: #FB4934; }
 ''')
 
 # ─────────────────────────── solarized ───────────────────────────
@@ -466,10 +466,10 @@ html.dark .md-editor h2 { color: #268BD2; }
 /* base1 on the tinted header band was 3.9:1 — the band is a --surface mix, not
    the page. base0 (#B8C4C4) is the same family, one step up: 5.8:1. */
 html.dark .md-editor th { color: #B8C4C4; }
-.md-editor .eyebrow { background: #8A6700; color: #FDF6E3; }
-html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
-.md-editor .example-box.good-box { border-left-color: #859900; }
-.md-editor .example-box.bad-box { border-left-color: #DC322F; }
+.md-editor .md-eyebrow { background: #8A6700; color: #FDF6E3; }
+html.dark .md-editor .md-eyebrow { background: #B58900; color: #002B36; }
+.md-editor .md-example-box.md-good-box { border-left-color: #859900; }
+.md-editor .md-example-box.md-bad-box { border-left-color: #DC322F; }
 ''')
 
 # ─────────────────────────── block ───────────────────────────
@@ -518,7 +518,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
     color: var(--text-secondary);
     margin: 22px 0 4px;
 }}
-.md-editor .eyebrow {{ background: none; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 2px; letter-spacing: 0.11em; padding: 2px 8px; }}
+.md-editor .md-eyebrow {{ background: none; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 2px; letter-spacing: 0.11em; padding: 2px 8px; }}
 .md-editor a {{ text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }}
 .md-editor a:hover {{ border-bottom-color: var(--accent); }}
 .md-editor strong {{ font-weight: 600; }}
@@ -526,7 +526,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 .md-editor pre {{ font-family: {PLEX_MONO}; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; background: var(--code-bg); }}
 .md-editor pre code {{ border: none; padding: 0; font-size: inherit; }}
 /* A quote is a rail, not a filled box. */
-.md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }}
+.md-editor blockquote, .md-editor .md-blockquotes {{ background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }}
 /* Tables are read as data: hairlines, a label row, and digits that line up. */
 .md-editor table {{ font-size: 0.9em; font-variant-numeric: tabular-nums; }}
 .md-editor th, .md-editor td {{ border-left: none; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 13px; }}
@@ -541,9 +541,9 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
    that makes the theme "Block": a hairline border and no shadow at all. */
 .md-editor {{ background: var(--book-bg); }}
 /* Doubled class throughout: the shared Section-rhythm block is emitted last
-   and claims both `.section` and its opening h2, so reshaping either into a
+   and claims both `.md-section` and its opening h2, so reshaping either into a
    card needs one more point of specificity than the block that follows. */
-.md-editor.md-editor .section {{
+.md-editor.md-editor .md-section {{
     background: var(--bg);
     border: 1px solid var(--border);
     /* The accent is spent on the card's top edge rather than on any text, so it
@@ -575,7 +575,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
    strip flush at any inset the reader picks — and the strip's own side padding
    tracks it too, so the header sits on the same left edge as the prose under it
    instead of hanging inboard of it. */
-.md-editor.md-editor .section > h2:first-child {{
+.md-editor.md-editor .md-section > h2:first-child {{
     margin: calc(-1 * var(--block-pad-y)) calc(-1 * var(--block-pad-x)) var(--block-pad-y);
     padding: 15px var(--block-pad-x);
     /* Sunk, not tinted with the accent: the strip earns its own band from the
@@ -587,7 +587,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 /* Collapsed, a card is only its header strip. The strip is pulled full-bleed
    out of the card's inset, so once the body is hidden that inset stands as
    empty white above and below the title — and it cannot be cancelled with a
-   negative margin, because .section is its own formatting context and an
+   negative margin, because .md-section is its own formatting context and an
    auto height clamps at zero before the padding is reached. So the padding
    itself goes and the strip stops pulling: the two undo each other and the
    card ends exactly where the strip does. The strip's hairline goes too — the
@@ -597,10 +597,10 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
    A host that drives --section-padding from an id-scoped rule (Qview's padding
    slider does) outranks the padding line here and has to repeat it; the margin
    and border below are this theme's alone and hold everywhere. */
-.md-editor.md-editor .section:has(> h2.sec-collapsed:first-child) {{
+.md-editor.md-editor .md-section:has(> h2.sec-collapsed:first-child) {{
     padding: 0;
 }}
-.md-editor.md-editor .section > h2.sec-collapsed:first-child {{
+.md-editor.md-editor .md-section > h2.sec-collapsed:first-child {{
     margin: 0;
     border-bottom: none;
 }}

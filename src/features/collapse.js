@@ -6,7 +6,7 @@
    asked, and binding nothing is how a document keeps its plain appearance.
 
    Two document shapes have to work. Post-processed markdown puts each h2 chunk
-   in <section class="section">, so a heading's range is its siblings inside
+   in <section class="md-section">, so a heading's range is its siblings inside
    that section. A document rendered without post-processing has no wrappers at
    all — its headings sit in one flat run — so there the range is "everything up
    to the next h2".
@@ -19,7 +19,7 @@
 function sectionRange(h) {
   const out = [];
   const parent = h.parentElement;
-  const wrapped = !!(parent && parent.classList.contains('section'));
+  const wrapped = !!(parent && parent.classList.contains('md-section'));
   for (let el = h.nextElementSibling; el; el = el.nextElementSibling) {
     if (!wrapped && el.tagName === 'H2') break; // flat run: the next heading ends this one
     out.push(el);
@@ -47,7 +47,7 @@ function revealCollapsedTarget(el) {
   if (!hid) return;
   const parent = hid.parentElement;
   let h = null;
-  if (parent && parent.classList.contains('section')) {
+  if (parent && parent.classList.contains('md-section')) {
     h = parent.querySelector('h2');
   } else {
     for (let p = hid.previousElementSibling; p; p = p.previousElementSibling) {
