@@ -186,7 +186,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     letter-spacing: 0.08em;
     color: var(--muted);
 }.md-editor table.md-fields td { color: var(--text); }.md-editor table.md-fields td:first-child {
-    font-family: "Cascadia Code", "Fira Code", "Courier New", monospace;
+    font-family: "Cascadia Code", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Courier New", monospace;
     font-size: 0.85em;
     color: var(--fields-key);
     white-space: nowrap;
@@ -286,8 +286,8 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     color: var(--code-text);
     padding: 0.08em 0.4em;
     border-radius: 3px;
-    font-size: 0.9em;
-    font-family: "Cascadia Code", "Fira Code", "Courier New", monospace;
+    font-size: 0.88em;
+    font-family: "Cascadia Code", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Courier New", monospace;
     border: 1px solid var(--border);
 }.md-editor pre code, .md-editor p pre code, .md-editor li pre code, .md-editor td pre code {
     color: inherit;
