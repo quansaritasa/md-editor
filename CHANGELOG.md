@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.10.43 — theme editor picker, and a bluer Block card
+
+- The theme editor's colour picker is now a vendored picker
+  (`demo/vendor/color-picker.*`, `demo/theme-editor-picker.js`); the two
+  palette scripts were merged away.
+- Block's `--surface` (the "Card surface" field) went from `#F6F8F7` to
+  `#E0F2FEBF`, a light blue at 75% opacity, in `themes/block.css` and its
+  generator `tools/gen_themes.py`. `--code-bg` and `--mermaid-bg` keep
+  `#F6F8F7`.
+
 ## v0.10.42 — a theme editor, and the sheet of what you moved
 
 - `demo/theme-editor.html`: thirteen themes on the left, the document on the
