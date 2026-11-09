@@ -244,8 +244,8 @@ README, cloned to `demo/readme/`; and on the right every attribute a theme
 actually has: page and surface colours, column width and padding, each heading's
 size, colour, padding and margins, the prose size and line height, inline and
 block code, the table bands, link ink. Lengths get a slider and a number, colours
-a hex field and a picker of sixty web colours (name on hover), and both light and
-dark are edited separately.
+a hex field; click a colour and the full picker, a popup under the chip
+(`demo/vendor/`), edits it. Light and dark are edited separately.
 
 What you change becomes one override sheet, scoped to the preview by id so it
 outranks whichever theme is loaded. Untouched fields are absent from it — switch

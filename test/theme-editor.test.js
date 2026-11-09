@@ -1,7 +1,7 @@
 'use strict';
 
-/* The theme editor's logic, without a browser: the palette, the field schema
-   and the CSS the two of them generate. The page around it is DOM wiring and
+/* The theme editor's logic, without a browser: the field schema and the CSS
+   it generates. The page around it is DOM wiring and
    is verified by opening it; everything that can be wrong silently — a field
    with no target, a colour that formats differently in the preview and in the
    export — is here. */
@@ -9,22 +9,11 @@
 const test = require('node:test');
 const assert = require('node:assert');
 
-const { PALETTE } = require('../demo/theme-palette');
 const { GROUPS } = require('../demo/theme-fields');
 const { toHex, buildCss } = require('../demo/theme-css');
 
 const fields = () => GROUPS.flatMap((g) => g.fields.map((f) => ({ g, f })));
 const byKey = (k) => fields().find((x) => x.f.k === k);
-
-test('the picker ships exactly 60 colours, each a unique 6-digit hex', () => {
-  assert.strictEqual(PALETTE.length, 60);
-  const hexes = PALETTE.map((c) => c.h);
-  assert.strictEqual(new Set(hexes).size, 60, 'a duplicate swatch is a wasted cell');
-  for (const c of PALETTE) {
-    assert.match(c.h, /^#[0-9A-F]{6}$/, c.n + ' is not a solid hex colour');
-    assert.ok(c.n && c.g, 'every swatch needs a name and a group for the picker');
-  }
-});
 
 test('every field can be written somewhere, and every key is unique', () => {
   const keys = fields().map((x) => x.f.k);
@@ -43,7 +32,10 @@ test('toHex accepts what a browser and a person produce, and refuses the rest', 
   assert.strictEqual(toHex('#abc'), '#aabbcc');
   assert.strictEqual(toHex('#AABBCC'), '#aabbcc');
   assert.strictEqual(toHex('rgb(28, 35, 51)'), '#1c2333');
-  assert.strictEqual(toHex('rgba(255, 0, 16, 0.5)'), '#ff0010');
+  // Opacity is kept as an 8-digit hex; an opaque colour stays 6 digits.
+  assert.strictEqual(toHex('rgba(255, 0, 16, 0.5)'), '#ff001080');
+  assert.strictEqual(toHex('rgba(255, 0, 16, 1)'), '#ff0010');
+  assert.strictEqual(toHex('#11223344'), '#11223344');
   // Chromium serialises a resolved color-mix() this way; the themes' derived
   // tokens are mixes, so the panel cannot read them without this form.
   assert.strictEqual(toHex('color(srgb 0.798275 0.799373 0.802824)'), '#cccccd');

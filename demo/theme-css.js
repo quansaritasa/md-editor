@@ -24,23 +24,29 @@
 function toHex(value) {
   const s = String(value == null ? '' : value).trim().toLowerCase();
   // A typed colour usually arrives without the hash, so accept both.
-  let m = /^#?([0-9a-f]{3})$/.exec(s);
+  let m = /^#?([0-9a-f]{3,4})$/.exec(s);
   if (m) return '#' + m[1].split('').map((c) => c + c).join('');
-  m = /^#?([0-9a-f]{6})$/.exec(s);
+  m = /^#?([0-9a-f]{6}|[0-9a-f]{8})$/.exec(s);
   if (m) return '#' + m[1];
-  m = /^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/.exec(s);
-  if (m) return rgbHex(m.slice(1, 4), 1);
-  m = /^color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)/.exec(s);
-  if (m) return rgbHex(m.slice(1, 4), 255);
+  m = /^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)(?:\s*[,/]\s*([\d.]+)(%?))?/.exec(s);
+  if (m) return rgbHex(m.slice(1, 4), 1, alphaOf(m[4], m[5]));
+  m = /^color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+)(%?))?/.exec(s);
+  if (m) return rgbHex(m.slice(1, 4), 255, alphaOf(m[4], m[5]));
   return null;
 }
 
+// Alpha written as 0.4 or 40% -> 0-1; absent means opaque.
+function alphaOf(n, pct) {
+  if (n == null) return 1;
+  return Math.max(0, Math.min(1, parseFloat(n) / (pct ? 100 : 1)));
+}
+
 // mult: 1 for channels already in 0-255, 255 for the 0-1 form.
-function rgbHex(parts, mult) {
-  return '#' + parts.map((n) => {
-    const v = Math.max(0, Math.min(255, Math.round(parseFloat(n) * mult)));
-    return (v < 16 ? '0' : '') + v.toString(16);
-  }).join('');
+function rgbHex(parts, mult, a = 1) {
+  const two = (v) => (v < 16 ? '0' : '') + v.toString(16);
+  const hex = parts.map((n) => two(Math.max(0, Math.min(255, Math.round(parseFloat(n) * mult))))).join('');
+  // Opaque stays 6 digits, so existing values are written exactly as before.
+  return '#' + hex + (a < 1 ? two(Math.round(a * 255)) : '');
 }
 
 // A colour is written as a token when the field has one, so the theme's own

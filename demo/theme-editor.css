@@ -50,11 +50,38 @@ body {
 
 /* ---------- three columns ---------- */
 #te-main {
-  display: grid; grid-template-columns: 190px minmax(0, 1fr) 304px;
+  display: grid; grid-template-columns: var(--te-left, 190px) minmax(0, 1fr) 304px;
   height: calc(100vh - 42px);
 }
 #te-themes, #te-panel { overflow: auto; background: var(--te-panel); }
-#te-themes { border-right: 1px solid var(--te-line); padding: 10px 8px; }
+#te-themes {
+  border-right: 1px solid var(--te-line); position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+#te-theme-box { flex: 1 1 auto; min-height: 0; overflow: auto; padding: 10px 8px; }
+#te-resize {
+  position: absolute; top: 0; bottom: 0; right: 0; width: 5px; cursor: col-resize; z-index: 5;
+}
+#te-resize:hover, #te-resize.drag { background: rgba(37, 99, 235, .45); }
+body.te-resizing { cursor: col-resize; user-select: none; }
+
+/* Changes: a read-only log of what differs from the theme, with Reset. */
+#te-changes { flex: 0 0 auto; height: 38%; min-height: 110px; display: flex; flex-direction: column;
+  border-top: 1px solid var(--te-line); padding: 8px 8px 8px; }
+#te-changes h2 { display: flex; align-items: center; gap: 6px; margin-top: 0; }
+#te-nchanges { font-weight: 400; text-transform: none; letter-spacing: 0; }
+#te-reset {
+  margin-left: auto; width: 22px; height: 22px; padding: 0; line-height: 1; font-size: 15px;
+  border: 1px solid var(--te-line); border-radius: 4px; background: var(--te-btn);
+  color: inherit; cursor: pointer;
+}
+#te-reset:hover { border-color: var(--te-muted); }
+#te-log {
+  flex: 1 1 auto; min-height: 0; width: 100%; resize: none; margin: 0 0 0 0;
+  font: 11px/1.45 ui-monospace, Menlo, monospace; white-space: pre; overflow: auto;
+  border: 1px solid var(--te-line); border-radius: 4px; padding: 5px 6px;
+  background: var(--te-btn); color: inherit;
+}
 #te-panel { border-left: 1px solid var(--te-line); }
 
 #te-themes h2, #te-panel h2 {
@@ -116,23 +143,10 @@ body {
 }
 .te-chip > span { display: block; width: 100%; height: 100%; border-radius: 3px; }
 
-/* ---------- colour picker ---------- */
-#te-palette {
-  position: fixed; z-index: 40; width: 268px; padding: 8px;
-  border: 1px solid var(--te-line); border-radius: 7px;
-  background: var(--te-panel); box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
-}
-#te-palette h3 {
-  margin: 2px 2px 5px; font-size: 10px; letter-spacing: .07em; text-transform: uppercase;
-  color: var(--te-muted); font-weight: 600;
-}
-.te-swatch-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
-.te-swatch {
-  height: 21px; padding: 0; cursor: pointer; border: 1px solid rgba(0, 0, 0, .16);
-  border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12);
-}
-.te-swatch:hover { transform: scale(1.18); border-color: #2563eb; }
-#te-palette .te-pal-foot {
-  margin: 7px 2px 0; font-size: 11px; color: var(--te-muted);
-  display: flex; gap: 6px; align-items: center;
-}
+/* ---------- attribute list ---------- */
+/* The panel is a column; the attribute list takes it all and scrolls on its
+   own. The colour picker is a popup, so it takes no room here. */
+#te-panel { display: flex; flex-direction: column; overflow: hidden; }
+#te-attrs { flex: 1 1 auto; min-height: 0; overflow: auto; }
+.te-row.active { background: rgba(37, 99, 235, .10); box-shadow: inset 2px 0 0 #2563eb; }
+.te-row.active .te-chip { border-color: #2563eb; }

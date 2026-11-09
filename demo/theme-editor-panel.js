@@ -14,6 +14,30 @@
 function createPanel(opts) {
   const groups = opts.groups;
   const rows = [];
+  // The colour row the picker is pointed at; null until the first prefill.
+  let active = null;
+
+  // Point the picker at a row. What it hands back is the same write a typed
+  // hex makes, so the text box, the chip and the override all move together.
+  function point(r, hex) {
+    opts.picker.point(r.g.label + ' · ' + r.f.label, hex, (h) => {
+      r.text.value = h;
+      paintChip(r, h);
+      edit(r, h);
+    }, () => {
+      // Back to the theme's own colour: drop the override, read what renders.
+      opts.onClear(r.f.k);
+      paint(r);
+      point(r, r.text.value);
+    });
+  }
+
+  function select(r) {
+    if (active) active.el.classList.remove('active');
+    active = r;
+    r.el.classList.add('active');
+    point(r, r.text.value);
+  }
 
   function paintChip(r, hex) {
     r.inner.style.background = hex || 'transparent';
@@ -61,14 +85,14 @@ function createPanel(opts) {
       text.id = 'te-in-' + f.k;
       // The picker hands back a hex; the text field takes one too, so a value
       // copied out of another theme can be pasted straight in.
-      chip.addEventListener('click', () => opts.picker.open(chip, (hex) => {
-        text.value = hex;
-        paintChip(r, hex);
-        edit(r, hex);
-      }));
+      chip.addEventListener('click', () => { select(r); opts.picker.open(chip); });
+      text.addEventListener('focus', () => { if (active !== r) select(r); });
       text.addEventListener('input', () => {
         const hex = TE_CSS.toHex(text.value);
-        if (hex) { paintChip(r, hex); edit(r, hex); }
+        if (!hex) return;
+        paintChip(r, hex);
+        edit(r, hex);
+        if (active === r) point(r, hex);
       });
       text.addEventListener('blur', () => paint(r));
       ctl.append(chip, text);
@@ -131,6 +155,10 @@ function createPanel(opts) {
 
   function prefill() {
     for (const r of rows) paint(r);
+    // A new theme or mode changed the numbers under the picker; the first
+    // colour row is where it starts.
+    const first = rows.find((r) => r.f.kind === 'color');
+    if (active || first) select(active || first);
   }
 
   return { rows, build, prefill };

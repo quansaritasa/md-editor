@@ -10,8 +10,8 @@
    and the preview is the same builder with a different selector.
 
    The pieces around this file: theme-editor-read.js measures the theme's own
-   values, theme-editor-panel.js draws the rows, theme-editor-palette.js is the
-   sixty-swatch picker, theme-css.js turns overrides into CSS. */
+   values, theme-editor-panel.js draws the rows, theme-editor-picker.js docks the
+   vendored colour picker as a popup under a chip, theme-css.js turns overrides into CSS. */
 
 const GROUPS = window.TE_FIELDS;
 const TECSS = window.TE_CSS;
@@ -31,8 +31,31 @@ const state = {
 const mode = () => (state.dark ? 'dark' : 'light');
 const over = () => state.over[mode()];
 
+/* ---------- remembered between visits ---------- */
+// Theme, mode and both override sets. localStorage can throw (private window,
+// blocked site data) or hold junk, so every touch is guarded and the page
+// starts fresh when it fails.
+const KEY = 'md-editor.theme-editor';
+function save() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify({ theme: state.theme, dark: state.dark, over: state.over }));
+  } catch (e) {}
+}
+function restore() {
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (!s || typeof s !== 'object') return;
+    if (MdEditor.themes.includes(s.theme)) state.theme = s.theme;
+    state.dark = !!s.dark;
+    for (const m of ['light', 'dark']) {
+      const o = s.over && s.over[m];
+      if (o && typeof o === 'object' && !Array.isArray(o)) state.over[m] = o;
+    }
+  } catch (e) {}
+}
+
 const reader = TE_READ.createReader(root);
-const picker = TE_PICKER.createPicker(document.getElementById('te-palette'), window.TE_PALETTE);
+const picker = TE_PICKER.createPicker();
 const panel = TE_PANEL.createPanel({
   groups: GROUPS,
   box: document.getElementById('te-groups'),
@@ -41,6 +64,10 @@ const panel = TE_PANEL.createPanel({
   picker,
   onEdit: (key, value) => {
     over()[key] = value;
+    apply();
+  },
+  onClear: (key) => {
+    delete over()[key];
     apply();
   },
 });
@@ -54,19 +81,51 @@ function mirrorStage() {
     TECSS.toHex(getComputedStyle(root).getPropertyValue('--bg')) || '');
 }
 
-function apply() {
+function overrideEl() {
   let el = document.getElementById('te-override');
   if (!el) {
     el = document.createElement('style');
     el.id = 'te-override';
     document.head.appendChild(el);
   }
-  el.textContent = TECSS.buildCss(GROUPS, over(), '#te-preview', '');
+  return el;
+}
+
+// The Changes log: one line per overridden field, "was -> now". "Was" is the
+// theme's own value, measured with the override sheet emptied for a moment
+// (synchronously, so nothing paints) and then put back.
+function fmt(f, v) {
+  return f.kind === 'color' ? String(v) : v + 'px';
+}
+function renderChanges() {
+  const keys = Object.keys(over());
+  const log = document.getElementById('te-log');
+  document.getElementById('te-nchanges').textContent = keys.length ? '· ' + keys.length + ' ' + mode() : '';
+  if (!keys.length) { log.value = ''; return; }
+  const el = overrideEl();
+  const css = el.textContent;
+  el.textContent = '';
+  const lines = [];
+  for (const r of panel.rows) {
+    if (!(r.f.k in over())) continue;
+    const base = r.f.kind === 'color' ? reader.color(r.g, r.f) : Math.round(reader.length(r.g, r.f));
+    const was = base === '' || Number.isNaN(base) ? '?' : fmt(r.f, base);
+    lines.push(r.g.label + ' · ' + r.f.label + ': ' + was + ' → ' + fmt(r.f, over()[r.f.k]));
+  }
+  el.textContent = css;
+  log.value = lines.join('\n');
+}
+
+function apply() {
+  overrideEl().textContent = TECSS.buildCss(GROUPS, over(), '#te-preview', '');
   mirrorStage();
+  renderChanges();
+  save();
 }
 
 function prefill() {
   panel.prefill();
+  renderChanges();
   document.getElementById('te-which').textContent = mode();
   mirrorStage();
 }
@@ -74,6 +133,7 @@ function prefill() {
 /* ---------- themes, document, export ---------- */
 function setTheme(name) {
   state.theme = name;
+  save();
   link.setAttribute('href', '../dist/themes/' + name + '.css');
   document.querySelectorAll('.te-theme').forEach((b) => {
     b.classList.toggle('active', b.dataset.theme === name);
@@ -123,10 +183,39 @@ function status(msg, ok) {
   status.t = setTimeout(() => { el.textContent = ''; }, 2400);
 }
 
+/* ---------- resizable left column ---------- */
+const WKEY = 'md-editor.theme-editor.left';
+function setLeft(px) {
+  document.getElementById('te-main').style.setProperty('--te-left',
+    Math.max(140, Math.min(520, Math.round(px))) + 'px');
+}
+function bindResize() {
+  try { const w = Number(localStorage.getItem(WKEY)); if (w) setLeft(w); } catch (e) {}
+  const bar = document.getElementById('te-resize');
+  const main = document.getElementById('te-main');
+  bar.addEventListener('pointerdown', (e) => {
+    bar.setPointerCapture(e.pointerId);
+    bar.classList.add('drag');
+    document.body.classList.add('te-resizing');
+  });
+  bar.addEventListener('pointermove', (e) => {
+    if (bar.hasPointerCapture(e.pointerId)) setLeft(e.clientX - main.getBoundingClientRect().left);
+  });
+  const end = (e) => {
+    bar.classList.remove('drag');
+    document.body.classList.remove('te-resizing');
+    try { localStorage.setItem(WKEY, parseInt(main.style.getPropertyValue('--te-left'), 10) || ''); } catch (err) {}
+  };
+  bar.addEventListener('pointerup', end);
+  bar.addEventListener('pointercancel', end);
+}
+
 function bindBar() {
+  bindResize();
   document.getElementById('te-dark').addEventListener('change', (e) => {
     state.dark = e.target.checked;
     document.documentElement.classList.toggle('dark', state.dark);
+    picker.setDark(state.dark);
     apply();
     prefill();
   });
@@ -134,7 +223,7 @@ function bindBar() {
     state.over[mode()] = {};
     apply();
     prefill();
-    status('Cleared the ' + mode() + ' overrides', true);
+    status('Cleared the ' + mode() + ' changes', true);
   });
   document.getElementById('te-copy').addEventListener('click', async () => {
     const text = exportText();
@@ -185,10 +274,14 @@ function bindBar() {
   buildThemes();
   panel.build();
   bindBar();
+  restore();
+  document.getElementById('te-dark').checked = state.dark;
+  document.documentElement.classList.toggle('dark', state.dark);
+  picker.setDark(state.dark);
   // The sheet's load is the only signal that the new theme's rules are in
   // place; measuring before it fires reads the previous theme's numbers.
   link.addEventListener('load', () => { if (panel.rows.length) prefill(); });
-  setTheme('card');
+  setTheme(state.theme);
   const doc = window.TE_DOC || { name: 'untitled.md', text: '# Empty\n' };
   show(doc.text, doc.name);
 })();

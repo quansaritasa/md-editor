@@ -474,7 +474,7 @@ html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
 # Plex faces are named first and fall back to the system stacks, so the theme
 # never pulls a font over the network — no other theme here does either.
 emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex in three roles',
-     {**COMMON_LIGHT, 'mermaid-bg': '#f6f8f7', 'book-bg': '#EEF1F0', 'bg': '#FFFFFF', 'surface': '#F6F8F7',
+     {**COMMON_LIGHT, 'mermaid-bg': '#f6f8f7', 'book-bg': '#EEF1F0', 'bg': '#FFFFFF', 'surface': '#E0F2FEBF',
       'text': '#11191A', 'text-secondary': '#5B6A6B', 'border': '#D4DCDB',
       'accent': '#0E6A61', 'accent-soft': '#E2EFEC',
       'code-bg': '#F6F8F7', 'code-text': '#9B4732', 'radius': '5px',

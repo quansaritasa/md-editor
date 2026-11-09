@@ -35,7 +35,6 @@
     "esbuild": "^0.28.2",
     "jsdom": "^30.0.1",
     "marked": "^12.0.2",
-    "mermaid": "^11.17.2",
-    "ui-inspector": "github:quansaritasa/ui-inspector#f003f4bd74ed5ce216728abc04275384cec5aa1d"
+    "mermaid": "^11.17.2"
   }
 }

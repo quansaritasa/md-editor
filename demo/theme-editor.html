@@ -7,6 +7,7 @@
      editor's own override sheet is appended after. -->
 <link id="te-theme-css" rel="stylesheet" href="../dist/themes/card.css">
 <link rel="stylesheet" href="../dist/md-editor.css">
+<link rel="stylesheet" href="vendor/color-picker.min.css">
 <link rel="stylesheet" href="theme-editor.css">
 </head>
 <body>
@@ -21,7 +22,6 @@
   <label title="Edit the light or the dark block">
     <input type="checkbox" id="te-dark"> Dark block
   </label>
-  <button type="button" id="te-reset">Reset overrides</button>
   <button type="button" id="te-copy">Copy CSS</button>
   <button type="button" id="te-download">Download CSS</button>
   <span id="te-status"></span>
@@ -29,8 +29,17 @@
 
 <main id="te-main">
   <aside id="te-themes">
-    <h2>Themes</h2>
-    <div id="te-theme-list"></div>
+    <div id="te-theme-box">
+      <h2>Themes</h2>
+      <div id="te-theme-list"></div>
+    </div>
+    <section id="te-changes">
+      <h2>Changes <span id="te-nchanges"></span>
+        <button type="button" id="te-reset" title="Reset: clear every change in this mode" aria-label="Reset changes">&#x21BA;</button>
+      </h2>
+      <textarea id="te-log" readonly spellcheck="false" placeholder="Nothing changed yet."></textarea>
+    </section>
+    <div id="te-resize" role="separator" aria-orientation="vertical" title="Drag to resize"></div>
   </aside>
 
   <section id="te-stage">
@@ -38,25 +47,24 @@
   </section>
 
   <aside id="te-panel">
-    <h2>Attributes <span id="te-which"></span></h2>
-    <div id="te-groups"></div>
+    <div id="te-attrs">
+      <h2>Attributes <span id="te-which"></span></h2>
+      <div id="te-groups"></div>
+    </div>
   </aside>
 </main>
-
-<!-- Built by theme-editor.js on first use: 60 colours, one click each. -->
-<div id="te-palette" hidden></div>
 
 <script src="../node_modules/marked/marked.min.js"></script>
 <script src="../node_modules/@highlightjs/cdn-assets/highlight.min.js"></script>
 <script src="../dist/md-editor.js"></script>
-<script src="theme-palette.js"></script>
+<script src="vendor/color-picker.min.js"></script>
 <script src="theme-fields.js"></script>
 <script src="theme-css.js"></script>
 <script src="theme-editor-read.js"></script>
-<script src="theme-editor-palette.js"></script>
+<script src="theme-editor-picker.js"></script>
 <script src="theme-editor-panel.js"></script>
 <script src="theme-editor-doc.js"></script>
-<script src="../node_modules/ui-inspector/dist/ui-inspector.js"></script>
+<script src="vendor/ui-inspector.js"></script>
 <script src="theme-editor.js"></script>
 <script src="uiinspect.js"></script>
 </body>
