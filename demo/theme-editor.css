@@ -50,7 +50,7 @@ body {
 
 /* ---------- three columns ---------- */
 #te-main {
-  display: grid; grid-template-columns: var(--te-left, 190px) minmax(0, 1fr) 304px;
+  display: grid; grid-template-columns: var(--te-left, 300px) minmax(0, 1fr) 304px;
   height: calc(100vh - 42px);
 }
 #te-themes, #te-panel { overflow: auto; background: var(--te-panel); }
@@ -70,12 +70,13 @@ body.te-resizing { cursor: col-resize; user-select: none; }
   border-top: 1px solid var(--te-line); padding: 8px 8px 8px; }
 #te-changes h2 { display: flex; align-items: center; gap: 6px; margin-top: 0; }
 #te-nchanges { font-weight: 400; text-transform: none; letter-spacing: 0; }
-#te-reset {
-  margin-left: auto; width: 22px; height: 22px; padding: 0; line-height: 1; font-size: 15px;
+#te-copy-log { margin-left: auto; }
+#te-reset, #te-copy-log {
+  width: 22px; height: 22px; padding: 0; line-height: 1; font-size: 15px;
   border: 1px solid var(--te-line); border-radius: 4px; background: var(--te-btn);
   color: inherit; cursor: pointer;
 }
-#te-reset:hover { border-color: var(--te-muted); }
+#te-reset:hover, #te-copy-log:hover { border-color: var(--te-muted); }
 #te-log {
   flex: 1 1 auto; min-height: 0; width: 100%; resize: none; margin: 0 0 0 0;
   font: 11px/1.45 ui-monospace, Menlo, monospace; white-space: pre; overflow: auto;

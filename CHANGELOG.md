@@ -1,3 +1,5 @@
+- Theme editor: Changes log reads 'card.css: change Heading 1: Text size 32px → 28px', with a copy icon; Block table header is #E9FFFD
+
 # Changelog
 
 ## v0.10.43 — theme editor picker, and a bluer Block card

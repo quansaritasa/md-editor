@@ -25,6 +25,7 @@
   <button type="button" id="te-copy">Copy CSS</button>
   <button type="button" id="te-download">Download CSS</button>
   <span id="te-status"></span>
+  <button type="button" id="te-reset-top" title="Reset: clear every change in this mode" aria-label="Reset changes">&#x21BA; Reset</button>
 </header>
 
 <main id="te-main">
@@ -35,6 +36,7 @@
     </div>
     <section id="te-changes">
       <h2>Changes <span id="te-nchanges"></span>
+        <button type="button" id="te-copy-log" class="te-icon" title="Copy the changes" aria-label="Copy changes">&#x29C9;</button>
         <button type="button" id="te-reset" title="Reset: clear every change in this mode" aria-label="Reset changes">&#x21BA;</button>
       </h2>
       <textarea id="te-log" readonly spellcheck="false" placeholder="Nothing changed yet."></textarea>

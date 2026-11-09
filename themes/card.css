@@ -23,7 +23,7 @@
     /* The table's header band: the body ink over --surface — muted, no accent
        hue, and one solid step off both the page and the striped row. Light
        block only; the mix re-reads --text/--surface where it is used. */
-    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
+    --table-head-bg: #E0F2FE;
     --h2-border-line: rgb(13, 148, 136);
     --table-even-row: #f8fafc;
     --table-border: #e5e7eb;
@@ -299,6 +299,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 4px 0;
 }
 .md-editor pre{
+    font-size: var(--pre-font-size, 0.9em);
     margin: 0 0 20px;
     padding: 16px;
     overflow-x: auto;
@@ -397,7 +398,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }
-.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
+.md-editor .code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }

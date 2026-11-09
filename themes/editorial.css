@@ -10,7 +10,7 @@
     --border: #C9C4BA;
     --accent: #A31621;
     --accent-soft: #F8E9EA;
-    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
+    --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: var(--accent);
@@ -207,7 +207,7 @@ html.dark .md-editor .hljs-attr { color: #E0616B; }
     border-radius: var(--radius);
     padding: 16px;
     overflow-x: auto;
-    font-size: 0.85rem;
+    font-size: var(--pre-font-size, 0.9em);
     line-height: 1.5;
     margin: 12px 0 20px;
 }
@@ -306,7 +306,7 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
+}.md-editor .code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }
@@ -548,7 +548,7 @@ html.dark .md-editor pre {
 .md-editor table { font-size: 0.92em; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif; }
 .md-editor th, .md-editor td { border-left: none; border-right: none; }
 .md-editor th { background: var(--table-head-bg); border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.815em; }
-.md-editor tr:nth-child(even) td { background: none; }
+.md-editor tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 5%, transparent); }
 
 .md-editor pre { font-size: 0.82rem; border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-radius: 0; }
 .md-editor hr { border: none; text-align: center; margin: 36px 0; }

@@ -4,13 +4,13 @@
     --mermaid-bg: #f6f8f7;
     --mermaid-er-header: color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg));
     --bg: #FFFFFF;
-    --surface: #E0F2FEBF;
+    --surface: #ECFDF5D4;
     --text: #11191A;
     --text-secondary: #5B6A6B;
     --border: #D4DCDB;
     --accent: #0E6A61;
     --accent-soft: #E2EFEC;
-    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
+    --table-head-bg: #E9FFFD;
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: var(--accent);
@@ -207,7 +207,7 @@ html.dark .md-editor .hljs-attr { color: #D4866A; }
     border-radius: var(--radius);
     padding: 16px;
     overflow-x: auto;
-    font-size: 0.85rem;
+    font-size: var(--pre-font-size, 0.9em);
     line-height: 1.5;
     margin: 12px 0 20px;
 }
@@ -306,7 +306,7 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
+}.md-editor .code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }
@@ -550,7 +550,7 @@ html.dark .md-editor pre {
 .md-editor a:hover { border-bottom-color: var(--accent); }
 .md-editor strong { font-weight: 600; }
 .md-editor code { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; padding: 0.05em 0.3em; border: 1px solid var(--border); border-radius: 3px; }
-.md-editor pre { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; }
+.md-editor pre { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; background: var(--code-bg); }
 .md-editor pre code { border: none; padding: 0; font-size: inherit; }
 /* A quote is a rail, not a filled box. */
 .md-editor blockquote, .md-editor .blockquotes { background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }
@@ -558,7 +558,7 @@ html.dark .md-editor pre {
 .md-editor table { font-size: 0.9em; font-variant-numeric: tabular-nums; }
 .md-editor th, .md-editor td { border-left: none; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 13px; }
 .md-editor th { background: var(--table-head-bg); font-size: 0.78em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--text-secondary) 70%, var(--text)); }
-.md-editor tr:nth-child(even) td { background: none; }
+.md-editor tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 5%, transparent); }
 .md-editor hr { border: none; border-top: 1px solid var(--border); margin: 26px 0; }
 /* A task box is drawn, never a glyph. */
 .md-editor li > input[type="checkbox"] { appearance: none; width: 10px; height: 10px; border: 1px solid var(--text-secondary); border-radius: 2px; background: none; }

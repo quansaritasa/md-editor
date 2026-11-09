@@ -110,7 +110,7 @@ function renderChanges() {
     if (!(r.f.k in over())) continue;
     const base = r.f.kind === 'color' ? reader.color(r.g, r.f) : Math.round(reader.length(r.g, r.f));
     const was = base === '' || Number.isNaN(base) ? '?' : fmt(r.f, base);
-    lines.push(r.g.label + ' · ' + r.f.label + ': ' + was + ' → ' + fmt(r.f, over()[r.f.k]));
+    lines.push(state.theme + '.css: change ' + r.g.label + ': ' + r.f.label + ' ' + was + ' → ' + fmt(r.f, over()[r.f.k]));
   }
   el.textContent = css;
   log.value = lines.join('\n');
@@ -219,17 +219,23 @@ function bindBar() {
     apply();
     prefill();
   });
-  document.getElementById('te-reset').addEventListener('click', () => {
+  const reset = () => {
     state.over[mode()] = {};
     apply();
     prefill();
     status('Cleared the ' + mode() + ' changes', true);
+  };
+  document.getElementById('te-reset').addEventListener('click', reset);
+  document.getElementById('te-reset-top').addEventListener('click', reset);
+  document.getElementById('te-copy').addEventListener('click', () => copyText(exportText(), 'CSS copied'));
+  document.getElementById('te-copy-log').addEventListener('click', () => {
+    const t = document.getElementById('te-log').value;
+    if (t) copyText(t, 'Changes copied');
   });
-  document.getElementById('te-copy').addEventListener('click', async () => {
-    const text = exportText();
+  async function copyText(text, done) {
     try {
       await navigator.clipboard.writeText(text);
-      status('CSS copied', true);
+      status(done, true);
       return;
     } catch (e) {}
     // A page opened from disk has no clipboard permission to write to, so the
@@ -244,8 +250,8 @@ function bindBar() {
       ok = document.execCommand('copy');
       ta.remove();
     } catch (e) {}
-    status(ok ? 'CSS copied' : 'Clipboard refused — use Download', ok);
-  });
+    status(ok ? done : 'Clipboard refused — use Download', ok);
+  }
   document.getElementById('te-download').addEventListener('click', () => {
     const blob = new Blob([exportText()], { type: 'text/css' });
     const a = document.createElement('a');

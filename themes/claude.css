@@ -30,7 +30,7 @@
     /* The table's header band: the body ink over --surface — muted, no accent
        hue, and one solid step off both the page and the striped row. Light
        block only; the mix re-reads --text/--surface where it is used. */
-    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
+    --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
     --h2-border-line: #D8D6D0;
     --table-even-row: #F5F4F0;
     --table-border: #D8D6D0;
@@ -192,6 +192,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     white-space: nowrap;
     padding-right: 1.2rem;
 }.md-editor pre {
+    font-size: var(--pre-font-size, 0.9em);
     margin: 0 0 1rem;
     padding: 1rem 1.1rem;
     overflow-x: auto;
@@ -276,7 +277,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
+}.md-editor .code-wrap-btn:hover {
     background: var(--accent-soft);
     color: var(--accent);
     border-color: var(--accent);

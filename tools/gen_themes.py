@@ -102,7 +102,11 @@ COMMON_LIGHT = {'mermaid-bg': '#f6f8fa', 'max-w': '900px',
                 # the page and the stripe in either mode (measured 1.34:1 to
                 # 8.4:1 luminance across the palettes). 16% is the ceiling that
                 # still keeps every header label at or above 4.85:1.
-                'table-head-bg': 'color-mix(in srgb, var(--text) 16%, var(--surface))',
+                # Revised: the neutral band read the same in every theme, so the
+                # header now takes the theme's own accent (20% over --surface).
+                # Still one step off the stripe; eink's accent is its ink, so it
+                # stays gray without a special case.
+                'table-head-bg': 'color-mix(in srgb, var(--accent) 20%, var(--surface))',
                 'heading-ink': 'color-mix(in srgb, var(--accent) 60%, var(--text))',
                 'strong-ink': 'color-mix(in srgb, var(--accent) 42%, var(--text))',
                 # Link ink defaults to the accent. A palette whose accent is too
@@ -156,7 +160,7 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }}
 .md-editor blockquote p::before {{ content: "> "; color: var(--text-secondary); }}
 .md-editor th {{ text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.87em; }}
-.md-editor tr:nth-child(even) td {{ background: none; }}
+.md-editor tr:nth-child(even) td {{ background: color-mix(in srgb, var(--text) 5%, transparent); }}
 .md-editor hr {{ border-top: 1px dashed var(--border); }}
 .md-editor ul {{ list-style: none; margin-left: 4px; }}
 .md-editor ul > li {{ padding-left: 18px; position: relative; }}
@@ -242,7 +246,7 @@ emit('eink', 'Grayscale, serif, no shadows — an e-reader on the desktop',
 .md-editor a {{ text-decoration: underline; text-underline-offset: 2px; }}
 .md-editor a:hover {{ background: var(--accent-soft); }}
 .md-editor th {{ background: var(--table-head-bg); border-bottom: 2px solid var(--text); }}
-.md-editor tr:nth-child(even) td {{ background: none; }}
+.md-editor tr:nth-child(even) td {{ background: color-mix(in srgb, var(--text) 5%, transparent); }}
 .md-editor th, .md-editor td {{ border-color: var(--border); }}
 .md-editor code {{ border: 1px solid var(--border); }}
 .md-editor pre {{ border: 1px solid var(--border); background: var(--surface); }}
@@ -307,7 +311,7 @@ emit('editorial', 'Newspaper — display serif headings, hairline rules, drop ca
 .md-editor table {{ font-size: 0.92em; font-family: {SANS}; }}
 .md-editor th, .md-editor td {{ border-left: none; border-right: none; }}
 .md-editor th {{ background: var(--table-head-bg); border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.815em; }}
-.md-editor tr:nth-child(even) td {{ background: none; }}
+.md-editor tr:nth-child(even) td {{ background: color-mix(in srgb, var(--text) 5%, transparent); }}
 
 .md-editor pre {{ font-size: 0.82rem; border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-radius: 0; }}
 .md-editor hr {{ border: none; text-align: center; margin: 36px 0; }}
@@ -474,9 +478,9 @@ html.dark .md-editor .eyebrow { background: #B58900; color: #002B36; }
 # Plex faces are named first and fall back to the system stacks, so the theme
 # never pulls a font over the network — no other theme here does either.
 emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex in three roles',
-     {**COMMON_LIGHT, 'mermaid-bg': '#f6f8f7', 'book-bg': '#EEF1F0', 'bg': '#FFFFFF', 'surface': '#E0F2FEBF',
+     {**COMMON_LIGHT, 'mermaid-bg': '#f6f8f7', 'book-bg': '#EEF1F0', 'bg': '#FFFFFF', 'surface': '#ECFDF5D4',
       'text': '#11191A', 'text-secondary': '#5B6A6B', 'border': '#D4DCDB',
-      'accent': '#0E6A61', 'accent-soft': '#E2EFEC',
+      'accent': '#0E6A61', 'accent-soft': '#E2EFEC', 'table-head-bg': '#E9FFFD',
       'code-bg': '#F6F8F7', 'code-text': '#9B4732', 'radius': '5px',
       'note-amber': '#9B4732', 'note-amber-lt': '#F6E9E4', 'note-amber-border': '#C08165',
       'info-blue': '#1F5E6E', 'info-blue-lt': '#E3EEF0', 'info-blue-border': '#4F8B99', 'fields-key': '#0E6A61'},
@@ -519,7 +523,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 .md-editor a:hover {{ border-bottom-color: var(--accent); }}
 .md-editor strong {{ font-weight: 600; }}
 .md-editor code {{ font-family: {PLEX_MONO}; padding: 0.05em 0.3em; border: 1px solid var(--border); border-radius: 3px; }}
-.md-editor pre {{ font-family: {PLEX_MONO}; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; }}
+.md-editor pre {{ font-family: {PLEX_MONO}; font-size: 0.86rem; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; background: var(--code-bg); }}
 .md-editor pre code {{ border: none; padding: 0; font-size: inherit; }}
 /* A quote is a rail, not a filled box. */
 .md-editor blockquote, .md-editor .blockquotes {{ background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }}
@@ -527,7 +531,7 @@ emit('block', 'Block — cool paper, teal accent, hairline structure, IBM Plex i
 .md-editor table {{ font-size: 0.9em; font-variant-numeric: tabular-nums; }}
 .md-editor th, .md-editor td {{ border-left: none; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 13px; }}
 .md-editor th {{ background: var(--table-head-bg); font-size: 0.78em; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--text-secondary) 70%, var(--text)); }}
-.md-editor tr:nth-child(even) td {{ background: none; }}
+.md-editor tr:nth-child(even) td {{ background: color-mix(in srgb, var(--text) 5%, transparent); }}
 .md-editor hr {{ border: none; border-top: 1px solid var(--border); margin: 26px 0; }}
 /* A task box is drawn, never a glyph. */
 .md-editor li > input[type="checkbox"] {{ appearance: none; width: 10px; height: 10px; border: 1px solid var(--text-secondary); border-radius: 2px; background: none; }}

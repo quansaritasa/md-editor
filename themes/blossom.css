@@ -10,7 +10,7 @@
     --border: #F2CEDD;
     --accent: #C2255C;
     --accent-soft: #FCE0EB;
-    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
+    --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: var(--accent);
@@ -207,7 +207,7 @@ html.dark .md-editor .hljs-attr { color: #F783AC; }
     border-radius: var(--radius);
     padding: 16px;
     overflow-x: auto;
-    font-size: 0.85rem;
+    font-size: var(--pre-font-size, 0.9em);
     line-height: 1.5;
     margin: 12px 0 20px;
 }
@@ -306,7 +306,7 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
+}.md-editor .code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }

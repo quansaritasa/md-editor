@@ -16,7 +16,7 @@
     /* The table's header band: the body ink over the frosted --surface — a
        muted step with no accent hue, so the header does not compete with the
        links and headings the indigo already paints. */
-    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
+    --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
     /* Headings and bold runs: the accent pulled toward the body ink, so neither
        reads as the same colour as the paragraph it sits in. Light block only —
        the mix re-reads --accent/--text at the use site. */
@@ -267,7 +267,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     border-radius: var(--radius);
     padding: 20px;
     overflow-x: auto;
-    font-size: 0.85rem;
+    font-size: var(--pre-font-size, 0.9em);
     line-height: 1.6;
     margin: 16px 0 24px;
     backdrop-filter: blur(var(--blur)) saturate(200%);
@@ -370,7 +370,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     line-height: 1;
     cursor: pointer;
     transition: all 0.15s;
-}.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
+}.md-editor .code-wrap-btn:hover {
     background: var(--accent-soft);
     color: var(--accent);
 }.md-editor blockquote, .md-editor .blockquotes {
@@ -596,3 +596,5 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
    outside a section. */
 .md-editor h2 { padding-block: 14px; }
 .md-editor .section > h2:first-child { margin-top: 0; }
+
+.md-editor tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 5%, transparent); }

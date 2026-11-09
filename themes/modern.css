@@ -20,7 +20,7 @@
        headings). Muted by construction: every palette's ink is near-neutral.
        Declared light-only like --heading-ink below: the mix re-reads --text and
        --surface where it is used. */
-    --table-head-bg: color-mix(in srgb, var(--text) 16%, var(--surface));
+    --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
     /* See tools/gen_themes.py: accent pulled toward the body ink. Declared in
        the light block only — the mix re-reads --accent/--text where it is used,
        so dark mode gets its own pair without a second declaration. */
@@ -219,7 +219,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     border-radius: var(--radius);
     padding: 16px;
     overflow-x: auto;
-    font-size: 0.85rem;
+    font-size: var(--pre-font-size, 0.9em);
     line-height: 1.5;
     margin: 12px 0 20px;
 }
@@ -318,7 +318,7 @@ html.dark .md-editor pre {
     line-height: 1;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .code-wrap-btn:hover, .md-editor .code-wrap-btn.active {
+}.md-editor .code-wrap-btn:hover {
     background: var(--border);
     color: var(--text);
 }
