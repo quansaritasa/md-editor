@@ -26,7 +26,7 @@
     --table-head-bg: #E0F2FE;
     --h2-border-line: rgb(13, 148, 136);
     --table-even-row: #f8fafc;
-    --table-border: #e5e7eb;
+    --table-border: #cbd5e1;
     /* Was #0f172a (dark navy, matching dark mode's own --pre-bg exactly),
        then #1e293b (lighter navy). Now flipped to a light block — same tint
        as inline --code-bg — differentiated from the page by --border below
@@ -83,7 +83,7 @@ html.dark .md-editor {
     --th-title: #cbd5e1;
     --h2-border-line: #2dd4bf;
     --table-even-row: #273549;
-    --table-border: #334155;
+    --table-border: #475569;
     --pre-bg: #0f172a;
     --pre-text: #e5eefc;
     --code-bg: #22303f;

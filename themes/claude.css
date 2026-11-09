@@ -167,6 +167,12 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor p { margin: 0 0 0.9rem; }.md-editor a { color: var(--link-ink); text-decoration: none; }.md-editor h1 { color: var(--accent); text-decoration: none; }.md-editor a:hover { text-decoration: underline; }.md-editor ul, .md-editor ol { margin: 4px 0 1em 20px; }.md-editor li { margin-bottom: 8px; }.md-editor table {
     width: 100%;
     border-collapse: collapse;
+    /* Chrome ignores border-radius on a collapsed table: clip the corner and
+       redraw the outline over the clipped border. */
+    border-radius: 4px;
+    clip-path: inset(0 round 4px);
+    outline: 1px solid var(--border);
+    outline-offset: -1px;
     border: 1px solid var(--table-border);
     background: var(--table-bg);
     margin: 0.75rem 0 1rem;

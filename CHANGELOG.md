@@ -2,7 +2,18 @@
 
 # Changelog
 
-## Unreleased — a smaller inline code step, and Claude's system mono
+## Unreleased — rounded tables, and a firmer Card border
+
+- Every table is rounded to **4px**. Chrome ignores `border-radius` on a table
+  that collapses its borders, so the table is clipped with `clip-path` and its
+  outline redrawn over the clipped border. Card and Glass already rounded their
+  own tables and are unchanged. The rule lives in `themes/modern.css`; the nine
+  generated themes take it from there, and Claude carries its own copy.
+- Card's table border is `#cbd5e1` in light and `#475569` in dark, was
+  `#e5e7eb` / `#334155`. The old line sat almost on the white page, so the
+  outline and the column rules barely read.
+
+## Earlier, still unreleased — a smaller inline code step, and Claude's system mono
 
 - Inline `code` is **0.88em** of the prose in all thirteen themes, was 0.9em.
   The mono face draws taller than the surrounding sans at any one size (at 12px,

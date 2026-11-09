@@ -155,6 +155,12 @@ html.dark .md-editor .hljs-attr { color: #EBCB8B; }
 .md-editor table {
     width: 100%;
     border-collapse: collapse;
+    /* Chrome ignores border-radius on a collapsed table: clip the corner and
+       redraw the outline over the clipped border. */
+    border-radius: 4px;
+    clip-path: inset(0 round 4px);
+    outline: 1px solid var(--border);
+    outline-offset: -1px;
     margin: 12px 0 20px;
     font-size: 0.9em;
 }.md-editor th, .md-editor td {
