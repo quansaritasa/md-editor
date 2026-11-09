@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased — a smaller inline code step, and Claude's system mono
+
+- Inline `code` is **0.88em** of the prose in all thirteen themes, was 0.9em.
+  The mono face draws taller than the surrounding sans at any one size (at 12px,
+  cap 8.74 against 8.46), so the old step still read almost level with the
+  sentence; 0.88em leaves a visible step and still follows a host's text size
+  because it is an em. `pre code` keeps its `inherit`, so a block stays at the
+  prose's size. Touches `themes/*.css` and `tools/gen_themes.py`: the nine
+  generated themes take the number from `themes/modern.css`.
+- Claude's code face fell straight from `Cascadia Code` / `Fira Code` to
+  `Courier New`, so on a machine carrying neither (any stock macOS) code drew
+  about a fifth short of the prose — `Courier New`'s cap is 0.57em against
+  0.73em for the system mono. The stack now passes through `ui-monospace`,
+  SF Mono, Menlo and Consolas before `Courier New`, and the key column of a
+  fields table uses the same stack.
+
 ## v0.10.42 — a theme editor, and the sheet of what you moved
 
 - `demo/theme-editor.html`: thirteen themes on the left, the document on the
