@@ -114,9 +114,14 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
         radial-gradient(ellipse 55% 55% at 8% 92%, var(--glow-4), transparent 60%);
     pointer-events: none;
 }.md-editor {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 48px 24px 96px;
+    /* The box spans its parent, not just the reading column, so the ambient glow
+       (::before, inset:0) tints the whole parent surface and not a strip down
+       its middle. The column keeps its --max-w width and stays centred: the side
+       padding is the gutter left over once --max-w is taken out of the parent's
+       width. The parent's own box still bounds the glow, so it never reaches the
+       host app's chrome. */
+    margin: 0;
+    padding: 48px max(24px, calc((100% - var(--max-w)) / 2 + 24px)) 96px;
 }
 /* ── Frontmatter Display ───────────────────── */
 .md-editor .md-header {
