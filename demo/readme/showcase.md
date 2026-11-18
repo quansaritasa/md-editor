@@ -68,6 +68,56 @@ Hidden body with **bold** and a list:
 - two
 :::
 
+## Indentation
+
+Bullets, three levels deep:
+
+- Level one, short
+- Level one, long enough to wrap onto a second line so the hanging indent shows: the continuation must line up under the first word, not under the bullet
+  - Level two, short
+  - Level two, long enough to wrap onto a second line so the hanging indent shows against the level above it
+    - Level three, short
+    - Level three, long enough to wrap onto a second line so the hanging indent shows at the deepest step
+    - Level three with **bold** and `code`
+  - Level two again
+- Level one again
+
+Numbered, three levels deep:
+
+1. Step one
+2. Step two, long enough to wrap onto a second line so the number's hanging indent is visible against the text
+   1. Sub-step two-a
+   2. Sub-step two-b
+      1. Detail two-b-i
+      2. Detail two-b-ii, long enough to wrap onto a second line at the deepest numbered level
+   3. Sub-step two-c
+3. Step three
+
+Mixed, bullets inside numbers inside bullets:
+
+- Bullet
+  1. Number under a bullet
+     - Bullet under that number
+       - One more level down
+  2. Second number
+- Next bullet
+  - [ ] Task under a bullet
+    - [x] Done task under that task
+
+A list item holding more than one block:
+
+- First item, with a paragraph underneath.
+
+  The second paragraph belongs to the same item and must sit at the text edge, not the bullet.
+
+  ```js
+  const nested = { in: 'a list item' };
+  ```
+
+  > A quote inside the item.
+
+- Second item
+
 ## Tables
 
 | Name | Type | Default | Notes |

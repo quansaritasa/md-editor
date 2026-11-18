@@ -405,7 +405,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor ul, .md-editor ol {
     margin: 8px 0 16px 0;
     padding-left: 32px;
-}.md-editor .md-example-box {
+}.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }.md-editor .md-example-box {
     background: var(--surface);
     backdrop-filter: blur(var(--blur)) saturate(200%);
     -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);

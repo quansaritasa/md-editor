@@ -323,7 +323,9 @@ html.dark .md-editor pre {
     margin: 6px 0 14px 0;
     padding-left: 32px;
     color: var(--text);
-}.md-editor li {
+}
+/* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
+.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }.md-editor li {
     margin-bottom: 8px;
     line-height: 1.45;
 }
@@ -506,8 +508,12 @@ html.dark .md-editor pre {
     justify-content: center;
 }
 /* ── nord: typography and component reshaping ── */
-.md-editor h1 { border-bottom: 2px solid var(--border); }
-.md-editor h2 { border-bottom: 1px solid var(--border); }
+.md-editor h1 { color: #4F46E5; border-bottom: 2px solid var(--border); }
+html.dark .md-editor h1 { color: var(--heading-ink); }
+.md-editor h2 { color: #4F46E5; border-bottom: 1px solid var(--border); }
+html.dark .md-editor h2 { color: var(--heading-ink); }
+.md-editor strong { color: #1B4BD1; }
+html.dark .md-editor strong { color: var(--strong-ink); }
 /* h1–h3 all take --heading-ink (see the token block): one ink per mode, so a
    section opener cannot be dimmer than the size above or below it. */
 /* The eyebrow is an inverted chip: nordfrost at full strength put cream on

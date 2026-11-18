@@ -224,6 +224,8 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 6px 0 1em 0;
     padding-left: 32px;
 }
+/* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
+.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }
 .md-editor li{
   margin-bottom: 8px;
   line-height: 1.45;

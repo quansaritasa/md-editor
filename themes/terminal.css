@@ -321,7 +321,9 @@ html.dark .md-editor pre {
     margin: 6px 0 14px 0;
     padding-left: 32px;
     color: var(--text);
-}.md-editor li {
+}
+/* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
+.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }.md-editor li {
     margin-bottom: 8px;
     line-height: 1.45;
 }
@@ -538,6 +540,7 @@ html.dark .md-editor pre {
 .md-editor hr { border-top: 1px dashed var(--border); }
 .md-editor ul { list-style: none; margin-left: 0; padding-left: 0; }
 .md-editor ul > li { padding-left: 32px; position: relative; }
+.md-editor li > ul { padding-left: 0; margin-left: -12px; }
 .md-editor ul > li::before { content: "-"; position: absolute; left: 14px; color: var(--accent); }
 .md-editor ul ul > li::before { content: "·"; }
 .md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,

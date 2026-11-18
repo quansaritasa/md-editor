@@ -26,7 +26,6 @@ function heading(id, label, sel) {
     sel,
     fields: [
       { k: id + 'Size', label: 'Text size', kind: 'length', prop: 'font-size', min: 12, max: 72, step: 1 },
-      { k: id + 'Color', label: 'Text colour', kind: 'color', prop: 'color' },
       { k: id + 'PadTop', label: 'Padding top', kind: 'length', prop: 'padding-top', min: 0, max: 60, step: 1 },
       { k: id + 'PadBottom', label: 'Padding bottom', kind: 'length', prop: 'padding-bottom', min: 0, max: 60, step: 1 },
       { k: id + 'MarginTop', label: 'Margin top', kind: 'length', prop: 'margin-top', min: 0, max: 80, step: 1 },
@@ -47,6 +46,16 @@ const GROUPS = [
       { k: 'muted', label: 'Muted text', kind: 'color', vars: ['--muted', '--text-secondary'] },
       { k: 'border', label: 'Border', kind: 'color', vars: ['--border'] },
       { k: 'accent', label: 'Accent', kind: 'color', vars: ['--accent'] },
+      { k: 'h1Color', label: 'Heading 1 colour', kind: 'color', sel: 'h1', prop: 'color' },
+      { k: 'h2Color', label: 'Heading 2 colour', kind: 'color', sel: 'h2', prop: 'color' },
+      { k: 'h3Color', label: 'Heading 3 colour', kind: 'color', sel: 'h3', prop: 'color' },
+      { k: 'strongColor', label: 'Bold text colour', kind: 'color', sel: 'strong', prop: 'color' },
+      // `fb` is the element to measure when a theme has no such token — the
+      // generated palettes stripe rows from --surface instead of a table token,
+      // so the panel would otherwise prefill a grey that is not on screen.
+      { k: 'thBg', label: 'Table header background', kind: 'color', vars: ['--table-head-bg', '--th-bg'], fb: 'th' },
+      { k: 'rowBg', label: 'Table even row background', kind: 'color', vars: ['--table-even-row'], fb: 'tbody tr:nth-child(even) td' },
+      { k: 'tableBorder', label: 'Table border', kind: 'color', vars: ['--table-border'], fb: 'table' },
       { k: 'radius', label: 'Corner radius', kind: 'length', vars: ['--radius'], min: 0, max: 40, step: 1 },
     ],
   },
@@ -83,14 +92,6 @@ const GROUPS = [
     ],
   },
   {
-    id: 'bold',
-    label: 'Bold text',
-    sel: 'strong',
-    fields: [
-      { k: 'strongColor', label: 'Text colour', kind: 'color', prop: 'color' },
-    ],
-  },
-  {
     id: 'code',
     label: 'Code',
     sel: '',
@@ -100,19 +101,6 @@ const GROUPS = [
       { k: 'preBg', label: 'Block background', kind: 'color', vars: ['--pre-bg'] },
       { k: 'preText', label: 'Block text', kind: 'color', vars: ['--pre-text'] },
       { k: 'codeSize', label: 'Block text size', kind: 'length', sel: 'pre code', prop: 'font-size', min: 10, max: 22, step: 1 },
-    ],
-  },
-  {
-    id: 'table',
-    label: 'Table',
-    sel: 'table',
-    fields: [
-      // `fb` is the element to measure when a theme has no such token — the
-      // generated palettes stripe rows from --surface instead of a table token,
-      // so the panel would otherwise prefill a grey that is not on screen.
-      { k: 'thBg', label: 'Header background', kind: 'color', vars: ['--table-head-bg', '--th-bg'], fb: 'th' },
-      { k: 'rowBg', label: 'Even row background', kind: 'color', vars: ['--table-even-row'], fb: 'tbody tr:nth-child(even) td' },
-      { k: 'tableBorder', label: 'Border', kind: 'color', vars: ['--table-border'], fb: 'table' },
     ],
   },
   {

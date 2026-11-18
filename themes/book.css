@@ -11,8 +11,8 @@
     --accent: #7A3E1D;
     --accent-soft: #EADFCB;
     --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
-    --heading-ink: #135A31;
-    --strong-ink: #174C2D;
+    --heading-ink: #5B21B6;
+    --strong-ink: #7C3AED;
     --link-ink: var(--accent);
     --code-bg: #ECE5D3;
     --code-text: #8F3A12;
@@ -323,7 +323,9 @@ html.dark .md-editor pre {
     margin: 6px 0 14px 0;
     padding-left: 32px;
     color: var(--text);
-}.md-editor li {
+}
+/* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
+.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }.md-editor li {
     margin-bottom: 8px;
     line-height: 1.45;
 }
@@ -506,7 +508,8 @@ html.dark .md-editor pre {
     justify-content: center;
 }
 /* ── book: typography and component reshaping ── */
-.md-editor h1 { border-bottom: 2px solid var(--border); }
+.md-editor h1 { border-bottom: 2px solid var(--border); color: #6B21A8; }
+html.dark .md-editor h1 { color: var(--heading-ink); }
 .md-editor h2 { border-bottom: 1px solid var(--border); }
 .md-editor .md-eyebrow { background: #7A3E1D; color: #F6F1E7; }
 html.dark .md-editor .md-eyebrow { background: #D9A066; color: #1F1B16; }

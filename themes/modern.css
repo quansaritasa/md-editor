@@ -333,7 +333,9 @@ html.dark .md-editor pre {
     margin: 6px 0 14px 0;
     padding-left: 32px;
     color: var(--text);
-}.md-editor li {
+}
+/* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
+.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }.md-editor li {
     margin-bottom: 8px;
     line-height: 1.45;
 }

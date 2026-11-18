@@ -48,7 +48,11 @@ function createReader(root) {
     const el = f.fb ? root.querySelector(f.fb) : targetOf(g, f);
     if (!el) return '';
     const s = getComputedStyle(el);
-    return TE_CSS.toHex(s.backgroundColor) || TE_CSS.toHex(s.color);
+    // A field that writes `color` is about the text; for the rest the fill leads.
+    // A transparent fill (#00000000) is no colour at all, so it falls through.
+    const bg = TE_CSS.toHex(s.backgroundColor);
+    const fill = bg && !/^#[0-9a-f]{6}00$/.test(bg) ? bg : '';
+    return f.prop === 'color' ? TE_CSS.toHex(s.color) : fill || TE_CSS.toHex(s.color);
   }
 
   function length(g, f) {

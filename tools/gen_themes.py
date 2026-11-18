@@ -164,6 +164,7 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor hr {{ border-top: 1px dashed var(--border); }}
 .md-editor ul {{ list-style: none; margin-left: 0; padding-left: 0; }}
 .md-editor ul > li {{ padding-left: 32px; position: relative; }}
+.md-editor li > ul {{ padding-left: 0; margin-left: -12px; }}
 .md-editor ul > li::before {{ content: "-"; position: absolute; left: 14px; color: var(--accent); }}
 .md-editor ul ul > li::before {{ content: "·"; }}
 .md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
@@ -381,8 +382,12 @@ emit('nord', 'Nord — arctic, bluish palette',
       'info-blue': '#8FBCBB', 'info-blue-lt': '#33414A', 'info-blue-border': '#81A1C1', 'fields-key': '#A3BE8C'},
      ('#497337', '#7A5A12'), ('#A3BE8C', '#EBCB8B'),
      '''
-.md-editor h1 { border-bottom: 2px solid var(--border); }
-.md-editor h2 { border-bottom: 1px solid var(--border); }
+.md-editor h1 { color: #4F46E5; border-bottom: 2px solid var(--border); }
+html.dark .md-editor h1 { color: var(--heading-ink); }
+.md-editor h2 { color: #4F46E5; border-bottom: 1px solid var(--border); }
+html.dark .md-editor h2 { color: var(--heading-ink); }
+.md-editor strong { color: #1B4BD1; }
+html.dark .md-editor strong { color: var(--strong-ink); }
 /* h1–h3 all take --heading-ink (see the token block): one ink per mode, so a
    section opener cannot be dimmer than the size above or below it. */
 /* The eyebrow is an inverted chip: nordfrost at full strength put cream on
@@ -411,10 +416,10 @@ emit('gruvbox', 'Gruvbox — warm retro palette',
      '''
 .md-editor h1 { color: #9D0006; border-bottom: 2px solid var(--border); }
 html.dark .md-editor h1 { color: #FB4934; }
-.md-editor h2 { color: #605C0A; border-bottom: 1px solid var(--border); }
+.md-editor h2 { color: #881337; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: #B8BB26; }
 /* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page.
-   Light mode is a sepia page (#F1E8D4, body ink #3A3024 at 10.6:1); the h2 and
+   Light mode is a sepia page (#F1E8D4, body ink #3A3024 at 10.6:1); h2 is rose #881337;
    fields-key green steps from #79740E (4.0:1) to #605C0A so it clears AA on it. */
 .md-editor .md-eyebrow { background: #AF3A03; color: #FBF1C7; }
 html.dark .md-editor .md-eyebrow { background: #FE8019; color: #282828; }
@@ -433,12 +438,13 @@ html.dark .md-editor .md-example-box.md-bad-box { border-left-color: #FB4934; }
 emit('book', 'Book — warm cream paper, soft sepia ink',
      # Body ink #3A332A is 10.5:1 on the page: firm without the glare of black on
      # cream. Secondary #6B6254 stays above 4.7:1 even on --surface. The accent is
-     # a sienna for links and rules; headings take Terminal's green ink (its 60% accent
-     # mix) and bold takes its 42% mix, both written out as hex so the page is not one wash of brown or amber.
+     # a sienna for links and rules. Light headings and bold are violet (h1 #6B21A8,
+     # h2/h3 #5B21B6, bold #7C3AED); dark keeps Terminal's green ink (its 60% and 42%
+     # accent mixes, as hex), so the page is not one wash of brown or amber.
      {**COMMON_LIGHT, 'mermaid-bg': '#F6F1E7', 'book-bg': '#F6F1E7', 'bg': '#F6F1E7', 'surface': '#ECE5D3', 'text': '#3A332A',
       'text-secondary': '#6B6254', 'border': '#D9CFB8', 'accent': '#7A3E1D', 'accent-soft': '#EADFCB',
       'code-bg': '#ECE5D3', 'code-text': '#8F3A12', 'radius': '3px',
-      'heading-ink': '#135A31', 'strong-ink': '#174C2D',
+      'heading-ink': '#5B21B6', 'strong-ink': '#7C3AED',
       'note-amber': '#85560F', 'note-amber-lt': '#F3E7C4', 'note-amber-border': '#C9962E',
       'info-blue': '#2F5D6B', 'info-blue-lt': '#E3E6DA', 'info-blue-border': '#5E8A96', 'fields-key': '#4F6B2A'},
      {'book-bg': '#1F1B16', 'bg': '#1F1B16', 'surface': '#2A251E', 'text': '#E8DFCC',
@@ -449,7 +455,8 @@ emit('book', 'Book — warm cream paper, soft sepia ink',
       'info-blue': '#8FB8C4', 'info-blue-lt': '#27302F', 'info-blue-border': '#5E8A96', 'fields-key': '#B5C77A'},
      ('#4F6B2A', '#8A5A12'), ('#B5C77A', '#E0B060'),
      '''
-.md-editor h1 { border-bottom: 2px solid var(--border); }
+.md-editor h1 { border-bottom: 2px solid var(--border); color: #6B21A8; }
+html.dark .md-editor h1 { color: var(--heading-ink); }
 .md-editor h2 { border-bottom: 1px solid var(--border); }
 .md-editor .md-eyebrow { background: #7A3E1D; color: #F6F1E7; }
 html.dark .md-editor .md-eyebrow { background: #D9A066; color: #1F1B16; }

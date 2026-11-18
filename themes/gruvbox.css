@@ -321,7 +321,9 @@ html.dark .md-editor pre {
     margin: 6px 0 14px 0;
     padding-left: 32px;
     color: var(--text);
-}.md-editor li {
+}
+/* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
+.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }.md-editor li {
     margin-bottom: 8px;
     line-height: 1.45;
 }
@@ -506,10 +508,10 @@ html.dark .md-editor pre {
 /* ── gruvbox: typography and component reshaping ── */
 .md-editor h1 { color: #9D0006; border-bottom: 2px solid var(--border); }
 html.dark .md-editor h1 { color: #FB4934; }
-.md-editor h2 { color: #605C0A; border-bottom: 1px solid var(--border); }
+.md-editor h2 { color: #881337; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: #B8BB26; }
 /* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page.
-   Light mode is a sepia page (#F1E8D4, body ink #3A3024 at 10.6:1); the h2 and
+   Light mode is a sepia page (#F1E8D4, body ink #3A3024 at 10.6:1); h2 is rose #881337;
    fields-key green steps from #79740E (4.0:1) to #605C0A so it clears AA on it. */
 .md-editor .md-eyebrow { background: #AF3A03; color: #FBF1C7; }
 html.dark .md-editor .md-eyebrow { background: #FE8019; color: #282828; }

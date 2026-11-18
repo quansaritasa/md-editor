@@ -106,10 +106,14 @@ test('preview and export are the same declarations under a different selector', 
 
 test('the fields the panel offers cover the groups the editor promised', () => {
   const ids = GROUPS.map((g) => g.id);
-  for (const id of ['surface', 'layout', 'h1', 'h2', 'h3', 'body', 'code', 'table', 'link']) {
+  for (const id of ['surface', 'layout', 'h1', 'h2', 'h3', 'body', 'code', 'link']) {
     assert.ok(ids.includes(id), 'missing group: ' + id);
   }
   assert.ok(byKey('linkColor').f.vars.includes('--link-ink'));
   assert.ok(byKey('codeBg').f.vars.includes('--code-bg'));
   assert.ok(byKey('tableBorder').f.vars.includes('--table-border'));
+  // Heading, bold and table colours live in the top section, beside the page colours.
+  for (const k of ['h1Color', 'h2Color', 'h3Color', 'strongColor', 'thBg', 'rowBg', 'tableBorder']) {
+    assert.strictEqual(GROUPS.find((g) => g.fields.some((f) => f.k === k)).id, 'surface', k);
+  }
 });
