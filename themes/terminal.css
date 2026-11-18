@@ -318,7 +318,8 @@ html.dark .md-editor pre {
 }
 /* ── Lists ────────────────────────────────── */
 .md-editor ul, .md-editor ol {
-    margin: 6px 0 14px 24px;
+    margin: 6px 0 14px 0;
+    padding-left: 32px;
     color: var(--text);
 }.md-editor li {
     margin-bottom: 8px;
@@ -535,9 +536,9 @@ html.dark .md-editor pre {
 .md-editor th { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.87em; }
 .md-editor tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 5%, transparent); }
 .md-editor hr { border-top: 1px dashed var(--border); }
-.md-editor ul { list-style: none; margin-left: 4px; }
-.md-editor ul > li { padding-left: 18px; position: relative; }
-.md-editor ul > li::before { content: "-"; position: absolute; left: 0; color: var(--accent); }
+.md-editor ul { list-style: none; margin-left: 0; padding-left: 0; }
+.md-editor ul > li { padding-left: 32px; position: relative; }
+.md-editor ul > li::before { content: "-"; position: absolute; left: 14px; color: var(--accent); }
 .md-editor ul ul > li::before { content: "·"; }
 .md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {

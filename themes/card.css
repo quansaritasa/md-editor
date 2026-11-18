@@ -222,7 +222,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor ul,
 .md-editor ol{
     margin: 6px 0 1em 0;
-    padding-left: 22px;
+    padding-left: 32px;
 }
 .md-editor li{
   margin-bottom: 8px;

@@ -83,6 +83,14 @@ const GROUPS = [
     ],
   },
   {
+    id: 'bold',
+    label: 'Bold text',
+    sel: 'strong',
+    fields: [
+      { k: 'strongColor', label: 'Text colour', kind: 'color', prop: 'color' },
+    ],
+  },
+  {
     id: 'code',
     label: 'Code',
     sel: '',

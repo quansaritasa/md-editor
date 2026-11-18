@@ -1,3 +1,5 @@
+- Book theme: headings and bold take Terminal's green ink; lists indent 32px in every theme (Card was 22px, Claude ~60px); theme editor gets a Bold text colour field and a markdown showcase section
+
 - Themes: Gruvbox now sits on a light sepia page (#F1E8D4) with softer ink (#3A3024, 10.6:1); new Book theme — warm cream paper (#F6F1E7), sepia ink (#3A332A, 11:1), sienna accent, with a sepia-dark mode
 - Theme editor: Changes log reads 'card.css: change Heading 1: Text size 32px → 28px', with a copy icon; Block table header is #E9FFFD
 

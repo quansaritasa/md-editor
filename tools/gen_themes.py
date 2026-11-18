@@ -162,9 +162,9 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor th {{ text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.87em; }}
 .md-editor tr:nth-child(even) td {{ background: color-mix(in srgb, var(--text) 5%, transparent); }}
 .md-editor hr {{ border-top: 1px dashed var(--border); }}
-.md-editor ul {{ list-style: none; margin-left: 4px; }}
-.md-editor ul > li {{ padding-left: 18px; position: relative; }}
-.md-editor ul > li::before {{ content: "-"; position: absolute; left: 0; color: var(--accent); }}
+.md-editor ul {{ list-style: none; margin-left: 0; padding-left: 0; }}
+.md-editor ul > li {{ padding-left: 32px; position: relative; }}
+.md-editor ul > li::before {{ content: "-"; position: absolute; left: 14px; color: var(--accent); }}
 .md-editor ul ul > li::before {{ content: "·"; }}
 .md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {{
@@ -433,15 +433,18 @@ html.dark .md-editor .md-example-box.md-bad-box { border-left-color: #FB4934; }
 emit('book', 'Book — warm cream paper, soft sepia ink',
      # Body ink #3A332A is 10.5:1 on the page: firm without the glare of black on
      # cream. Secondary #6B6254 stays above 4.7:1 even on --surface. The accent is
-     # a sienna so headings and bold read as ink, not as a UI colour.
+     # a sienna for links and rules; headings take Terminal's green ink (its 60% accent
+     # mix) and bold takes its 42% mix, both written out as hex so the page is not one wash of brown or amber.
      {**COMMON_LIGHT, 'mermaid-bg': '#F6F1E7', 'book-bg': '#F6F1E7', 'bg': '#F6F1E7', 'surface': '#ECE5D3', 'text': '#3A332A',
       'text-secondary': '#6B6254', 'border': '#D9CFB8', 'accent': '#7A3E1D', 'accent-soft': '#EADFCB',
       'code-bg': '#ECE5D3', 'code-text': '#8F3A12', 'radius': '3px',
+      'heading-ink': '#135A31', 'strong-ink': '#174C2D',
       'note-amber': '#85560F', 'note-amber-lt': '#F3E7C4', 'note-amber-border': '#C9962E',
       'info-blue': '#2F5D6B', 'info-blue-lt': '#E3E6DA', 'info-blue-border': '#5E8A96', 'fields-key': '#4F6B2A'},
      {'book-bg': '#1F1B16', 'bg': '#1F1B16', 'surface': '#2A251E', 'text': '#E8DFCC',
       'text-secondary': '#A89D86', 'border': '#3A342A', 'accent': '#D9A066', 'accent-soft': '#3A3128',
       'code-bg': '#2A251E', 'code-text': '#E8A87C',
+      'heading-ink': '#8ADBA8', 'strong-ink': '#A1DEB4',
       'note-amber': '#E0B060', 'note-amber-lt': '#352D1F', 'note-amber-border': '#C9962E',
       'info-blue': '#8FB8C4', 'info-blue-lt': '#27302F', 'info-blue-border': '#5E8A96', 'fields-key': '#B5C77A'},
      ('#4F6B2A', '#8A5A12'), ('#B5C77A', '#E0B060'),

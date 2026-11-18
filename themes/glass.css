@@ -403,7 +403,8 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor .md-blockquotes.md-info strong, .md-editor .md-blockquotes.md-info p {
     color: var(--info-blue);
 }.md-editor ul, .md-editor ol {
-    margin: 8px 0 16px 24px;
+    margin: 8px 0 16px 0;
+    padding-left: 32px;
 }.md-editor .md-example-box {
     background: var(--surface);
     backdrop-filter: blur(var(--blur)) saturate(200%);

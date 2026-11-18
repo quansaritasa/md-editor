@@ -319,7 +319,8 @@ html.dark .md-editor pre {
 }
 /* ── Lists ────────────────────────────────── */
 .md-editor ul, .md-editor ol {
-    margin: 6px 0 14px 24px;
+    margin: 6px 0 14px 0;
+    padding-left: 32px;
     color: var(--text);
 }.md-editor li {
     margin-bottom: 8px;
