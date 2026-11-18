@@ -1,30 +1,30 @@
 /* theme-gruvbox.css — Gruvbox — warm retro palette */
 .md-editor {
-    --book-bg: #FBF1C7;
-    --mermaid-bg: #FBF1C7;
+    --book-bg: #F1E8D4;
+    --mermaid-bg: #F1E8D4;
     --mermaid-er-header: color-mix(in srgb, var(--accent) 45%, var(--mermaid-bg));
-    --bg: #FBF1C7;
-    --surface: #EBDBB2;
-    --text: #3C3836;
-    --text-secondary: #665C54;
-    --border: #D5C4A1;
+    --bg: #F1E8D4;
+    --surface: #E7DCC0;
+    --text: #3A3024;
+    --text-secondary: #6B5F4A;
+    --border: #D3C5A5;
     --accent: #076678;
     --accent-soft: #E4DFC0;
     --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: var(--accent);
-    --code-bg: #EBDBB2;
+    --code-bg: #E7DCC0;
     --code-text: #AD3903;
     --radius: 3px;
     --max-w: 900px;
     --note-amber: #85560F;
-    --note-amber-lt: #F4E8C1;
+    --note-amber-lt: #F1E3B8;
     --note-amber-border: #D79921;
     --info-blue: #076678;
-    --info-blue-lt: #E6E5C6;
+    --info-blue-lt: #E3E1C4;
     --info-blue-border: #458588;
-    --fields-key: #79740E;
+    --fields-key: #605C0A;
 }
 .md-editor .hljs-string { color: #67630C; }
 .md-editor .hljs-attr { color: #84560F; }
@@ -505,9 +505,11 @@ html.dark .md-editor pre {
 /* ── gruvbox: typography and component reshaping ── */
 .md-editor h1 { color: #9D0006; border-bottom: 2px solid var(--border); }
 html.dark .md-editor h1 { color: #FB4934; }
-.md-editor h2 { color: #79740E; border-bottom: 1px solid var(--border); }
+.md-editor h2 { color: #605C0A; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: #B8BB26; }
-/* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page. */
+/* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page.
+   Light mode is a sepia page (#F1E8D4, body ink #3A3024 at 10.6:1); the h2 and
+   fields-key green steps from #79740E (4.0:1) to #605C0A so it clears AA on it. */
 .md-editor .md-eyebrow { background: #AF3A03; color: #FBF1C7; }
 html.dark .md-editor .md-eyebrow { background: #FE8019; color: #282828; }
 .md-editor strong { color: #9D0006; }
@@ -515,7 +517,7 @@ html.dark .md-editor .md-eyebrow { background: #FE8019; color: #282828; }
    --surface block, so emphasis faded on cards and quotes. The palette's orange
    clears both (5.8:1 / 4.6:1) and stays in the warm family. */
 html.dark .md-editor strong { color: #FE8019; }
-.md-editor .md-example-box.md-good-box { border-left-color: #79740E; }
+.md-editor .md-example-box.md-good-box { border-left-color: #605C0A; }
 .md-editor .md-example-box.md-bad-box { border-left-color: #9D0006; }
 html.dark .md-editor .md-example-box.md-good-box { border-left-color: #B8BB26; }
 html.dark .md-editor .md-example-box.md-bad-box { border-left-color: #FB4934; }

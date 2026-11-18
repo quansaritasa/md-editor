@@ -397,11 +397,11 @@ html.dark .md-editor .md-eyebrow { background: #88C0D0; color: #2E3440; }
 
 # ─────────────────────────── gruvbox ───────────────────────────
 emit('gruvbox', 'Gruvbox — warm retro palette',
-     {**COMMON_LIGHT, 'mermaid-bg': '#FBF1C7', 'book-bg': '#FBF1C7', 'bg': '#FBF1C7', 'surface': '#EBDBB2', 'text': '#3C3836',
-      'text-secondary': '#665C54', 'border': '#D5C4A1', 'accent': '#076678', 'accent-soft': '#E4DFC0',
-      'code-bg': '#EBDBB2', 'code-text': '#AD3903', 'radius': '3px',
-      'note-amber': '#85560F', 'note-amber-lt': '#F4E8C1', 'note-amber-border': '#D79921',
-      'info-blue': '#076678', 'info-blue-lt': '#E6E5C6', 'info-blue-border': '#458588', 'fields-key': '#79740E'},
+     {**COMMON_LIGHT, 'mermaid-bg': '#F1E8D4', 'book-bg': '#F1E8D4', 'bg': '#F1E8D4', 'surface': '#E7DCC0', 'text': '#3A3024',
+      'text-secondary': '#6B5F4A', 'border': '#D3C5A5', 'accent': '#076678', 'accent-soft': '#E4DFC0',
+      'code-bg': '#E7DCC0', 'code-text': '#AD3903', 'radius': '3px',
+      'note-amber': '#85560F', 'note-amber-lt': '#F1E3B8', 'note-amber-border': '#D79921',
+      'info-blue': '#076678', 'info-blue-lt': '#E3E1C4', 'info-blue-border': '#458588', 'fields-key': '#605C0A'},
      {'book-bg': '#282828', 'bg': '#282828', 'surface': '#3C3836', 'text': '#EBDBB2',
       'text-secondary': '#A89984', 'border': '#504945', 'accent': '#83A598', 'accent-soft': '#3A4442',
       'code-bg': '#3C3836', 'code-text': '#FE8019',
@@ -411,9 +411,11 @@ emit('gruvbox', 'Gruvbox — warm retro palette',
      '''
 .md-editor h1 { color: #9D0006; border-bottom: 2px solid var(--border); }
 html.dark .md-editor h1 { color: #FB4934; }
-.md-editor h2 { color: #79740E; border-bottom: 1px solid var(--border); }
+.md-editor h2 { color: #605C0A; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: #B8BB26; }
-/* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page. */
+/* h3 takes the shared --heading-ink: #B57614 is 3.3:1 on the cream page.
+   Light mode is a sepia page (#F1E8D4, body ink #3A3024 at 10.6:1); the h2 and
+   fields-key green steps from #79740E (4.0:1) to #605C0A so it clears AA on it. */
 .md-editor .md-eyebrow { background: #AF3A03; color: #FBF1C7; }
 html.dark .md-editor .md-eyebrow { background: #FE8019; color: #282828; }
 .md-editor strong { color: #9D0006; }
@@ -421,10 +423,37 @@ html.dark .md-editor .md-eyebrow { background: #FE8019; color: #282828; }
    --surface block, so emphasis faded on cards and quotes. The palette's orange
    clears both (5.8:1 / 4.6:1) and stays in the warm family. */
 html.dark .md-editor strong { color: #FE8019; }
-.md-editor .md-example-box.md-good-box { border-left-color: #79740E; }
+.md-editor .md-example-box.md-good-box { border-left-color: #605C0A; }
 .md-editor .md-example-box.md-bad-box { border-left-color: #9D0006; }
 html.dark .md-editor .md-example-box.md-good-box { border-left-color: #B8BB26; }
 html.dark .md-editor .md-example-box.md-bad-box { border-left-color: #FB4934; }
+''')
+
+# ─────────────────────────── book ───────────────────────────
+emit('book', 'Book — warm cream paper, soft sepia ink',
+     # Body ink #3A332A is 10.5:1 on the page: firm without the glare of black on
+     # cream. Secondary #6B6254 stays above 4.7:1 even on --surface. The accent is
+     # a sienna so headings and bold read as ink, not as a UI colour.
+     {**COMMON_LIGHT, 'mermaid-bg': '#F6F1E7', 'book-bg': '#F6F1E7', 'bg': '#F6F1E7', 'surface': '#ECE5D3', 'text': '#3A332A',
+      'text-secondary': '#6B6254', 'border': '#D9CFB8', 'accent': '#7A3E1D', 'accent-soft': '#EADFCB',
+      'code-bg': '#ECE5D3', 'code-text': '#8F3A12', 'radius': '3px',
+      'note-amber': '#85560F', 'note-amber-lt': '#F3E7C4', 'note-amber-border': '#C9962E',
+      'info-blue': '#2F5D6B', 'info-blue-lt': '#E3E6DA', 'info-blue-border': '#5E8A96', 'fields-key': '#4F6B2A'},
+     {'book-bg': '#1F1B16', 'bg': '#1F1B16', 'surface': '#2A251E', 'text': '#E8DFCC',
+      'text-secondary': '#A89D86', 'border': '#3A342A', 'accent': '#D9A066', 'accent-soft': '#3A3128',
+      'code-bg': '#2A251E', 'code-text': '#E8A87C',
+      'note-amber': '#E0B060', 'note-amber-lt': '#352D1F', 'note-amber-border': '#C9962E',
+      'info-blue': '#8FB8C4', 'info-blue-lt': '#27302F', 'info-blue-border': '#5E8A96', 'fields-key': '#B5C77A'},
+     ('#4F6B2A', '#8A5A12'), ('#B5C77A', '#E0B060'),
+     '''
+.md-editor h1 { border-bottom: 2px solid var(--border); }
+.md-editor h2 { border-bottom: 1px solid var(--border); }
+.md-editor .md-eyebrow { background: #7A3E1D; color: #F6F1E7; }
+html.dark .md-editor .md-eyebrow { background: #D9A066; color: #1F1B16; }
+.md-editor .md-example-box.md-good-box { border-left-color: #4F6B2A; }
+.md-editor .md-example-box.md-bad-box { border-left-color: #9D2A12; }
+html.dark .md-editor .md-example-box.md-good-box { border-left-color: #B5C77A; }
+html.dark .md-editor .md-example-box.md-bad-box { border-left-color: #E8836A; }
 ''')
 
 # ─────────────────────────── solarized ───────────────────────────

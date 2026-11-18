@@ -192,13 +192,14 @@ mount element, so a theme cannot reach out and restyle the host application.
 | `claude` | Warm paper, book-like |
 | `catppuccin` | Catppuccin Latte (light) and Mocha (dark) |
 | `nord` | Nord — arctic blues |
-| `gruvbox` | Gruvbox — warm retro |
+| `gruvbox` | Gruvbox — warm retro palette on a light sepia page |
 | `solarized` | Solarized light and dark |
 | `terminal` | Monospace throughout, Markdown hashes kept on headings, phosphor accents |
 | `editorial` | Newspaper — display serif, hairline rules, drop cap on the opening paragraph |
 | `eink` | Grayscale serif with no shadows; syntax is carried by weight and slant |
 | `blossom` | Soft pink paper with raspberry accents, rounded edges and a ❀ rule |
 | `block` | Cool paper, teal accent, hairline structure; IBM Plex serif headings over sans prose |
+| `book` | Warm cream paper, soft sepia ink, sienna accent |
 
 Every theme carries a light and a dark block; `setDark` flips between them.
 
