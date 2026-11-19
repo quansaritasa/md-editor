@@ -14,7 +14,7 @@
     --heading-ink: #2F4A6B;
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: #516F94;
-    --code-bg: #E5E9F0;
+    --code-bg: #FBF6AE;
     --code-text: #9F5158;
     --radius: 4px;
     --max-w: 900px;

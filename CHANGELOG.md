@@ -1,3 +1,5 @@
+- Inline code background: yellow #FBF6AE in light themes, Gruvbox #F0FDF4, Solarized #EFF6FF, v0.10.46
+
 - Code blocks: Card and Claude get the 12px margin above that Modern has, Block's block text is 0.9em (was 0.86rem), v0.10.45
 
 - Color picker: vendored build e67e3d3 (width/height, placement, offset options), v0.10.44

@@ -26,7 +26,7 @@
        so links take one stop darker while the accent keeps painting h1, the
        eyebrow and the glow. Dark mode's accent already clears AA. */
     --link-ink: #4f46e5;
-    --code-bg: rgba(99, 102, 241, 0.06);
+    --code-bg: #FBF6AE;
     --code-text: #be185d;
     --radius: 14px;
     --max-w: 948px;

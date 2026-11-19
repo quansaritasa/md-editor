@@ -30,7 +30,7 @@
        read as body-size text while still being the right colour for h1, borders
        and the eyebrow chip. */
     --link-ink: var(--accent);
-    --code-bg: #f6f8fa;
+    --code-bg: #FBF6AE;
     --code-text: #cf222e;
     --radius: 6px;
     --max-w: 900px;
