@@ -311,7 +311,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .md-code-block{
     position: relative;
-    margin: 0 0 20px;
+    margin: 12px 0 20px;
 }
 .md-editor .md-code-block pre{
     margin: 0;

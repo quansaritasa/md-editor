@@ -209,7 +209,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor pre.mermaid {
     background: var(--mermaid-bg);
     color: #1C2333;
-}.md-editor .md-code-block { position: relative; margin: 0 0 1rem; }.md-editor .md-code-block pre { margin: 0; padding-top: 34px; }.md-editor .md-code-copy-btn {
+}.md-editor .md-code-block { position: relative; margin: 12px 0 1rem; }.md-editor .md-code-block pre { margin: 0; padding-top: 34px; }.md-editor .md-code-copy-btn {
     position: absolute;
     top: 8px;
     right: 8px;

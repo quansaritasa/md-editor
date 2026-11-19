@@ -1,3 +1,5 @@
+- Code blocks: Card and Claude get the 12px margin above that Modern has, Block's block text is 0.9em (was 0.86rem), v0.10.45
+
 - Color picker: vendored build e67e3d3 (width/height, placement, offset options), v0.10.44
 
 - Book theme: headings and bold take Terminal's green ink; lists indent 32px in every theme (Card was 22px, Claude ~60px); theme editor gets a Bold text colour field and a markdown showcase section
