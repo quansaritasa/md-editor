@@ -48,6 +48,7 @@ function createReader(root) {
     const el = f.fb ? root.querySelector(f.fb) : targetOf(g, f);
     if (!el) return '';
     const s = getComputedStyle(el);
+    if (f.prop && f.prop !== 'color') return TE_CSS.toHex(s[f.prop.replace(/-([a-z])/g, (_, ch) => ch.toUpperCase())]);
     // A field that writes `color` is about the text; for the rest the fill leads.
     // A transparent fill (#00000000) is no colour at all, so it falls through.
     const bg = TE_CSS.toHex(s.backgroundColor);

@@ -12,8 +12,8 @@
     --accent-soft: #E1E8DA;
     --table-head-bg: color-mix(in srgb, var(--accent) 20%, var(--surface));
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
-    --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
-    --link-ink: #2076B2;
+    --strong-ink: #1D59DE;
+    --link-ink: #2C6AF3;
     --code-bg: #EFF6FF;
     --code-text: #B52E6F;
     --radius: 4px;

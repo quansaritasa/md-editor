@@ -59,6 +59,11 @@ test('a heading colour is a declaration, because themes derive it differently', 
   assert.strictEqual(css, '#te-preview h1 {\n  color: #1c2333;\n}');
 });
 
+test('a colour field with a prop writes that property, not color', () => {
+  const css = buildCss(GROUPS, { quoteBg: '#ECFDF5', quoteBorder: '#0F766E' }, '#te-preview', '');
+  assert.strictEqual(css, '#te-preview .md-blockquotes {\n  background-color: #ecfdf5;\n  border-left-color: #0f766e;\n}');
+});
+
 test('padding-left and padding-right are written together', () => {
   const css = buildCss(GROUPS, { padX: 32 }, '#te-preview', '');
   assert.match(css, /padding-left: 32px;/);

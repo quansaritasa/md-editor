@@ -78,7 +78,7 @@ function buildCss(groups, overrides, selector, prefix) {
         const hex = toHex(overrides[f.k]);
         if (!hex) continue;
         if (f.vars) for (const v of f.vars) vars.push('  ' + v + ': ' + hex + ';');
-        else put(selectorFor(g, f, rootSel), '  color: ' + hex + ';');
+        else put(selectorFor(g, f, rootSel), '  ' + (f.prop || 'color') + ': ' + hex + ';');
         continue;
       }
       const n = Number(overrides[f.k]);

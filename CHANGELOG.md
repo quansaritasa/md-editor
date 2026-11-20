@@ -1,3 +1,5 @@
+- Book heading/bold colours #003C97/#094299, Solarized bold #1D59DE/link #2C6AF3, theme editor Blockquote fields, links in showcase headings, v0.10.48
+
 - Blockquote background #ECFDF5 in Terminal, E-ink, Block, Nord; Gruvbox accent-soft #ECFDF5, v0.10.47
 
 - Inline code background: yellow #FBF6AE in light themes, Gruvbox #F0FDF4, Solarized #EFF6FF, v0.10.46

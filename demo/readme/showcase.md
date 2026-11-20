@@ -1,13 +1,13 @@
 
 ---
 
-# Markdown showcase
+# Markdown showcase with a [link](https://example.com)
 
 Every element below exists to check colour: headings, **bold**, *italic*, ***bold italic***, ~~struck~~, `inline code`, [a link](https://example.com), and plain body text.
 
-## Headings, all levels
+## Headings, all levels, with a [link](https://example.com)
 
-### Third level
+### Third level with a [link](https://example.com)
 
 #### Fourth level
 

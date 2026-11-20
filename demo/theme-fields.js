@@ -104,6 +104,16 @@ const GROUPS = [
     ],
   },
   {
+    id: 'quote',
+    label: 'Blockquote',
+    sel: '.md-blockquotes',
+    fields: [
+      { k: 'quoteBg', label: 'Background', kind: 'color', prop: 'background-color' },
+      { k: 'quoteBorder', label: 'Left border', kind: 'color', prop: 'border-left-color' },
+      { k: 'quoteText', label: 'Text', kind: 'color', prop: 'color' },
+    ],
+  },
+  {
     id: 'link',
     label: 'Link',
     sel: 'a',
