@@ -533,7 +533,7 @@ html.dark .md-editor pre {
 .md-editor code { padding: 1px 5px; border: 1px solid var(--border); }
 .md-editor pre { font-size: 0.9rem; border-left: 3px solid var(--accent); }
 .md-editor pre code { font-size: inherit; }
-.md-editor blockquote, .md-editor .md-blockquotes { background: none; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }
+.md-editor blockquote, .md-editor .md-blockquotes { background: #ECFDF5; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }
 .md-editor blockquote p::before { content: "> "; color: var(--text-secondary); }
 .md-editor th { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.87em; }
 .md-editor tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 5%, transparent); }

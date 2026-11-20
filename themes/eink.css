@@ -529,7 +529,7 @@ html.dark .md-editor pre {
 .md-editor .hljs-keyword, .md-editor .hljs-built_in, .md-editor .hljs-title, .md-editor .hljs-section,
 .md-editor .hljs-selector-tag, .md-editor .hljs-name { font-weight: 700; }
 .md-editor .hljs-string, .md-editor .hljs-attr { text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 2px; }
-.md-editor blockquote, .md-editor .md-blockquotes { background: none; border-left: 2px solid var(--text); color: var(--text); font-style: italic; }
+.md-editor blockquote, .md-editor .md-blockquotes { background: #ECFDF5; border-left: 2px solid var(--text); color: var(--text); font-style: italic; }
 .md-editor .md-blockquotes.md-note { border-left-style: dashed; background: var(--surface); font-style: normal; }
 .md-editor .md-blockquotes.md-info { border-left-style: double; border-left-width: 5px; background: none; font-style: normal; }
 .md-editor .md-example-box.md-good-box { border-left: 4px solid var(--text); }

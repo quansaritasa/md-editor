@@ -540,7 +540,7 @@ html.dark .md-editor pre {
 .md-editor pre { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.9em; line-height: 1.55; border: 1px solid var(--border); border-radius: var(--radius); padding: 13px 18px; background: var(--code-bg); }
 .md-editor pre code { border: none; padding: 0; font-size: inherit; }
 /* A quote is a rail, not a filled box. */
-.md-editor blockquote, .md-editor .md-blockquotes { background: none; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }
+.md-editor blockquote, .md-editor .md-blockquotes { background: #ECFDF5; border-left: 2px solid var(--border); border-radius: 0; padding: 0 0 0 11px; color: var(--text-secondary); }
 /* Tables are read as data: hairlines, a label row, and digits that line up. */
 .md-editor table { font-size: 0.9em; font-variant-numeric: tabular-nums; }
 .md-editor th, .md-editor td { border-left: none; border-right: none; border-bottom: 1px solid var(--border); padding: 6px 13px; }

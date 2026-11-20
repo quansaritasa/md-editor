@@ -1,3 +1,5 @@
+- Blockquote background #ECFDF5 in Terminal, E-ink, Block, Nord; Gruvbox accent-soft #ECFDF5
+
 - Inline code background: yellow #FBF6AE in light themes, Gruvbox #F0FDF4, Solarized #EFF6FF, v0.10.46
 
 - Code blocks: Card and Claude get the 12px margin above that Modern has, Block's block text is 0.9em (was 0.86rem), v0.10.45
