@@ -1,4 +1,4 @@
-- Blockquote background #ECFDF5 in Terminal, E-ink, Block, Nord; Gruvbox accent-soft #ECFDF5
+- Blockquote background #ECFDF5 in Terminal, E-ink, Block, Nord; Gruvbox accent-soft #ECFDF5, v0.10.47
 
 - Inline code background: yellow #FBF6AE in light themes, Gruvbox #F0FDF4, Solarized #EFF6FF, v0.10.46
 
