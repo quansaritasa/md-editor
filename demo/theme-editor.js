@@ -73,7 +73,7 @@ const panel = TE_PANEL.createPanel({
 });
 
 /* ---------- the override sheet ---------- */
-// The stage wears the theme's page colour: without it a 760px column sits on
+// The stage wears the theme's page colour: without it a narrow column sits on
 // the app's grey and reads as a card, not as the page a reader gets. Read from
 // the preview, so an overridden --bg reaches the stage as well.
 function mirrorStage() {
@@ -152,6 +152,7 @@ function buildThemes() {
     b.addEventListener('click', () => setTheme(name));
     box.appendChild(b);
   }
+  TE_KEYS.bindThemeArrows(box, setTheme);
 }
 
 async function show(text, name) {

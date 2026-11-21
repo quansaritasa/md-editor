@@ -15,7 +15,7 @@
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: #516F94;
     --code-bg: #FBF6AE;
-    --code-text: #9F5158;
+    --code-text: #8A2F3A;
     --radius: 4px;
     --max-w: 900px;
     --note-amber: #7A5A12;
@@ -512,7 +512,7 @@ html.dark .md-editor pre {
 html.dark .md-editor h1 { color: var(--heading-ink); }
 .md-editor h2 { color: #4F46E5; border-bottom: 1px solid var(--border); }
 html.dark .md-editor h2 { color: var(--heading-ink); }
-.md-editor strong { color: #1B4BD1; }
+.md-editor strong { color: #28408A; }
 html.dark .md-editor strong { color: var(--strong-ink); }
 /* h1–h3 all take --heading-ink (see the token block): one ink per mode, so a
    section opener cannot be dimmer than the size above or below it. */
@@ -535,3 +535,21 @@ html.dark .md-editor .md-eyebrow { background: #88C0D0; color: #2E3440; }
    way from the start; this brings the rest into line. */
 .md-editor .md-section { margin-bottom: 12px; }
 .md-editor .md-section > h2:first-child { margin-top: 0; }
+/* Heading ladder: h1 strongest, h2 accent, h3 quieter; each >= 5:1 on the page. */
+.md-editor {
+    --h1-ink: #1e4f8a;
+    --h2-ink: #2a5a96;
+    --h3-ink: #35704f;
+    --link-ink: #24559a;
+}
+html.dark .md-editor {
+    --h1-ink: #9be4f6;
+    --h2-ink: #7fc8e6;
+    --h3-ink: #b3d68f;
+    --link-ink: #8fd4ee;
+}
+.md-editor h1, html.dark .md-editor h1 { color: var(--h1-ink); }
+.md-editor h2, html.dark .md-editor h2 { color: var(--h2-ink); }
+.md-editor h3, html.dark .md-editor h3 { color: var(--h3-ink); }
+/* Blockquote tint: a share of the accent over the page, so the quote reads as its own block in every theme. */
+.md-editor blockquote:not(.md-note):not(.md-info), .md-editor .md-blockquotes:not(.md-note):not(.md-info) { background: color-mix(in srgb, var(--accent) 12%, var(--bg)); }

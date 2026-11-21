@@ -552,3 +552,17 @@ html.dark .md-editor pre {
    way from the start; this brings the rest into line. */
 .md-editor .md-section { margin-bottom: 12px; }
 .md-editor .md-section > h2:first-child { margin-top: 0; }
+/* Heading ladder: h1 strongest, h2 accent, h3 quieter; each >= 5:1 on the page. */
+.md-editor {
+    --h1-ink: #77171f;
+    --h2-ink: #a31621;
+    --h3-ink: #3c191c;
+}
+html.dark .md-editor {
+    --h1-ink: #e59c9d;
+    --h2-ink: #e06670;
+    --h3-ink: #e9c6c1;
+}
+.md-editor h1, html.dark .md-editor h1 { color: var(--h1-ink); }
+.md-editor h2, html.dark .md-editor h2 { color: var(--h2-ink); }
+.md-editor h3, html.dark .md-editor h3 { color: var(--h3-ink); }

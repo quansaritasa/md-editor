@@ -1,3 +1,5 @@
+- Heading/link/strong inks across all themes, Nord h2/link/code text darker, shared max-width 900px, v0.10.49
+
 - Theme editor: QA notes atop preview doc; demo loads CSS straight from css/ and themes/
 
 - Book heading/bold colours #003C97/#094299, Solarized bold #1D59DE/link #2C6AF3, theme editor Blockquote fields, links in showcase headings, v0.10.48

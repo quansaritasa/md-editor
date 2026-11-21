@@ -29,7 +29,7 @@
     --code-bg: #FBF6AE;
     --code-text: #be185d;
     --radius: 14px;
-    --max-w: 948px;
+    --max-w: 900px;
     --blur: 26px;
     --note-amber: #7c5c00;
     --note-amber-lt: #fef8e7;
@@ -578,3 +578,19 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 .md-editor .md-section > h2:first-child { margin-top: 0; }
 
 .md-editor tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 5%, transparent); }
+/* Heading ladder: h1 strongest, h2 accent, h3 quieter; each >= 5:1 on the page. */
+.md-editor {
+    --h1-ink: #3a3b84;
+    --h2-ink: #5154c2;
+    --h3-ink: #2c2d5f;
+}
+html.dark .md-editor {
+    --h1-ink: #c2b2f7;
+    --h2-ink: #a78bfa;
+    --h3-ink: #d8d1f6;
+}
+.md-editor h2, html.dark .md-editor h2 { color: var(--h2-ink); }
+.md-editor h3, html.dark .md-editor h3 { color: var(--h3-ink); }
+/* Blockquote tint: the frosted surface alone read as no background; a share of the accent gives it colour and keeps the blur. */
+.md-editor blockquote:not(.md-note):not(.md-info), .md-editor .md-blockquotes:not(.md-note):not(.md-info) { background: color-mix(in srgb, var(--accent) 19%, var(--surface)); }
+html.dark .md-editor blockquote:not(.md-note):not(.md-info), html.dark .md-editor .md-blockquotes:not(.md-note):not(.md-info) { background: color-mix(in srgb, var(--accent) 18%, var(--surface)); }
