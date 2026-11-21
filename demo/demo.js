@@ -15,7 +15,7 @@ const goodView = () => document.getElementById('gv').checked;
 const theme = MdEditor.createTheme({
   root: pane,
   link: document.getElementById('doc-theme'),
-  basePath: '../dist/themes/',
+  basePath: '../themes/',
   storagePrefix: 'md-editor-demo-',
   onTheme: (name) => { document.getElementById('theme').value = name; },
   onDark: (on) => { document.getElementById('dark').checked = on; },

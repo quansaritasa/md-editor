@@ -16,8 +16,8 @@ console.log('demo/docs.js written');
 // neighbour. Its pictures were copied to demo/docs/screenshots/ too, so the
 // relative srcs the markdown carries resolve against the page that mounts it.
 const readme = path.join(__dirname, 'readme', 'qview-readme.md');
-// showcase.md is appended: it exercises every element a theme styles, so colours can be checked in one scroll.
-const text = fs.readFileSync(readme, 'utf8') + fs.readFileSync(path.join(__dirname, 'readme', 'showcase.md'), 'utf8');
+// qa-notes.md is prepended; showcase.md is appended: it exercises every element a theme styles, so colours can be checked in one scroll.
+const text = fs.readFileSync(path.join(__dirname, 'readme', 'qa-notes.md'), 'utf8') + fs.readFileSync(readme, 'utf8') + fs.readFileSync(path.join(__dirname, 'readme', 'showcase.md'), 'utf8');
 fs.writeFileSync(path.join(__dirname, 'theme-editor-doc.js'),
   '// Generated from demo/readme/qview-readme.md by demo/build-docs.js — rerun it\n'
   + '// after re-cloning the README, do not hand-edit.\n'

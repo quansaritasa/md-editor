@@ -1,3 +1,5 @@
+- Theme editor: QA notes atop preview doc; demo loads CSS straight from css/ and themes/
+
 - Book heading/bold colours #003C97/#094299, Solarized bold #1D59DE/link #2C6AF3, theme editor Blockquote fields, links in showcase headings, v0.10.48
 
 - Blockquote background #ECFDF5 in Terminal, E-ink, Block, Nord; Gruvbox accent-soft #ECFDF5, v0.10.47

@@ -255,7 +255,7 @@ theme and the numbers follow that theme, not the last one. **Copy CSS** or
 tokens and rules you moved and nothing else.
 
 ```bash
-npm run build        # the page reads dist/, like the demo
+npm run build        # JS only: the page loads dist/md-editor.js; CSS is read straight from css/ and themes/
 node demo/build-docs.js   # only after re-cloning demo/readme/qview-readme.md
 ```
 

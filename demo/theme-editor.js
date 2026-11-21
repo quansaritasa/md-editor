@@ -134,7 +134,7 @@ function prefill() {
 function setTheme(name) {
   state.theme = name;
   save();
-  link.setAttribute('href', '../dist/themes/' + name + '.css');
+  link.setAttribute('href', '../themes/' + name + '.css');
   document.querySelectorAll('.te-theme').forEach((b) => {
     b.classList.toggle('active', b.dataset.theme === name);
   });
