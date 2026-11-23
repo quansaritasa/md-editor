@@ -39,6 +39,7 @@ function wrapCodeBlocks(html) {
     if (classes && classes.includes('language-mermaid')) return match;
     const button = '<button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button>'
       + '<button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button>'
+      + '<button class="md-code-beautify-btn" type="button" style="display:none" aria-label="Beautify JSON">Beautify</button>'
       + '<button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button>';
     const codeClassAttr = classes && classes.trim() ? ' class="' + classes.trim() + '"' : '';
     return '<div class="md-code-block">' + button + '<pre><code' + codeClassAttr + '>' + codeHtml + '</code></pre></div>';

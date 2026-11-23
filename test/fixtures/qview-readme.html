@@ -84,23 +84,23 @@
 <p>That is the warning every un-notarized app gets. It is about the download, not the app: the <code>.dmg</code> comes from the browser carrying macOS&#39;s quarantine flag, the first launch of a quarantined app goes through Gatekeeper, and Gatekeeper only accepts a Developer ID it can trace back to Apple. Control-clicking and choosing Open no longer clears it, because macOS 15 removed that shortcut. Either:</p>
 <p>Open <strong>System Settings ▸ Privacy &amp; Security</strong>, scroll to <strong>Security</strong>, click <strong>Open Anyway</strong> next to the message about Qview, then open the app again.</p>
 <p>Or drop the flag from a terminal:</p>
-<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">xattr -dr com.apple.quarantine /Applications/Qview.app
+<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-beautify-btn" type="button" style="display:none" aria-label="Beautify JSON">Beautify</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">xattr -dr com.apple.quarantine /Applications/Qview.app
 </code></pre></div>
 <p>With no quarantine flag there is no first-launch check, and the app opens normally from then on. The flag arrives with the download, so a <code>.dmg</code> fetched later asks again.</p>
 <h3>From source</h3>
-<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">git clone https://github.com/quansaritasa/qview.git
+<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-beautify-btn" type="button" style="display:none" aria-label="Beautify JSON">Beautify</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">git clone https://github.com/quansaritasa/qview.git
 cd qview
 npm install
 npm start
 </code></pre></div>
 <p><code>npm install</code> runs <code>src/scripts/vendor.js</code>, which copies the browser builds of <code>marked</code>, <code>mermaid</code>, <code>highlight.js</code> and <code>md-editor</code> — along with the four document themes — into <code>src/renderer/vendor/</code>. That directory is generated, so it is not checked into git.</p>
 <p>Because it is generated on <code>npm install</code> only, a <code>git pull</code> that changes where those files belong leaves the old copies behind and the new directory empty. The window then opens blank: the four <code>vendor/</code> script tags 404, so <code>MdEditor</code>, <code>marked</code> and <code>hljs</code> are all undefined, <code>src/renderer/edit.js</code> throws while initialising, and every later <code>openFile()</code> dies on the half-initialised module. Run the copy again after any pull that touches the layout:</p>
-<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run vendor
+<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-beautify-btn" type="button" style="display:none" aria-label="Beautify JSON">Beautify</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run vendor
 </code></pre></div>
 </section>
 <section class="md-section">
 <h2>Building a distributable</h2>
-<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run dist
+<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-beautify-btn" type="button" style="display:none" aria-label="Beautify JSON">Beautify</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run dist
 </code></pre></div>
 <p>The output lands in <code>dist/</code>. macOS targets are <code>.dmg</code> and <code>.zip</code>; Windows produces a portable executable.</p>
 </section>
@@ -163,7 +163,7 @@ npm start
 <section class="md-section">
 <h2>Testing</h2>
 <p>Qview ships a headless smoke suite that drives the real Electron window, asserting on rendering, file operations, tabs, collections, grouping and sorting, thumbnails, the EPUB reader, the outline, find, zoom, and keyboard shortcuts.</p>
-<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run smoke
+<div class="md-code-block"><button class="md-code-full-btn" type="button" style="display:none" aria-label="Copy code with _pre/_post prompt">Copy Full</button><button class="md-code-wrap-btn" type="button" aria-label="Toggle wrap">Wrap</button><button class="md-code-beautify-btn" type="button" style="display:none" aria-label="Beautify JSON">Beautify</button><button class="md-code-copy-btn" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run smoke
 </code></pre></div>
 <p>The run prints <code>SMOKE OK</code> on success, or <code>SMOKE FAIL</code> together with a per-probe diagnostic line naming exactly which assertion did not hold.</p>
 </section>

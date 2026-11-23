@@ -239,7 +239,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor .md-code-full-btn {
     position: absolute;
     top: 8px;
-    right: 132px;
+    right: 218px;
     height: 22px;
     min-width: 56px;
     box-sizing: border-box;
@@ -262,7 +262,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     background: var(--accent-soft);
     color: var(--accent);
     border-color: var(--accent);
-}.md-editor .md-code-wrap-btn {
+}.md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn {
     position: absolute;
     top: 8px;
     right: 70px;
@@ -284,11 +284,12 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     padding: 0 8px;
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
-}.md-editor .md-code-wrap-btn:hover {
+}.md-editor .md-code-wrap-btn:hover, .md-editor .md-code-beautify-btn:hover {
     background: var(--accent-soft);
     color: var(--accent);
     border-color: var(--accent);
-}.md-editor code {
+}
+.md-editor .md-code-beautify-btn { right: 132px; width: 80px; padding: 0 4px; white-space: nowrap; }.md-editor code {
     background: var(--code-bg);
     color: var(--code-text);
     padding: 0.08em 0.4em;

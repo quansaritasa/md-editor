@@ -328,7 +328,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     position: absolute;
     z-index: 2;
     top: 8px;
-    right: 132px;
+    right: 218px;
     height: 22px;
     min-width: 56px;
     box-sizing: border-box;
@@ -351,7 +351,7 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
 }.md-editor .md-code-full-btn:hover, .md-editor .md-code-full-btn.md-copied {
     background: var(--accent-soft);
     color: var(--accent);
-}.md-editor .md-code-wrap-btn {
+}.md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn {
     position: absolute;
     z-index: 2;
     top: 8px;
@@ -375,10 +375,11 @@ html.dark .md-editor .hljs-attr { color: #d97706; }html.dark .md-editor {
     line-height: 1;
     cursor: pointer;
     transition: all 0.15s;
-}.md-editor .md-code-wrap-btn:hover {
+}.md-editor .md-code-wrap-btn:hover, .md-editor .md-code-beautify-btn:hover {
     background: var(--accent-soft);
     color: var(--accent);
-}.md-editor blockquote, .md-editor .md-blockquotes {
+}
+.md-editor .md-code-beautify-btn { right: 132px; width: 80px; padding: 0 4px; white-space: nowrap; }.md-editor blockquote, .md-editor .md-blockquotes {
     background: var(--surface);
     backdrop-filter: blur(var(--blur)) saturate(200%);
     -webkit-backdrop-filter: blur(var(--blur)) saturate(200%);

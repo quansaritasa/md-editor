@@ -1,8 +1,10 @@
 'use strict';
 
-/* ================= code block Copy / Wrap / Copy Full ================= */
+/* ================= code block Copy / Wrap / Beautify / Copy Full ================= */
 
 const { createAdapter } = require('../adapter');
+const deps = require('../deps');
+const { beautify, kindOf } = require('./beautify');
 
 function flash(btn, text, revertTo, ok) {
   btn.textContent = text;
@@ -105,6 +107,40 @@ function bind(root, options) {
     armEditable(root);
   }
   editableRoots.set(root, !!o.editableCode);
+
+  // Beautify starts ON for every block with a known language (json, xml, html,
+  // yaml, ini, conf, css), like Wrap. It rewrites the text on screen, never the
+  // markdown source; the button flips between Beautify and Original.
+  root.querySelectorAll('.md-code-beautify-btn').forEach((btn) => {
+    const code = codeOf(btn);
+    const kind = code && kindOf(code);
+    if (!kind) return;
+    btn.style.display = '';
+    let original = null;
+    const apply = () => {
+      const text = code.textContent || '';
+      const out = beautify(text, kind);
+      if (out === null) return 'Not ' + kind;
+      if (out === text.trim()) return 'Already tidy';
+      original = code.innerHTML;
+      code.textContent = out;
+      const h = deps.hljs();
+      if (h) { delete code.dataset.highlighted; try { h.highlightElement(code); } catch (e) {} }
+      btn.textContent = 'Original';
+      return '';
+    };
+    apply();
+    btn.addEventListener('click', () => {
+      if (original !== null) {
+        code.innerHTML = original;
+        original = null;
+        btn.textContent = 'Beautify';
+        return;
+      }
+      const err = apply();
+      if (err) flash(btn, err, 'Beautify', err === 'Already tidy');
+    });
+  });
 
   // Wrapping starts ON: a long line scrolled off-screen reads as truncated.
   root.querySelectorAll('.md-code-wrap-btn').forEach((btn) => {

@@ -351,7 +351,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor .md-code-full-btn {
     position: absolute;
     top: 8px;
-    right: 132px;
+    right: 218px;
     height: 22px;
     min-width: 56px;
     box-sizing: border-box;
@@ -374,7 +374,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--border);
     color: var(--text);
 }
-.md-editor .md-code-wrap-btn {
+.md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn {
     position: absolute;
     top: 8px;
     right: 70px;
@@ -396,10 +396,11 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     cursor: pointer;
     transition: background 0.15s, color 0.15s;
 }
-.md-editor .md-code-wrap-btn:hover {
+.md-editor .md-code-wrap-btn:hover, .md-editor .md-code-beautify-btn:hover {
     background: var(--border);
     color: var(--text);
 }
+.md-editor .md-code-beautify-btn { right: 132px; width: 80px; padding: 0 4px; white-space: nowrap; margin-right: 5px; }
 .md-editor .md-code-block pre code[contenteditable="true"]::selection{
     background: transparent;
 }

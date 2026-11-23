@@ -1,3 +1,5 @@
+- Beautify button on code blocks: JSON, XML, HTML, YAML, INI, conf, CSS, on by default; Beautify tests in theme editor, v0.10.50
+
 - Heading/link/strong inks across all themes, Nord h2/link/code text darker, shared max-width 900px, v0.10.49
 
 - Theme editor: QA notes atop preview doc; demo loads CSS straight from css/ and themes/

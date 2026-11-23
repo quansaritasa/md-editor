@@ -167,7 +167,7 @@ emit('terminal', 'Monospace, phosphor accents, dark-first console feel',
 .md-editor li > ul {{ padding-left: 0; margin-left: -12px; }}
 .md-editor ul > li::before {{ content: "-"; position: absolute; left: 14px; color: var(--accent); }}
 .md-editor ul ul > li::before {{ content: "·"; }}
-.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
+.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {{
     border-radius: 0;
     text-transform: uppercase;
@@ -265,7 +265,7 @@ emit('eink', 'Grayscale, serif, no shadows — an e-reader on the desktop',
 .md-editor img {{ filter: grayscale(1) contrast(1.05); }}
 .md-editor .mermaid-wrapper {{ filter: grayscale(1); }}
 .md-editor hr {{ border-top: 1px solid var(--text); }}
-.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
+.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {{ border-radius: 0; }}
 ''')
 
@@ -349,7 +349,7 @@ emit('blossom', 'Blossom — soft pink paper, raspberry accents, rounded edges',
 .md-editor .md-example-box, .md-editor .md-block-card, .md-editor .mermaid-wrapper { border-radius: var(--radius); }
 .md-editor hr { border: none; text-align: center; margin: 36px 0; }
 .md-editor hr::after { content: "❀"; color: var(--accent); font-size: 1.1rem; }
-.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn,
+.md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {
     border-radius: 999px;
 }

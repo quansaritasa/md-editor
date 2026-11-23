@@ -169,6 +169,93 @@ export KEY="value"
 .card > h1:hover { color: #135A31; margin: 0 auto; }
 ```
 
+## Beautify tests
+
+Click **Beautify** on each block. Click again for **Original**. Rust and plain blocks must show no button.
+
+#### JSON, minified, with an escaped body in a string
+
+```json
+{"@t":"2026-11-20T08:41:12Z","Method":"PUT","StatusCode":200,"RequestBody":"{\n  \"wbs1\": \"00-260008-0\",\n  \"name\": \"Test Sample Project\",\n  \"custDSAAppNo\": null\n}","EventId":{"Id":9,"Name":"RequestResponseLog"},"tags":["a","b"]}
+```
+
+#### JSON, no fence language (sniffed)
+
+```
+{"name":"demo","private":true,"list":[1,2,{"deep":[]}]}
+```
+
+#### JSON that is invalid (flashes "Not json")
+
+```json
+{ "name": "demo", }
+```
+
+#### XML
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?><project name="demo"><!-- build --><target name="build"><echo>hello</echo><copy file="a" tofile="b"/></target></project>
+```
+
+#### HTML
+
+```html
+<div class="card"><h1>Title</h1><p>Some text</p><br><img src="a.png"><ul><li>one</li><li>two</li></ul><script>var a = 1;
+  go(a);</script></div>
+```
+
+#### YAML, bad indentation
+
+```yaml
+name:    demo
+services:
+    web:
+        image:   nginx
+        ports:
+            -   "80:80"
+            -   "443:443"
+        command: |
+              echo one
+                echo two
+    db:
+        image: postgres
+```
+
+#### INI / TOML
+
+```ini
+[server]
+host=localhost
+
+
+   port  =  8080
+[database]
+url=postgres://x
+```
+
+#### Config with braces
+
+```conf
+server {
+listen 80;
+      location / {
+  proxy_pass http://app;
+}
+}
+```
+
+#### CSS, minified
+
+```css
+.card{color:red;margin:0 auto}@media (max-width:600px){.card>h1:hover{background:url(data:image/png;base64,AAA)}}
+```
+
+#### No formatter (no button)
+
+```rust
+fn main() { println!("hi"); }
+```
+
 ## Diagram
 
 ```mermaid
