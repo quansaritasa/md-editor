@@ -15,8 +15,8 @@
     --link-ink: var(--accent);
     --warning: #9a3412;
     --shadow: 0 6px 15px rgba(15, 23, 42, 0.2);
-    --radius: 6px;
-    --max-w: 900px;
+    --radius: .375rem;
+    --max-w: 56.25rem;
     --title: #1e3a5f;
     --sub-title: #12488c;
     --th-bg: var(--table-head-bg);
@@ -61,7 +61,7 @@
     --info-blue-border: #5b9bd5;
     --fields-key: #2d6a4f;
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: var(--text);
   line-height: 1.45;
 }
@@ -118,19 +118,19 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 /* plain-markdown extras the theme's own post-processor normally adds */
 .md-editor img { max-width: 100%; border-radius: var(--radius); }
 .md-editor hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
-.md-editor blockquote { border: 1px solid var(--border); background: var(--block-card-bg); border-radius: 9px; padding: 14px 16px; margin: 12px 0; border-left: 4px solid #e67e22; }
+.md-editor blockquote { border: 1px solid var(--border); background: var(--block-card-bg); border-radius: .5625rem; padding: 1rem 1rem; margin: .75rem 0; border-left: .25rem solid #e67e22; }
 .md-editor blockquote p { margin: 0; }
-.md-editor .mermaid-diagram { margin: 0 0 1.4em; padding: 16px; background: var(--mermaid-bg); border: 1px solid var(--border); border-radius: 9px; overflow-x: auto; text-align: center; }
+.md-editor .mermaid-diagram { margin: 0 0 1.4em; padding: 1rem; background: var(--mermaid-bg); border: 1px solid var(--border); border-radius: .5625rem; overflow-x: auto; text-align: center; }
 
 /* theme.css element + component rules, scoped to content */
 .md-editor strong{
     color: var(--strong);
-    font-size: 15px;
+    font-size: .9375rem;
 }
 .md-editor{
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 32px 20px 56px;
+    padding: 2rem 1.25rem 3.5rem;
 }
 .md-editor .md-header{
     background: linear-gradient(
@@ -139,77 +139,77 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
         var(--header-bg-end) 100%
     );
     border: 1px solid var(--border);
-    border-radius: 9px;
+    border-radius: .5625rem;
     box-shadow: var(--shadow);
-    padding: 28px;
-    margin-bottom: 26px;
+    padding: 1.75rem;
+    margin-bottom: 1.75rem;
     overflow: hidden;
 }
 .md-editor .md-eyebrow{
     display: inline-block;
-    padding: 6px 10px;
-    border-radius: 9px;
+    padding: .5rem .75rem;
+    border-radius: .5625rem;
     background: var(--accent-soft);
     color: var(--accent);
-    font-size: 12px;
+    font-size: .75rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: .75rem;
 }
 .md-editor h1{
-    margin: 0 0 10px;
-    font-size: 38px;
+    margin: 0 0 .75rem;
+    font-size: 2.375rem;
     line-height: 1.15;
     color: var(--title);
 }
 .md-editor .md-meta{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-    margin-top: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(11.25rem, 1fr));
+    gap: .75rem;
+    margin-top: 1.25rem;
 }
 .md-editor .md-meta-item{
     background: var(--surface-2);
     border: 1px solid var(--border);
-    border-radius: 9px;
-    padding: 12px 14px;
+    border-radius: .5625rem;
+    padding: .75rem 1rem;
 }
 .md-editor .md-meta-label{
     display: block;
-    font-size: 12px;
+    font-size: .75rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--muted);
-    margin-bottom: 4px;
+    margin-bottom: .25rem;
     font-weight: 700;
 }
 .md-editor .md-section{
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 9px;
+    border-radius: .5625rem;
     box-shadow: var(--shadow);
-    padding: 24px;
-    margin-bottom: 26px;
+    padding: 1.5rem;
+    margin-bottom: 1.75rem;
     overflow: hidden;
 }
 .md-editor h2{
-    margin: 0 0 16px;
-    font-size: 26px;
+    margin: 0 0 1rem;
+    font-size: 1.625rem;
     color: var(--title);
     border-bottom: 2px solid var(--h2-border-line);
 }
 .md-editor h3{
-    margin: 38px 0 10px;
-    font-size: 19px;
+    margin: 2.5rem 0 .75rem;
+    font-size: 1.1875rem;
     color: var(--sub-title);
 }
 .md-editor h4{
-    margin: 28px 0 8px;
+    margin: 1.75rem 0 .5rem;
     color: var(--title);
 }
 .md-editor p.md-note{
-    margin: 0 0 14px;
+    margin: 0 0 1rem;
     color: var(--muted);
 }
 
@@ -222,13 +222,13 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
    margin) is what a 6px top margin collapses to anyway. */
 .md-editor ul,
 .md-editor ol{
-    margin: 6px 0 1em 0;
-    padding-left: 32px;
+    margin: .5rem 0 1em 0;
+    padding-left: 2rem;
 }
 /* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
-.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }
+.md-editor li > ul, .md-editor li > ol { padding-left: 1.25rem; }
 .md-editor li{
-  margin-bottom: 8px;
+  margin-bottom: .5rem;
   line-height: 1.45;
 }
 .md-editor p {
@@ -240,7 +240,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid var(--table-border);
-    border-radius: 9px;
+    border-radius: .5625rem;
     overflow: hidden;
     background: var(--table-bg);
     font-size: 0.9em;
@@ -251,7 +251,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     border-right: 1px solid var(--table-border);
     vertical-align: top;
     text-align: left;
-    padding: 10px 14px;
+    padding: .75rem 1rem;
     line-height: 1.4;
 }
 .md-editor th{
@@ -272,13 +272,13 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor td ul{
     margin: 0;
-    padding-left: 18px;
+    padding-left: 1.25rem;
 }
 .md-editor table.md-fields{
     font-variant-numeric: tabular-nums;
 }
 .md-editor table.md-fields th{
-    font-size: 12px;
+    font-size: .75rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--muted);
@@ -294,15 +294,15 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     white-space: nowrap;
 }
 .md-editor td li{
-    margin: 4px 0;
+    margin: .25rem 0;
 }
 .md-editor pre{
     font-size: var(--pre-font-size, 0.9em);
-    margin: 0 0 20px;
-    padding: 16px;
+    margin: 0 0 1.25rem;
+    padding: 1rem;
     overflow-x: auto;
     border: 1px solid var(--border);
-    border-radius: 9px;
+    border-radius: .5625rem;
     background: var(--pre-bg);
     color: var(--pre-text);
 }
@@ -312,18 +312,18 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .md-code-block{
     position: relative;
-    margin: 12px 0 20px;
+    margin: .75rem 0 1.25rem;
 }
 .md-editor .md-code-block pre{
     margin: 0;
-    padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
+    padding-top: 2.25rem; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
 }
 .md-editor .md-code-copy-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    height: 22px;
-    min-width: 56px;
+    top: .5rem;
+    right: .5rem;
+    height: 1.375rem;
+    min-width: 3.5rem;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
@@ -331,7 +331,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 0 8px;
+    padding: 0 .5rem;
     border-radius: var(--radius);
     font-size: 0.7rem;
     font-weight: 600;
@@ -350,10 +350,10 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .md-code-full-btn {
     position: absolute;
-    top: 8px;
-    right: 218px;
-    height: 22px;
-    min-width: 56px;
+    top: .5rem;
+    right: 13.625rem;
+    height: 1.375rem;
+    min-width: 3.5rem;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
@@ -361,7 +361,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 0 8px;
+    padding: 0 .5rem;
     border-radius: var(--radius);
     font-size: 0.7rem;
     font-weight: 600;
@@ -376,10 +376,10 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn {
     position: absolute;
-    top: 8px;
-    right: 70px;
-    height: 22px;
-    min-width: 56px;
+    top: .5rem;
+    right: 4.375rem;
+    height: 1.375rem;
+    min-width: 3.5rem;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
@@ -387,7 +387,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 0 8px;
+    padding: 0 .5rem;
     border-radius: var(--radius);
     font-size: 0.7rem;
     font-weight: 600;
@@ -400,7 +400,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     background: var(--border);
     color: var(--text);
 }
-.md-editor .md-code-beautify-btn { right: 132px; width: 80px; padding: 0 4px; white-space: nowrap; margin-right: 5px; }
+.md-editor .md-code-beautify-btn { right: 8.25rem; width: 5rem; padding: 0 .25rem; white-space: nowrap; margin-right: .25rem; }
 .md-editor .md-code-block pre code[contenteditable="true"]::selection{
     background: transparent;
 }
@@ -413,7 +413,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor code{
     background: var(--code-bg);
     color: var(--code-text);
-    padding: 2px 6px;
+    padding: .125rem .5rem;
     border-radius: var(--radius);
     font-size: 0.88em;
     font-family:
@@ -436,7 +436,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor td code{
     background: var(--code-bg);
     color: var(--code-text);
-    padding: 2px 6px;
+    padding: .125rem .5rem;
     border-radius: var(--radius);
     font-size: 0.88em;
 }
@@ -450,33 +450,33 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor .md-block-card{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
-    border-radius: 9px;
-    padding: 14px 16px;
+    border-radius: .5625rem;
+    padding: 1rem 1rem;
     overflow: hidden;
 }
 .md-editor .md-example-box{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
-    border-radius: 9px;
-    padding: 14px 16px;
-    margin: 12px 0;
+    border-radius: .5625rem;
+    padding: 1rem 1rem;
+    margin: .75rem 0;
 }
 .md-editor .md-example-box p{
     margin: 0;
 }
 .md-editor .md-example-box.md-good-box{
-    border-left: 4px solid #0f766e;
+    border-left: .25rem solid #0f766e;
 }
 .md-editor .md-example-box.md-bad-box{
-    border-left: 4px solid #9a3412;
+    border-left: .25rem solid #9a3412;
 }
 .md-editor .md-blockquotes{
     border: 1px solid var(--border);
     background: var(--block-card-bg);
-    border-radius: 9px;
-    padding: 14px 16px;
-    margin: 12px 0;
-    border-left: 4px solid #e67e22;
+    border-radius: .5625rem;
+    padding: 1rem 1rem;
+    margin: .75rem 0;
+    border-left: .25rem solid #e67e22;
 }
 .md-editor .md-blockquotes p{
     margin: 0;
@@ -499,11 +499,11 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .md-block-grid{
     display: grid;
-    gap: 14px;
+    gap: 1rem;
 }
 .md-editor .md-q{
     font-weight: 700;
-    margin: 0 0 8px;
+    margin: 0 0 .5rem;
     color: var(--text);
 }
 .md-editor .md-a{
@@ -528,29 +528,29 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 
 
 .md-editor select{
-    padding: 6px 12px;
+    padding: .5rem .75rem;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
-    font-size: 15px;
+    font-size: .9375rem;
     font-family: inherit;
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
-@media (max-width: 760px) {
+@media (max-width: 47.5em) {
     .md-editor{
-        padding: 18px 12px 36px;
+        padding: 1.25rem .75rem 2.25rem;
     }
     .md-editor .md-header,
 .md-editor .md-section{
-        padding: 16px;
+        padding: 1rem;
     }
     .md-editor h1{
-        font-size: 32px;
+        font-size: 2rem;
     }
     .md-editor h2{
-        font-size: 24px;
+        font-size: 1.5rem;
     }
     .md-editor table,
 .md-editor thead,
@@ -565,30 +565,30 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     }
     .md-editor tr{
         border: 1px solid var(--table-border);
-        padding: 10px 0;
+        padding: .75rem 0;
     }
     .md-editor td{
         border: none;
-        padding: 8px 0;
+        padding: .5rem 0;
     }
     .md-editor td::before{
         content: attr(data-label);
         display: block;
-        font-size: 12px;
+        font-size: .75rem;
         font-weight: 700;
         text-transform: uppercase;
         color: var(--muted);
-        margin-bottom: 4px;
+        margin-bottom: .25rem;
     }
 }
 .md-editor .mermaid-wrapper{
     position: relative;
     overflow: hidden;
     border: 1px solid var(--border);
-    border-radius: 9px;
+    border-radius: .5625rem;
     background: var(--mermaid-bg);
-    margin: 0 0 20px;
-    min-height: 100px;
+    margin: 0 0 1.25rem;
+    min-height: 6.25rem;
     cursor: grab;
     user-select: none;
 }
@@ -596,7 +596,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     margin: 0;
     border: none;
     border-radius: 0;
-    padding: 44px 20px 20px;
+    padding: 2.75rem 1.25rem 1.25rem;
     color: #1f2937;
 }
 .md-editor .mermaid-wrapper .mermaid svg,
@@ -622,7 +622,7 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 .md-editor .mermaid-wrapper .mermaid .edgeLabel foreignObject,
 .md-editor .mermaid-fullscreen-canvas .mermaid .edgeLabel foreignObject{
     box-sizing: content-box;
-    padding: 0 2px;
+    padding: 0 .125rem;
 }
 .md-editor .mermaid-wrapper .mermaid p,
 .md-editor .mermaid-wrapper .mermaid div,
@@ -642,20 +642,20 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .mermaid-zoom-controls{
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: .5rem;
+    right: .5rem;
     display: flex;
-    gap: 4px;
+    gap: .25rem;
     z-index: 10;
 }
 .md-editor .mermaid-zoom-btn{
-    width: 28px;
-    height: 28px;
+    width: 1.75rem;
+    height: 1.75rem;
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: .375rem;
     background: var(--surface);
     color: var(--text);
-    font-size: 15px;
+    font-size: .9375rem;
     font-weight: 700;
     cursor: pointer;
     display: flex;
@@ -671,16 +671,16 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
     color: var(--accent);
 }
 .md-editor .mermaid-zoom-label{
-    min-width: 44px;
-    height: 28px;
+    min-width: 2.75rem;
+    height: 1.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: .75rem;
     font-weight: 600;
     color: var(--muted);
     background: var(--surface-2);
-    border-radius: 6px;
+    border-radius: .375rem;
 }
 .md-editor .mermaid-fullscreen-overlay{
     position: fixed;
@@ -698,10 +698,10 @@ html.dark .md-editor ::selection { background: #2dd4bf; color: #0f172a; }
 }
 .md-editor .mermaid-fullscreen-canvas{
     width: 90vw;
-    height: 90vh;
+    height: 90dvh;
     overflow: hidden;
     background: var(--mermaid-bg);
-    border-radius: 9px;
+    border-radius: .5625rem;
     position: relative;
     cursor: grab;
     display: flex;

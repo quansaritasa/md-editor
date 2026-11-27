@@ -14,10 +14,10 @@
     --heading-ink: color-mix(in srgb, var(--accent) 60%, var(--text));
     --strong-ink: color-mix(in srgb, var(--accent) 42%, var(--text));
     --link-ink: var(--accent);
-    --code-bg: #FBF6AE;
+    --code-bg: #ECEEE7;
     --code-text: #8A5A00;
-    --radius: 0px;
-    --max-w: 900px;
+    --radius: 0;
+    --max-w: 56.25rem;
     --note-amber: #7A5200;
     --note-amber-lt: #F6EFD8;
     --note-amber-border: #B58900;
@@ -57,17 +57,17 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
     color: var(--text);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    font-size: 16px;
+    font-size: 1rem;
 }.md-editor {
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 48px 24px 96px;
+    padding: 3rem 1.5rem 6rem;
     line-height: 1.45;
 }
 /* ── Frontmatter Display ───────────────────── */
 .md-editor .md-header {
-    margin-bottom: 36px;
-    padding-bottom: 24px;
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
 }.md-editor .md-eyebrow {
     display: inline-block;
@@ -76,22 +76,22 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
     color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 6px;
+    margin-bottom: .5rem;
     background: var(--accent-soft);
-    padding: 3px 10px;
-    border-radius: 12px;
+    padding: .125rem .75rem;
+    border-radius: .75rem;
 }.md-editor .md-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 16px;
-    margin-top: 14px;
+    gap: .5rem 1rem;
+    margin-top: 1rem;
 }.md-editor .md-meta-item {
     font-size: 0.85rem;
     color: var(--text-secondary);
 }.md-editor .md-meta-label {
     font-weight: 600;
     color: var(--text);
-    margin-right: 6px;
+    margin-right: .5rem;
 }.md-editor .md-meta-label::after {
     content: ":";
 }
@@ -101,23 +101,23 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.25;
-    margin-bottom: 8px;
-    padding-bottom: 8px;
+    margin-bottom: .5rem;
+    padding-bottom: .5rem;
     border-bottom: 1px solid var(--border);
 }.md-editor h2 {
     font-size: 1.625rem;
     font-weight: 600;
-    margin: 52px 0 14px;
-    padding-bottom: 6px;
+    margin: 3.25rem 0 1rem;
+    padding-bottom: .5rem;
     border-bottom: 1px solid var(--border);
 }.md-editor h3 {
     font-size: 1.05rem;
     font-weight: 600;
-    margin: 38px 0 10px;
+    margin: 2.5rem 0 .75rem;
 }.md-editor h4 {
     font-size: 0.95rem;
     font-weight: 600;
-    margin: 24px 0 8px;
+    margin: 1.5rem 0 .5rem;
 }
 /* Headings take --heading-ink, not the body ink they inherited: a heading the
    same colour as the text under it leaned on size and weight alone, and in a
@@ -132,10 +132,10 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
 }
 /* ── Paragraphs & Links ───────────────────── */
 .md-editor p {
-    margin: 0 0 12px;
+    margin: 0 0 .75rem;
     color: var(--text);
 }.md-editor p + p {
-    margin-top: 12px;
+    margin-top: .75rem;
 }.md-editor a {
     color: var(--link-ink);
     text-decoration: none;
@@ -155,14 +155,14 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
     border-collapse: collapse;
     /* Chrome ignores border-radius on a collapsed table: clip the corner and
        redraw the outline over the clipped border. */
-    border-radius: 4px;
-    clip-path: inset(0 round 4px);
+    border-radius: .25rem;
+    clip-path: inset(0 round .25rem);
     outline: 1px solid var(--border);
     outline-offset: -1px;
-    margin: 12px 0 20px;
+    margin: .75rem 0 1.25rem;
     font-size: 0.9em;
 }.md-editor th, .md-editor td {
-    padding: 8px 14px;
+    padding: .5rem 1rem;
     text-align: left;
     border: 1px solid var(--border);
     line-height: 1.4;
@@ -202,7 +202,7 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
 .md-editor code {
     background: var(--code-bg);
     color: var(--code-text);
-    padding: 2px 6px;
+    padding: .125rem .5rem;
     border-radius: var(--radius);
     font-size: 0.88em;
     font-family:
@@ -211,11 +211,11 @@ html.dark .md-editor .hljs-attr { color: #F0C674; }
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 16px;
+    padding: 1rem;
     overflow-x: auto;
     font-size: var(--pre-font-size, 0.9em);
     line-height: 1.5;
-    margin: 12px 0 20px;
+    margin: .75rem 0 1.25rem;
 }
 /* A code block is a step off the page, not a light panel on it. --surface sits
    well above --bg in the darker palettes — nord's #3B4252 on #2E3440 is a
@@ -236,16 +236,16 @@ html.dark .md-editor pre {
 }
 .md-editor .md-code-block {
     position: relative;
-    margin: 12px 0 20px;
+    margin: .75rem 0 1.25rem;
 }.md-editor .md-code-block pre {
     margin: 0;
-    padding-top: 34px; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
+    padding-top: 2.25rem; /* buttons: top 8px + height 22px = 30px, leaving a tight 4px gap */
 }.md-editor .md-code-copy-btn {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    height: 22px;
-    min-width: 56px;
+    top: .5rem;
+    right: .5rem;
+    height: 1.375rem;
+    min-width: 3.5rem;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
@@ -253,7 +253,7 @@ html.dark .md-editor pre {
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 0 8px;
+    padding: 0 .5rem;
     border-radius: var(--radius);
     font-size: 0.7rem;
     font-weight: 600;
@@ -269,10 +269,10 @@ html.dark .md-editor pre {
     border-color: var(--accent);
 }.md-editor .md-code-full-btn {
     position: absolute;
-    top: 8px;
-    right: 218px;
-    height: 22px;
-    min-width: 56px;
+    top: .5rem;
+    right: 13.625rem;
+    height: 1.375rem;
+    min-width: 3.5rem;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
@@ -280,7 +280,7 @@ html.dark .md-editor pre {
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 0 8px;
+    padding: 0 .5rem;
     border-radius: var(--radius);
     font-size: 0.7rem;
     font-weight: 600;
@@ -293,10 +293,10 @@ html.dark .md-editor pre {
     color: var(--text);
 }.md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn {
     position: absolute;
-    top: 8px;
-    right: 70px;
-    height: 22px;
-    min-width: 56px;
+    top: .5rem;
+    right: 4.375rem;
+    height: 1.375rem;
+    min-width: 3.5rem;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
@@ -304,7 +304,7 @@ html.dark .md-editor pre {
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 0 8px;
+    padding: 0 .5rem;
     border-radius: var(--radius);
     font-size: 0.7rem;
     font-weight: 600;
@@ -316,23 +316,23 @@ html.dark .md-editor pre {
     background: var(--border);
     color: var(--text);
 }
-.md-editor .md-code-beautify-btn { right: 132px; width: 80px; padding: 0 4px; white-space: nowrap; }
+.md-editor .md-code-beautify-btn { right: 8.25rem; width: 5rem; padding: 0 .25rem; white-space: nowrap; }
 /* ── Lists ────────────────────────────────── */
 .md-editor ul, .md-editor ol {
-    margin: 6px 0 14px 0;
-    padding-left: 32px;
+    margin: .5rem 0 1rem 0;
+    padding-left: 2rem;
     color: var(--text);
 }
 /* Nested lists step in 20px per level (level 1 sits 32px from the edge). */
-.md-editor li > ul, .md-editor li > ol { padding-left: 20px; }.md-editor li {
-    margin-bottom: 8px;
+.md-editor li > ul, .md-editor li > ol { padding-left: 1.25rem; }.md-editor li {
+    margin-bottom: .5rem;
     line-height: 1.45;
 }
 /* ── Blockquotes ──────────────────────────── */
 .md-editor blockquote, .md-editor .md-blockquotes {
-    border-left: 3px solid var(--accent);
-    padding: 8px 16px;
-    margin: 12px 0 20px;
+    border-left: .1875rem solid var(--accent);
+    padding: .5rem 1rem;
+    margin: .75rem 0 1.25rem;
     color: var(--text-secondary);
     background: var(--accent-soft);
     border-radius: 0 var(--radius) var(--radius) 0;
@@ -355,27 +355,27 @@ html.dark .md-editor pre {
 .md-editor .md-example-box {
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 12px 16px;
-    margin: 12px 0;
+    padding: .75rem 1rem;
+    margin: .75rem 0;
     background: var(--surface);
 }.md-editor .md-example-box p {
     margin: 0;
 }.md-editor .md-example-box.md-good-box {
-    border-left: 4px solid #0f766e;
+    border-left: .25rem solid #0f766e;
 }.md-editor .md-example-box.md-bad-box {
-    border-left: 4px solid #9a3412;
+    border-left: .25rem solid #9a3412;
 }.md-editor .md-block-card {
     border: 1px solid var(--border);
     background: var(--surface);
     border-radius: var(--radius);
-    padding: 14px 16px;
+    padding: 1rem 1rem;
 }.md-editor .md-block-grid {
     display: grid;
-    gap: 14px;
+    gap: 1rem;
 }.md-editor hr {
     border: none;
     border-top: 1px solid var(--border);
-    margin: 32px 0;
+    margin: 2rem 0;
 }.md-editor img {
     max-width: 100%;
     height: auto;
@@ -384,18 +384,18 @@ html.dark .md-editor pre {
 
 /* ── Responsive ───────────────────────────── */
 .md-editor select {
-    padding: 5px 12px;
+    padding: .25rem .75rem;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
     font-size: 0.9rem;
     font-family: inherit;
-    height: 29px;
+    height: 1.8125rem;
     cursor: pointer;
-}@media (max-width: 640px) {
+}@media (max-width: 40em) {
 .md-editor {
-        padding: 28px 16px 56px;
+        padding: 1.75rem 1rem 3.5rem;
     }.md-editor h1 {
         font-size: 1.5rem;
     }.md-editor h2 {
@@ -403,7 +403,7 @@ html.dark .md-editor pre {
     }.md-editor table {
         font-size: 0.82rem;
     }.md-editor th, .md-editor td {
-        padding: 6px 10px;
+        padding: .5rem .75rem;
     }
 }
 /* ── Mermaid zoom controls ────────────────── */
@@ -413,15 +413,15 @@ html.dark .md-editor pre {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--mermaid-bg);
-    margin: 0 0 20px;
-    min-height: 100px;
+    margin: 0 0 1.25rem;
+    min-height: 6.25rem;
     cursor: grab;
     user-select: none;
 }.md-editor .mermaid-wrapper .mermaid {
     margin: 0;
     border: none;
     border-radius: 0;
-    padding: 44px 20px 20px;
+    padding: 2.75rem 1.25rem 1.25rem;
     color: #1f2937;
 }.md-editor .mermaid-wrapper .mermaid svg, .md-editor .mermaid-fullscreen-canvas .mermaid svg {
     overflow: visible;
@@ -437,7 +437,7 @@ html.dark .md-editor pre {
     overflow: visible;
 }.md-editor .mermaid-wrapper .mermaid .edgeLabel foreignObject, .md-editor .mermaid-fullscreen-canvas .mermaid .edgeLabel foreignObject {
     box-sizing: content-box;
-    padding: 0 2px;
+    padding: 0 .125rem;
 }.md-editor .mermaid-wrapper .mermaid p, .md-editor .mermaid-wrapper .mermaid div, .md-editor .mermaid-wrapper .mermaid span {
     color: #1f2937;
 }.md-editor .mermaid-wrapper .mermaid .nodeLabel, .md-editor .mermaid-fullscreen-canvas .mermaid .nodeLabel {
@@ -449,19 +449,19 @@ html.dark .md-editor pre {
     transform: translateX(-10px);
 }.md-editor .mermaid-zoom-controls {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: .5rem;
+    right: .5rem;
     display: flex;
-    gap: 4px;
+    gap: .25rem;
     z-index: 10;
 }.md-editor .mermaid-zoom-btn {
-    width: 28px;
-    height: 28px;
+    width: 1.75rem;
+    height: 1.75rem;
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: .375rem;
     background: var(--surface);
     color: var(--text-secondary);
-    font-size: 15px;
+    font-size: .9375rem;
     font-weight: 700;
     cursor: pointer;
     display: flex;
@@ -474,16 +474,16 @@ html.dark .md-editor pre {
     background: var(--border);
     color: var(--text);
 }.md-editor .mermaid-zoom-label {
-    min-width: 44px;
-    height: 28px;
+    min-width: 2.75rem;
+    height: 1.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: .75rem;
     font-weight: 600;
     color: var(--text-secondary);
     background: var(--surface);
-    border-radius: 6px;
+    border-radius: .375rem;
 }.md-editor .mermaid-fullscreen-overlay {
     position: fixed;
     inset: 0;
@@ -496,7 +496,7 @@ html.dark .md-editor pre {
     color: #1f2937;
 }.md-editor .mermaid-fullscreen-canvas {
     width: 90vw;
-    height: 90vh;
+    height: 90dvh;
     overflow: hidden;
     background: var(--mermaid-bg);
     border-radius: var(--radius);
@@ -506,10 +506,16 @@ html.dark .md-editor pre {
     align-items: center;
     justify-content: center;
 }
+/* Heading ladder, from the theme's own tokens. */
+.md-editor, html.dark .md-editor {
+    --h1-ink: var(--heading-ink);
+    --h2-ink: color-mix(in srgb, var(--accent) 45%, var(--heading-ink));
+    --h3-ink: color-mix(in srgb, var(--text-secondary) 50%, var(--heading-ink));
+}
 /* ── terminal: typography and component reshaping ── */
 .md-editor {
     font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-    font-size: 15px;
+    font-size: .9375rem;
     line-height: 1.6;
 }
 .md-editor h1, .md-editor h2, .md-editor h3, .md-editor h4 {
@@ -523,26 +529,26 @@ html.dark .md-editor pre {
 .md-editor h2::before { content: "## "; color: var(--accent); }
 .md-editor h3::before { content: "### "; color: var(--accent); }
 .md-editor h4::before { content: "#### "; color: var(--accent); }
-.md-editor h1 { font-size: 1.6rem; padding-bottom: 10px; border-bottom: 1px dashed var(--border); }
-.md-editor h2 { font-size: 1.25rem; margin: 44px 0 12px; padding-bottom: 6px; border-bottom: 1px dashed var(--border); }
+.md-editor h1 { font-size: 1.6rem; padding-bottom: .75rem; border-bottom: 1px dashed var(--border); }
+.md-editor h2 { font-size: 1.25rem; margin: 2.75rem 0 .75rem; padding-bottom: .5rem; border-bottom: 1px dashed var(--border); }
 .md-editor h3 { font-size: 1.05rem; }
 .md-editor h4 { font-size: 0.95rem; }
-.md-editor .md-eyebrow { border-radius: 0; background: none; border: 1px solid var(--accent); padding: 2px 8px; }
+.md-editor .md-eyebrow { border-radius: 0; background: none; border: 1px solid var(--accent); padding: .125rem .5rem; }
 .md-editor a { text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; }
 .md-editor a:hover { text-decoration-style: solid; background: var(--accent-soft); }
 .md-editor strong { color: var(--accent); font-weight: 700; }
-.md-editor code { padding: 1px 5px; border: 1px solid var(--border); }
-.md-editor pre { font-size: 0.9rem; border-left: 3px solid var(--accent); }
+.md-editor code { padding: .125rem .25rem; border: 1px solid var(--border); }
+.md-editor pre { font-size: 0.9rem; border-left: .1875rem solid var(--accent); }
 .md-editor pre code { font-size: inherit; }
-.md-editor blockquote, .md-editor .md-blockquotes { background: #ECFDF5; border-left: 3px solid var(--text-secondary); color: var(--text-secondary); }
+.md-editor blockquote, .md-editor .md-blockquotes { background: none; border-left: .1875rem solid var(--text-secondary); color: var(--text-secondary); }
 .md-editor blockquote p::before { content: "> "; color: var(--text-secondary); }
 .md-editor th { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.87em; }
 .md-editor tr:nth-child(even) td { background: color-mix(in srgb, var(--text) 5%, transparent); }
 .md-editor hr { border-top: 1px dashed var(--border); }
 .md-editor ul { list-style: none; margin-left: 0; padding-left: 0; }
-.md-editor ul > li { padding-left: 32px; position: relative; }
-.md-editor li > ul { padding-left: 0; margin-left: -12px; }
-.md-editor ul > li::before { content: "-"; position: absolute; left: 14px; color: var(--accent); }
+.md-editor ul > li { padding-left: 2rem; position: relative; }
+.md-editor li > ul { padding-left: 0; margin-left: -.75rem; }
+.md-editor ul > li::before { content: "-"; position: absolute; left: .875rem; color: var(--accent); }
 .md-editor ul ul > li::before { content: "·"; }
 .md-editor .md-code-copy-btn, .md-editor .md-code-full-btn, .md-editor .md-code-wrap-btn, .md-editor .md-code-beautify-btn,
 .md-editor .mermaid-zoom-btn, .md-editor .mermaid-zoom-label, .md-editor select {
@@ -559,25 +565,9 @@ html.dark .md-editor pre {
    nameable. The gap now belongs to .md-section alone; the h2 rule above is kept
    as the fallback for an h2 rendered outside a section. Card has worked this
    way from the start; this brings the rest into line. */
-.md-editor .md-section { margin-bottom: 12px; }
+.md-editor .md-section { margin-bottom: .75rem; }
 .md-editor .md-section > h2:first-child { margin-top: 0; }
 /* Heading ladder: h1 strongest, h2 accent, h3 quieter; each >= 5:1 on the page. */
-.md-editor {
-    --h1-ink: #0f3d22;
-    --h2-ink: #0c773a;
-    --h3-ink: #3d5a47;
-    --strong-ink: #0f3d22;
-}
-html.dark .md-editor {
-    --h1-ink: #d0f5dc;
-    --h2-ink: #58d68d;
-    --h3-ink: #9ccaa8;
-    --strong-ink: #d0f5dc;
-}
 .md-editor h1, html.dark .md-editor h1 { color: var(--h1-ink); }
 .md-editor h2, html.dark .md-editor h2 { color: var(--h2-ink); }
 .md-editor h3, html.dark .md-editor h3 { color: var(--h3-ink); }
-.md-editor strong, html.dark .md-editor strong { color: var(--strong-ink); }
-/* Blockquote tint: a share of the accent over the page, so the quote reads as its own block in every theme. */
-.md-editor blockquote:not(.md-note):not(.md-info), .md-editor .md-blockquotes:not(.md-note):not(.md-info) { background: color-mix(in srgb, var(--accent) 8%, var(--bg)); }
-html.dark .md-editor blockquote:not(.md-note):not(.md-info), html.dark .md-editor .md-blockquotes:not(.md-note):not(.md-info) { background: color-mix(in srgb, var(--accent) 16%, var(--bg)); }

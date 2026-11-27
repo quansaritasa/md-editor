@@ -21,7 +21,19 @@
 
 # Changelog
 
-## Unreleased — rounded tables, and a firmer Card border
+## Unreleased — rem units across the stylesheets
+
+- `css/base.css`, the four hand-written themes and `tools/gen_themes.py` now size type, spacing, radius and
+  component widths in **rem** (px / 16), so the library follows the host's root font size. Hairlines,
+  focus rings, shadows and `!important` mermaid pins stay in px. Media queries are in `em`, full-height
+  shells use `dvh`. Spacing snaps to a 4px grid, so pages run about 1.5-3% taller. The ten generated themes
+  were regenerated; see `AGENTS.md`.
+  Border-radius, `clip-path` rounding, the Card grid min width, Glass blur and the 3-4px accent bars are in
+  rem too. `tools/gen_themes.py` is now a stub over `tools/themegen/` (core + one module per theme).
+  Generated themes take their heading ladder (h1-h3) from their own tokens instead of modern's blue/purple;
+  Book and Solarized keep their hand-set inks.
+
+## Also unreleased — rounded tables, and a firmer Card border
 
 - Every table is rounded to **4px**. Chrome ignores `border-radius` on a table
   that collapses its borders, so the table is clipped with `clip-path` and its

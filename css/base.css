@@ -34,8 +34,8 @@
   font-weight: 700;
   color: var(--accent);
   background: var(--accent-soft);
-  border-radius: 3px;
-  padding: 0 3px;
+  border-radius: .1875rem;
+  padding: 0 .125rem;
 }
 
 /* ---------- collapsible sections ---------- */
@@ -78,9 +78,9 @@
   border: none;
   outline: none;
   resize: none;
-  padding: 24px 28px 40px;
+  padding: 1.5rem 1.75rem 2.5rem;
   font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 14px;
+  font-size: .875rem;
   line-height: 1.7;
   color: #1f2937;
   background: #fafbfc;
@@ -269,7 +269,7 @@ html.dark .md-editor-source {
 .md-editor .mermaid-fullscreen-overlay:fullscreen { background: var(--mermaid-bg, #f6f8fa); }
 .md-editor .mermaid-fullscreen-overlay:fullscreen .mermaid-fullscreen-canvas {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   border-radius: 0;
 }
 
@@ -285,12 +285,12 @@ html.dark .md-editor-source {
 
 .md-editor .mermaid-minimap {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: 1rem;
+  bottom: 1rem;
   overflow: hidden;
   background: var(--mermaid-bg, var(--surface));
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: .375rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
   cursor: crosshair;
   z-index: 10;
@@ -309,7 +309,7 @@ html.dark .md-editor-source {
   /* Tinted, never solid: --accent-soft is an opaque colour in every theme,
      and a solid frame hides the very tables it is framing. */
   background: color-mix(in srgb, var(--accent) 8%, transparent);
-  border-radius: 2px;
+  border-radius: .125rem;
   pointer-events: none;
   box-sizing: border-box;
 }
@@ -320,16 +320,16 @@ html.dark .md-editor-source {
    title bands use, so a theme that repaints one repaints the other. */
 .md-editor .mermaid-degree-legend {
   position: absolute;
-  left: 16px;
-  bottom: 16px;
+  left: 1rem;
+  bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 5px 9px;
+  gap: .75rem;
+  padding: .25rem .5rem;
   background: var(--mermaid-bg, var(--surface));
   border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 11px;
+  border-radius: .375rem;
+  font-size: .6875rem;
   line-height: 1;
   color: #1f2937;
   pointer-events: none;
@@ -339,13 +339,13 @@ html.dark .md-editor-source {
 .md-editor .mermaid-degree-key {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: .25rem;
 }
 .md-editor .mermaid-degree-key i {
-  width: 11px;
-  height: 11px;
+  width: .6875rem;
+  height: .6875rem;
   border: 1px solid color-mix(in srgb, #1f2937 30%, transparent);
-  border-radius: 2px;
+  border-radius: .125rem;
 }
 .md-editor .mermaid-degree-key.mmd-deg-0 i {
   background: var(--mermaid-er-deg-0, color-mix(in srgb, #64748b 35%, var(--mermaid-bg, #f6f8fa)));
@@ -359,36 +359,36 @@ html.dark .md-editor-source {
 
 .md-editor .mermaid-search { position: relative; }
 .md-editor .mermaid-search-input {
-  width: 180px;
-  height: 28px;
+  width: 11.25rem;
+  height: 1.75rem;
   box-sizing: border-box;
-  padding: 0 8px;
+  padding: 0 .5rem;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: .375rem;
   background: var(--surface);
   color: var(--text);
-  font-size: 13px;
+  font-size: .8125rem;
 }
 .md-editor .mermaid-search-input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
 .md-editor .mermaid-search-list {
   position: absolute;
-  top: 32px;
+  top: 2rem;
   left: 0;
   right: 0;
   margin: 0;
-  padding: 4px 0;
+  padding: .25rem 0;
   list-style: none;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: .375rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  max-height: 260px;
+  max-height: 16.25rem;
   overflow-y: auto;
 }
 .md-editor .mermaid-search-list[hidden] { display: none; }
 .md-editor .mermaid-search-list li {
-  padding: 4px 10px;
-  font-size: 13px;
+  padding: .25rem .75rem;
+  font-size: .8125rem;
   color: var(--text);
   cursor: pointer;
   white-space: nowrap;
@@ -403,19 +403,19 @@ html.dark .md-editor-source {
    (bottom-left); a long list scrolls inside it. */
 .md-editor .mermaid-relations {
   position: absolute;
-  left: 16px;
-  top: 16px;
-  width: 300px;
-  max-height: calc(100% - 80px);
+  left: 1rem;
+  top: 1rem;
+  width: 18.75rem;
+  max-height: calc(100% - 5rem);
   overflow-y: auto;
   box-sizing: border-box;
-  padding: 10px 12px;
+  padding: .75rem .75rem;
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: .5rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  font-size: 12px;
+  font-size: .75rem;
   line-height: 1.4;
   z-index: 11;
 }
@@ -423,8 +423,8 @@ html.dark .md-editor-source {
 .md-editor .mermaid-relations-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: .5rem;
+  margin-bottom: .5rem;
 }
 .md-editor .mermaid-relations-name {
   flex: 1;
@@ -435,7 +435,7 @@ html.dark .md-editor-source {
   font-family: inherit;
   text-align: left;
   cursor: pointer;
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 600;
   overflow-wrap: anywhere;
 }
@@ -444,7 +444,7 @@ html.dark .md-editor-source {
   border: 0;
   background: none;
   color: var(--text);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1;
   cursor: pointer;
   opacity: 0.6;
@@ -452,15 +452,15 @@ html.dark .md-editor-source {
 .md-editor .mermaid-relations-close:hover { opacity: 1; }
 .md-editor .mermaid-relations-keys {
   display: flex;
-  gap: 6px;
+  gap: .5rem;
   align-items: baseline;
-  margin: 2px 0;
+  margin: .125rem 0;
 }
 .md-editor .mermaid-relations-tag {
   flex: none;
-  padding: 0 4px;
-  border-radius: 3px;
-  font-size: 10px;
+  padding: 0 .25rem;
+  border-radius: .1875rem;
+  font-size: .625rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   background: color-mix(in srgb, var(--accent) 22%, transparent);
@@ -472,24 +472,24 @@ html.dark .md-editor-source {
 }
 .md-editor .mermaid-relations-none { opacity: 0.6; font-style: italic; }
 .md-editor .mermaid-relations-heading {
-  margin: 10px 0 4px;
+  margin: .75rem 0 .25rem;
   font-weight: 600;
   opacity: 0.75;
 }
 .md-editor .mermaid-relations-list { margin: 0; padding: 0; list-style: none; }
 .md-editor .mermaid-relations-item {
-  padding: 6px 0;
+  padding: .5rem 0;
   border-top: 1px solid var(--border);
 }
 .md-editor .mermaid-relations-item.is-peek {
-  margin: 0 -12px;
-  padding: 6px 12px 6px 9px;
-  border-left: 3px solid var(--accent);
+  margin: 0 -.75rem;
+  padding: .5rem .75rem .5rem .5rem;
+  border-left: .1875rem solid var(--accent);
   background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 .md-editor .mermaid-relations-head {
   display: flex;
-  gap: 8px;
+  gap: .5rem;
   align-items: baseline;
   flex-wrap: wrap;
 }
@@ -504,7 +504,7 @@ html.dark .md-editor-source {
 }
 .md-editor .mermaid-relations-partner:hover { text-decoration: underline; }
 .md-editor .mermaid-relations-label { font-style: italic; opacity: 0.8; }
-.md-editor .mermaid-relations-says { margin-top: 1px; }
+.md-editor .mermaid-relations-says { margin-top: .125rem; }
 /* The focused table's own "one"/"many": bold only. Themes restyle <strong>
    in prose (size, colour), which would jolt this line. */
 .md-editor .mermaid-relations-says strong.is-me {
@@ -513,7 +513,7 @@ html.dark .md-editor-source {
   color: inherit;
   letter-spacing: inherit;
 }
-.md-editor .mermaid-relations-kind { opacity: 0.7; font-size: 11px; }
+.md-editor .mermaid-relations-kind { opacity: 0.7; font-size: .6875rem; }
 
 /* ---------- callouts: > [!NOTE] and ::: containers (src/callouts.js) ---------- */
 /* One hue per kind, mixed toward the theme's own text and background so the
@@ -523,8 +523,8 @@ html.dark .md-editor-source {
   --callout-c: var(--text-secondary, #656d76);
   margin: 0 0 var(--good-view-gap, 1em);
   padding: 0.6em 1em;
-  border-left: 4px solid var(--callout-c);
-  border-radius: var(--radius, 6px);
+  border-left: .25rem solid var(--callout-c);
+  border-radius: var(--radius, .375rem);
   background: color-mix(in srgb, var(--callout-c) 9%, transparent);
 }
 .md-editor .callout > :last-child { margin-bottom: 0; }
